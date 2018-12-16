@@ -1,0 +1,114 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Editar Perfil</h4>
+            <p class="card-category">Completa la información</p>
+          </div>
+          
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Colegio</label>
+                    <input type="text" class="form-control" value="{{alumnoEditar.colegio}}" >
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Curso</label>
+                    <input type="text" class="form-control" value="{{alumnoEditar.curso}}">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Email</label>
+                    <input type="email" class="form-control" value="{{alumnoEditar.email}}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Nombres</label>
+                    <input type="text" class="form-control" value="{{alumnoEditar.nombres}}">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Apellidos</label>
+                    <input type="text" class="form-control" value="{{alumnoEditar.apellidos}}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Dirección</label>
+                    <input type="text" class="form-control" value="{{alumnoEditar.direccion}}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Ciudad</label>
+                    <input type="text" class="form-control" value="{{alumnoEditar.ciudad}}">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Comuna</label>
+                    <input type="text" class="form-control" value="{{alumnoEditar.comuna}}">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Telefono</label>
+                    <input type="text" class="form-control" value="{{alumnoEditar.telefono}}">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Antecedentes</label>
+                    <div class="form-group">
+                      <label class="bmd-label-floating"> Condiciones especiales a tener en consideración.</label>
+                      <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn pull-right" (click)="guardarUsuario()">Actulizar Perfil</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="card card-profile">
+          <div class="card-avatar">
+            <a href="">
+              <img class="img" src="../assets/img/faces/{{alumnoEditar.imagen}}.jpg" />
+            </a>
+          </div>
+          <div class="card-body">
+            <h6 class="card-category text-gray">Alumno</h6>
+            <h4 class="card-title">{{alumnoEditar.nombres}} {{alumnoEditar.apellidos}}</h4>
+            <p class="card-description">
+              Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+            </p>
+            <a href="" class="btn">Hoja de Vida</a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
