@@ -1,0 +1,138 @@
+<!-- ====================================
+——— PRELOADER
+===================================== -->
+<div id="preloader" class="smooth-loader-wrapper">
+  <div class="smooth-loader">
+    <div class="loader">
+      <span class="dot dot-1"></span>
+      <span class="dot dot-2"></span>
+      <span class="dot dot-3"></span>
+      <span class="dot dot-4"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================
+——— HEADER
+===================================== -->
+<header class="header" id="pageTop">
+  <!-- Top Bar-->
+  <div class=" bg-stone d-none d-md-block top-bar">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 d-none d-lg-block">
+          <ul class="list-inline d-flex justify-content-xl-start align-items-center h-100 mb-0">
+            <li>
+              <span class="bg-warning icon-header mr-xl-2">
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </span>
+              <a class="mr-lg-4 mr-xl-6 text-white opacity-80">Nombre Administrador</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-5">
+          <ul class="list-inline d-flex mb-0 justify-content-xl-end justify-content-md-center align-items-center mr-xl-2">
+            <li class="text-white mr-3 mr-lg-2 mr-xl-5">
+              <span class="bg-purple icon-header mr-2 mr-lg-1 mr-xl-2">
+                <i class="fa fa-unlock-alt text-white font-size-13" aria-hidden="true"></i>
+              </span>
+              <span class="text-white opacity-80">Cerrar sesión</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-md navbar-scrollUp navbar-sticky navbar-white">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img class="d-inline-block" src="assets/img/preu.jpg" alt="Kidz School">
+      </a>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ml-lg-auto">
+          <li class="nav-item dropdown bg-warning">
+            <a class="nav-link dropdown-toggle  active " href="/admin"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-home nav-icon" aria-hidden="true"></i>
+              <span>Home</span>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown bg-danger">
+            <a class="nav-link dropdown-toggle active" href="" role="button"
+              data-toggle="dropdown">
+              <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+              <span>Perfiles</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item " href="">Alumnos</a>
+              </li>
+              <li>
+                <a class="dropdown-item " href="">Apoderados </a>
+              </li>
+              <li>
+                <a class="dropdown-item " href="">Profesores</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown bg-success">
+            <a class="nav-link dropdown-toggle active" href="#" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-file-text-o nav-icon" aria-hidden="true"></i>
+              <span>Cursos</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item " href="">Cursos</a>
+              </li>
+              <li>
+                <a class="dropdown-item " href="">Asignaturas </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown bg-info">
+            <a class="nav-link dropdown-toggle active" href="javascript:void(0)" id="stores"
+              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-pencil-square-o nav-icon" aria-hidden="true"></i>
+              <span>Puntajes</span>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown bg-purple">
+            <a class="nav-link dropdown-toggle active" href="javascript:void(0)" id="stores"
+              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-list nav-icon" aria-hidden="true"></i>
+              <span>Asistencia</span>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown bg-pink">
+            <a class="nav-link dropdown-toggle active" href="" role="button"
+            data-toggle="dropdown">
+              <i class="fa fa-exclamation nav-icon" aria-hidden="true"></i>
+              <span>Alertas</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item " href="">Alertas</a>
+              </li>
+              <li>
+                <a class="dropdown-item " href="">Estadisticas </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<app-perfiles></app-perfiles>
