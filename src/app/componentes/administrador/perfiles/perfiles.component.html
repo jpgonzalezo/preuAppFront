@@ -1,35 +1,357 @@
-<div class="main-wrapper home">
-    <section class="breadcrumb-bg" style="background-image: url(assets/img/background/footer-bg-img.jpg); ">
-      <div class="container">
-        <div class="breadcrumb-holder">
-          <div>
-            <h1 class="breadcrumb-title">Perfiles</h1>
-            <ul class="breadcrumb breadcrumb-transparent">
-              <li class="breadcrumb-item">
-                <a class="text-white" href="/admin">Home</a>
-              </li>
-              <li class="breadcrumb-item text-white active" aria-current="page">
-                Perfiles
-              </li>
-            </ul>
+<div class="row">
+  <div class="col-xl-10">
+    <div class="" id="alerts">
+      <h1 class="element-title">Nuevo Registro</h1>
+    </div>
+  </div>
+  
+  <div class="col-xl-12">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="profesor-tab" data-toggle="tab" href="#profesor" role="tab" aria-controls="profesor"
+          aria-selected="true">Profesor</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="estudiante-tab" data-toggle="tab" href="#estudiante" role="tab" aria-controls="estudiante"
+          aria-selected="false">Estudiante</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="registrar_apoderado-tab" data-toggle="tab" href="#registrar_apoderado" role="tab" aria-controls="registrar_apoderado"
+          aria-selected="false">Apoderado</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      
+      <!--PROFESOR TAB-->
+      <div class="tab-pane fade show active" id="profesor" role="tabpanel" aria-labelledby="profesor-tab">
+        <div class="mb-8">
+          <br>
+          <form>
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre profesor">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Apellido paterno</label>
+                <input type="text" class="form-control" placeholder="Apellido paterno">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Apellido materno</label>
+                <input type="text" class="form-control" placeholder="Apellido materno">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Nombre usuario</label>
+                <input type="text" class="form-control" placeholder="Username">
+              </div>
+              
+              <div class="form-group col-xl-4">
+                <label >Direccion</label>
+                <input type="text" class="form-control" placeholder="Direccion">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Asignatura</label>
+                <div class="dropdown mb-2">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Asignaturas
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="">Matematica</a>
+                    <a class="dropdown-item" href="">Lenguaje</a>
+                    <a class="dropdown-item" href="">Fisica</a>
+                    <a class="dropdown-item" href="">Quimica</a>
+                    <a class="dropdown-item" href="">Biologia</a>
+                    <a class="dropdown-item" href="">Historia</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Fecha de nacimiento</label>
+                <input type="date" class="form-control" placeholder="Nombre profesor">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Fono de contacto</label>
+                <input type="text" class="form-control" placeholder="Teléfono">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Email</label>
+                <input type="email" class="form-control" placeholder="example@email.com">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-xl-6">
+                <label >Rut</label>
+                <input type="text" class="form-control" placeholder="11.111.111-1">
+              </div>
+
+              <div class="form-group col-xl-6">
+                <label >Contraseña temporal</label>
+                <input type="password" class="form-control" placeholder="*************">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-xl-12" style="text-align:right;">
+                <button type="button" class="btn btn-danger mb-2">Borrar datos</button>
+                &nbsp;
+                <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#modal_registro_exitoso">Confirmar registro</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!--ESTUDIANTE TAB-->
+      <div class="tab-pane fade" id="estudiante" role="tabpanel" aria-labelledby="estudiante-tab">
+        <div class="mb-8">
+          <br>
+          <form>
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre profesor">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Apellido paterno</label>
+                <input type="text" class="form-control" placeholder="Apellido paterno">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Apellido materno</label>
+                <input type="text" class="form-control" placeholder="Apellido materno">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Nombre usuario</label>
+                <input type="text" class="form-control" placeholder="Username">
+              </div>
+              
+              <div class="form-group col-xl-4">
+                <label >Direccion</label>
+                <input type="text" class="form-control" placeholder="Direccion">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Curso</label>
+                <div class="dropdown mb-2">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Cursos
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="">Curso Historia</a>
+                    <a class="dropdown-item" href="">Curso Ciencias</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Fecha de nacimiento</label>
+                <input type="date" class="form-control" placeholder="Nombre profesor">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Fono de contacto</label>
+                <input type="text" class="form-control" placeholder="Teléfono">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Email</label>
+                <input type="email" class="form-control" placeholder="example@email.com">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Rut</label>
+                <input type="text" class="form-control" placeholder="11.111.111-1">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >N° Matricula</label>
+                <input type="text" class="form-control" placeholder="Matricula">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Contraseña temporal</label>
+                <input type="password" class="form-control" placeholder="*************">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-xl-12" style="text-align:right;">
+                <button type="button" class="btn btn-danger mb-2">Borrar datos</button>
+                &nbsp;
+                <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#modal_registro_exitoso">Confirmar registro</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!--CURSO COMPLETO TAB-->
+      <div class="tab-pane fade" id="registrar_apoderado" role="tabpanel" aria-labelledby="registrar_apoderado-tab">
+        <div class="mb-8">
+          <br>
+          <form>
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre ">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Apellido paterno</label>
+                <input type="text" class="form-control" placeholder="Apellido paterno">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Apellido materno</label>
+                <input type="text" class="form-control" placeholder="Apellido materno">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-xl-3">
+                <label >Nombre usuario</label>
+                <input type="text" class="form-control" placeholder="Username">
+              </div>
+              <div class="form-group col-xl-3">
+                <label >Rut</label>
+                <input type="text" class="form-control" placeholder="11.111.111-1">
+              </div>
+
+              <div class="form-group col-xl-3">
+                <label >Contraseña temporal</label>
+                <input type="password" class="form-control" placeholder="*************">
+              </div>
+              <div class="form-group col-xl-3">
+                <label >Alumno</label>
+                <div class="dropdown mb-2">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Alumnos
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="">Alumno 1</a>
+                    <a class="dropdown-item" href="">Alumno 2</a>
+                    <a class="dropdown-item" href="">Alumno 3</a>
+                    <a class="dropdown-item" href="">Alumno 4</a>
+                    <a class="dropdown-item" href="">Alumno 5</a>
+                    <a class="dropdown-item" href="">Alumno 6</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-xl-4">
+                <label >Fecha de nacimiento</label>
+                <input type="date" class="form-control" placeholder="Nombre profesor">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Fono de contacto</label>
+                <input type="text" class="form-control" placeholder="Teléfono">
+              </div>
+
+              <div class="form-group col-xl-4">
+                <label >Email</label>
+                <input type="email" class="form-control" placeholder="example@email.com">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-xl-12" style="text-align:right;">
+                <button type="button" class="btn btn-danger mb-2">Borrar datos</button>
+                &nbsp;
+                <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#modal_registro_exitoso">Confirmar registro</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--MODAL EXITO REGISTRO-->
+<div class="modal fade" id="modal_registro_exitoso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="bg-warning rounded-top p-2">
+        <h3 class="text-white font-weight-bold mb-0 ml-2">Exito!</h3>
+      </div>
+
+      <div class="border rounded-bottom-md border-top-0">
+        <div class="p-3">
+          <div class="modal-body">
+            <label >Se ha registrado al Usuario <b>Nombre</b> Correctamente.</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="py-8 py-md-10">
-        <div class="container">
+    </div>
+  </div>
+</div>
+<hr>
+<!--PERFILES EXISTENTES-->
+<div class="row">
+  <div class="col-xl-10">
+    <div class="" id="alerts">
+      <h1 class="element-title">Perfiles Existentes</h1>
+    </div>
+  </div>
+  
+  <div class="col-xl-12">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="profesor-tab-existentes" data-toggle="tab" href="#profesor-existentes" role="tab" aria-controls="profesor-existentes"
+          aria-selected="true">Profesor</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="estudiante-tab-existentes" data-toggle="tab" href="#estudiante-existentes" role="tab" aria-controls="estudiante-existentes"
+          aria-selected="false">Estudiante</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="registrar_apoderado-tab-existentes" data-toggle="tab" href="#registrar_apoderado-existentes" role="tab" aria-controls="registrar_apoderado-existentes"
+          aria-selected="false">Apoderado</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      
+      <!--PROFESOR TAB-->
+      <div class="tab-pane fade show active" id="profesor-existentes" role="tabpanel" aria-labelledby="profesor-tab-existentes">
+        <div class="mb-8">
+          <br><br>
           <div class="table-responsive-sm table-cart">
             <table class="table mb-0">
               <thead>
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col">Rut</th>
                   <th scope="col">Nombre</th>
-                  <th scope="col">Curso</th>
-                  <th scope="col">Colegio</th>
-                  <th scope="col">Direccion</th>
+                  <th scope="col">Rut</th>
+                  <th scope="col">Email</th>
                   <th scope="col">Telefono</th>
+                  <th scope="col">Direccion</th>
+                  <th scope="col">Asignatura</th>
                   <th scope="col">Accion</th>
                 </tr>
               </thead>
@@ -38,54 +360,141 @@
                   <td>
                     <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
                   </td>
-                  <td>20.123.456-7</td>
-                  <td class="td-product-name">Nombre Alumno</td>
-                  <td class="td-product-name">Ciencias</td>
-                  <td class="td-product-name">Colegio 1</td>
-                  <td class="td-product-name">Direccion 1</td>
-                  <td class="td-product-name">+569987654</td>
+                  <td class="td-product-name">Nombre Profesor</td>
+                  <td>11.111.111-1</td>
+                  <td>correo@gmail.com</td>
+                  <td>+569 98765432</td>
+                  <td>Calle 123, San Bernardo</td>
+                  <td>Matematica</td>
                   <td>
-                      <button type="button" class="btn btn-info btn-sm mb-2"><i class="fa fa-pencil" ></i></button>
-                      &nbsp;
-                      <button type="button" class="btn btn-danger btn-sm mb-2"><i class="fa fa-trash" ></i></button>
+                    <div class="row">
+                      <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
+                      <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
+                    </div>
                   </td>
-                </tr>
-                <tr>
-                    <td>
-                      <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
-                    </td>
-                    <td>20.123.456-7</td>
-                    <td class="td-product-name">Nombre Alumno</td>
-                    <td class="td-product-name">Ciencias</td>
-                    <td class="td-product-name">Colegio 1</td>
-                    <td class="td-product-name">Direccion 1</td>
-                    <td class="td-product-name">+569987654</td>
-                    <td>
-                      <button type="button" class="btn btn-info btn-sm mb-2"><i class="fa fa-pencil" ></i></button>
-                      &nbsp;
-                      <button type="button" class="btn btn-danger btn-sm mb-2"><i class="fa fa-trash" ></i></button>
-                    </td>
                 </tr>
                 <tr>
                   <td>
                     <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
                   </td>
-                  <td>20.123.456-7</td>
-                  <td class="td-product-name">Nombre Alumno</td>
-                  <td class="td-product-name">Ciencias</td>
-                  <td class="td-product-name">Colegio 1</td>
-                  <td class="td-product-name">Direccion 1</td>
-                  <td class="td-product-name">+569987654</td>
+                  <td class="td-product-name">Nombre Profesor</td>
+                  <td>11.111.111-1</td>
+                  <td>correo@gmail.com</td>
+                  <td>+569 98765432</td>
+                  <td>Calle 123, San Bernardo</td>
+                  <td>Matematica</td>
                   <td>
-                    <button type="button" class="btn btn-info btn-sm mb-2"><i class="fa fa-pencil" ></i></button>
-                    &nbsp;
-                    <button type="button" class="btn btn-danger btn-sm mb-2"><i class="fa fa-trash" ></i></button>
+                    <div class="row">
+                      <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
+                      <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
+                  </td>
+                  <td class="td-product-name">Nombre Profesor</td>
+                  <td>11.111.111-1</td>
+                  <td>correo@gmail.com</td>
+                  <td>+569 98765432</td>
+                  <td>Calle 123, San Bernardo</td>
+                  <td>Matematica</td>
+                  <td>
+                    <div class="row">
+                      <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
+                      <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
+                    </div>
                   </td>
                 </tr>
               </tbody>
-      
             </table>
           </div>
+        </div>
+      </div>
+
+      <!--ESTUDIANTE TAB-->
+      <div class="tab-pane fade" id="estudiante-existentes" role="tabpanel" aria-labelledby="estudiante-tab-existentes">
+        <div class="mb-8">
+          <br><br>
+          <div class="table-responsive-sm table-cart">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Rut</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Telefono</th>
+                  <th scope="col">Direccion</th>
+                  <th scope="col">Colegio</th>
+                  <th scope="col">Accion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
+                  </td>
+                  <td class="td-product-name">Nombre Alumno</td>
+                  <td>11.111.111-1</td>
+                  <td>correo@gmail.com</td>
+                  <td>+569 98765432</td>
+                  <td>Calle 123, San Bernardo</td>
+                  <td>Colegio 1</td>
+                  <td>
+                      <div class="row">
+                          <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
+                          <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
+                        </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
+                  </td>
+                  <td class="td-product-name">Nombre Alumno</td>
+                  <td>11.111.111-1</td>
+                  <td>correo@gmail.com</td>
+                  <td>+569 98765432</td>
+                  <td>Calle 123, San Bernardo</td>
+                  <td>Colegio 2</td>
+                  <td>
+                      <div class="row">
+                          <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
+                          <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
+                        </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
+                  </td>
+                  <td class="td-product-name">Nombre Alumno</td>
+                  <td>11.111.111-1</td>
+                  <td>correo@gmail.com</td>
+                  <td>+569 98765432</td>
+                  <td>Calle 123, San Bernardo</td>
+                  <td>Colegio 3</td>
+                  <td>
+                      <div class="row">
+                          <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
+                          <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
+                        </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-    </section>
+        </div>
+      </div>
+
+      <!--CURSO COMPLETO TAB-->
+      <div class="tab-pane fade" id="registrar_apoderado-existentes" role="tabpanel" aria-labelledby="registrar_apoderado-tab-existentes">
+        <div class="mb-8">
+          <h1>sdadsa</h1>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
