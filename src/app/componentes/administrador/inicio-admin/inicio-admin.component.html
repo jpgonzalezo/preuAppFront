@@ -45,7 +45,6 @@
     </div>
   </div>
 
-
   <!-- Navbar -->
   <nav class="navbar navbar-expand-md navbar-scrollUp navbar-sticky navbar-white">
     <div class="container">
@@ -56,7 +55,7 @@
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav ml-lg-auto">
           <li class="nav-item dropdown bg-warning">
-            <a class="nav-link dropdown-toggle  active " href="/admin"
+            <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(1)" href="#"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-home nav-icon" aria-hidden="true"></i>
               <span>Home</span>
@@ -64,26 +63,15 @@
           </li>
 
           <li class="nav-item dropdown bg-danger">
-            <a class="nav-link dropdown-toggle active" href="" role="button"
+            <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(2)" href="#" role="button"
               data-toggle="dropdown">
               <i class="fa fa-users nav-icon" aria-hidden="true"></i>
               <span>Perfiles</span>
             </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item " href="">Alumnos</a>
-              </li>
-              <li>
-                <a class="dropdown-item " href="">Apoderados </a>
-              </li>
-              <li>
-                <a class="dropdown-item " href="">Profesores</a>
-              </li>
-            </ul>
           </li>
 
           <li class="nav-item dropdown bg-success">
-            <a class="nav-link dropdown-toggle active" href="#" role="button"
+            <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(3)" href="#" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-file-text-o nav-icon" aria-hidden="true"></i>
               <span>Cursos</span>
@@ -107,7 +95,7 @@
           </li>
 
           <li class="nav-item dropdown bg-purple">
-            <a class="nav-link dropdown-toggle active" href="javascript:void(0)" id="stores"
+            <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(4)" href="#" id="stores"
               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-list nav-icon" aria-hidden="true"></i>
               <span>Asistencia</span>
@@ -115,7 +103,7 @@
           </li>
 
           <li class="nav-item dropdown bg-pink">
-            <a class="nav-link dropdown-toggle active" href="" role="button"
+            <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(5)" href="#" role="button"
             data-toggle="dropdown">
               <i class="fa fa-exclamation nav-icon" aria-hidden="true"></i>
               <span>Alertas</span>
@@ -134,5 +122,65 @@
     </div>
   </nav>
 </header>
-
-<app-perfiles></app-perfiles>
+<section class="py-8 py-md-10">
+    <div style="text-align:center;">
+      <h1 class="element-title">Administrador: Bastian Piña</h1>
+      <br>
+    </div>
+    <div class="container">
+      <div class="mb-9">
+        <div class="row">
+          <div class="col-sm-4 col-xs-12">
+            <div class="media flex-md-column flex-lg-row mb-3 mb-md-0">
+              <div class="icon-rounded-circle-large shadow-sm mb-md-2 mr-md-0 mr-2 mr-lg-2 bg-warning">
+                <i class="fa fa-user-graduate text-white" aria-hidden="true"></i>
+              </div>
+              <div class="media-body">
+                <h3 class="media-heading text-warning mt-0 font-weight-bold mb-3">Estudiantes:</h3>
+                <p class="text-muted font-weight-medium">Estudiantes Inscritos: 500</p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-sm-4 col-xs-12">
+            <div class="media flex-md-column flex-lg-row mb-3 mb-md-0">
+              <div class="icon-rounded-circle-large shadow-sm mr-2 mb-md-2 mr-md-0 mr-lg-2 bg-success">
+                <i class="fa fa-chalkboard-teacher text-white" aria-hidden="true"></i>
+              </div>
+              <div class="media-body">
+                <h3 class="media-heading text-success mt-0 font-weight-bold mb-3">Profesores:</h3>
+                <p class="text-muted font-weight-medium">Profesores Inscritos: 5</p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="col-sm-4 col-xs-12">
+            <div class="media flex-md-column flex-lg-row mb-3 mb-md-0">
+              <div class="icon-rounded-circle-large shadow-sm mr-2 mb-md-2 mr-md-0 mr-lg-2 bg-danger">
+                <i class="fa fa-exclamation-triangle text-white" aria-hidden="true"></i>
+              </div>
+              <div class="media-body">
+                <h3 class="media-heading text-danger">Alertas:</h3>
+                <p class="font-weight-medium">Pendientes en el sistema: 15</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <!--SECCION HOME-->
+      <div *ngIf="ventanaActiva=='1'">
+        <app-home></app-home>
+      </div>
+      <!--SECCION NUEVO REGISTRO-->
+      <div *ngIf="ventanaActiva=='2'">
+        <app-perfiles></app-perfiles>
+      </div>
+      <!--SECCION NUEVOS CURSOS DISPONIBLES-->
+      <div *ngIf="ventanaActiva=='3'">
+          <app-curso></app-curso>
+      </div>
+      <!--SECCION NUEVOS CURSOS DISPONIBLES-->
+      <hr>
+    </div>
+  </section>

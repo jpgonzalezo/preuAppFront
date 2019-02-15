@@ -1,3 +1,171 @@
-<p>
-  home works!
-</p>
+<div class="row">  
+  <div class="col-xl-12 row">
+    <div class="col-xl-10">
+      <div class="" id="alerts">
+        <h1 class="element-title">Resumen de Puntajes</h1>
+      </div>
+    </div>
+    <div class="col-xl-12">
+      <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [chartType]="barChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+      </canvas>
+      <br>
+      <br>
+    </div>
+    <br>
+    <div class="col-xl-10">
+      <div class="" id="alerts">
+        <h1 class="element-title">Resumen de Asistencia</h1>
+      </div>
+      
+    </div>
+    <div class="col-xl-12">
+      <canvas baseChart
+        [datasets]="radarChartData"
+        [labels]="radarChartLabels"
+        [chartType]="radarChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<hr>
+<!--PERFILES EXISTENTES-->
+<div class="row">
+  <div class="col-xl-10">
+    <div class="" id="alerts">
+      <h1 class="element-title">Celendario Academico</h1>
+    </div>
+  </div>
+  
+  <div class="col-xl-12">
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="media media-events-list bg-warning">
+          <a class="media-img" href="event-single-left-sidebar.html">
+            <img src="assets/img/events/events-img1.jpg" alt="events-image">
+            <div class="media-img-overlay p-4">
+              <span class="badge badge-warning badge-rounded "> 10 <br> Julio</span>
+            </div>
+          </a>
+      
+          <div class="media-body">
+            <h3 class="media-heading mb-4">
+              <a class="text-white text-capitalize d-block text-truncate" href="event-single-left-sidebar.html">Ensayo Historia.</a>
+            </h3>
+      
+            <ul class="list-unstyled mb-2">
+              <li class="text-white">
+                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>9.00AM-11.00AM
+              </li>
+            </ul>
+      
+            <p class="text-white mb-5">
+              Profesor: Bastian Piña
+            </p>
+            <div class="mb-1">
+            </div>            
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+				<div class="media media-events-list bg-success">
+          <a class="media-img" href="event-single-left-sidebar.html">
+            <img src="assets/img/events/events-img2.jpg" alt="events-image">
+            <div class="media-img-overlay p-4">
+              <span class="badge badge-success badge-rounded "> 10 <br> Julio</span>
+            </div>
+          </a>
+
+          <div class="media-body">
+            <h3 class="media-heading mb-4">
+              <a class="text-white text-capitalize d-block text-truncate" href="event-single-left-sidebar.html">Ensayo Biologia</a>
+            </h3>
+
+            <ul class="list-unstyled mb-2">
+              <li class="text-white">
+                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>9.00AM-11.00AM
+              </li>
+            </ul>
+
+            <p class="text-white mb-5">
+              Profesor: Profesor de Biologia
+            </p>
+
+            <div class="mb-1">
+            </div>            
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+				<div class="media media-events-list bg-danger">
+          <a class="media-img position-relative" href="event-single-left-sidebar.html">
+            <img src="assets/img/events/events-img3.jpg" alt="events-image">
+            <div class="media-img-overlay p-4">
+              <span class="badge badge-danger badge-rounded "> 10 <br> Julio</span>
+            </div>
+          </a>
+
+          <div class="media-body">
+            <h3 class="media-heading mb-4">
+              <a class="text-white text-capitalize d-block text-truncate" href="event-single-left-sidebar.html">Ensayo Lenguaje</a>
+            </h3>
+
+            <ul class="list-unstyled mb-2">
+              <li class="text-white">
+                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>9.00AM-11.00AM
+              </li>
+            </ul>
+
+            <p class="text-white mb-5">
+              Profesor: Sergio Soto
+            </p>
+            <div class="mb-1">
+            </div>            
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+				<div class="media media-events-list bg-info">
+          <a class="media-img position-relative" href="event-single-left-sidebar.html">
+            <img src="assets/img/events/events-img4.jpg" alt="events-image">
+            <div class="media-img-overlay p-4">
+              <span class="badge badge-info badge-rounded "> 10 <br> Julio</span>
+            </div>
+          </a>
+
+          <div class="media-body">
+            <h3 class="media-heading mb-4">
+              <a class="text-white text-capitalize d-block text-truncate" href="event-single-left-sidebar.html">Ensayo Matematicas</a>
+            </h3>
+
+            <ul class="list-unstyled mb-2">
+              <li class="text-white">
+                <i class="fa fa-clock-o mr-2" aria-hidden="true"></i>9.00AM-11.00AM
+              </li>
+            </ul>
+
+            <p class="text-white mb-5">
+              Profesor: Juan Pablo Gonzalez</p>
+            <div class="mb-1">
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="node_modules/chart.js/src/chart.js"></script>
