@@ -73,17 +73,9 @@
           <li class="nav-item dropdown bg-success">
             <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(3)" href="#" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-file-text-o nav-icon" aria-hidden="true"></i>
+              <i class="fa fa-book nav-icon" aria-hidden="true"></i>
               <span>Cursos</span>
             </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item " href="">Cursos</a>
-              </li>
-              <li>
-                <a class="dropdown-item " href="">Asignaturas </a>
-              </li>
-            </ul>
           </li>
 
           <li class="nav-item dropdown bg-info">
@@ -108,14 +100,6 @@
               <i class="fa fa-exclamation nav-icon" aria-hidden="true"></i>
               <span>Alertas</span>
             </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item " href="">Alertas</a>
-              </li>
-              <li>
-                <a class="dropdown-item " href="">Estadisticas </a>
-              </li>
-            </ul>
           </li>
         </ul>
       </div>
@@ -178,9 +162,10 @@
       </div>
       <!--SECCION NUEVOS CURSOS DISPONIBLES-->
       <div *ngIf="ventanaActiva=='3'">
-          <app-curso></app-curso>
+        <app-curso></app-curso>
       </div>
       <!--SECCION NUEVOS CURSOS DISPONIBLES-->
+
       <hr>
     </div>
   </section>
