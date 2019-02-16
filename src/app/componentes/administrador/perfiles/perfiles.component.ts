@@ -1,19 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
 export interface Profesor{
-
+  nombres: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  email: string;
+  password: string;
+  telefono: string;
+  rut: string;
+  direccion: string;
+  asignatura: string;
 }
 
-export interface Apoderador{
-
+export interface Apoderado{
+ nombres: string;
+ apellido_paterno:string;
+ apellido_materno: string;
+ email: string;
+ telefono:string;
+ direccion: string;
+ rut: string;
+ password: string;
 }
 
 export interface Alumno{
@@ -139,6 +147,128 @@ const ALUMNO_DATA: Alumno[] = [
   },
 ];
 
+const PROFESOR_DATA: Profesor[]=[
+  {
+    nombres: "Juan Pablo",
+    apellido_paterno: "Gonzalez",
+    apellido_materno: "Opazo",
+    email: "jpgonzalez@gmail.com",
+    password: "123",
+    telefono: "+56974459133",
+    rut: "18.883.307-1",
+    direccion: "cale 234, Sn Bdo",
+    asignatura: "Matemáticas",
+  },
+  {
+    nombres: "Juan Pablo",
+    apellido_paterno: "Gonzalez",
+    apellido_materno: "Opazo",
+    email: "jpgonzalez@gmail.com",
+    password: "123",
+    telefono: "+56974459133",
+    rut: "18.883.307-1",
+    direccion: "cale 234, Sn Bdo",
+    asignatura: "Matemáticas",
+  },
+  {
+    nombres: "Juan Pablo",
+    apellido_paterno: "Gonzalez",
+    apellido_materno: "Opazo",
+    email: "jpgonzalez@gmail.com",
+    password: "123",
+    telefono: "+56974459133",
+    rut: "18.883.307-1",
+    direccion: "cale 234, Sn Bdo",
+    asignatura: "Matemáticas",
+  },
+  {
+    nombres: "Juan Pablo",
+    apellido_paterno: "Gonzalez",
+    apellido_materno: "Opazo",
+    email: "jpgonzalez@gmail.com",
+    password: "123",
+    telefono: "+56974459133",
+    rut: "18.883.307-1",
+    direccion: "cale 234, Sn Bdo",
+    asignatura: "Matemáticas",
+  },
+  {
+    nombres: "Juan Pablo",
+    apellido_paterno: "Gonzalez",
+    apellido_materno: "Opazo",
+    email: "jpgonzalez@gmail.com",
+    password: "123",
+    telefono: "+56974459133",
+    rut: "18.883.307-1",
+    direccion: "cale 234, Sn Bdo",
+    asignatura: "Matemáticas",
+  },
+  {
+    nombres: "Juan Pablo",
+    apellido_paterno: "Gonzalez",
+    apellido_materno: "Opazo",
+    email: "jpgonzalez@gmail.com",
+    password: "123",
+    telefono: "+56974459133",
+    rut: "18.883.307-1",
+    direccion: "cale 234, Sn Bdo",
+    asignatura: "Matemáticas",
+  },
+]
+
+const APODERADO_DATA: Apoderado[] = [
+  {
+    nombres: "Alvaro",
+    apellido_paterno:"Alvarez",
+    apellido_materno: "Sanchez",
+    email: "jorge.sancehz@gmail.com",
+    telefono: "+56975747185",
+    direccion: "calle 456, Sn Bdo",
+    rut: "9.993.456-7",
+    password: "1234",
+  },
+  {
+    nombres: "Jorge",
+    apellido_paterno:"Alvarez",
+    apellido_materno: "Sanchez",
+    email: "jorge.sancehz@gmail.com",
+    telefono: "+56975747185",
+    direccion: "calle 456, Sn Bdo",
+    rut: "9.993.456-7",
+    password: "1234",
+  },
+  {
+    nombres: "Jorge",
+    apellido_paterno:"Alvarez",
+    apellido_materno: "Sanchez",
+    email: "jorge.sancehz@gmail.com",
+    telefono: "+56975747185",
+    direccion: "calle 456, Sn Bdo",
+    rut: "9.993.456-7",
+    password: "1234",
+  },
+  {
+    nombres: "Jorge",
+    apellido_paterno:"Alvarez",
+    apellido_materno: "Sanchez",
+    email: "jorge.sancehz@gmail.com",
+    telefono: "+56975747185",
+    direccion: "calle 456, Sn Bdo",
+    rut: "9.993.456-7",
+    password: "1234",
+  },
+  {
+    nombres: "Jorge",
+    apellido_paterno:"Alvarez",
+    apellido_materno: "Sanchez",
+    email: "jorge.sancehz@gmail.com",
+    telefono: "+56975747185",
+    direccion: "calle 456, Sn Bdo",
+    rut: "9.993.456-7",
+    password: "1234",
+  },
+]
+
 @Component({
   selector: 'app-perfiles',
   templateUrl: './perfiles.component.html',
@@ -146,7 +276,7 @@ const ALUMNO_DATA: Alumno[] = [
 })
 
 export class PerfilesComponent implements OnInit {
-  displayedColumns: string[] = [
+  displayedColumnsAlumno: string[] = [
     'imagen',
     'rut',
     'nombres', 
@@ -158,7 +288,31 @@ export class PerfilesComponent implements OnInit {
     'accion'
   ];
 
+  displayedColumnsProfesor: string[] = [
+    'imagen',
+    'rut',
+    'nombres', 
+    'apellido_paterno',
+    'apellido_materno',
+    'asignatura',
+    'telefono',
+    'accion'
+  ]
+
+  displayedColumnsApoderado: string[] = [
+    'imagen',
+    'rut',
+    'nombres', 
+    'apellido_paterno',
+    'apellido_materno',
+    'direccion',
+    'telefono',
+    'accion'
+  ]
+
   dataSourceAlumno = new MatTableDataSource<Alumno>(ALUMNO_DATA);
+  dataSourceProfesor = new MatTableDataSource<Profesor>(PROFESOR_DATA);
+  dataSourceApoderado = new MatTableDataSource<Apoderado>(APODERADO_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -167,10 +321,14 @@ export class PerfilesComponent implements OnInit {
 
   ngOnInit() {
     this.dataSourceAlumno.paginator = this.paginator;
+    this.dataSourceProfesor.paginator = this.paginator;
+    this.dataSourceApoderado.paginator = this.paginator;
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSourceAlumno.filter = filterValue;
+    this.dataSourceProfesor.filter = filterValue;
+    this.dataSourceApoderado.filter = filterValue;
   }
 }
