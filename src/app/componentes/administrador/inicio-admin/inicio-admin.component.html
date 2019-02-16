@@ -46,66 +46,68 @@
   </div>
 
   <!-- Navbar -->
+    <!-- Navbar -->
   <nav class="navbar navbar-expand-md navbar-scrollUp navbar-sticky navbar-white">
     <div class="container">
       <a class="navbar-brand" href="index.html">
-        <img class="d-inline-block" src="assets/img/preu.jpg" alt="Kidz School">
+        <img class="d-inline-block" src="assets/img/logo-school.png" alt="Kidz School">
       </a>
+
+      <button class="navbar-toggler py-2" type="button" data-toggle="collapse" (click)="mostrarNavbar()" 
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars"></i>
+      </button>
 
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav ml-lg-auto">
           <li class="nav-item dropdown bg-warning">
-            <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(1)" href="#"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-home nav-icon" aria-hidden="true"></i>
-              <span>Home</span>
-            </a>
+              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(1)" href="#"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-home nav-icon" aria-hidden="true"></i>
+                <span>Home</span>
+              </a>
           </li>
-
           <li class="nav-item dropdown bg-danger">
-            <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(2)" href="#" role="button"
-              data-toggle="dropdown">
-              <i class="fa fa-users nav-icon" aria-hidden="true"></i>
-              <span>Perfiles</span>
-            </a>
+              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(2)" href="#"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                <span>Perfiles</span>
+              </a>
           </li>
-
           <li class="nav-item dropdown bg-success">
-            <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(3)" href="#" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-book nav-icon" aria-hidden="true"></i>
-              <span>Cursos</span>
-            </a>
+              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(3)" href="#"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-book nav-icon" aria-hidden="true"></i>
+                <span>Cursos</span>
+              </a>
           </li>
-
           <li class="nav-item dropdown bg-info">
-            <a class="nav-link dropdown-toggle active" href="javascript:void(0)" id="stores"
-              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-pencil-square-o nav-icon" aria-hidden="true"></i>
-              <span>Puntajes</span>
-            </a>
+              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(4)" href="#"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-pencil-square-o nav-icon" aria-hidden="true"></i>
+                <span>Puntajes</span>
+              </a>
           </li>
-
           <li class="nav-item dropdown bg-purple">
-            <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(4)" href="#" id="stores"
-              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-list nav-icon" aria-hidden="true"></i>
-              <span>Asistencia</span>
-            </a>
+              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(5)" href="#"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-list nav-icon" aria-hidden="true"></i>
+                <span>Asistencia</span>
+              </a>
           </li>
-
           <li class="nav-item dropdown bg-pink">
-            <a class="nav-link dropdown-toggle active" (click)="cambiarRuta(5)" href="#" role="button"
-            data-toggle="dropdown">
-              <i class="fa fa-exclamation nav-icon" aria-hidden="true"></i>
-              <span>Alertas</span>
-            </a>
+              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(6)" href="#"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-exclamation nav-icon" aria-hidden="true"></i>
+                <span>Alertas</span>
+              </a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
+<div class="main-wrapper home">
 <section class="py-8 py-md-10">
     <div style="text-align:center;">
       <h1 class="element-title">Administrador: Bastian Piña</h1>

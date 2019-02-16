@@ -30,6 +30,10 @@ import { PuntajeComponent } from './componentes/administrador/puntaje/puntaje.co
 import { AsistenciaComponent } from './componentes/administrador/asistencia/asistencia.component';
 import { EstadisticaComponent } from './componentes/administrador/estadistica/estadistica.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { MatTableModule } from  '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule } from '@angular/material';
+import { MatPaginatorModule, MatSortModule } from '@angular/material';
+import { ReactiveFormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +54,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     /** Covalent Modules */
     CovalentLayoutModule,
     CovalentHttpModule.forRoot(),
@@ -57,7 +62,13 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     CovalentMarkdownModule,
     CovalentDynamicFormsModule,
     CovalentStepsModule,
-    ChartsModule
+    /**Chart Moule para graficos */
+    ChartsModule,
+    /**MatTableModule para tablas */
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule
   ], // modules needed to run this module
   providers: [
   ], // additional providers needed for this module
