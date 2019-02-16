@@ -8,22 +8,135 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Soldium', weight: 1.0079, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 4.0026, symbol: 'Mg'},
-  {position: 13, name: 'Aluminium', weight: 6.941, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 9.0122, symbol: 'Si'},
-  {position: 15, name: 'Phosphorous', weight: 10.811, symbol: 'P'},
+export interface Profesor{
+
+}
+
+export interface Apoderador{
+
+}
+
+export interface Alumno{
+  nombres: string;
+  apellido_paterno: string;
+  apellido_materno: string;
+  colegio: string;
+  curso: string;
+  apoderado: string;
+  email: string;
+  password: string
+  telefono: number;
+  direccion: string;
+  rut: string;
+  fecha_ingreso: string;
+  fecha_nacimiento: string;
+  sexo: string;
+  puntaje_ingreso: number;
+}
+
+const ALUMNO_DATA: Alumno[] = [
+  {
+    nombres: "Pedro Antonio", 
+    apellido_paterno: "Figueroa" ,  
+    apellido_materno: "Sanchez",
+    colegio: "Colegio Bicentenario",
+    curso: "Historia",
+    apoderado: "Alvaro Figueroa",
+    email: "pedro_antonio@gmail.com",
+    password: "1234",
+    telefono: 978767182,
+    direccion: "Calle 123, San Bdo",
+    rut: "20.052.789-2",
+    fecha_ingreso: "19/03/19",
+    fecha_nacimiento: "13/04/98",
+    sexo: "Masculino",
+    puntaje_ingreso: 670
+  },
+  {
+    nombres: "Pedro Antonio", 
+    apellido_paterno: "Figueroa" ,  
+    apellido_materno: "Sanchez",
+    colegio: "Colegio Bicentenario",
+    curso: "Historia",
+    apoderado: "Alvaro Figueroa",
+    email: "pedro_antonio@gmail.com",
+    password: "1234",
+    telefono: 978767182,
+    direccion: "Calle 123, San Bdo",
+    rut: "20.052.789-2",
+    fecha_ingreso: "19/03/19",
+    fecha_nacimiento: "13/04/98",
+    sexo: "Masculino",
+    puntaje_ingreso: 670
+  },
+  {
+    nombres: "Pedro Antonio", 
+    apellido_paterno: "Figueroa" ,  
+    apellido_materno: "Sanchez",
+    colegio: "Colegio Bicentenario",
+    curso: "Historia",
+    apoderado: "Alvaro Figueroa",
+    email: "pedro_antonio@gmail.com",
+    password: "1234",
+    telefono: 978767182,
+    direccion: "Calle 123, San Bdo",
+    rut: "20.052.789-2",
+    fecha_ingreso: "19/03/19",
+    fecha_nacimiento: "13/04/98",
+    sexo: "Masculino",
+    puntaje_ingreso: 670
+  },
+  {
+    nombres: "Pedro Antonio", 
+    apellido_paterno: "Figueroa" ,  
+    apellido_materno: "Sanchez",
+    colegio: "Colegio Bicentenario",
+    curso: "Historia",
+    apoderado: "Alvaro Figueroa",
+    email: "pedro_antonio@gmail.com",
+    password: "1234",
+    telefono: 978767182,
+    direccion: "Calle 123, San Bdo",
+    rut: "20.052.789-2",
+    fecha_ingreso: "19/03/19",
+    fecha_nacimiento: "13/04/98",
+    sexo: "Masculino",
+    puntaje_ingreso: 670
+  },
+  {
+    nombres: "Pedro Antonio", 
+    apellido_paterno: "Figueroa" ,  
+    apellido_materno: "Sanchez",
+    colegio: "Colegio Bicentenario",
+    curso: "Historia",
+    apoderado: "Alvaro Figueroa",
+    email: "pedro_antonio@gmail.com",
+    password: "1234",
+    telefono: 978767182,
+    direccion: "Calle 123, San Bdo",
+    rut: "20.052.789-2",
+    fecha_ingreso: "19/03/19",
+    fecha_nacimiento: "13/04/98",
+    sexo: "Masculino",
+    puntaje_ingreso: 670
+  },
+  {
+    nombres: "Pedro Antonio", 
+    apellido_paterno: "Figueroa" ,  
+    apellido_materno: "Sanchez",
+    colegio: "Colegio Bicentenario",
+    curso: "Ciencias",
+    apoderado: "Alvaro Figueroa",
+    email: "pedro_antonio@gmail.com",
+    password: "1234",
+    telefono: 978767182,
+    direccion: "Calle 123, San Bdo",
+    rut: "20.052.789-2",
+    fecha_ingreso: "19/03/19",
+    fecha_nacimiento: "13/04/98",
+    sexo: "Masculino",
+    puntaje_ingreso: 670
+  },
 ];
 
 @Component({
@@ -33,8 +146,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class PerfilesComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = [
+    'imagen',
+    'rut',
+    'nombres', 
+    'apellido_paterno',
+    'apellido_materno',
+    'curso',
+    'telefono',
+    'puntaje_ingreso',
+    'accion'
+  ];
+
+  dataSourceAlumno = new MatTableDataSource<Alumno>(ALUMNO_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -42,12 +166,11 @@ export class PerfilesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSourceAlumno.paginator = this.paginator;
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.dataSourceAlumno.filter = filterValue;
   }
 }
