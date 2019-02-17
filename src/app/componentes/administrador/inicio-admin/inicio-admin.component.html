@@ -158,16 +158,18 @@
       <div *ngIf="ventanaActiva=='1'">
         <app-home></app-home>
       </div>
-      <!--SECCION NUEVO REGISTRO-->
-      <div *ngIf="ventanaActiva=='2'">
-        <app-perfiles></app-perfiles>
+      <!--SECCION PERFILES-->
+      <div *ngIf="ventanaActiva=='2'" >
+        <app-perfiles (hojaVida)="cargarHojaVida($event)"></app-perfiles >
       </div>
-      <!--SECCION NUEVOS CURSOS DISPONIBLES-->
+      <!--SECCION CURSOS-->
       <div *ngIf="ventanaActiva=='3'">
         <app-curso></app-curso>
       </div>
-      <!--SECCION NUEVOS CURSOS DISPONIBLES-->
-
+      <!--SECCION HOJA DE VIDA-->
+      <div *ngIf="ventanaActiva=='7'">
+        <app-hoja-vida [id_alumno]="hojaAlumno" (redireccion)="volver($event)"></app-hoja-vida>
+      </div>
       <hr>
     </div>
   </section>

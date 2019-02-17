@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import * as $ from 'jquery';
 import * as jQuery from 'jquery';
 
@@ -10,6 +9,7 @@ import * as jQuery from 'jquery';
 })
 export class InicioAdminComponent implements OnInit {
   ventanaActiva:string='1';
+  hojaAlumno:string;
   constructor() { }
 
   ngOnInit() {
@@ -18,13 +18,22 @@ export class InicioAdminComponent implements OnInit {
 
   public cambiarRuta(opcion:string):void{
     this.ventanaActiva=opcion;
-    console.log("ocultar navbar");
     $('#navbarContent').hide();
   }
 
+  public volver(opcion:string):void{
+    if(opcion=="perfiles"){
+      this.ventanaActiva='2'
+    }
+  }
+
   public mostrarNavbar():void{
-    console.log("mostrarNavbar")
     $('#navbarContent').show();
+  }
+
+  public cargarHojaVida(mensaje){
+    this.hojaAlumno = mensaje
+    this.ventanaActiva='7'
   }
 
 }

@@ -1,0 +1,143 @@
+<div class="row">
+  <div class="col-sm-4 col-xs-12">
+    <div class="image mb-5 mb-md-0">
+      <img class="w-100 rounded" src="assets/img/features/features-team-1.jpg" alt="team-1.jpg">
+    </div>
+  </div>
+
+  <div class="col-sm-8 col-xs-12">
+    <h2 class="text-danger font-weight-bold text-capitalize pl-0 mb-5">Hoja vida ({{alumno.nombres}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}})</h2>
+    <div class="mb-8">
+      <form>
+        <div class="row">
+          <div class="form-group col-xl-4">
+            <label >Nombre</label>
+            <input type="text" class="form-control" placeholder="Nombre profesor" value="{{alumno.nombres}}" disabled>
+          </div>
+
+          <div class="form-group col-xl-4">
+            <label >Apellido paterno</label>
+            <input type="text" class="form-control" placeholder="Apellido paterno" value="{{alumno.apellido_paterno}}" disabled>
+          </div>
+
+          <div class="form-group col-xl-4">
+            <label >Apellido materno</label>
+            <input type="text" class="form-control" placeholder="Apellido materno" value="{{alumno.apellido_materno}}" disabled>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-xl-4">
+            <label >Nombre usuario</label>
+            <input type="text" class="form-control" placeholder="Username" value="{{alumno.nombres}}" disabled>
+          </div>
+          
+          <div class="form-group col-xl-4">
+            <label >Direccion</label>
+            <input type="text" class="form-control" placeholder="Direccion" value="{{alumno.direccion}}" disabled>
+          </div>
+
+          <div class="form-group col-xl-4">
+            <label >Curso</label>
+            <input type="text" class="form-control" placeholder="Direccion" value="{{alumno.curso}}" disabled>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="form-group col-xl-4">
+            <label >Fecha de nacimiento</label>
+            <input type="date" class="form-control" placeholder="Nombre profesor" value="2011-09-29" disabled>
+          </div>
+
+          <div class="form-group col-xl-4">
+            <label >Fono de contacto</label>
+            <input type="text" class="form-control" placeholder="Teléfono" value="{{alumno.telefono}}" disabled>
+          </div>
+
+          <div class="form-group col-xl-4">
+            <label >Email</label>
+            <input type="email" class="form-control" placeholder="example@email.com" value="{{alumno.email}}" disabled>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-xl-4">
+            <label >Rut</label>
+            <input type="text" class="form-control" placeholder="11.111.111-1" value="{{alumno.rut}}" disabled>
+          </div>
+
+          <div class="form-group col-xl-4">
+            <label >N° Matricula</label>
+            <input type="text" class="form-control" placeholder="Matricula" value="12304" disabled>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <hr>
+</div>
+<div class="row">
+  <hr>
+  <div class="col-sm-5 col-xs-12">
+    <h2 class="text-danger font-weight-medium mb-3 ">Puntajes Promedio</h2>
+
+    <div class="text-muted text-capitalize font-weight-medium ml-4 mb-5 font-size-20">Historia</div>
+    <div class="text-white rounded bg-warning text-uppercase font-weight-medium px-6 py-3 mb-3">850 puntos</div>
+
+    <div class="text-muted text-capitalize font-weight-medium ml-4 mb-5 font-size-20">Lenguaje</div>
+    <div class="text-white rounded bg-success text-uppercase font-weight-medium px-6 py-3 mb-3">850 puntos</div>
+    
+    <div class="text-muted text-capitalize font-weight-medium ml-4 mb-5 font-size-20">Matemáticas</div>
+    <div class="text-white rounded bg-info text-uppercase font-weight-medium px-6 py-3 mb-3">850 puntos</div>
+  </div>
+  <div class="col-sm-7 col-xs-12">
+    <h2 class="text-danger font-weight-medium mb-3 ">Anotaciones</h2>
+    <div class="table-responsive-lg ">
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+      </div>
+      <table mat-table [dataSource]="dataSourceAnotacion" class="mat-elevation-z8v table-cart table-responsive-lg" style="width:100%">
+
+        <ng-container matColumnDef="titulo">
+          <th mat-header-cell *matHeaderCellDef > Título </th>
+          <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="profesor">
+          <th mat-header-cell *matHeaderCellDef > Profesor </th>
+          <td mat-cell *matCellDef="let element"> {{element.profesor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="apellido_paterno">
+          <th mat-header-cell *matHeaderCellDef > Apellido Paterno </th>
+          <td mat-cell *matCellDef="let element"> {{element.apellido_paterno}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef > Fecha</th>
+          <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="detalle">
+          <th mat-header-cell *matHeaderCellDef > Detalle </th>
+          <td mat-cell *matCellDef="let element"> {{element.detalle}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsAnotacion"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsAnotacion;"></tr>
+        <br><br>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>
+<div class="row" style="text-align:right;">
+  <br><br>
+  <div class="col-sm-10 col-xs-12"></div>
+  <div class="col-sm-2 col-xs-12">
+    <button (click)="redireccionarAtras()" class="btn btn-primary float-right">Volver</button>
+  </div>
+</div>
