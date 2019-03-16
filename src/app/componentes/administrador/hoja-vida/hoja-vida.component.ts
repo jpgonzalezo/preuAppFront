@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import {Alumno,ALUMNO_DATA} from '../../../modelos/alumno';
+import {Alumno,ALUMNO_DATA} from '../../../modelos/alumno.model';
 import {Anotacion, ANOTACION_DATA} from '../../../modelos/anotacion'
 @Component({
   selector: 'app-hoja-vida',

@@ -4,9 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HotTableModule } from '@handsontable/angular';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {AlumnoService} from './servicios/alumno.service'
 
 // register 'es' locale
 registerLocaleData(localeEs);
@@ -34,6 +36,7 @@ import { MatTableModule } from  '@angular/material';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule } from '@angular/material';
 import { MatPaginatorModule, MatSortModule } from '@angular/material';
 import { ReactiveFormsModule} from '@angular/forms';
+import { HojaVidaComponent } from './componentes/administrador/hoja-vida/hoja-vida.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +48,8 @@ import { ReactiveFormsModule} from '@angular/forms';
     CursoComponent,
     PuntajeComponent,
     AsistenciaComponent,
-    EstadisticaComponent
+    EstadisticaComponent,
+    HojaVidaComponent
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserAnimationsModule,
@@ -68,9 +72,12 @@ import { ReactiveFormsModule} from '@angular/forms';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule
+    MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule,
+    HotTableModule,
+    NgbModule
   ], // modules needed to run this module
   providers: [
+    AlumnoService,
   ], // additional providers needed for this module
   entryComponents: [ ],
   bootstrap: [ AppComponent],
