@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../../servicios/login.service';
 import { FormGroup, FormBuilder, Validator } from '@angular/forms';
+import { Router} from '@angular/router'
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { FormGroup, FormBuilder, Validator } from '@angular/forms';
 export class LoginComponent implements OnInit {
   formGroupLogin: FormGroup;
   constructor( private loginService: LoginService,
-               private formBuilderLogin: FormBuilder ) { }
+               private formBuilderLogin: FormBuilder,
+               private router: Router ) { }
 
   ngOnInit() {
     this.buildForm()
@@ -19,9 +21,13 @@ export class LoginComponent implements OnInit {
   public logearse(){
     const usuario = this.formGroupLogin.value
     this.loginService.login({'data':{'nombre_usuario':usuario.nombre_usuario,'password':usuario.password}}).subscribe(
-      res=>{
-        console.log(res)
-      }
+      (res: any)=>{
+        console.log(res.respuesta)
+      },
+      error => {
+        console.log("error")
+      },
+      () => this.navigate()
     )
   }
 
@@ -30,5 +36,9 @@ export class LoginComponent implements OnInit {
       nombre_usuario:[""],
       password: [""]
     })
+  }
+
+  public navigate(){
+    this.router.navigate(['/admin'])
   }
 }
