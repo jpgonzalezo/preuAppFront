@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import * as jQuery from 'jquery';
+import { Router} from '@angular/router'
+import {Location} from '@angular/common'
 
 @Component({
   selector: 'app-inicio-admin',
@@ -10,7 +12,7 @@ import * as jQuery from 'jquery';
 export class InicioAdminComponent implements OnInit {
   ventanaActiva:string='1';
   hojaAlumno:string;
-  constructor() { }
+  constructor(private router:Router, private location:Location) { }
 
   ngOnInit() {
 
