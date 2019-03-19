@@ -1,0 +1,15 @@
+<div *ngIf="afterInit">
+	<div *ngFor="let seccion of content">
+		<div *ngIf="seccion.tipo=='BANNER'">
+			<section class="bg-info" style="background-image: url(assets/img/background/page-title-bg-img.jpg); background-size:cover; background-position:bottom center; background-repeat:no-repeat;">
+			  <div class="container">
+			    <div class="row breadcrumb-element">
+			      <div class="col-12 col-md-12">
+			        <div  [innerHtml]="seccion.contenido"></div> 
+			      </div>
+			    </div>
+			  </div>
+			</section>	
+		</div>
+	</div>
+</div>

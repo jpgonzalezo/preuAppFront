@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+
 import {Alumno} from '../../../modelos/alumno.model';
 import {ALUMNO_DATA} from '../../../modelos/alumno.model';
 import {Profesor} from '../../../modelos/profesor';
@@ -30,9 +30,7 @@ export class PerfilesComponent implements OnInit {
   displayedColumnsAlumno: string[] = ['imagen','rut','nombres','apellido_paterno','apellido_materno','curso','telefono','puntaje_ingreso','accion'];
   displayedColumnsProfesor: string[] = ['imagen','rut','nombres','apellido_paterno','apellido_materno','asignatura','telefono','accion']
   displayedColumnsApoderado: string[] = ['imagen','rut','nombres', 'apellido_paterno','apellido_materno','direccion','telefono','accion']
-  
-  dataSourceProfesor = new MatTableDataSource<Profesor>(PROFESOR_DATA);
-  dataSourceApoderado = new MatTableDataSource<Apoderado>(APODERADO_DATA);
+
 
   profesor_perfil: Profesor;
   alumno_perfil: Alumno;
@@ -41,16 +39,15 @@ export class PerfilesComponent implements OnInit {
   evento:string
   @Output() 
   hojaVida = new EventEmitter<string>()
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+
 
   constructor(private alumnoService: AlumnoService, private formBuilder: FormBuilder) { }
 
 
 
-  dataSourceAlumno :MatTableDataSource<Alumno>;
+
   ngOnInit() {
-    this.dataSourceProfesor.paginator = this.paginator;
-    this.dataSourceApoderado.paginator = this.paginator;
+
     this.getAlumnos();
     this.registerProfesorForm = this.formBuilder.group({
       nombre_profesor:['', Validators.required],
@@ -66,9 +63,6 @@ export class PerfilesComponent implements OnInit {
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
-    this.dataSourceAlumno.filter = filterValue;
-    this.dataSourceProfesor.filter = filterValue;
-    this.dataSourceApoderado.filter = filterValue;
   }
 
   public postProfesor(){
@@ -79,8 +73,7 @@ export class PerfilesComponent implements OnInit {
   public getAlumnos(){
   	this.alumnoService.getAlumno().subscribe((data: Array<Alumno>) => {
       this.alumnos = data;
-      this.dataSourceAlumno= new MatTableDataSource<any>(data);
-      this.dataSourceAlumno.paginator = this.paginator;
+
   	});
   }
   public verHojaVida(id:string):void{

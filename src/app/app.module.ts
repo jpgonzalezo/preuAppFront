@@ -13,7 +13,6 @@ import {AlumnoService} from './servicios/alumno.service'
 // register 'es' locale
 registerLocaleData(localeEs);
 
-import { MainComponent } from './componentes/main/main.component';
 import { AppRoutingModule, RoutedComponents } from './app-routing.module';
 import { CovalentLayoutModule } from '@covalent/core/layout';
 import { CovalentStepsModule  } from '@covalent/core/steps';
@@ -31,16 +30,29 @@ import { CursoComponent } from './componentes/administrador/curso/curso.componen
 import { PuntajeComponent } from './componentes/administrador/puntaje/puntaje.component';
 import { AsistenciaComponent } from './componentes/administrador/asistencia/asistencia.component';
 import { EstadisticaComponent } from './componentes/administrador/estadistica/estadistica.component';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { MatTableModule } from  '@angular/material';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule } from '@angular/material';
-import { MatPaginatorModule, MatSortModule } from '@angular/material';
+import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule} from '@angular/forms';
 import { HojaVidaComponent } from './componentes/administrador/hoja-vida/hoja-vida.component';
+
+//COMPONENTES INICIO
+import { InicioComponent } from './componentes/inicio/inicio/inicio.component';
+import { SliderComponent } from './componentes/inicio/slider/slider.component';
+import { NosotrosComponent } from './componentes/inicio/nosotros/nosotros.component';
+import { ServiciosComponent } from './componentes/inicio/servicios/servicios.component';
+import { CursosPaginaPrincipalComponent } from './componentes/inicio/cursos-pagina-principal/cursos-pagina-principal.component';
+import { FooterComponent } from './componentes/inicio/footer/footer.component';
+import { LoginComponent } from './componentes/inicio/login/login.component';
+
+import {LoginService} from './servicios/login.service'
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
+    InicioComponent,
+    FooterComponent,
+    SliderComponent,
+    NosotrosComponent,
+    ServiciosComponent,
+    CursosPaginaPrincipalComponent,
     RoutedComponents,
     InicioAdminComponent,
     PerfilesComponent,
@@ -49,7 +61,8 @@ import { HojaVidaComponent } from './componentes/administrador/hoja-vida/hoja-vi
     PuntajeComponent,
     AsistenciaComponent,
     EstadisticaComponent,
-    HojaVidaComponent
+    HojaVidaComponent,
+    LoginComponent
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserAnimationsModule,
@@ -68,16 +81,12 @@ import { HojaVidaComponent } from './componentes/administrador/hoja-vida/hoja-vi
     CovalentStepsModule,
     /**Chart Moule para graficos */
     ChartsModule,
-    /**MatTableModule para tablas */
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule,
     HotTableModule,
     NgbModule
   ], // modules needed to run this module
   providers: [
     AlumnoService,
+    LoginService
   ], // additional providers needed for this module
   entryComponents: [ ],
   bootstrap: [ AppComponent],

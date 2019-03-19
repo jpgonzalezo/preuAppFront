@@ -1,0 +1,39 @@
+<section class="py-7 py-md-10" id="nosotros">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-xs-12 order-md-1">
+        <div class="image mb-4 mb-md-0">
+          <img class="img-fluid rounded" src="assets/img/features/{{seccion.contenido.img}}" alt="features-img1.jpg">
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xs-12">
+        <div class="">
+          <div class="section-title mb-4">
+            <h2 class="text-danger pl-0">Bienvenidos a {{seccion.contenido.titulo}}</h2>
+          </div>
+          <p class="text-dark font-size-15 mb-4">{{seccion.contenido.parrafo}}</p>
+
+          <ul class="list-unstyled mb-5">
+            <div *ngFor="let check of seccion.contenido.checklist">
+              <li class="d-flex align-items-baseline text-muted mb-2">
+                <i class="fa fa-check mr-2" aria-hidden="true"></i>
+                {{check}}
+              </li>
+            </div>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="py-9 bg-parallax" style="background-image: url(assets/img/background/background-img-1.jpg);">
+	<div class="container">
+    <div class="wow fadeInUp">
+      <div class="section-title justify-content-center">
+        <h2 class="text-white text-center">{{seccion.contenido.textoBanner}}</h2>
+      </div>
+    </div>
+	</div>
+</section>
