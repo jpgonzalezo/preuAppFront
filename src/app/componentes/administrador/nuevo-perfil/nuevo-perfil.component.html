@@ -1,0 +1,174 @@
+<section class="section " *ngIf="tipo_nuevo_perfil=='estudiante'">
+  <div class="container">
+    <h2 class="display-3">Nuevo Estudiante</h2>
+    <div class="row row-grid align-items-center">
+      <div class="col-xl-12">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+              <a class="nav-link active" id="personal-tab" data-toggle="tab" href="#personal_existente" role="tab" aria-controls="personal"
+              aria-selected="false">Datos Personales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="contacto-tab" data-toggle="tab" href="#contacto_existente" role="tab" aria-controls="contacto"
+            aria-selected="true">Datos Contacto</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" id="academico-tab" data-toggle="tab" href="#academico_existente" role="tab" aria-controls="academico"
+              aria-selected="true">Datos Acádemicos</a>
+          </li>
+        </ul>
+          
+        <div class="tab-content" id="myTabContent">
+        <!--DATOS PERSONALES TAB-->
+          <div class="tab-pane fade show active" id="personal_existente" role="tabpanel" aria-labelledby="personal-tab">
+            <div class="mb-8 ">
+              <br>
+              <form [formGroup]="formGroupDatosPersonalesEstudiante">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="nombres"> Nombres</label>
+                      <input name="nombres" formControlName="nombres" type="text" class="form-control" placeholder="Nombres estudiante">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="apellido_paterno"> Apellido Paterno</label>
+                      <input name="apellido_paterno" formControlName="apellido_paterno" type="text" class="form-control" placeholder="Primer Apellido">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="apellido_materno"> Apellido Materno</label>
+                      <input name="apellido_materno" formControlName="apellido_materno" type="text" class="form-control" placeholder="Segundo Apellido">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="rut"> Rut </label>
+                      <input name="rut" formControlName="rut" type="text" class="form-control" placeholder="11.111.111-1">
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="nomre_usuario"> Nombre Usuario </label>
+                      <input name="nombre_usuario" formControlName="nombre_usuario" type="text" class="form-control" placeholder="Nombre usuario">
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="password"> Password </label>
+                      <input name="password" formControlName="password" type="password" class="form-control" placeholder="**********">
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="telefono"> Sexo </label><br>
+                      <input name="sexo" formControlName="sexo" type="hidden" class="form-control" placeholder="11.111.111-1">
+                      <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{sexo_dropdown}}</button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                          <button ngbDropdownItem (click)="cambiarSexo('MASCULINO')">Masculino</button>
+                          <button ngbDropdownItem (click)="cambiarSexo('FEMENINO')">Femenino</button>
+                          <button ngbDropdownItem (click)="cambiarSexo('NO DEFINIDO')">No Definido</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!--DATOS CONTACTO TAB-->
+          <div class="tab-pane fade show" id="contacto_existente" role="tabpanel" aria-labelledby="contacto-tab">
+            <div class="mb-8">
+              <br>
+              <form [formGroup]="formGroupDatosContactoEstudiante">
+                <div class="table-responsive-lg"> 
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="calle"> Direccion </label>
+                        <input name="calle" formControlName="calle" type="text" class="form-control" placeholder="Calle">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="numero"> Número </label>
+                        <input name="numero" formControlName="numero" type="text" class="form-control" placeholder="N° Dirección">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="comuna"> Comuna </label>
+                        <input name="comuna" formControlName="comuna" type="text" class="form-control" placeholder="San Bernardo">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!--DATOS ACADEMICOS TAB-->
+          <div class="tab-pane fade show" id="academico_existente" role="tabpanel" aria-labelledby="academico-tab">
+            <div class="mb-8">
+              <br>
+              <form [formGroup]="formGroupDatosAcademicosEstudiante">
+                <div class="table-responsive-lg"> 
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="nombre_usuario"> Colegio</label> <br>
+                        <div ngbDropdown class="d-inline-block"> 
+                          <button class="btn btn-outline-primary" id="dropdownColegioEstudiante" ngbDropdownToggle>{{sexo_dropdown}}</button>
+                          <div ngbDropdownMenu aria-labelledby="dropdownColegioEstudiante">
+                            <button ngbDropdownItem (click)="cambiarColegio('MASCULINO')">Masculino</button>
+                            <button ngbDropdownItem (click)="cambiarSexo('FEMENINO')">Femenino</button>
+                            <button ngbDropdownItem (click)="cambiarSexo('NO DEFINIDO')">No Definido</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="password"> Apoderado</label>
+                        <input name="password" formControlName="password" type="password" class="form-control" placeholder="********">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="matricula"> Puntaje de Ingreso </label>
+                        <input name="matricula" formControlName="matricula" type="text" class="form-control" placeholder="Matricula">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="matricula"> Curso </label>
+                        <input name="matricula" formControlName="matricula" type="text" class="form-control" placeholder="Matricula">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+                
+              </div>
+              <div class="text-center">
+                <hr>
+                <button type="button" class="btn btn-outline-danger" (click)="cancelar()">Cancelar</button>
+                <button type="button" class="btn btn-outline-primary" (click)="guardarPerfilEstudiante()">Guardar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

@@ -43,7 +43,10 @@ import { CursosPaginaPrincipalComponent } from './componentes/inicio/cursos-pagi
 import { FooterComponent } from './componentes/inicio/footer/footer.component';
 import { LoginComponent } from './componentes/inicio/login/login.component';
 
+
 import {LoginService} from './servicios/login.service'
+import {EstadisticaService} from './servicios/estadistica.service';
+import { NuevoPerfilComponent } from './componentes/administrador/nuevo-perfil/nuevo-perfil.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +65,8 @@ import {LoginService} from './servicios/login.service'
     AsistenciaComponent,
     EstadisticaComponent,
     HojaVidaComponent,
-    LoginComponent
+    LoginComponent,
+    NuevoPerfilComponent
   ], // directives, components, and pipes owned by this NgModule
   imports: [
     BrowserAnimationsModule,
@@ -86,7 +90,8 @@ import {LoginService} from './servicios/login.service'
   ], // modules needed to run this module
   providers: [
     AlumnoService,
-    LoginService
+    LoginService,
+    EstadisticaService
   ], // additional providers needed for this module
   entryComponents: [ ],
   bootstrap: [ AppComponent],

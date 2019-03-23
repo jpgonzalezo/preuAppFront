@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {EstadisticaService} from '../../../servicios/estadistica.service'
 
 @Component({
   selector: 'app-home',
@@ -6,11 +7,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  public data:any=[]
+  public barChartData:any[] = [
+    {data: [100,0,0,100,0,0,0,0,0,0,0,0], label: 'asignatura1'}
+  ];
+  constructor(public _estadisticaService: EstadisticaService) {
+  }
 
   ngOnInit() {
+    this.get_estadistica()
   }
+
+  get_estadistica(){
+    this._estadisticaService.getEstadisticaResumen().subscribe((data: any) => (
+      this.data = data)
+    );
+  }
+
+
   public barChartOptions:any = {
     scaleShowVerticalLines: true,
     responsive: true
@@ -21,13 +35,7 @@ export class HomeComponent implements OnInit {
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
  
-  public barChartData:any[] = [
-    {data: [650, 590, 800, 810, 560, 550, 850], label: 'Lenguaje'},
-    {data: [280, 800, 652, 654, 710, 750, 850], label: 'Matematicas'},
-    {data: [280, 480, 409, 520, 550, 270, 850], label: 'Fisica'},
-    {data: [280, 785, 750, 630, 520, 650, 850], label: 'Quimica'},
-    {data: [280, 480, 400, 550, 630, 720, 850], label: 'Biologia'},
-  ];
+
  
   // events
   public chartClicked(e:any):void {

@@ -1,143 +1,94 @@
-<!-- ====================================
-——— PRELOADER
-===================================== -->
-<!-- <div id="preloader" class="smooth-loader-wrapper">
-  <div class="smooth-loader">
-    <div class="loader">
-      <span class="dot dot-1"></span>
-      <span class="dot dot-2"></span>
-      <span class="dot dot-3"></span>
-      <span class="dot dot-4"></span>
-    </div>
-  </div>
-</div> -->
-
-<!-- ====================================
-——— HEADER
-===================================== -->
-<header class="header" id="pageTop">
-  <!-- Top Bar-->
-  <div class=" bg-stone d-none d-md-block top-bar">
+<header class="header-global">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-7 d-none d-lg-block">
-          <ul class="list-inline d-flex justify-content-xl-start align-items-center h-100 mb-0">
-            <li>
-              <span class="bg-warning icon-header mr-xl-2">
-                <i class="fa fa-user" aria-hidden="true"></i>
-              </span>
-              <a class="mr-lg-4 mr-xl-6 text-white opacity-80">Nombre Administrador</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-lg-5">
-          <ul class="list-inline d-flex mb-0 justify-content-xl-end justify-content-md-center align-items-center mr-xl-2">
-            <li class="text-white mr-3 mr-lg-2 mr-xl-5">
-              <span class="bg-purple icon-header mr-2 mr-lg-1 mr-xl-2">
-                <i class="fa fa-unlock-alt text-white font-size-13" aria-hidden="true"></i>
-              </span>
-              <span class="text-white opacity-80">Cerrar sesión</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Navbar -->
-    <!-- Navbar -->
-  <nav class="navbar navbar-expand-md navbar-scrollUp navbar-sticky navbar-white">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">
-        <img class="d-inline-block" src="assets/img/preu.jpg" alt="Kidz School">
-      </a>
-
-      <button class="navbar-toggler py-2" type="button" data-toggle="collapse" (click)="mostrarNavbar()" 
-        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fa fa-bars"></i>
+      <a class="navbar-brand" href="/admin"><!--<img src="assets/img/logo/logo_vr_5.png">-->LOGO PREU</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-info" aria-controls="navbar-info" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
-
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav ml-lg-auto">
-          <li class="nav-item dropdown bg-warning">
-              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(1)" href="#"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-home nav-icon" aria-hidden="true"></i>
-                <span>Home</span>
+      <div class="collapse navbar-collapse" id="navbar-info">
+        <div class="navbar-collapse-header">
+          <div class="row">
+            <div class="col-6 collapse-brand">
+              <a href="#">
+                logo preu
+                <!-- <img src="assets/img/logo/logo_vr_5.png" > -->
               </a>
+            </div>
+            <div class="col-6 collapse-close">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-info" aria-controls="navbar-info" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" (click)="cambiarVentanaActiva('home')">
+              <i class="fas fa-home"></i>
+              <span class="nav-link-inner--text">Home</span>
+            </a>
           </li>
-          <li class="nav-item dropdown bg-danger">
-              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(2)" href="#"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-users nav-icon" aria-hidden="true"></i>
-                <span>Perfiles</span>
-              </a>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" (click)="cambiarVentanaActiva('perfiles')">
+              <i class="fas fa-users"></i>
+              <span class="nav-link-inner--text">Perfiles</span>
+            </a>
           </li>
-          <li class="nav-item dropdown bg-success">
-              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(3)" href="#"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-book nav-icon" aria-hidden="true"></i>
-                <span>Cursos</span>
-              </a>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" href="#">
+              <i class="fas fa-book"></i>
+              <span class="nav-link-inner--text">Cursos</span>
+            </a>
           </li>
-          <li class="nav-item dropdown bg-info">
-              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(4)" href="#"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-pencil-square-o nav-icon" aria-hidden="true"></i>
-                <span>Puntajes</span>
-              </a>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" href="#">
+              <i class="fas fa-file-signature"></i>
+              <span class="nav-link-inner--text">Asignaturas</span>
+            </a>
           </li>
-          <li class="nav-item dropdown bg-purple">
-              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(5)" href="#"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-list nav-icon" aria-hidden="true"></i>
-                <span>Asistencia</span>
-              </a>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" href="#">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span class="nav-link-inner--text">Alertas</span>
+            </a>
           </li>
-          <li class="nav-item dropdown bg-pink">
-              <a class="nav-link dropdown-toggle  active" (click)="cambiarRuta(6)" href="#"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-exclamation nav-icon" aria-hidden="true"></i>
-                <span>Alertas</span>
-              </a>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" href="#">
+              <i class="fas fa-user-injured"></i>
+              <span class="nav-link-inner--text">Asistencia</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-icon" href="#">
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="nav-link-inner--text">Cerrar Sesión</span>
+            </a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
-<div class="main-wrapper home">
-<section class="py-8 py-md-10">
-    <div style="text-align:center;">
-      <h1 class="element-title">Administrador: Bastian Piña</h1>
-      <br>
-    </div>
-    <div class="container">
-      <div class="mb-9">
+<main>
+  <app-home *ngIf="ventanaActiva=='home'"></app-home>
+  <app-perfiles *ngIf="ventanaActiva=='perfiles'" (nuevo_perfil)="redireccionEvento($event)"></app-perfiles>
+  <app-nuevo-perfil *ngIf="ventanaActiva=='nuevo_perfil'" [tipo_nuevo_perfil]="tipo_nuevo_perfil"></app-nuevo-perfil>
 
+</main>
+<footer class="footer has-cards">
+
+  <div class="container">
+    <hr>
+    <div class="row align-items-center justify-content-md-between">
+      <div class="col-md-6">
+        <div class="copyright">
+          &copy; 2019
+          <a href="https://www.nice.cl" target="_blank">Juan Pablo González Opazo</a>.
+        </div>
       </div>
-      <hr>
-      <!--SECCION HOME-->
-      <div *ngIf="ventanaActiva=='1'">
-        <app-home></app-home>
+      <div class="col-md-6">
       </div>
-      <!--SECCION PERFILES-->
-      <div *ngIf="ventanaActiva=='2'" >
-        <app-perfiles (hojaVida)="cargarHojaVida($event)"></app-perfiles >
-      </div>
-      <!--SECCION CURSOS-->
-      <div *ngIf="ventanaActiva=='3'">
-        <app-curso></app-curso>
-      </div>
-      <!--SECCION PUNTAJES-->
-      <div *ngIf="ventanaActiva=='4'">
-        <app-puntaje></app-puntaje>
-      </div>
-      <!--SECCION HOJA DE VIDA-->
-      <div *ngIf="ventanaActiva=='7'">
-        <app-hoja-vida [id_alumno]="hojaAlumno" (redireccion)="volver($event)"></app-hoja-vida>
-      </div>
-      <hr>
     </div>
-  </section>
+  </div>
+</footer>

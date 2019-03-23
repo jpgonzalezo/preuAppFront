@@ -1,1 +1,121 @@
-<h1>dsa</h1>
+<section class="section ">
+    <div class="container">
+        <h2 class="display-3">Perfiles de Usuario</h2>
+        <div class="row row-grid align-items-center">
+            <div class="col-xl-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="estudiante-tab" data-toggle="tab" href="#estudiante_existente" role="tab" aria-controls="estudiante"
+                        aria-selected="false">Estudiantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profesor-tab" data-toggle="tab" href="#profesor_existente" role="tab" aria-controls="profesor"
+                        aria-selected="true">Profesores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="apoderado-tab" data-toggle="tab" href="#apoderado_existente" role="tab" aria-controls="apoderado"
+                        aria-selected="true">Apoderados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="administrador-tab" data-toggle="tab" href="#administrador_existente" role="tab" aria-controls="administrador"
+                        aria-selected="true">Administradores</a>
+                    </li>
+                </ul>
+            
+                <div class="tab-content" id="myTabContent">
+                    <!--ESTUDIANTE EXISTENTE TAB-->
+                    <div class="tab-pane fade show active" id="estudiante_existente" role="tabpanel" aria-labelledby="estudiante-tab">
+                        <div class="mb-8 ">
+                            <br>
+                            <div class="table-responsive-lg"> 
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Rut</th>
+                                        <th scope="col">Nombres</th>
+                                        <th scope="col">Apellido Paterno</th>
+                                        <th scope="col">Apellido Materno</th>
+                                        <th scope="col">Curso</th>
+                                        <th scope="col">Acción</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let alumno of alumnos_tabla">
+                                        <th scope="row"><img [src]="'https://upload.wikimedia.org/wikipedia/commons/' " class="mr-2" style="width: 20px"></th>
+                                        <td>{{ alumno.rut }}</td>
+                                        <td>{{ alumno.nombres}}</td>
+                                        <td>{{ alumno.apellido_paterno}}</td>
+                                        <td>{{ alumno.apellido_materno}}</td>
+                                        <td>{{ alumno.curso }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                            <button type="button" class="btn btn-info btn-sm"><i class="far fa-eye"></i></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-between p-2">
+                                    <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="page" [pageSize]="pageSizeAlumno">
+                                    </ngb-pagination>
+                                    
+                                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
+                                        <option [ngValue]="2">2 alumnos por página</option>
+                                        <option [ngValue]="4">4 alumnos por página</option>
+                                        <option [ngValue]="6">6 alumnos por página</option>
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-outline-primary" (click)="generarVistaNuevoPerfil('estudiante')">Nuevo Estudiante</button>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--PROFESOR EXISTENTE TAB-->
+                    <div class="tab-pane fade show" id="profesor_existente" role="tabpanel" aria-labelledby="profesor-tab">
+                        <div class="mb-8">
+                            <br>
+                            <div class="table-responsive-lg"> 
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Nombre Usuario</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Teléfono</th>
+                                            <th scope="col">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let profesor of profesores_tabla">
+                                            <th scope="row"><img [src]="'https://upload.wikimedia.org/wikipedia/commons/' " class="mr-2" style="width: 20px"></th>
+                                            <td>{{ profesor.nombre_usuario }}</td>
+                                            <td>{{ profesor.email}}</td>
+                                            <td>{{ profesor.telefono}}</td>
+                                            <td><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-between p-2">
+                                    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                                    </ngb-pagination>
+                                    
+                                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+                                        <option [ngValue]="2">2 profesores por página</option>
+                                        <option [ngValue]="4">4 profesores por página</option>
+                                        <option [ngValue]="6">6 profesores por página</option>
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-outline-primary" (click)="generarVistaNuevoPerfil()">Nuevo Profesor</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

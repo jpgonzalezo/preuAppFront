@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Config } from '../config';
 
 @Injectable()
-export class AlumnoService {
+export class EstadisticaService {
   API_URL = Config.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 

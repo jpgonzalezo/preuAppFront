@@ -16,94 +16,42 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 
 export class PerfilesComponent implements OnInit {
-  alumno_editar: Alumno;
-  profesor_editar: Profesor;
-  alumnos: Alumno[];
-  profesores: Profesor[];
+  page: number;
+  pageSizeAlumno: number;
+  collectionSizeAlumno: number;
+  pageSizeProfesor: number;
+  collectionSizeProfesor: number;
+  alumnos:any=[]
+  profesores:any=[]
 
+  @Output()
+  nuevo_perfil = new EventEmitter<any>()
 
-  registerProfesorForm: FormGroup;
-  submitted = false;
-
-
-
-  displayedColumnsAlumno: string[] = ['imagen','rut','nombres','apellido_paterno','apellido_materno','curso','telefono','puntaje_ingreso','accion'];
-  displayedColumnsProfesor: string[] = ['imagen','rut','nombres','apellido_paterno','apellido_materno','asignatura','telefono','accion']
-  displayedColumnsApoderado: string[] = ['imagen','rut','nombres', 'apellido_paterno','apellido_materno','direccion','telefono','accion']
-
-
-  profesor_perfil: Profesor;
-  alumno_perfil: Alumno;
-  apoderado_perfil: Apoderado;
-  perfil_editar: string;
-  evento:string
-  @Output() 
-  hojaVida = new EventEmitter<string>()
-
-
-  constructor(private alumnoService: AlumnoService, private formBuilder: FormBuilder) { }
-
-
-
+  constructor(private _alumnoService: AlumnoService, private formBuilder: FormBuilder) { 
+    this.page = 1;
+    this.pageSizeAlumno = 4;
+    this.pageSizeProfesor = 4;
+  }
 
   ngOnInit() {
-
     this.getAlumnos();
-    this.registerProfesorForm = this.formBuilder.group({
-      nombre_profesor:['', Validators.required],
-      apellido_paterno_profesor:['', Validators.required],
-      apellido_materno_profesor:['', Validators.required],
-      nombre_usuario_profesor:['', Validators.required],
-      direccion_profesor:['', Validators.required],
-    },
-    {
-
-    })
-  }
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
   }
 
-  public postProfesor(){
-
-    console.log(this.registerProfesorForm.value)
+  get alumnos_tabla(): any[] {
+    return this.alumnos
+      .map((alumno, i) => ({id: i + 1, ...alumno}))
+      .slice((this.page - 1) * this.pageSizeAlumno, (this.page - 1) * this.pageSizeAlumno + this.pageSizeAlumno);
   }
 
   public getAlumnos(){
-  	this.alumnoService.getAlumno().subscribe((data: Array<Alumno>) => {
+  	this._alumnoService.getAlumno().subscribe((data: Array<any>) => {
       this.alumnos = data;
-
-  	});
-  }
-  public verHojaVida(id:string):void{
-    this.evento=id
-    console.log(this.evento)
-    this.hojaVida.emit(this.evento)
+      this.collectionSizeAlumno = this.alumnos.length;
+    });
   }
 
-  public editarPerfil(tipo:string,id:number):void{
-    this.perfil_editar=tipo
-    if(tipo=="profesor"){
-      for(let profesor of PROFESOR_DATA){
-        if(profesor.id == id){
-          this.profesor_perfil=profesor;
-        }
-      }
-    }
-    if(tipo=="alumno"){
-      for(let alumno of ALUMNO_DATA){
-        if(alumno.id == id){
-          this.alumno_perfil=alumno;
-        }
-      }
-    }
-    if(tipo=="apoderado"){
-      for(let apoderado of APODERADO_DATA){
-        if(apoderado.id == id){
-          this.apoderado_perfil=apoderado;
-        }
-      }
-    }
+  public generarVistaNuevoPerfil(tipo_perfil:string){
+    this.nuevo_perfil.emit({vista : "nuevo_perfil", tipo : tipo_perfil})
   }
+
 }
