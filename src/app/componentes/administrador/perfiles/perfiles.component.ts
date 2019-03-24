@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-
 import {Alumno} from '../../../modelos/alumno.model';
 import {ALUMNO_DATA} from '../../../modelos/alumno.model';
 import {Profesor} from '../../../modelos/profesor';
@@ -8,6 +7,7 @@ import {Apoderado} from '../../../modelos/apoderado';
 import {APODERADO_DATA} from '../../../modelos/apoderado';
 import {AlumnoService} from '../../../servicios/alumno.service'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import swal from'sweetalert2';
 
 @Component({
   selector: 'app-perfiles',
@@ -48,6 +48,36 @@ export class PerfilesComponent implements OnInit {
       this.alumnos = data;
       this.collectionSizeAlumno = this.alumnos.length;
     });
+  }
+
+  public deleteAlumno(id:string){
+
+    swal.fire({
+      title: 'Desea borrar este perfil?',
+      text: "Usted no podrá revertir los cambios!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#5e72e4',
+      cancelButtonColor: '#f5365c',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.value) {
+        this._alumnoService.deleteAlumno(id).subscribe((data:any)=>{
+          if(data['Response']=='borrado'){
+            swal.fire({
+              title:'Borrado!',
+              text:'Se ha borrado registro exitosamente.',
+              type:'success'
+            }).then((result)=>{
+              if(result.value){
+                this.getAlumnos();
+              }
+            })
+          }
+        })
+      }
+    })
   }
 
   public generarVistaNuevoPerfil(tipo_perfil:string){

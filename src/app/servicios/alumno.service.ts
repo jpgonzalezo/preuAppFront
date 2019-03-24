@@ -23,5 +23,13 @@ export class AlumnoService {
       headers: headers
     }
     return this.httpClient.post(`${this.API_URL}/alumnos`, JSON.stringify(data), options).pipe(map(res => res))
-	}
+  }
+  
+  deleteAlumno(id:any){
+    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+    const options = {
+      headers:headers
+    }
+    return this.httpClient.delete(`${this.API_URL}/alumno/${id}`, options).pipe(map(res => res))
+  }
 }
