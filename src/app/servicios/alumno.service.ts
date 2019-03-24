@@ -16,4 +16,12 @@ export class AlumnoService {
   	}
     return this.httpClient.get(`${this.API_URL}/alumnos`,options).pipe(map(res => res))
 	}
+
+	postAlumno(data:any):any{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = {
+      headers: headers
+    }
+    return this.httpClient.post(`${this.API_URL}/alumnos`, JSON.stringify(data), options).pipe(map(res => res))
+	}
 }

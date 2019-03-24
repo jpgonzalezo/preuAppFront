@@ -133,18 +133,16 @@ export class NuevoPerfilComponent implements OnInit {
     const alumnoPersonal = this.formGroupDatosPersonalesEstudiante.value;
     const alumnoContacto = this.formGroupDatosContactoEstudiante.value;
     const alumnoAcademico = this.formGroupDatosAcademicosEstudiante.value;
-    console.log(alumnoPersonal);
-    console.log(alumnoContacto);
-    console.log(alumnoAcademico);
-    swal.fire({title:'Registro exitoso',
-               text:'Se registrado a un alumno exitosamente',
-               type:'success',
-               confirmButtonColor: '#5e72e4',
-               cancelButtonColor: '#d33',}).then()
-/*     this._alumnoService.postAlumno({'data_personal':alumnoPersonal,'data_academico':alumnoAcademico}).subscribe((data:any)=>{
-      if(data['Response']=='exito'){
-        swal.fire('Registro exitoso','Se registrado a un alumno exitosamente','success').then((result)=>{this.guardado_exitoso.emit("home")})
+  this._alumnoService.postAlumno({'data_personal':alumnoPersonal,
+                                  'data_academico':alumnoAcademico, 
+                                  'data_contacto':alumnoContacto}).subscribe((data:any)=>{
+    if(data['Response']=='exito'){
+        swal.fire({title:'Registro exitoso',
+        text:'Se registrado a '+ data['nombres']+" "+data['apellido_paterno']+" "+data['apellido_materno'] +' exitosamente',
+        type:'success',
+        confirmButtonColor: '#5e72e4',
+        cancelButtonColor: '#d33',}).then((result)=>{this.guardado_exitoso.emit("perfiles")})
       }
-    }) */
+    })
   }
 }
