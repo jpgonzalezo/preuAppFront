@@ -74,9 +74,11 @@
 </header>
 <main>
   <app-home *ngIf="ventanaActiva=='home'"></app-home>
-  <app-perfiles *ngIf="ventanaActiva=='perfiles'" (nuevo_perfil)="redireccionEvento($event)"></app-perfiles>
+  <app-perfiles *ngIf="ventanaActiva=='perfiles'" 
+    (nuevo_perfil)="redireccionEvento($event)"
+    (hoja_vida)="verHojaVida($event)"></app-perfiles>
   <app-nuevo-perfil *ngIf="ventanaActiva=='nuevo_perfil'" [tipo_nuevo_perfil]="tipo_nuevo_perfil" (guardado_exitoso)="cambiarVentanaActiva($event)"></app-nuevo-perfil>
-
+  <app-hoja-vida *ngIf="ventanaActiva=='hoja_vida'"></app-hoja-vida>
 </main>
 <footer class="footer has-cards">
 

@@ -129,6 +129,10 @@ export class NuevoPerfilComponent implements OnInit {
     this.curso_seleccion.setValue(id);
   }
 
+  public cancelar(){
+    this.guardado_exitoso.emit("perfiles");
+  }
+
   public guardarPerfilEstudiante(){
     const alumnoPersonal = this.formGroupDatosPersonalesEstudiante.value;
     const alumnoContacto = this.formGroupDatosContactoEstudiante.value;

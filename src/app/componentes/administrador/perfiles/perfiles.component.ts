@@ -21,11 +21,14 @@ export class PerfilesComponent implements OnInit {
   collectionSizeAlumno: number;
   pageSizeProfesor: number;
   collectionSizeProfesor: number;
-  alumnos:any=[]
-  profesores:any=[]
+  alumnos:any=[];
+  profesores:any=[];
 
   @Output()
-  nuevo_perfil = new EventEmitter<any>()
+  nuevo_perfil = new EventEmitter<any>();
+
+  @Output()
+  hoja_vida = new EventEmitter<any>();
 
   constructor(private _alumnoService: AlumnoService, private formBuilder: FormBuilder) { 
     this.page = 1;
@@ -81,7 +84,11 @@ export class PerfilesComponent implements OnInit {
   }
 
   public generarVistaNuevoPerfil(tipo_perfil:string){
-    this.nuevo_perfil.emit({vista : "nuevo_perfil", tipo : tipo_perfil})
+    this.nuevo_perfil.emit({vista : "nuevo_perfil", tipo : tipo_perfil});
+  }
+
+  generarVistaHojaVida(id:string){
+    this.hoja_vida.emit(id);
   }
 
 }

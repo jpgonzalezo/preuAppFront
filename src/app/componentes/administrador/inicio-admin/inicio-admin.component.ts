@@ -9,7 +9,8 @@ import {Location} from '@angular/common'
 })
 export class InicioAdminComponent implements OnInit {
   ventanaActiva:string;
-  public tipo_nuevo_perfil: string;
+  tipo_nuevo_perfil: string;
+  id_hoja_vida: string;
   constructor(private router:Router, private location:Location){
     this.ventanaActiva = 'home';
   }
@@ -25,6 +26,11 @@ export class InicioAdminComponent implements OnInit {
   public redireccionEvento(event:any){
     this.cambiarVentanaActiva(event.vista)
     this.tipo_nuevo_perfil = event.tipo
+  }
+
+  public verHojaVida(event:any){
+    this.cambiarVentanaActiva('hoja_vida');
+    this.id_hoja_vida = event;
   }
 
 

@@ -14768,7 +14768,7 @@ a.btn-icon-only
 
 .profile-page .card-profile
 {
-    margin-top: -150px;
+    margin-top: 0px;
 }
 .profile-page .card-profile .card-profile-image
 {
@@ -17658,7 +17658,7 @@ textarea[resize='horizontal']
 
 .section-profile-cover
 {
-    height: 580px;
+    height: 320px;
 
     background-position: center center; 
     background-size: cover;
@@ -17668,7 +17668,7 @@ textarea[resize='horizontal']
 {
     .section-profile-cover
     {
-        height: 400px;
+        height: 50px;
     }
 }
 
