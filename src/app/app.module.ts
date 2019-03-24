@@ -44,7 +44,10 @@ import { FooterComponent } from './componentes/inicio/footer/footer.component';
 import { LoginComponent } from './componentes/inicio/login/login.component';
 
 
-import {LoginService} from './servicios/login.service'
+import {LoginService} from './servicios/login.service';
+import { ColegioService } from './servicios/colegio.service';
+import { ApoderadoService} from './servicios/apoderado.service';
+import {CursoService} from './servicios/curso.service';
 import {EstadisticaService} from './servicios/estadistica.service';
 import { NuevoPerfilComponent } from './componentes/administrador/nuevo-perfil/nuevo-perfil.component'
 @NgModule({
@@ -91,7 +94,10 @@ import { NuevoPerfilComponent } from './componentes/administrador/nuevo-perfil/n
   providers: [
     AlumnoService,
     LoginService,
-    EstadisticaService
+    EstadisticaService,
+    ColegioService,
+    ApoderadoService,
+    CursoService
   ], // additional providers needed for this module
   entryComponents: [ ],
   bootstrap: [ AppComponent],

@@ -68,8 +68,7 @@
 
                   <div class="col-md-3">
                     <div class="form-group">
-                      <label for="telefono"> Sexo </label><br>
-                      <input name="sexo" formControlName="sexo" type="hidden" class="form-control" placeholder="11.111.111-1">
+                      <label for="sexo"> Sexo </label><br>
                       <div ngbDropdown class="d-inline-block">
                         <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{sexo_dropdown}}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -123,39 +122,55 @@
               <form [formGroup]="formGroupDatosAcademicosEstudiante">
                 <div class="table-responsive-lg"> 
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label for="nombre_usuario"> Colegio</label> <br>
                         <div ngbDropdown class="d-inline-block"> 
-                          <button class="btn btn-outline-primary" id="dropdownColegioEstudiante" ngbDropdownToggle>{{sexo_dropdown}}</button>
+                          <button class="btn btn-outline-primary" id="dropdownColegioEstudiante" ngbDropdownToggle>{{colegio_dropdown}}</button>
                           <div ngbDropdownMenu aria-labelledby="dropdownColegioEstudiante">
-                            <button ngbDropdownItem (click)="cambiarColegio('MASCULINO')">Masculino</button>
-                            <button ngbDropdownItem (click)="cambiarSexo('FEMENINO')">Femenino</button>
-                            <button ngbDropdownItem (click)="cambiarSexo('NO DEFINIDO')">No Definido</button>
+                            <button ngbDropdownItem (click)="cambiarColegio('Seleccione colegio','')">Ningún colegio</button>
+                            <div class="dropdown-divider"></div>
+                            <button *ngFor="let colegio of colegios" ngbDropdownItem (click)="cambiarColegio(colegio.nombre,colegio.id)">{{colegio.nombre}}</button>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <label for="password"> Apoderado</label>
-                        <input name="password" formControlName="password" type="password" class="form-control" placeholder="********">
+                        <label for="apoderado"> Apoderado </label><br>
+                        <div ngbDropdown class="d-inline-block"> 
+                          <button class="btn btn-outline-primary" id="dropdownApoderadoEstudiante" ngbDropdownToggle>{{apoderado_dropdown}}</button>
+                          <div ngbDropdownMenu aria-labelledby="dropdownApoderadoEstudiante">
+                            <button ngbDropdownItem (click)="cambiarApoderado('Seleccione colegio','')">Ningún apoderado</button>
+                            <div class="dropdown-divider"></div>
+                            <button *ngFor="let apoderado of apoderados" ngbDropdownItem (click)="cambiarApoderado(apoderado.nombres,apoderado.id)">{{apoderado.nombres}}</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="curso"> Curso </label><br>
+                        <div ngbDropdown class="d-inline-block"> 
+                          <button class="btn btn-outline-primary" id="dropdownCursoEstudiante" ngbDropdownToggle>{{curso_dropdown}}</button>
+                          <div ngbDropdownMenu aria-labelledby="dropdownCursoEstudiante">
+                            <button ngbDropdownItem (click)="cambiarCurso('Seleccione curso','')">Ningún curso</button>
+                            <div class="dropdown-divider"></div>
+                            <button *ngFor="let curso of cursos" ngbDropdownItem (click)="cambiarCurso(curso.nombre,curso.id)">{{curso.nombre}}</button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <label for="matricula"> Puntaje de Ingreso </label>
-                        <input name="matricula" formControlName="matricula" type="text" class="form-control" placeholder="Matricula">
+                        <label for="puntaje_ingreso"> Puntaje de Ingreso </label>
+                        <input name="puntaje_ingreso" formControlName="puntaje_ingreso" type="text" class="form-control" placeholder="Puntaje ingreso">
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="matricula"> Curso </label>
-                        <input name="matricula" formControlName="matricula" type="text" class="form-control" placeholder="Matricula">
-                      </div>
-                    </div>
+                    <div class="col-md-4"></div>
                   </div>
                 </div>
               </form>
