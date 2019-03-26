@@ -47,6 +47,7 @@ import { LoginComponent } from './componentes/inicio/login/login.component';
 import {LoginService} from './servicios/login.service';
 import { ColegioService } from './servicios/colegio.service';
 import { ApoderadoService} from './servicios/apoderado.service';
+import { ObservacionService } from './servicios/observacion.service'
 import {CursoService} from './servicios/curso.service';
 import {EstadisticaService} from './servicios/estadistica.service';
 import { NuevoPerfilComponent } from './componentes/administrador/nuevo-perfil/nuevo-perfil.component'
@@ -102,7 +103,8 @@ import { FullCalendarDirective } from './componentes/administrador/calendario/ca
     EstadisticaService,
     ColegioService,
     ApoderadoService,
-    CursoService
+    CursoService,
+    ObservacionService
   ], // additional providers needed for this module
   entryComponents: [ ],
   bootstrap: [ AppComponent],

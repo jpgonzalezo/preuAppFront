@@ -32,4 +32,12 @@ export class AlumnoService {
     }
     return this.httpClient.delete(`${this.API_URL}/alumno/${id}`, options).pipe(map(res => res))
   }
+
+  getHojaVida(id:any){
+    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+    const options = {
+      headers:headers
+    }
+    return this.httpClient.get(`${this.API_URL}/hoja_vida/${id}`,options).pipe(map(res => res))
+  }
 }

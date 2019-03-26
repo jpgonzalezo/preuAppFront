@@ -1,10 +1,4 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import {Alumno} from '../../../modelos/alumno.model';
-import {ALUMNO_DATA} from '../../../modelos/alumno.model';
-import {Profesor} from '../../../modelos/profesor';
-import {PROFESOR_DATA} from '../../../modelos/profesor';
-import {Apoderado} from '../../../modelos/apoderado';
-import {APODERADO_DATA} from '../../../modelos/apoderado';
 import {AlumnoService} from '../../../servicios/alumno.service'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import swal from'sweetalert2';

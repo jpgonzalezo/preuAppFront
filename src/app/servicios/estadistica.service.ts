@@ -14,6 +14,6 @@ export class EstadisticaService {
   	const options = {
   		headers: headers
   	}
-    return this.httpClient.get(`${this.API_URL}/resumen`,options).pipe(map(res => res))
+    return this.httpClient.get(`${this.API_URL}/alumnos`,options).pipe(map(res => res))
 	}
 }

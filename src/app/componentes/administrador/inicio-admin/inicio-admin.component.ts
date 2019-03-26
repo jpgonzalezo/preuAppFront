@@ -16,7 +16,6 @@ export class InicioAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   public cambiarVentanaActiva(opcion:string){
