@@ -52,7 +52,6 @@ import {CursoService} from './servicios/curso.service';
 import {EstadisticaService} from './servicios/estadistica.service';
 import { NuevoPerfilComponent } from './componentes/administrador/nuevo-perfil/nuevo-perfil.component'
 
-import { FullCalendarDirective } from './componentes/administrador/calendario/calendario.component'
 
 @NgModule({
   declarations: [
@@ -74,7 +73,6 @@ import { FullCalendarDirective } from './componentes/administrador/calendario/ca
     HojaVidaComponent,
     LoginComponent,
     NuevoPerfilComponent,
-    FullCalendarDirective,
 
   ], // directives, components, and pipes owned by this NgModule
   imports: [

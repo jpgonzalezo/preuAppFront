@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {EstadisticaService} from '../../../servicios/estadistica.service';
-import {FullCalendarDirective} from '../calendario/calendario.component';
 
 @Component({
   selector: 'app-home',
