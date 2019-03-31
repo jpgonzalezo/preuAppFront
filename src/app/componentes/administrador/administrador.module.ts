@@ -13,16 +13,19 @@ registerLocaleData(localeEs);
 
 
 //COMPONENTES
-import { InicioAdminComponent } from './inicio-admin/inicio-admin.component';
+import { HomeComponent } from './home/home.component';
 import { PerfilesComponent } from './perfiles/perfiles.component';
 import { HojaVidaComponent } from './hoja-vida/hoja-vida.component';
 import { NuevoPerfilComponent } from './nuevo-perfil/nuevo-perfil.component';
+import { HeadersComponent } from './headers/headers.component';
+import { FooterComponent } from './footer/footer.component';
 //SERVICIOS
 import { EstadisticaService } from 'src/app/servicios/estadistica.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
+
 const routes: Routes = [
-    { path: '', component: InicioAdminComponent },
+    { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent}
 ];
 
@@ -40,8 +43,10 @@ const routes: Routes = [
         NgbModule
     ],
     declarations: [
-        InicioAdminComponent,
-        PerfilesComponent],
+        HomeComponent,
+        PerfilesComponent,
+        HeadersComponent,
+        FooterComponent],
     exports: [
         RouterModule
     ],
