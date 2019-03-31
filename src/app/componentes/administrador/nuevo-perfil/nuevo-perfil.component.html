@@ -45,28 +45,21 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="rut"> Rut </label>
                       <input name="rut" formControlName="rut" type="text" class="form-control" placeholder="11.111.111-1">
                     </div>
                   </div>
 
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="nomre_usuario"> Nombre Usuario </label>
                       <input name="nombre_usuario" formControlName="nombre_usuario" type="text" class="form-control" placeholder="Nombre usuario">
                     </div>
                   </div>
 
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label for="password"> Password </label>
-                      <input name="password" formControlName="password" type="password" class="form-control" placeholder="**********">
-                    </div>
-                  </div>
-
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="sexo"> Sexo </label><br>
                       <div ngbDropdown class="d-inline-block">
@@ -151,19 +144,6 @@
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="apoderado"> Apoderado </label><br>
-                        <div ngbDropdown class="d-inline-block"> 
-                          <button class="btn btn-outline-primary" id="dropdownApoderadoEstudiante" ngbDropdownToggle>{{apoderado_dropdown}}</button>
-                          <div ngbDropdownMenu aria-labelledby="dropdownApoderadoEstudiante">
-                            <button ngbDropdownItem (click)="cambiarApoderado('Seleccione colegio','')">Ningún apoderado</button>
-                            <div class="dropdown-divider"></div>
-                            <button *ngFor="let apoderado of apoderados" ngbDropdownItem (click)="cambiarApoderado(apoderado.nombres,apoderado.id)">{{apoderado.nombres}}</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
                         <label for="curso"> Curso </label><br>
                         <div ngbDropdown class="d-inline-block"> 
                           <button class="btn btn-outline-primary" id="dropdownCursoEstudiante" ngbDropdownToggle>{{curso_dropdown}}</button>
@@ -175,16 +155,12 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4"></div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label for="puntaje_ingreso"> Puntaje de Ingreso </label>
                         <input name="puntaje_ingreso" formControlName="puntaje_ingreso" type="text" class="form-control" placeholder="Puntaje ingreso">
                       </div>
                     </div>
-                    <div class="col-md-4"></div>
                   </div>
                 </div>
               </form>
@@ -195,7 +171,7 @@
               <div class="text-center">
                 <hr>
                 <button type="button" class="btn btn-outline-danger" (click)="cancelar()">Cancelar</button>
-                <button type="button" class="btn btn-outline-primary" (click)="guardarPerfilEstudiante()">Guardar</button>
+                <button [disabled]="formGroupDatosAcademicosEstudiante.invalid" type="button" class="btn btn-outline-primary" (click)="guardarPerfilEstudiante()">Guardar</button>
               </div>
           </div>
       </div>

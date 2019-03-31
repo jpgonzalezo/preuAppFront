@@ -8,11 +8,19 @@ export class CursoService {
   API_URL = Config.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 
-  getCursos():any{
+  getCursos(){
   	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   	const options = {
   		headers: headers
   	}
     return this.httpClient.get(`${this.API_URL}/cursos`,options).pipe(map(res => res))
+	}
+
+	getCurso(id:string){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/cursos/${id}`,options).pipe(map(res => res))
 	}
 }

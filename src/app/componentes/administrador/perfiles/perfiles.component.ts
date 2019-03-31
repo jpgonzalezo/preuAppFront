@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import {AlumnoService} from '../../../servicios/alumno.service'
+import {AlumnoService} from 'src/app/servicios/alumno.service';
+import { CursoService } from 'src/app/servicios/curso.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import swal from'sweetalert2';
 
@@ -15,7 +16,7 @@ export class PerfilesComponent implements OnInit {
   collectionSizeAlumno: number;
   pageSizeProfesor: number;
   collectionSizeProfesor: number;
-  alumnos:any=[];
+  alumnos:any;
   profesores:any=[];
 
   @Output()
@@ -24,10 +25,13 @@ export class PerfilesComponent implements OnInit {
   @Output()
   hoja_vida = new EventEmitter<any>();
 
-  constructor(private _alumnoService: AlumnoService, private formBuilder: FormBuilder) { 
+  constructor(private _alumnoService: AlumnoService, 
+              private formBuilder: FormBuilder,
+              private _cursoService: CursoService) { 
     this.page = 1;
     this.pageSizeAlumno = 4;
     this.pageSizeProfesor = 4;
+    this.alumnos=[];
   }
 
   ngOnInit() {
@@ -41,9 +45,16 @@ export class PerfilesComponent implements OnInit {
   }
 
   public getAlumnos(){
-  	this._alumnoService.getAlumno().subscribe((data: Array<any>) => {
+  	this._alumnoService.getAlumno().subscribe((data:any) => {
       this.alumnos = data;
       this.collectionSizeAlumno = this.alumnos.length;
+      for(let alumno of this.alumnos){
+        if(alumno.curso != null){
+          this._cursoService.getCurso(alumno.curso).subscribe((curso:any)=>{
+            alumno.curso = curso.nombre;
+          })
+        }
+      } 
     });
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit,Output, EventEmitter,Input} from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { AlumnoService } from '../../../servicios/alumno.service';
 import { ColegioService} from '../../../servicios/colegio.service';
 import { ApoderadoService} from '../../../servicios/apoderado.service';
@@ -19,8 +19,6 @@ export class NuevoPerfilComponent implements OnInit {
   sexo_dropdown:string;
   colegio_seleccion:FormControl;
   colegio_dropdown:string;
-  apoderado_seleccion:FormControl;
-  apoderado_dropdown:string;
   curso_seleccion:FormControl;
   curso_dropdown:string;
   formGroupDatosPersonalesEstudiante: FormGroup;
@@ -38,10 +36,8 @@ export class NuevoPerfilComponent implements OnInit {
     private _cursoService: CursoService) { 
     this.sexo_dropdown = "Seleccione sexo";
     this.colegio_dropdown = "Seleccione colegio";
-    this.sexo_seleccion = new FormControl('NO DEFINIDO');
+    this.sexo_seleccion = new FormControl("");
     this.colegio_seleccion = new FormControl("");
-    this.apoderado_dropdown = "Seleccione apoderado";
-    this.apoderado_seleccion = new FormControl("");
     this.curso_dropdown = "Seleccione curso";
     this.curso_seleccion = new FormControl("");
     this.colegios=[];
@@ -67,7 +63,6 @@ export class NuevoPerfilComponent implements OnInit {
       telefono:[''],
       rut:[''],
       nombre_usuario:[''],
-      password:[''],
       sexo: this.sexo_seleccion
     });
   }
@@ -85,10 +80,18 @@ export class NuevoPerfilComponent implements OnInit {
   private builFormAcademicoEstudiante(){
     this.formGroupDatosAcademicosEstudiante = this.formBuilderAcademicoEstudiante.group({
       colegio: this.colegio_seleccion,
-      apoderado: this.apoderado_seleccion,
       curso:this.curso_seleccion,
       puntaje_ingreso:[''],
     })
+  }
+
+  private validateColegio(control: AbstractControl) {
+    const colegio = control.value;
+    let error = null;
+    if(colegio.value ==""){
+      error = {"error":"no se ha seleccionado sexo"}
+    }
+    return error;
   }
 
   public getColegios(){
@@ -119,11 +122,6 @@ export class NuevoPerfilComponent implements OnInit {
     this.colegio_seleccion.setValue(id);
   }
 
-  public cambiarApoderado(opcion:string, id:string){
-    this.apoderado_dropdown = opcion;
-    this.apoderado_seleccion.setValue(id);
-  }
-
   public cambiarCurso(opcion:string, id:string){
     this.curso_dropdown = opcion;
     this.curso_seleccion.setValue(id);
@@ -137,16 +135,41 @@ export class NuevoPerfilComponent implements OnInit {
     const alumnoPersonal = this.formGroupDatosPersonalesEstudiante.value;
     const alumnoContacto = this.formGroupDatosContactoEstudiante.value;
     const alumnoAcademico = this.formGroupDatosAcademicosEstudiante.value;
-  this._alumnoService.postAlumno({'data_personal':alumnoPersonal,
-                                  'data_academico':alumnoAcademico, 
-                                  'data_contacto':alumnoContacto}).subscribe((data:any)=>{
-    if(data['Response']=='exito'){
-        swal.fire({title:'Registro exitoso',
-        text:'Se registrado a '+ data['nombres']+" "+data['apellido_paterno']+" "+data['apellido_materno'] +' exitosamente',
-        type:'success',
-        confirmButtonColor: '#5e72e4',
-        cancelButtonColor: '#d33',}).then((result)=>{this.guardado_exitoso.emit("perfiles")})
-      }
-    })
+    var sexo_error=false
+    var colegio_error=false
+    var curso_error=false
+    var mensaje = "Debe seleccionar: "
+    if(alumnoAcademico["colegio"]==""){
+      colegio_error=true
+      mensaje = mensaje + "colegio "
+    }
+    if(alumnoAcademico["curso"]==""){
+      curso_error=true
+      mensaje = mensaje + "curso "
+    }
+    if(alumnoPersonal["sexo"]==""){
+      sexo_error=true
+      mensaje = mensaje + "sexo "
+    }
+    if(colegio_error || sexo_error || curso_error){
+      swal.fire({
+        title: "Error nuevo perfil",
+        text: mensaje,
+        type: 'error'
+      })
+    }
+    else{
+      this._alumnoService.postAlumno({'data_personal':alumnoPersonal,
+        'data_academico':alumnoAcademico, 
+        'data_contacto':alumnoContacto}).subscribe((data:any)=>{
+        if(data['Response']=='exito'){
+          swal.fire({title:'Registro exitoso',
+                     text:'Se registrado a '+ data['nombres']+" "+data['apellido_paterno']+" "+data['apellido_materno'] +' exitosamente',
+                     type:'success',
+                     confirmButtonColor: '#5e72e4',
+                     cancelButtonColor: '#d33',}).then((result)=>{this.guardado_exitoso.emit("perfiles")})
+        }
+      }) 
+    }
   }
 }
