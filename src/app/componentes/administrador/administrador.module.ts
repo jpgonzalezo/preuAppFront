@@ -20,13 +20,19 @@ import { NuevoPerfilComponent } from './nuevo-perfil/nuevo-perfil.component';
 import { HeadersComponent } from './headers/headers.component';
 import { FooterComponent } from './footer/footer.component';
 //SERVICIOS
+import { AdministradorCompartidoService } from './administrador.compartido.service';
 import { EstadisticaService } from 'src/app/servicios/estadistica.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
+import { ObservacionService } from 'src/app/servicios/observacion.service';
+import { ColegioService } from 'src/app/servicios/colegio.service';
+import { ApoderadoService } from 'src/app/servicios/apoderado.service';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'perfiles', component: PerfilesComponent}
+    { path: 'perfiles', component: PerfilesComponent},
+    { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
+    { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
 ];
 
 @NgModule({
@@ -46,14 +52,21 @@ const routes: Routes = [
         HomeComponent,
         PerfilesComponent,
         HeadersComponent,
-        FooterComponent],
+        FooterComponent,
+        HojaVidaComponent,
+        NuevoPerfilComponent
+    ],
     exports: [
         RouterModule
     ],
     providers:[
+        AdministradorCompartidoService,
         EstadisticaService,
         CursoService,
-        AlumnoService
+        AlumnoService,
+        ObservacionService,
+        ColegioService,
+        ApoderadoService
     ]
 })
 export class AdministradorModule { }

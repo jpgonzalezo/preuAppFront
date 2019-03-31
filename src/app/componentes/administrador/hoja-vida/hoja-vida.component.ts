@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import {AlumnoService} from '../../../servicios/alumno.service';
-import {ObservacionService} from '../../../servicios/observacion.service';
+import { AlumnoService } from '../../../servicios/alumno.service';
+import { ObservacionService } from '../../../servicios/observacion.service';
+import { AdministradorCompartidoService } from '../administrador.compartido.service';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router'
 import swal from'sweetalert2';
 @Component({
   selector: 'app-hoja-vida',
@@ -21,13 +24,14 @@ export class HojaVidaComponent implements OnInit {
   observaciones_profe:any
   observaciones_psico:any
   hoja_vida:any;
-
-  @Input()
   id_hoja_vida:string;
-  @Output()
-  guardado_exitoso = new EventEmitter<any>()
-  
-  constructor(private _alumnoService:AlumnoService, private _observacionService: ObservacionService) {
+
+  constructor(private _alumnoService:AlumnoService, 
+    private _observacionService: ObservacionService,
+    private _administradorCompartidoService: AdministradorCompartidoService,
+    private router: Router,
+    private _activatedRoute: ActivatedRoute
+    ) {
     this.hoja_vida=[]
     this.observaciones_admin = []
     this.observaciones_profe = []
@@ -41,6 +45,7 @@ export class HojaVidaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.id_hoja_vida=this._activatedRoute.snapshot.paramMap.get('id')
     this.getHojaVida(this.id_hoja_vida);
     this.getObservacionesAdministrador()
     this.getObservacionesProfesor()
@@ -96,7 +101,7 @@ export class HojaVidaComponent implements OnInit {
   }
 
   public cancelar(){
-    this.guardado_exitoso.emit("perfiles");
+    this.router.navigateByUrl('/admin/perfiles');
   }
 
   public modalNuevaObservacion(){
@@ -155,7 +160,9 @@ export class HojaVidaComponent implements OnInit {
                 type: 'success'
               }).then((result)=>{
                 if(result){
-                  this.getObservacionesAdministrador()
+                  this.getObservacionesAdministrador();
+                  this.getObservacionesProfesor();
+                  this.getObservacionesPsicologo();
                 }
               })
             }

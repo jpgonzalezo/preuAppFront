@@ -1,9 +1,10 @@
-import { Component, OnInit,Output, EventEmitter,Input} from '@angular/core';
+import { Component, OnInit,Output, EventEmitter} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { AlumnoService } from '../../../servicios/alumno.service';
 import { ColegioService} from '../../../servicios/colegio.service';
 import { ApoderadoService} from '../../../servicios/apoderado.service';
 import { CursoService } from '../../../servicios/curso.service';
+import { ActivatedRoute, Router } from '@angular/router'
 import swal from'sweetalert2';
 
 @Component({
@@ -24,7 +25,7 @@ export class NuevoPerfilComponent implements OnInit {
   formGroupDatosPersonalesEstudiante: FormGroup;
   formGroupDatosAcademicosEstudiante: FormGroup;
   formGroupDatosContactoEstudiante: FormGroup;
-  @Input() tipo_nuevo_perfil:string;
+  tipo_nuevo_perfil:string;
   @Output()
   guardado_exitoso = new EventEmitter<any>()
   constructor(private formBuilderDatosEstudiante: FormBuilder, 
@@ -33,7 +34,10 @@ export class NuevoPerfilComponent implements OnInit {
     private _alumnoService: AlumnoService,
     private _colegioService: ColegioService,
     private _apoderadoService: ApoderadoService,
-    private _cursoService: CursoService) { 
+    private _cursoService: CursoService,
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router) 
+    { 
     this.sexo_dropdown = "Seleccione sexo";
     this.colegio_dropdown = "Seleccione colegio";
     this.sexo_seleccion = new FormControl("");
@@ -46,6 +50,7 @@ export class NuevoPerfilComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tipo_nuevo_perfil = this._activatedRoute.snapshot.paramMap.get('tipo_perfil')
     this.getCursos();
     this.getColegios();
     this.getApoderado();
@@ -128,7 +133,7 @@ export class NuevoPerfilComponent implements OnInit {
   }
 
   public cancelar(){
-    this.guardado_exitoso.emit("perfiles");
+    this._router.navigateByUrl('/admin/perfiles');
   }
 
   public guardarPerfilEstudiante(){
@@ -167,7 +172,7 @@ export class NuevoPerfilComponent implements OnInit {
                      text:'Se registrado a '+ data['nombres']+" "+data['apellido_paterno']+" "+data['apellido_materno'] +' exitosamente',
                      type:'success',
                      confirmButtonColor: '#5e72e4',
-                     cancelButtonColor: '#d33',}).then((result)=>{this.guardado_exitoso.emit("perfiles")})
+                     cancelButtonColor: '#d33',}).then((result)=>{this._router.navigateByUrl('/admin/perfiles')})
         }
       }) 
     }

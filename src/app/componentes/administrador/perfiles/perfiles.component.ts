@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import {AlumnoService} from 'src/app/servicios/alumno.service';
 import { CursoService } from 'src/app/servicios/curso.service';
+import { AdministradorCompartidoService } from 'src/app/componentes/administrador/administrador.compartido.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import swal from'sweetalert2';
 
 @Component({
@@ -19,15 +21,11 @@ export class PerfilesComponent implements OnInit {
   alumnos:any;
   profesores:any=[];
 
-  @Output()
-  nuevo_perfil = new EventEmitter<any>();
-
-  @Output()
-  hoja_vida = new EventEmitter<any>();
-
   constructor(private _alumnoService: AlumnoService, 
               private formBuilder: FormBuilder,
-              private _cursoService: CursoService) { 
+              private _cursoService: CursoService,
+              private _administradorCompartidoService: AdministradorCompartidoService,
+              private router: Router) { 
     this.page = 1;
     this.pageSizeAlumno = 4;
     this.pageSizeProfesor = 4;
@@ -89,11 +87,11 @@ export class PerfilesComponent implements OnInit {
   }
 
   public generarVistaNuevoPerfil(tipo_perfil:string){
-    this.nuevo_perfil.emit({vista : "nuevo_perfil", tipo : tipo_perfil});
+    this.router.navigateByUrl('/admin/perfiles/nuevo_perfil/'+tipo_perfil);
   }
 
   generarVistaHojaVida(id:string){
-    this.hoja_vida.emit(id);
+    this.router.navigateByUrl('/admin/perfiles/hoja_vida/'+id);
   }
 
 }
