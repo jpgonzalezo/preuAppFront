@@ -16,7 +16,7 @@
 
 */
 
-#section_login{
+.section_login{
     background-image: url("../img/gallery/banner-bg.jpg");
     -webkit-background-size: cover;
     -moz-background-size: cover;

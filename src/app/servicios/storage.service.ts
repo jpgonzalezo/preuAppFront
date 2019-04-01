@@ -33,7 +33,13 @@ export class StorageService {
   };
 
   isAuthenticatedAdmin(): boolean{
-    return (this.getCurrentToken() == 'ADMINISTRADOR') ? true : false;
+    console.log(this.getCurrentToken())
+    if (this.getCurrentToken() == 'ADMINISTRADOR') {
+      return true
+    }
+    else{
+      return false
+    }
   }
   getCurrentToken(): string {
     var session = this.getCurrentSession();
