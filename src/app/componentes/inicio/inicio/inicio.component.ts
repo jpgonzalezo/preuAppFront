@@ -68,7 +68,13 @@ export class InicioComponent implements OnInit {
           })
         }
       },
-      (error) =>{console.log("error")}
+      (error) =>{
+        swal.fire({
+          title : 'Error Login',
+          text: 'Verifique sus credenciales',
+          type: 'error'
+        })
+      }
       )
     }
   }
