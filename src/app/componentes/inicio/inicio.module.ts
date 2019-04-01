@@ -14,7 +14,6 @@ registerLocaleData(localeEs);
 
 //COMPONENTES
 import { InicioComponent } from './inicio/inicio.component';
-import { FooterComponent } from './footer/footer.component';
 //SERVICIOS
 //import { LoginService } from 'src/app/servicios/login.service';
 const routes: Routes = [
