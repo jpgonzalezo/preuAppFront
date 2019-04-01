@@ -19,6 +19,10 @@ import { HojaVidaComponent } from './hoja-vida/hoja-vida.component';
 import { NuevoPerfilComponent } from './nuevo-perfil/nuevo-perfil.component';
 import { HeadersComponent } from './headers/headers.component';
 import { FooterComponent } from './footer/footer.component';
+import { AsistenciaComponent } from './asistencia/asistencia.component';
+import { CursoComponent } from './curso/curso.component';
+import { EstadisticaComponent } from './estadistica/estadistica.component';
+import { PuntajeComponent } from './puntaje/puntaje.component';
 //SERVICIOS
 import { AdministradorCompartidoService } from './administrador.compartido.service';
 import { EstadisticaService } from 'src/app/servicios/estadistica.service';
@@ -54,7 +58,11 @@ const routes: Routes = [
         HeadersComponent,
         FooterComponent,
         HojaVidaComponent,
-        NuevoPerfilComponent
+        NuevoPerfilComponent,
+        AsistenciaComponent,
+        CursoComponent,
+        EstadisticaComponent,
+        PuntajeComponent
     ],
     exports: [
         RouterModule
