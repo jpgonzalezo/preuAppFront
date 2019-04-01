@@ -1,14 +1,22 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from "@angular/core";
+import {Http, Response} from "@angular/http";
+import {Observable} from "rxjs";
+import {Session} from "../modelos/session.model";
+import { map } from 'rxjs/operators';
 import { Config } from '../config';
-
 @Injectable()
 export class LoginService {
-    API_URL = Config.API_SERVER_URL;
-    constructor(private http: HttpClient) {
+    constructor(private http: Http) {}
+    private basePath = Config.API_SERVER_URL;
+    login(loginObj: any): Observable<Session> {
+        return this.http.post(this.basePath + '/login', loginObj).pipe(map(this.extractData));
     }
-
-    login(data) {
-        return this.http.post(`${this.API_URL}/login`, JSON.stringify(data));
+    logout(): Observable<Boolean> {
+    return this.http.post(this.basePath + '/logout', {}).pipe(map(this.extractData));
+    }
+    
+    private extractData(res: Response) {
+        let body = res.json();
+        return body;
     }
 }
