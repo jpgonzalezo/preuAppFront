@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {EstadisticaService} from '../../../servicios/estadistica.service';
+import { EstadisticaService } from 'src/app/servicios/estadistica.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -7,15 +8,20 @@ import {EstadisticaService} from '../../../servicios/estadistica.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  usuario: any
   public data:any=[]
   public barChartData:any[] = [
     {data: [100,0,0,100,0,0,0,0,0,0,0,0], label: 'asignatura1'}
   ];
-  constructor(public _estadisticaService: EstadisticaService) {
+  constructor(private _estadisticaService: EstadisticaService,
+              private _storageService: StorageService
+  ) {
   }
 
   ngOnInit() {
     this.get_estadistica()
+    this.usuario = this._storageService.getCurrentUser()
+    console.log(this.usuario)
   }
 
   get_estadistica(){
@@ -23,7 +29,6 @@ export class HomeComponent implements OnInit {
       this.data = data)
     );
   }
-
 
   public barChartOptions:any = {
     scaleShowVerticalLines: true,
