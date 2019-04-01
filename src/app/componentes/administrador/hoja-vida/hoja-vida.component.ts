@@ -3,7 +3,8 @@ import { AlumnoService } from '../../../servicios/alumno.service';
 import { ObservacionService } from '../../../servicios/observacion.service';
 import { AdministradorCompartidoService } from '../administrador.compartido.service';
 import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute } from '@angular/router';
+import { StorageService } from 'src/app/servicios/storage.service';
 import swal from'sweetalert2';
 @Component({
   selector: 'app-hoja-vida',
@@ -30,7 +31,8 @@ export class HojaVidaComponent implements OnInit {
     private _observacionService: ObservacionService,
     private _administradorCompartidoService: AdministradorCompartidoService,
     private router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _storageService: StorageService
     ) {
     this.hoja_vida=[]
     this.observaciones_admin = []
@@ -145,12 +147,14 @@ export class HojaVidaComponent implements OnInit {
           })
         }
         else{
+          this._storageService.getCurrentUser().nombres
+          var usuario = this._storageService.getCurrentUser().nombres+" "+this._storageService.getCurrentUser().apellido_paterno+" "+this._storageService.getCurrentUser().apellido_materno
           this._observacionService.postObservacion(
             { 'alumno': this.id_hoja_vida,
               'tipo':result.value[0],
               'titulo':result.value[1],
-              'contenido':result.value[2], 
-              'nombre_personal': 'Carolina Pavez'
+              'contenido':result.value[2],
+              'nombre_personal': usuario
             }
           ).subscribe((data:any)=>{
             if(data['Response']=='exito'){
