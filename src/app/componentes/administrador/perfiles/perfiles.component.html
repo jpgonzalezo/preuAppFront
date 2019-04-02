@@ -60,7 +60,7 @@
                                         </tbody>
                                     </table>
                                     <div class="d-flex justify-content-between p-2">
-                                        <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="page" [pageSize]="pageSizeAlumno">
+                                        <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="pageAlumno" [pageSize]="pageSizeAlumno">
                                         </ngb-pagination>
                                         
                                         <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
@@ -81,41 +81,51 @@
                         <div class="tab-pane fade show" id="profesor_existente" role="tabpanel" aria-labelledby="profesor-tab">
                             <div class="mb-8">
                                 <br>
-    <!--                             <div class="table-responsive-lg"> 
+                                <div class="table-responsive-lg"> 
                                     <table class="table table-striped">
                                         <thead>
-                                            <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col">Nombre Usuario</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Teléfono</th>
-                                                <th scope="col">Acción</th>
-                                            </tr>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Rut</th>
+                                            <th scope="col">Nombres</th>
+                                            <th scope="col">Apellido Paterno</th>
+                                            <th scope="col">Apellido Materno</th>
+                                            <th scope="col">Asignatura</th>
+                                            <th scope="col">Acción</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let profesor of profesores_tabla">
-                                                <th scope="row"><img [src]="'https://upload.wikimedia.org/wikipedia/commons/' " class="mr-2" style="width: 20px"></th>
-                                                <td>{{ profesor.nombre_usuario }}</td>
-                                                <td>{{ profesor.email}}</td>
-                                                <td>{{ profesor.telefono}}</td>
-                                                <td><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></td>
-                                            </tr>
+                                        <tr *ngFor="let profesor of profesores_tabla">
+                                            <th scope="row">
+                                                <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' " class="mr-2" style="width: 20px"> -->
+                                            </th>
+                                            <td>{{ profesor.rut }}</td>
+                                            <td>{{ profesor.nombres}}</td>
+                                            <td>{{ profesor.apellido_paterno}}</td>
+                                            <td>{{ profesor.apellido_materno}}</td>
+                                            <td>{{ profesor.asignatura }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfesor(profesor.id)"><i class="fas fa-trash-alt"></i></button>
+                                                <button type="button" class="btn btn-info btn-sm"><i class="far fa-eye"></i></button>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                     <div class="d-flex justify-content-between p-2">
-                                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                                        <ngb-pagination [collectionSize]="collectionSizeProfesor" [(page)]="pageProfesor" [pageSize]="pageSizeProfesor">
                                         </ngb-pagination>
                                         
-                                        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+                                        <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeProfesor">
                                             <option [ngValue]="2">2 profesores por página</option>
                                             <option [ngValue]="4">4 profesores por página</option>
                                             <option [ngValue]="6">6 profesores por página</option>
                                         </select>
                                     </div>
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-outline-primary" (click)="generarVistaNuevoPerfil()">Nuevo Profesor</button>
+                                        <button type="button" class="btn btn-outline-primary">Nuevo Profesor</button>
+                                        <br>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                     </div>
