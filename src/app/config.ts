@@ -1,3 +1,3 @@
 export const Config = {
-    API_SERVER_URL: 'http://preu-api.nice.cl'
+    API_SERVER_URL: 'http://localhost:5000'
 }
