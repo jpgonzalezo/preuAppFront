@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/servicios/storage.service';
 import swal from'sweetalert2';
+import { Config } from 'src/app/config';
 @Component({
   selector: 'app-hoja-vida',
   templateUrl: './hoja-vida.component.html',
@@ -56,6 +57,7 @@ export class HojaVidaComponent implements OnInit {
   public getHojaVida(id:string){
   	this._alumnoService.getHojaVida(id).subscribe((data: Array<any>) => {
       this.hoja_vida = data;
+      this.hoja_vida.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+this.hoja_vida.imagen
     });
   }
 

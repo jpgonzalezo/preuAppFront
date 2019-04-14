@@ -31,12 +31,14 @@ import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { ObservacionService } from 'src/app/servicios/observacion.service';
 import { ColegioService } from 'src/app/servicios/colegio.service';
 import { ApoderadoService } from 'src/app/servicios/apoderado.service';
+import { ColegioComponent } from './colegio/colegio.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
     { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
+    { path: 'colegios', component: ColegioComponent}
 ];
 
 @NgModule({
@@ -62,7 +64,8 @@ const routes: Routes = [
         AsistenciaComponent,
         CursoComponent,
         EstadisticaComponent,
-        PuntajeComponent
+        PuntajeComponent,
+        ColegioComponent
     ],
     exports: [
         RouterModule

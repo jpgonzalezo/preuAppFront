@@ -15,4 +15,22 @@ export class ColegioService {
   	}
     return this.httpClient.get(`${this.API_URL}/colegios`,options).pipe(map(res => res))
 	}
+
+	deleteColegio(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.delete(`${this.API_URL}/colegios/${id}`,options).pipe(map(res => res))
+	}
+
+	postColegio(data:any){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = {
+      headers: headers
+    }
+    return this.httpClient.post(`${this.API_URL}/colegios`, JSON.stringify(data), options).pipe(map(res => res))
+  }
+
+
 }

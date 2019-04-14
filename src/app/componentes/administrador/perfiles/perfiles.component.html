@@ -45,13 +45,13 @@
                                         <tbody>
                                         <tr *ngFor="let alumno of alumnos_tabla">
                                             <th scope="row">
-                                                <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' " class="mr-2" style="width: 20px"> -->
+                                                <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
                                             </th>
                                             <td>{{ alumno.rut }}</td>
-                                            <td>{{ alumno.nombres}}</td>
+                                            <td>{{ alumno.nombres }}</td>
                                             <td>{{ alumno.apellido_paterno}}</td>
                                             <td>{{ alumno.apellido_materno}}</td>
-                                            <td>{{ alumno.curso }}</td>
+                                            <td>{{ alumno.curso.nombre }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i class="fas fa-trash-alt"></i></button>
                                                 <button type="button" class="btn btn-info btn-sm" (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
@@ -70,7 +70,7 @@
                                         </select>
                                     </div>
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-outline-primary" (click)="generarVistaNuevoPerfil('estudiante')">Nuevo Estudiante</button>
+                                        <button type="button" class="btn btn-outline-primary" (click)="nuevo_estudiante()">Nuevo Estudiante</button>
                                         <br>
                                     </div>
                                 </div>
