@@ -15,5 +15,6 @@ export interface Alumno{
   sexo: string,
   puntaje_ingreso: number,
   curso: Curso,
-  rut: string
+  rut: string,
+  imagen: string
 }

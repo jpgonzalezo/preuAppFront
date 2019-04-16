@@ -53,8 +53,8 @@
                                             <td>{{ alumno.apellido_materno}}</td>
                                             <td>{{ alumno.curso.nombre }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i class="fas fa-trash-alt"></i></button>
                                                 <button type="button" class="btn btn-info btn-sm" (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i class="fas fa-trash-alt"></i></button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -103,10 +103,10 @@
                                             <td>{{ profesor.nombres}}</td>
                                             <td>{{ profesor.apellido_paterno}}</td>
                                             <td>{{ profesor.apellido_materno}}</td>
-                                            <td>{{ profesor.asignatura }}</td>
+                                            <td>{{ profesor.asignatura.nombre }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfesor(profesor.id)"><i class="fas fa-trash-alt"></i></button>
                                                 <button type="button" class="btn btn-info btn-sm"><i class="far fa-eye"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfesor(profesor.id)"><i class="fas fa-trash-alt"></i></button>
                                             </td>
                                         </tr>
                                         </tbody>

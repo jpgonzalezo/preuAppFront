@@ -1,13 +1,17 @@
 import { Component, OnInit} from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+//SERVICIOS
 import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { ColegioService } from 'src/app/servicios/colegio.service';
 import { ProfesorService } from 'src/app/servicios/profesor.service';
 import { AsignaturaService } from 'src/app/servicios/asignatura.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+//MODELOS
 import { Colegio } from 'src/app/modelos/colegio.model';
+import { Alumno } from 'src/app/modelos/alumno.model';
 import { Curso } from 'src/app/modelos/curso.models';
+import { Profesor } from 'src/app/modelos/profesor';
 import swal from'sweetalert2';
 import { Config } from 'src/app/config';
 
@@ -24,8 +28,8 @@ export class PerfilesComponent implements OnInit {
   pageProfesor: number;
   pageSizeProfesor: number;
   collectionSizeProfesor: number;
-  alumnos:any;
-  profesores:any;
+  alumnos:Alumno[];
+  profesores:Profesor[];
   colegios: Colegio[];
   cursos: Curso[];
 
@@ -68,26 +72,21 @@ export class PerfilesComponent implements OnInit {
   }
 
   public getAlumnos(){
-  	this._alumnoService.getAlumno().subscribe((data:any) => {
+  	this._alumnoService.getAlumno().subscribe((data:Alumno[]) => {
       this.alumnos = data;
       this.collectionSizeAlumno = this.alumnos.length;
       for(let alumno of this.alumnos){
-        console.log(alumno.imagen)
         alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
       }
     });
   }
 
   public getProfesores(){
-    this._profesorService.getProfesores().subscribe((data:any)=>{
+    this._profesorService.getProfesores().subscribe((data:Profesor[])=>{
       this.profesores = data;
       this.collectionSizeProfesor = this.profesores.length;
       for(let profesor of this.profesores){
-        if(profesor.asignatura != null){
-          this._asignaturaService.getAsignatura(profesor.asignatura).subscribe((asignatura:any)=>{
-            profesor.asignatura = asignatura.nombre;
-          })
-        }
+        profesor.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+profesor.imagen
       }
     })
   }
@@ -98,8 +97,8 @@ export class PerfilesComponent implements OnInit {
       text: "Usted no podrá revertir los cambios!",
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#5e72e4',
-      cancelButtonColor: '#f5365c',
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
       confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar',
     }).then((result) => {
@@ -109,7 +108,8 @@ export class PerfilesComponent implements OnInit {
             swal.fire({
               title:'Borrado!',
               text:'Se ha borrado registro exitosamente.',
-              type:'success'
+              type:'success',
+              confirmButtonColor: '#2dce89',
             }).then((result)=>{
               if(result.value){
                 this.getAlumnos();
@@ -121,7 +121,6 @@ export class PerfilesComponent implements OnInit {
           }
         })
       }
-
     })
   }
 
@@ -131,8 +130,8 @@ export class PerfilesComponent implements OnInit {
       text: "Usted no podrá revertir los cambios!",
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#5e72e4',
-      cancelButtonColor: '#f5365c',
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
       confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar',
     }).then((result) => {
@@ -142,7 +141,8 @@ export class PerfilesComponent implements OnInit {
             swal.fire({
               title:'Borrado!',
               text:'Se ha borrado registro exitosamente.',
-              type:'success'
+              type:'success',
+              confirmButtonColor: '#2dce89',
             }).then((result)=>{
               if(result.value){
                 this.getProfesores();
@@ -264,7 +264,6 @@ export class PerfilesComponent implements OnInit {
       }
     ]).then((result1)=> {
       if(result1.value){
-        console.log(result1.value[1].imagen)
         if(
           result1.value[0].nombres=="" ||
           result1.value[0].apellido_paterno=="" ||
@@ -319,7 +318,6 @@ export class PerfilesComponent implements OnInit {
                 confirmButtonText: 'Aceptar',
                 cancelButtonText: 'Cancelar'
               }).then((result2) => {
-                console.log(result2.value)
                 if (result2.value) {
                   swal.fire({
                     title: 'Foto de perfil',
@@ -348,7 +346,6 @@ export class PerfilesComponent implements OnInit {
                       })
                     }
                     else{
-                      console.log("entre else 2")
                       this._alumnoService.uploadImageDefault(data['id']).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           swal.fire({
@@ -366,8 +363,6 @@ export class PerfilesComponent implements OnInit {
                   })
                 }
                 else{
-                  console.log(data['id'])
-                  console.log("entre else1")
                   this._alumnoService.uploadImageDefault(data['id']).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
                       swal.fire({
@@ -390,11 +385,6 @@ export class PerfilesComponent implements OnInit {
         }
       }
     })
-  }
-  
-
-  public generarVistaNuevoPerfil(tipo_perfil:string){
-    this.router.navigateByUrl('/admin/perfiles/nuevo_perfil/'+tipo_perfil);
   }
 
   generarVistaHojaVida(id:string){
