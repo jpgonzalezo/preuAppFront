@@ -12,6 +12,7 @@ import { Colegio } from 'src/app/modelos/colegio.model';
 import { Alumno } from 'src/app/modelos/alumno.model';
 import { Curso } from 'src/app/modelos/curso.models';
 import { Profesor } from 'src/app/modelos/profesor';
+import { Asignatura } from 'src/app/modelos/asignatura.model';
 import swal from'sweetalert2';
 import { Config } from 'src/app/config';
 
@@ -32,7 +33,7 @@ export class PerfilesComponent implements OnInit {
   profesores:Profesor[];
   colegios: Colegio[];
   cursos: Curso[];
-
+  asignaturas: Asignatura[];
   constructor(private _alumnoService: AlumnoService, 
               private formBuilder: FormBuilder,
               private _cursoService: CursoService,
@@ -42,12 +43,13 @@ export class PerfilesComponent implements OnInit {
               private _colegioService: ColegioService
     )
   { 
+    this.asignaturas= []
     this.cursos = []
     this.colegios = []
     this.pageAlumno = 1;
     this.pageProfesor = 1;
-    this.pageSizeAlumno = 4;
-    this.pageSizeProfesor = 4;
+    this.pageSizeAlumno = 10;
+    this.pageSizeProfesor = 10;
     this.alumnos=[];
     this.profesores = [];
   }
@@ -57,6 +59,7 @@ export class PerfilesComponent implements OnInit {
     this.getProfesores();
     this.getColegios();
     this.getCursos();
+    this.getAsignaturas();
   }
 
   get alumnos_tabla(): any[] {
@@ -167,6 +170,12 @@ export class PerfilesComponent implements OnInit {
   public getCursos(){
     this._cursoService.getCursos().subscribe((cursos: Array<Curso>)=>{
       this.cursos = cursos
+    })
+  }
+
+  public getAsignaturas(){
+    this._asignaturaService.getAsignaturas().subscribe((asignaturas: Asignatura[])=>{
+      this.asignaturas = asignaturas
     })
   }
 
@@ -315,8 +324,8 @@ export class PerfilesComponent implements OnInit {
                 showCancelButton: true,
                 confirmButtonColor: '#2dce89',
                 cancelButtonColor: '#fb6340',
-                confirmButtonText: 'Aceptar',
-                cancelButtonText: 'Cancelar'
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
               }).then((result2) => {
                 if (result2.value) {
                   swal.fire({
@@ -372,6 +381,191 @@ export class PerfilesComponent implements OnInit {
                         confirmButtonColor: '#2dce89',
                       }).then((result)=>{
                         this.getAlumnos()
+                      })
+                    }
+                  },
+                  (error=>{}))
+                }
+              })
+            }
+          },
+          (error)=>{console.log("error")})
+        }
+      }
+    })
+  }
+
+  public nuevo_profesor(){
+    var asignaturas = {}
+
+    for(let asignatura of this.asignaturas){
+      asignaturas[asignatura.id] = asignatura.nombre
+    }
+
+    swal.mixin({
+      title: 'Nuevo Profesor',
+      confirmButtonText: 'Siguiente',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+      progressSteps: ['1', '2', '3'],
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+    }).queue([
+      {
+        title: 'Datos Personales 1',
+        preConfirm: function () {
+          return {
+            'rut': $('#swal-input0').val(),
+            'nombres': $('#swal-input1').val(),
+            'apellido_paterno': $('#swal-input2').val(),
+            'apellido_materno':  $('#swal-input3').val(),
+
+          }
+        },
+        html:
+          '<label>Rut</label>'+
+          '<input id="swal-input0" class="swal2-input placeholders="rut" value ="">' +
+          '<label>Nombres</label>'+
+          '<input id="swal-input1" class="swal2-input placeholders="nombres" value ="">' +
+          '<label>Apellido Paterno</label>'+
+          '<input id="swal-input2" class="swal2-input placeholders="apellido_paterno" value="">'+
+          '<label>Apellido Materno</label>'+
+          '<input id="swal-input3" class="swal2-input placeholders="apellido_materno" value="">'
+      },
+      {
+        title: 'Datos Contacto 1',
+        preConfirm: function () {
+          return {
+              'email':$('#swal-input4').val(),
+              'telefono':$('#swal-input5').val(),
+              'direccion':$('#swal-input6').val(),
+              'numero':$('#swal-input7').val(),
+              'comuna':$('#swal-input8').val(),
+          }
+        },
+        html:
+          '<label>Email</label>'+
+          '<input type="email" id="swal-input4" class="swal2-input placeholders="email" value ="">' +
+          '<label>Telefono</label>'+
+          '<input id="swal-input5" class="swal2-input placeholders="telefono" value ="">'+
+          '<label>Calle</label>'+
+          '<input id="swal-input6" class="swal2-input placeholders="calle" value ="">' +
+          '<label>Número</label>'+
+          '<input id="swal-input7" class="swal2-input placeholders="numero" value ="">'+
+          '<label>Comuna</label>'+
+          '<input id="swal-input8" class="swal2-input placeholders="comuna" value ="">'
+      },
+      {
+        title: 'Datos Académicos 2',
+        text: 'Seleccione asignatura del profesor',
+        input: 'select',
+        inputOptions: asignaturas,
+        inputPlaceholder: 'Asignaturas Preuniversitario',
+      }
+    ]).then((result1)=> {
+      if(result1.value){
+        if(
+          result1.value[0].nombres=="" ||
+          result1.value[0].apellido_paterno=="" ||
+          result1.value[0].apellido_materno=="" ||
+          result1.value[0].rut=="" ||
+          result1.value[1].telefono=="" ||
+          result1.value[1].email=="" ||
+          result1.value[1].direccion=="" ||
+          result1.value[1].numero=="" ||
+          result1.value[1].comuna=="" ||
+          result1.value[2]==""
+          )
+        {
+          swal.fire({
+            type: 'error',
+            title: 'Error en el Registro',
+            text: 'Debe completar todos los campos para crear un estudiante',
+            confirmButtonColor: '#2dce89',
+            confirmButtonText: 'Aceptar'
+          }).then((result)=>{
+            this.nuevo_profesor()
+          })
+        }
+        else{
+            const data={
+              "nombres" : result1.value[0].nombres,
+              "apellido_paterno":result1.value[0].apellido_paterno,
+              "apellido_materno":result1.value[0].apellido_materno,
+              "rut":result1.value[0].rut,
+              "telefono":result1.value[1].telefono,
+              "email":result1.value[1].email,
+              "calle":result1.value[1].direccion,
+              "numero":result1.value[1].numero,
+              "comuna":result1.value[1].comuna,
+              "asignatura":result1.value[2]
+          }
+          this._profesorService.postProfesor(data).subscribe((data:any)=>{
+            if(data['Response']=='exito'){
+              swal.fire({
+                title: 'Foto de Perfil',
+                text: "Desea agregar una foto de perfil?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#2dce89',
+                cancelButtonColor: '#fb6340',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+              }).then((result2) => {
+                if (result2.value) {
+                  swal.fire({
+                    title: 'Foto de perfil',
+                    text: 'Seleccione una foto de perfil',
+                    input: 'file',
+                    inputAttributes: {
+                      'accept': 'image/*'
+                    },
+                    confirmButtonColor: '#2dce89',
+                  }).then((result3)=>{
+                    if(result3.value){
+                      var file = result3.value
+                      var formData = new FormData()
+                      formData.append('imagen',file)
+                      this._profesorService.uploadImage(formData, data['id']).subscribe((data:any)=>{
+                        if(data['Response']=="exito"){
+                          swal.fire({
+                            title: 'Registro exitoso',
+                            text: 'Se ha guardado al profesor exitosamente!',
+                            type: 'success',
+                            confirmButtonColor: '#2dce89',
+                          }).then((result)=>{
+                            this.getProfesores()
+                          })
+                        }
+                      })
+                    }
+                    else{
+                      this._profesorService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                        if(data['Response']=="exito"){
+                          swal.fire({
+                            title: 'Registro exitoso',
+                            text: 'Se ha guardado al profesor exitosamente!',
+                            type: 'success',
+                            confirmButtonColor: '#2dce89',
+                          }).then((result)=>{
+                            this.getProfesores()
+                          })
+                        }
+                      },
+                      (error=>{}))
+                    }
+                  })
+                }
+                else{
+                  this._profesorService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                    if(data['Response']=="exito"){
+                      swal.fire({
+                        title: 'Registro exitoso',
+                        text: 'Se ha guardado al profesor exitosamente!',
+                        type: 'success',
+                        confirmButtonColor: '#2dce89',
+                      }).then((result)=>{
+                        this.getProfesores()
                       })
                     }
                   },

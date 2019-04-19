@@ -53,8 +53,10 @@
                                             <td>{{ alumno.apellido_materno}}</td>
                                             <td>{{ alumno.curso.nombre }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-info btn-sm" (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
-                                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i class="fas fa-trash-alt"></i></button>
+                                                <div class="row">
+                                                    <button type="button" class="btn btn-info btn-sm" (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
+                                                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i class="fas fa-trash-alt"></i></button>
+                                                </div>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -64,9 +66,10 @@
                                         </ngb-pagination>
                                         
                                         <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
-                                            <option [ngValue]="2">2 alumnos por página</option>
-                                            <option [ngValue]="4">4 alumnos por página</option>
-                                            <option [ngValue]="6">6 alumnos por página</option>
+                                            <option [ngValue]="5">5 alumnos por página</option>
+                                            <option [ngValue]="10">10 alumnos por página</option>
+                                            <option [ngValue]="20">20 alumnos por página</option>
+                                            <option [ngValue]="30">30 alumnos por página</option>
                                         </select>
                                     </div>
                                     <div class="text-center">
@@ -97,7 +100,7 @@
                                         <tbody>
                                         <tr *ngFor="let profesor of profesores_tabla">
                                             <th scope="row">
-                                                <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' " class="mr-2" style="width: 20px"> -->
+                                                <img [src]='profesor.imagen' class="mr-2" style="width: 50px">
                                             </th>
                                             <td>{{ profesor.rut }}</td>
                                             <td>{{ profesor.nombres}}</td>
@@ -105,7 +108,7 @@
                                             <td>{{ profesor.apellido_materno}}</td>
                                             <td>{{ profesor.asignatura.nombre }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-info btn-sm"><i class="far fa-eye"></i></button>
+                                                <button type="button" class="btn btn-info btn-sm" ><i class="far fa-eye"></i></button>
                                                 <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfesor(profesor.id)"><i class="fas fa-trash-alt"></i></button>
                                             </td>
                                         </tr>
@@ -116,13 +119,14 @@
                                         </ngb-pagination>
                                         
                                         <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeProfesor">
-                                            <option [ngValue]="2">2 profesores por página</option>
-                                            <option [ngValue]="4">4 profesores por página</option>
-                                            <option [ngValue]="6">6 profesores por página</option>
+                                            <option [ngValue]="5">5 profesores por página</option>
+                                            <option [ngValue]="10">10 profesores por página</option>
+                                            <option [ngValue]="20">20 profesores por página</option>
+                                            <option [ngValue]="30">30 profesores por página</option>
                                         </select>
                                     </div>
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-outline-primary">Nuevo Profesor</button>
+                                        <button type="button" class="btn btn-outline-primary" (click)="nuevo_profesor()">Nuevo Profesor</button>
                                         <br>
                                     </div>
                                 </div>
