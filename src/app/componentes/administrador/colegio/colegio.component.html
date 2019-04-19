@@ -25,6 +25,7 @@
                         <th scope="col">Calle</th>
                         <th scope="col">Número</th>
                         <th scope="col">Comuna</th>
+                        <th scope="col">Estudiantes</th>
                         <th scope="col">Acción</th>
                       </tr>
                     </thead>
@@ -34,6 +35,7 @@
                         <td>{{ colegio.direccion.calle }}</td>
                         <td>{{ colegio.direccion.numero }}</td>
                         <td>{{ colegio.direccion.comuna }}</td>
+                        <td>{{ colegio.cantidad_estudiantes }}</td>
                         <td>
                           <button type="button" class="btn btn-danger btn-sm" (click)="deleteColegio(colegio.id)"><i class="fas fa-trash-alt"></i>
                           </button>

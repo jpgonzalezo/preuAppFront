@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+//SERVICIOS
 import { ColegioService } from 'src/app/servicios/colegio.service';
+//MODELO
+import { Colegio } from 'src/app/modelos/colegio.model';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-colegio',
@@ -10,7 +13,7 @@ export class ColegioComponent implements OnInit {
   pageColegio: number;
   pageSizeColegio: number;
   collectionSizeColegio: number;
-  colegios:any;
+  colegios:Colegio[];
   constructor(private _colegioService: ColegioService) {
     this.pageColegio = 1;
     this.pageSizeColegio = 4;
@@ -22,7 +25,7 @@ export class ColegioComponent implements OnInit {
   }
 
   getColegios(){
-    this._colegioService.getColegios().subscribe((data:any)=>{
+    this._colegioService.getColegios().subscribe((data:Colegio[])=>{
       this.colegios = data;
       this.collectionSizeColegio = this.colegios.length
     })
