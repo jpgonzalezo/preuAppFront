@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { Curso } from 'src/app/modelos/curso.models';
 import Swal from 'sweetalert2';
@@ -13,7 +14,7 @@ export class CursoComponent implements OnInit {
   pageCurso: number;
   pageSizeCurso: number;
   collectionSizeCurso: number;
-  constructor(private _cursoService: CursoService) {
+  constructor(private _cursoService: CursoService, private router:Router) {
     this.pageCurso = 1;
     this.pageSizeCurso = 10;
     this.cursos = []
@@ -98,5 +99,8 @@ export class CursoComponent implements OnInit {
     })
 	}
 
+  generarVistaDetalleCurso(id:string){
+    this.router.navigateByUrl('/admin/cursos/detalle_curso/'+id);
+  }
 
 }

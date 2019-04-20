@@ -32,6 +32,7 @@ import { CursoComponent } from './curso/curso.component';
 import { EstadisticaComponent } from './estadistica/estadistica.component';
 import { PuntajeComponent } from './puntaje/puntaje.component';
 import { ColegioComponent } from './colegio/colegio.component';
+import { DetalleCursoComponent } from './detalle-curso/detalle-curso.component';
 
 
 
@@ -69,7 +70,8 @@ const routes: Routes = [
         CursoComponent,
         EstadisticaComponent,
         PuntajeComponent,
-        ColegioComponent
+        ColegioComponent,
+        DetalleCursoComponent
     ],
     exports: [
         RouterModule
