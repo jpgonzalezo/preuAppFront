@@ -1,141 +1,206 @@
 <app-header></app-header>
 <main>
-    <section class="section ">
-        <div class="container">
-            <h2 class="display-3">Perfiles de Usuario</h2>
-            <div class="row row-grid align-items-center">
-                <div class="col-xl-12">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="estudiante-tab" data-toggle="tab" href="#estudiante_existente" role="tab" aria-controls="estudiante"
-                            aria-selected="false">Estudiantes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profesor-tab" data-toggle="tab" href="#profesor_existente" role="tab" aria-controls="profesor"
-                            aria-selected="true">Profesores</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="apoderado-tab" data-toggle="tab" href="#apoderado_existente" role="tab" aria-controls="apoderado"
-                            aria-selected="true">Apoderados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="administrador-tab" data-toggle="tab" href="#administrador_existente" role="tab" aria-controls="administrador"
-                            aria-selected="true">Administradores</a>
-                        </li>
-                    </ul>
-                
-                    <div class="tab-content" id="myTabContent">
-                        <!--ESTUDIANTE EXISTENTE TAB-->
-                        <div class="tab-pane fade show active" id="estudiante_existente" role="tabpanel" aria-labelledby="estudiante-tab">
-                            <div class="mb-8 ">
-                                <br>
-                                <div class="table-responsive-lg"> 
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Rut</th>
-                                            <th scope="col">Nombres</th>
-                                            <th scope="col">Apellido Paterno</th>
-                                            <th scope="col">Apellido Materno</th>
-                                            <th scope="col">Curso</th>
-                                            <th scope="col">Acción</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr *ngFor="let alumno of alumnos_tabla">
-                                            <th scope="row">
-                                                <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
-                                            </th>
-                                            <td>{{ alumno.rut }}</td>
-                                            <td>{{ alumno.nombres }}</td>
-                                            <td>{{ alumno.apellido_paterno}}</td>
-                                            <td>{{ alumno.apellido_materno}}</td>
-                                            <td>{{ alumno.curso.nombre }}</td>
-                                            <td>
-                                                <div class="row">
-                                                    <button type="button" class="btn btn-info btn-sm" (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
-                                                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i class="fas fa-trash-alt"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-between p-2">
-                                        <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="pageAlumno" [pageSize]="pageSizeAlumno">
-                                        </ngb-pagination>
-                                        
-                                        <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
-                                            <option [ngValue]="5">5 alumnos por página</option>
-                                            <option [ngValue]="10">10 alumnos por página</option>
-                                            <option [ngValue]="20">20 alumnos por página</option>
-                                            <option [ngValue]="30">30 alumnos por página</option>
-                                        </select>
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="button" class="btn btn-outline-primary" (click)="nuevo_estudiante()">Nuevo Estudiante</button>
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <section class="section ">
+    <div class="container">
+      <h2 class="display-3">Perfiles de Usuario</h2>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="estudiante-tab" data-toggle="tab" href="#estudiante_existente" role="tab"
+                aria-controls="estudiante" aria-selected="false">Estudiantes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profesor-tab" data-toggle="tab" href="#profesor_existente" role="tab"
+                aria-controls="profesor" aria-selected="true">Profesores</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="apoderado-tab" data-toggle="tab" href="#apoderado_existente" role="tab"
+                aria-controls="apoderado" aria-selected="true">Apoderados</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="administrador-tab" data-toggle="tab" href="#administrador_existente" role="tab"
+                aria-controls="administrador" aria-selected="true">Administradores</a>
+            </li>
+          </ul>
 
-                        <!--PROFESOR EXISTENTE TAB-->
-                        <div class="tab-pane fade show" id="profesor_existente" role="tabpanel" aria-labelledby="profesor-tab">
-                            <div class="mb-8">
-                                <br>
-                                <div class="table-responsive-lg"> 
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Rut</th>
-                                            <th scope="col">Nombres</th>
-                                            <th scope="col">Apellido Paterno</th>
-                                            <th scope="col">Apellido Materno</th>
-                                            <th scope="col">Asignatura</th>
-                                            <th scope="col">Acción</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr *ngFor="let profesor of profesores_tabla">
-                                            <th scope="row">
-                                                <img [src]='profesor.imagen' class="mr-2" style="width: 50px">
-                                            </th>
-                                            <td>{{ profesor.rut }}</td>
-                                            <td>{{ profesor.nombres}}</td>
-                                            <td>{{ profesor.apellido_paterno}}</td>
-                                            <td>{{ profesor.apellido_materno}}</td>
-                                            <td>{{ profesor.asignatura.nombre }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-info btn-sm" ><i class="far fa-eye"></i></button>
-                                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfesor(profesor.id)"><i class="fas fa-trash-alt"></i></button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-between p-2">
-                                        <ngb-pagination [collectionSize]="collectionSizeProfesor" [(page)]="pageProfesor" [pageSize]="pageSizeProfesor">
-                                        </ngb-pagination>
-                                        
-                                        <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeProfesor">
-                                            <option [ngValue]="5">5 profesores por página</option>
-                                            <option [ngValue]="10">10 profesores por página</option>
-                                            <option [ngValue]="20">20 profesores por página</option>
-                                            <option [ngValue]="30">30 profesores por página</option>
-                                        </select>
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="button" class="btn btn-outline-primary" (click)="nuevo_profesor()">Nuevo Profesor</button>
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+          <div class="tab-content" id="myTabContent">
+            <!--ESTUDIANTE EXISTENTE TAB-->
+            <div class="tab-pane fade show active" id="estudiante_existente" role="tabpanel"
+              aria-labelledby="estudiante-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido Paterno</th>
+                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let alumno of alumnos_tabla">
+                        <th scope="row">
+                          <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ alumno.rut }}</td>
+                        <td>{{ alumno.nombres }}</td>
+                        <td>{{ alumno.apellido_paterno}}</td>
+                        <td>{{ alumno.apellido_materno}}</td>
+                        <td>{{ alumno.curso.nombre }}</td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i
+                                class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="pageAlumno"
+                      [pageSize]="pageSizeAlumno">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
+                      <option [ngValue]="5">5 alumnos por página</option>
+                      <option [ngValue]="10">10 alumnos por página</option>
+                      <option [ngValue]="20">20 alumnos por página</option>
+                      <option [ngValue]="30">30 alumnos por página</option>
+                    </select>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" (click)="nuevo_estudiante()">Nuevo
+                      Estudiante</button>
+                    <br>
+                  </div>
                 </div>
+              </div>
             </div>
+
+            <!--PROFESOR EXISTENTE TAB-->
+            <div class="tab-pane fade show" id="profesor_existente" role="tabpanel" aria-labelledby="profesor-tab">
+              <div class="mb-8">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido Paterno</th>
+                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Asignatura</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let profesor of profesores_tabla">
+                        <th scope="row">
+                          <img [src]='profesor.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ profesor.rut }}</td>
+                        <td>{{ profesor.nombres}}</td>
+                        <td>{{ profesor.apellido_paterno}}</td>
+                        <td>{{ profesor.apellido_materno}}</td>
+                        <td>{{ profesor.asignatura.nombre }}</td>
+                        <td>
+                          <button type="button" class="btn btn-info btn-sm"><i class="far fa-eye"></i></button>
+                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfesor(profesor.id)"><i
+                              class="fas fa-trash-alt"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeProfesor" [(page)]="pageProfesor"
+                      [pageSize]="pageSizeProfesor">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeProfesor">
+                      <option [ngValue]="5">5 profesores por página</option>
+                      <option [ngValue]="10">10 profesores por página</option>
+                      <option [ngValue]="20">20 profesores por página</option>
+                      <option [ngValue]="30">30 profesores por página</option>
+                    </select>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" (click)="nuevo_profesor()">Nuevo
+                      Profesor</button>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--APODERADO EXISTENTE TAB-->
+            <div class="tab-pane fade show" id="apoderado_existente" role="tabpanel" aria-labelledby="apoderado-tab">
+              <div class="mb-8">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido Paterno</th>
+                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let apoderado of apoderados_tabla">
+                        <th scope="row">
+                          <img [src]='apoderado.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ apoderado.rut }}</td>
+                        <td>{{ apoderado.nombres}}</td>
+                        <td>{{ apoderado.apellido_paterno}}</td>
+                        <td>{{ apoderado.apellido_materno}}</td>
+                        <td>{{ apoderado.telefono }}</td>
+                        <td>{{ apoderado.alumno.nombres }} {{ apoderado.alumno.apellido_paterno}}</td>
+                        <td>
+                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteApoderado(apoderado.id)"><i
+                              class="fas fa-trash-alt"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeProfesor" [(page)]="pageProfesor"
+                      [pageSize]="pageSizeProfesor">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeProfesor">
+                      <option [ngValue]="5">5 profesores por página</option>
+                      <option [ngValue]="10">10 profesores por página</option>
+                      <option [ngValue]="20">20 profesores por página</option>
+                      <option [ngValue]="30">30 profesores por página</option>
+                    </select>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" (click)="nuevo_apoderado()">Nuevo
+                      Apoderado</button>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </main>
 <app-footer></app-footer>
