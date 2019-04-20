@@ -8,6 +8,7 @@ import { ColegioService } from 'src/app/servicios/colegio.service';
 import { ProfesorService } from 'src/app/servicios/profesor.service';
 import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { ApoderadoService } from 'src/app/servicios/apoderado.service';
+import { AdministradorService } from 'src/app/servicios/administrador.service';
 //MODELOS
 import { Colegio } from 'src/app/modelos/colegio.model';
 import { Alumno } from 'src/app/modelos/alumno.model';
@@ -15,8 +16,10 @@ import { Curso } from 'src/app/modelos/curso.models';
 import { Profesor } from 'src/app/modelos/profesor';
 import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { Apoderado } from 'src/app/modelos/apoderado';
+import { Administrador } from 'src/app/modelos/administrador.model';
 import swal from'sweetalert2';
 import { Config } from 'src/app/config';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-perfiles',
@@ -34,12 +37,16 @@ export class PerfilesComponent implements OnInit {
   pageApoderado: number;
   pageSizeApoderado: number;
   collectionSizeApoderado: number;
+  pageAdministrador: number;
+  pageSizeAdministrador: number;
+  collectionSizeAdministrador: number;
   alumnos:Alumno[];
   profesores:Profesor[];
   colegios: Colegio[];
   cursos: Curso[];
   asignaturas: Asignatura[];
   apoderados: Apoderado[];
+  administradores: Administrador[];
   constructor(private _alumnoService: AlumnoService, 
               private formBuilder: FormBuilder,
               private _cursoService: CursoService,
@@ -47,16 +54,20 @@ export class PerfilesComponent implements OnInit {
               private _profesorService: ProfesorService,
               private _asignaturaService: AsignaturaService,
               private _colegioService: ColegioService,
-              private _apoderadoService: ApoderadoService
+              private _apoderadoService: ApoderadoService,
+              private _administradorService: AdministradorService
     )
   { 
     this.apoderados=[]
     this.asignaturas= []
     this.cursos = []
     this.colegios = []
+    this.administradores = []
     this.pageAlumno = 1;
     this.pageProfesor = 1;
     this.pageApoderado = 1;
+    this.pageAdministrador = 1;
+    this.pageSizeAdministrador = 10;
     this.pageSizeApoderado = 10;
     this.pageSizeAlumno = 10;
     this.pageSizeProfesor = 10;
@@ -71,7 +82,9 @@ export class PerfilesComponent implements OnInit {
     this.getCursos();
     this.getAsignaturas();
     this.getApoderados();
+    this.getAdministradores();
   }
+
 
   get alumnos_tabla(): any[] {
     return this.alumnos
@@ -85,12 +98,28 @@ export class PerfilesComponent implements OnInit {
       .slice((this.pageApoderado - 1) * this.pageSizeApoderado, (this.pageApoderado - 1) * this.pageSizeApoderado + this.pageSizeApoderado);
   }
 
+  get administradores_tabla(): any[] {
+    return this.administradores
+      .map((administrador, i) => ({id: i + 1, ...administrador}))
+      .slice((this.pageAdministrador - 1) * this.pageSizeAdministrador, (this.pageAdministrador - 1) * this.pageSizeAdministrador + this.pageSizeAdministrador);
+  }
+
   get profesores_tabla(): any[] {
     return this.profesores
       .map((profesor, i) => ({id: i + 1, ...profesor}))
       .slice((this.pageProfesor - 1) * this.pageSizeProfesor, (this.pageProfesor - 1) * this.pageSizeProfesor + this.pageSizeProfesor);
   }
 
+  public getAdministradores(){
+    this._administradorService.getAdministradores().subscribe((administradores:Administrador[])=>{
+      this.administradores = administradores
+      console.log(this.administradores)
+      this.collectionSizeAdministrador = this.administradores.length
+      for(let administrador of this.administradores){
+        administrador.imagen = Config.API_SERVER_URL+"/administrador_imagen/"+administrador.imagen
+      }
+    })
+  } 
   public getApoderados(){
     this._apoderadoService.getApoderados().subscribe((apoderados:Apoderado[])=>{
       this.apoderados = apoderados
@@ -772,6 +801,166 @@ export class PerfilesComponent implements OnInit {
                   this._apoderadoService.uploadImageDefault(data['id']).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
                       this.asignarAlumno(data['id'])
+                    }
+                  },
+                  (error=>{}))
+                  //agregar foto de perfil por defecto
+                }
+              })
+            
+            }
+          },
+          (error)=>{console.log("error")})
+        }
+      }
+    })
+  }
+
+  public nuevo_administrador(){
+    swal.mixin({
+      title: 'Nuevo Administrador',
+      confirmButtonText: 'Siguiente',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+      progressSteps: ['1', '2'],
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+    }).queue([
+      {
+        title: 'Datos Personales 1',
+        preConfirm: function () {
+          return {
+            'rut': $('#swal-input0').val(),
+            'nombres': $('#swal-input1').val(),
+            'apellido_paterno': $('#swal-input2').val(),
+            'apellido_materno':  $('#swal-input3').val(),
+
+          }
+        },
+        html:
+          '<label>Rut</label>'+
+          '<input id="swal-input0" class="swal2-input placeholders="rut" value ="">' +
+          '<label>Nombres</label>'+
+          '<input id="swal-input1" class="swal2-input placeholders="nombres" value ="">' +
+          '<label>Apellido Paterno</label>'+
+          '<input id="swal-input2" class="swal2-input placeholders="apellido_paterno" value="">'+
+          '<label>Apellido Materno</label>'+
+          '<input id="swal-input3" class="swal2-input placeholders="apellido_materno" value="">'
+      },
+      {
+        title: 'Datos Contacto 1',
+        preConfirm: function () {
+          return {
+              'email':$('#swal-input4').val(),
+              'telefono':$('#swal-input5').val()
+          }
+        },
+        html:
+          '<label>Email</label>'+
+          '<input type="email" id="swal-input4" class="swal2-input placeholders="email" value ="">' +
+          '<label>Telefono</label>'+
+          '<input id="swal-input5" class="swal2-input placeholders="telefono" value ="">'
+        }
+    ]).then((result1)=> {
+      if(result1.value){
+        if(
+          result1.value[0].nombres=="" ||
+          result1.value[0].apellido_paterno=="" ||
+          result1.value[0].apellido_materno=="" ||
+          result1.value[0].rut=="" ||
+          result1.value[1].telefono=="" ||
+          result1.value[1].email==""
+          )
+        {
+          swal.fire({
+            type: 'error',
+            title: 'Error en el Registro',
+            text: 'Debe completar todos los campos para crear un administrador',
+            confirmButtonColor: '#2dce89',
+            confirmButtonText: 'Aceptar',
+          }).then((result)=>{
+            this.nuevo_administrador()
+          })
+        }
+        else{
+          const data={
+              "nombres" : result1.value[0].nombres,
+              "apellido_paterno":result1.value[0].apellido_paterno,
+              "apellido_materno":result1.value[0].apellido_materno,
+              "rut":result1.value[0].rut,
+              "telefono":result1.value[1].telefono,
+              "email":result1.value[1].email,
+              "calle":result1.value[1].direccion,
+              "numero":result1.value[1].numero,
+              "comuna":result1.value[1].comuna
+          }
+          this._administradorService.postAdministrador(data).subscribe((data:any)=>{
+            if(data['Response']=='exito'){
+              swal.fire({
+                title: 'Foto de Perfil',
+                text: "Desea agregar una foto de perfil?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#2dce89',
+                cancelButtonColor: '#fb6340',
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+              }).then((result2) => {
+                if (result2.value) {
+                  swal.fire({
+                    title: 'Foto de perfil',
+                    text: 'Seleccione una foto de perfil',
+                    input: 'file',
+                    inputAttributes: {
+                      'accept': 'image/*'
+                    },
+                    confirmButtonColor: '#2dce89',
+                  }).then((result3)=>{
+                    if(result3.value){
+                      var file = result3.value
+                      var formData = new FormData()
+                      formData.append('imagen',file)
+                      this._administradorService.uploadImage(formData, data['id']).subscribe((data:any)=>{
+                        if(data['Response']=="exito"){
+                          swal.fire({
+                            title: 'Registro exitoso',
+                            text: 'Se ha guardado al administrador exitosamente!',
+                            type: 'success',
+                            confirmButtonColor: '#2dce89',
+                          }).then((result)=>{
+                            this.getAdministradores()
+                          })
+                        }
+                      })
+                    }
+                    else{
+                      this._administradorService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                        if(data['Response']=="exito"){
+                          swal.fire({
+                            title: 'Registro exitoso',
+                            text: 'Se ha guardado al administrador exitosamente!',
+                            type: 'success',
+                            confirmButtonColor: '#2dce89',
+                          }).then((result)=>{
+                            this.getAdministradores()
+                          })
+                        }
+                      },
+                      (error=>{}))
+                    }
+                  })
+                }
+                else{
+                  this._administradorService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                    if(data['Response']=="exito"){
+                      swal.fire({
+                        title: 'Registro exitoso',
+                        text: 'Se ha guardado al administrador exitosamente!',
+                        type: 'success',
+                        confirmButtonColor: '#2dce89',
+                      }).then((result)=>{
+                        this.getAdministradores()
+                      })
                     }
                   },
                   (error=>{}))

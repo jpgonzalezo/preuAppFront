@@ -178,20 +178,72 @@
                     </tbody>
                   </table>
                   <div class="d-flex justify-content-between p-2">
-                    <ngb-pagination [collectionSize]="collectionSizeProfesor" [(page)]="pageProfesor"
-                      [pageSize]="pageSizeProfesor">
+                    <ngb-pagination [collectionSize]="collectionSizeApoderado" [(page)]="pageApoderado"
+                      [pageSize]="pageSizeApoderado">
                     </ngb-pagination>
 
-                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeProfesor">
-                      <option [ngValue]="5">5 profesores por página</option>
-                      <option [ngValue]="10">10 profesores por página</option>
-                      <option [ngValue]="20">20 profesores por página</option>
-                      <option [ngValue]="30">30 profesores por página</option>
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeApoderado">
+                      <option [ngValue]="5">5 apoderado por página</option>
+                      <option [ngValue]="10">10 apoderados por página</option>
+                      <option [ngValue]="20">20 apoderados por página</option>
+                      <option [ngValue]="30">30 apoderados por página</option>
                     </select>
                   </div>
                   <div class="text-center">
                     <button type="button" class="btn btn-outline-primary" (click)="nuevo_apoderado()">Nuevo
                       Apoderado</button>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--ADMINISTRADOR EXISTENTE TAB-->
+            <div class="tab-pane fade show" id="administrador_existente" role="tabpanel" aria-labelledby="administrador-tab">
+              <div class="mb-8">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido Paterno</th>
+                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">email</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let administrador of administradores_tabla">
+                        <th scope="row">
+                          <img [src]='administrador.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ administrador.rut }}</td>
+                        <td>{{ administrador.nombres}}</td>
+                        <td>{{ administrador.apellido_paterno}}</td>
+                        <td>{{ administrador.apellido_materno}}</td>
+                        <td>{{ administrador.telefono }}</td>
+                        <td>{{ administrador.email }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAdministrador" [(page)]="pageAdministrador"
+                      [pageSize]="pageSizeAdministrador">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAdministrador">
+                      <option [ngValue]="5">5 administradores por página</option>
+                      <option [ngValue]="10">10 administradores por página</option>
+                      <option [ngValue]="20">20 administradores por página</option>
+                      <option [ngValue]="30">30 administradores por página</option>
+                    </select>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" (click)="nuevo_administrador()">Nuevo
+                      Administrador</button>
                     <br>
                   </div>
                 </div>
