@@ -41,7 +41,8 @@ const routes: Routes = [
     { path: 'perfiles', component: PerfilesComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
     { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
-    { path: 'colegios', component: ColegioComponent}
+    { path: 'colegios', component: ColegioComponent},
+    { path: 'cursos', component: CursoComponent}
 ];
 
 @NgModule({
