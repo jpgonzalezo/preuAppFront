@@ -34,16 +34,14 @@ import { PuntajeComponent } from './puntaje/puntaje.component';
 import { ColegioComponent } from './colegio/colegio.component';
 import { DetalleCursoComponent } from './detalle-curso/detalle-curso.component';
 
-
-
-
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
     { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
     { path: 'colegios', component: ColegioComponent},
-    { path: 'cursos', component: CursoComponent}
+    { path: 'cursos', component: CursoComponent},
+    { path: 'cursos/detalle_curso/:id', component: DetalleCursoComponent}
 ];
 
 @NgModule({
