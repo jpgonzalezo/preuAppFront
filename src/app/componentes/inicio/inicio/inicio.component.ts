@@ -81,10 +81,10 @@ export class InicioComponent implements OnInit {
 
   private correctLogin(data: Session){
     this._storageService.setCurrentSession(data);
-    if(data['tipo']=="ADMINISTRADOR"){
+    if(data['token']=="ADMINISTRADOR"){
       this.router.navigate(['/admin']);
     }
-    else if(data['tipo']=="PROFESOR"){
+    else if(data['token']=="PROFESOR"){
       this.router.navigate(['/profesor']);
     }
     else{

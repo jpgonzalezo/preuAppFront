@@ -33,7 +33,6 @@ export class StorageService {
   };
 
   isAuthenticatedAdmin(): boolean{
-    console.log(this.getCurrentToken())
     if (this.getCurrentToken() == 'ADMINISTRADOR') {
       return true
     }
@@ -42,7 +41,6 @@ export class StorageService {
     }
   }
   isAuthenticatedProfesor(): boolean{
-    console.log(this.getCurrentToken())
     if (this.getCurrentToken() == 'PROFESOR') {
       return true
     }

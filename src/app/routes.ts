@@ -1,7 +1,6 @@
-import { AuthorizatedGuard } from 'src/app/componentes/authorizated.guard';
-import { AuthorizatedGuardProfesor } from 'src/app/componentes/authorizated.guard';
-export const routes = [
+import { AuthorizatedGuard, AuthorizatedGuardProfesor } from 'src/app/componentes/authorizated.guard';
 
+export const routes = [
     {
         path: '',
         //component: LayoutComponent,
