@@ -16,7 +16,7 @@ export class ColegioComponent implements OnInit {
   colegios:Colegio[];
   constructor(private _colegioService: ColegioService) {
     this.pageColegio = 1;
-    this.pageSizeColegio = 4;
+    this.pageSizeColegio = 10;
     this.colegios = [];
   }
 

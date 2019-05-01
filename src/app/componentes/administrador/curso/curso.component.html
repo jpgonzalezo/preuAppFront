@@ -1,270 +1,69 @@
-<div class="row">
-  <div class="col-xl-10">
-    <div class="" id="alerts">
-      <h1 class="element-title">Nuevo Registro</h1>
-    </div>
-  </div>
-  
-  <div class="col-xl-12">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="profesor-tab" data-toggle="tab" href="#nuevo_curso" role="tab" aria-controls="profesor"
-          aria-selected="true">Curso</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="estudiante-tab" data-toggle="tab" href="#nueva_asignatura" role="tab" aria-controls="estudiante"
-          aria-selected="false">Asignatura</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      <!--PROFESOR TAB-->
-      <div class="tab-pane fade show active" id="nuevo_curso" role="tabpanel" aria-labelledby="profesor-tab">
-        <div class="mb-8">
-          <br>
-          <form>
-            <div class="row">
-              <div class="form-group col-xl-4">
-                <label >Nombre</label>
-                <input type="text" class="form-control" placeholder="Nombre curso">
-              </div>
+<app-header></app-header>
+<main>
+  <section class="section ">
+    <div class="container">
+      <h2 class="display-3">Cursos Preuniversitario</h2>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="cursos-tab" data-toggle="tab" href="#cursos_existente" role="tab"
+                aria-controls="colegio" aria-selected="false">Cursos</a>
+            </li>
+          </ul>
 
-              <div class="form-group col-xl-4">
-                <label >Año</label>
-                <input type="text" class="form-control" placeholder="Año">
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-xl-12" style="text-align:right;">
-                <button type="button" class="btn btn-danger mb-2">Borrar datos</button>
-                &nbsp;
-                <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#modal_registro_exitoso">Confirmar registro</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+          <div class="tab-content" id="myTabContent">
+            <!--COLEGIOS EXISTENTE TAB-->
+            <div class="tab-pane fade show active" id="cursos_existente" role="tabpanel" aria-labelledby="cursos-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Estudiantes</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let curso of cursos_tabla">
+                        <td>{{ curso.nombre }}</td>
+                        <td>{{ curso.cantidad_estudiantes }}</td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="generarVistaDetalleCurso(curso.id)"><i class="far fa-eye"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteCurso(curso.id)"><i
+                                class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeCurso" [(page)]="pageCurso"
+                      [pageSize]="pageSizeCurso">
+                    </ngb-pagination>
 
-      <!--ESTUDIANTE TAB-->
-      <div class="tab-pane fade" id="nueva_asignatura" role="tabpanel" aria-labelledby="estudiante-tab">
-        <div class="mb-8">
-          <br>
-          <form>
-            <div class="row">
-              <div class="form-group col-xl-4">
-                <label >Nombre</label>
-                <input type="text" class="form-control" placeholder="Nombre Asignatura">
-              </div>
-
-              <div class="form-group col-xl-4">
-                <label >Profesor</label>
-                <div class="dropdown mb-2">
-                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Profesores
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="">Profesor 1</a>
-                    <a class="dropdown-item" href="">Profesor 2</a>
-                    <a class="dropdown-item" href="">Profesor 3</a>
-                    <a class="dropdown-item" href="">Profesor 4</a>
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeCurso">
+                      <option [ngValue]="2">2 colegios por página</option>
+                      <option [ngValue]="4">4 colegios por página</option>
+                      <option [ngValue]="6">6 colegios por página</option>
+                    </select>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-outline-info" (click)="generarVistaDetalleCurso()"> Nuevo Curso
+                    </button>
+                    <br>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="form-group col-xl-12" style="text-align:right;">
-                <button type="button" class="btn btn-danger mb-2">Borrar datos</button>
-                &nbsp;
-                <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#modal_registro_exitoso">Confirmar registro</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!--MODAL EXITO REGISTRO-->
-<div class="modal fade" id="modal_registro_exitoso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="bg-warning rounded-top p-2">
-        <h3 class="text-white font-weight-bold mb-0 ml-2">Exito!</h3>
-      </div>
-
-      <div class="border rounded-bottom-md border-top-0">
-        <div class="p-3">
-          <div class="modal-body">
-            <label >Se ha registrado al Usuario <b>Nombre</b> Correctamente.</label>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-<hr>
-<!--PERFILES EXISTENTES-->
-<div class="row">
-  <div class="col-xl-10">
-    <div class="" id="alerts">
-      <h1 class="element-title">Alumnos en Cursos</h1>
-    </div>
-  </div>
-  
-  <div class="col-xl-12">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="profesor-tab-existentes" data-toggle="tab" href="#alumnos_ciencias" role="tab" aria-controls="profesor-existentes"
-          aria-selected="true">Ciencia</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="estudiante-tab-existentes" data-toggle="tab" href="#alumnos_ciencias" role="tab" aria-controls="estudiante-existentes"
-          aria-selected="false">Historia</a>
-      </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-      
-      <!--PROFESOR TAB-->
-      <div class="tab-pane fade show active" id="alumnos_ciencias" role="tabpanel" aria-labelledby="profesor-tab-existentes">
-        <div class="mb-8">
-          <br><br>
-          <div class="table-responsive-sm table-cart">
-            <table class="table mb-0">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Rut</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Telefono</th>
-                  <th scope="col">Direccion</th>
-                  <th scope="col">Puntaje Ponderado</th>
-                  <th scope="col">Asistencia</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
-                  </td>
-                  <td class="td-product-name">Nombre Alumno</td>
-                  <td>11.111.111-1</td>
-                  <td>correo@gmail.com</td>
-                  <td>+569 98765432</td>
-                  <td>Calle 123, San Bernardo</td>
-                  <td>650 pts</td>
-                  <td>80%</td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
-                  </td>
-                  <td class="td-product-name">Nombre Alumno</td>
-                  <td>11.111.111-1</td>
-                  <td>correo@gmail.com</td>
-                  <td>+569 98765432</td>
-                  <td>Calle 123, San Bernardo</td>
-                  <td>740 pts</td>
-                  <td>90%</td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
-                  </td>
-                  <td class="td-product-name">Nombre Alumno</td>
-                  <td>11.111.111-1</td>
-                  <td>correo@gmail.com</td>
-                  <td>+569 98765432</td>
-                  <td>Calle 123, San Bernardo</td>
-                  <td>800 pts</td>
-                  <td>100 %</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!--ESTUDIANTE TAB-->
-      <div class="tab-pane fade" id="alumnos_historia" role="tabpanel" aria-labelledby="estudiante-tab-existentes">
-        <div class="mb-8">
-          <br><br>
-          <div class="table-responsive-sm table-cart">
-            <table class="table mb-0">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Rut</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Telefono</th>
-                  <th scope="col">Direccion</th>
-                  <th scope="col">Colegio</th>
-                  <th scope="col">Accion</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
-                  </td>
-                  <td class="td-product-name">Nombre Alumno</td>
-                  <td>11.111.111-1</td>
-                  <td>correo@gmail.com</td>
-                  <td>+569 98765432</td>
-                  <td>Calle 123, San Bernardo</td>
-                  <td>Colegio 1</td>
-                  <td>
-                      <div class="row">
-                          <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
-                          <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
-                        </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
-                  </td>
-                  <td class="td-product-name">Nombre Alumno</td>
-                  <td>11.111.111-1</td>
-                  <td>correo@gmail.com</td>
-                  <td>+569 98765432</td>
-                  <td>Calle 123, San Bernardo</td>
-                  <td>Colegio 2</td>
-                  <td>
-                      <div class="row">
-                          <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
-                          <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
-                        </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="assets/img/avator/avator-img5.jpg" alt="image" class="cart-image d-none d-md-block">
-                  </td>
-                  <td class="td-product-name">Nombre Alumno</td>
-                  <td>11.111.111-1</td>
-                  <td>correo@gmail.com</td>
-                  <td>+569 98765432</td>
-                  <td>Calle 123, San Bernardo</td>
-                  <td>Colegio 3</td>
-                  <td>
-                      <div class="row">
-                          <button type="button" class="btn btn-primary btn-sm mb-4"><i class="far fa-trash-alt"></i></button>
-                          <button type="button" class="btn btn-info btn-sm mb-4"><i class="far fa-edit"></i></button>
-                        </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  </section>
+</main>
+<app-footer></app-footer>

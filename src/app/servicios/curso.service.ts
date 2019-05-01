@@ -23,4 +23,20 @@ export class CursoService {
   	}
     return this.httpClient.get(`${this.API_URL}/cursos/${id}`,options).pipe(map(res => res))
 	}
+
+	deleteCurso(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.delete(`${this.API_URL}/cursos/${id}`,options).pipe(map(res => res))
+	}
+
+	postCurso(data:any){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = {
+      headers: headers
+    }
+    return this.httpClient.post(`${this.API_URL}/cursos`, JSON.stringify(data), options).pipe(map(res => res))
+  }
 }

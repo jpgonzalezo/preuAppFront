@@ -11,7 +11,15 @@ import { ReactiveFormsModule} from '@angular/forms';
 // register 'es' locale
 registerLocaleData(localeEs);
 
-
+//SERVICIOS
+import { AdministradorCompartidoService } from './administrador.compartido.service';
+import { EstadisticaService } from 'src/app/servicios/estadistica.service';
+import { CursoService } from 'src/app/servicios/curso.service';
+import { AlumnoService } from 'src/app/servicios/alumno.service';
+import { ObservacionService } from 'src/app/servicios/observacion.service';
+import { ColegioService } from 'src/app/servicios/colegio.service';
+import { ApoderadoService } from 'src/app/servicios/apoderado.service';
+import { AdministradorService } from 'src/app/servicios/administrador.service';
 //COMPONENTES
 import { HomeComponent } from './home/home.component';
 import { PerfilesComponent } from './perfiles/perfiles.component';
@@ -23,22 +31,17 @@ import { AsistenciaComponent } from './asistencia/asistencia.component';
 import { CursoComponent } from './curso/curso.component';
 import { EstadisticaComponent } from './estadistica/estadistica.component';
 import { PuntajeComponent } from './puntaje/puntaje.component';
-//SERVICIOS
-import { AdministradorCompartidoService } from './administrador.compartido.service';
-import { EstadisticaService } from 'src/app/servicios/estadistica.service';
-import { CursoService } from 'src/app/servicios/curso.service';
-import { AlumnoService } from 'src/app/servicios/alumno.service';
-import { ObservacionService } from 'src/app/servicios/observacion.service';
-import { ColegioService } from 'src/app/servicios/colegio.service';
-import { ApoderadoService } from 'src/app/servicios/apoderado.service';
 import { ColegioComponent } from './colegio/colegio.component';
+import { DetalleCursoComponent } from './detalle-curso/detalle-curso.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
     { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
-    { path: 'colegios', component: ColegioComponent}
+    { path: 'colegios', component: ColegioComponent},
+    { path: 'cursos', component: CursoComponent},
+    { path: 'cursos/detalle_curso/:id', component: DetalleCursoComponent}
 ];
 
 @NgModule({
@@ -65,7 +68,8 @@ const routes: Routes = [
         CursoComponent,
         EstadisticaComponent,
         PuntajeComponent,
-        ColegioComponent
+        ColegioComponent,
+        DetalleCursoComponent
     ],
     exports: [
         RouterModule
@@ -77,7 +81,8 @@ const routes: Routes = [
         AlumnoService,
         ObservacionService,
         ColegioService,
-        ApoderadoService
+        ApoderadoService,
+        AdministradorService
     ]
 })
 export class AdministradorModule { }
