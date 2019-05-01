@@ -93,9 +93,7 @@ export class ColegioComponent implements OnInit {
         input: 'text'
       },
     ]).then((result) => {
-      if (result.dismiss!='cancel' && 
-        result.dismiss!='esc' && 
-        result.dismiss!='backdrop' &&
+      if (result.dismiss!= null &&
         (result.value[0]=="" || result.value[1]=="" || result.value[3]==""))
       {
         Swal.fire({
@@ -110,10 +108,7 @@ export class ColegioComponent implements OnInit {
           }
         })
       }
-      if(result.dismiss== 'cancel'){
-        return false
-      }
-      if(result.value == true){
+      else{
         this._colegioService.postColegio(
           { 'nombre':result.value[0],
             'calle': result.value[1],

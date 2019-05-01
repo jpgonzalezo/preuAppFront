@@ -1,4 +1,5 @@
 import { AuthorizatedGuard } from 'src/app/componentes/authorizated.guard';
+import { AuthorizatedGuardProfesor } from 'src/app/componentes/authorizated.guard';
 export const routes = [
 
     {
@@ -7,11 +8,9 @@ export const routes = [
         children: [
             { path: '', redirectTo: 'inicio', pathMatch: 'full' },
             { path: 'admin', loadChildren: './componentes/administrador/administrador.module#AdministradorModule', canActivate:[ AuthorizatedGuard ] },
+            { path: 'profesor', loadChildren: './componentes/profesor/profesor.module#ProfesorModule', canActivate:[ AuthorizatedGuardProfesor ] },
             { path: 'inicio', loadChildren: './componentes/inicio/inicio.module#InicioModule'},
         ]
     },
-    
-    // Not found
     { path: '**', redirectTo: 'inicio' }
-
 ];

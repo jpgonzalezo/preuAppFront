@@ -9,7 +9,20 @@ export class AuthorizatedGuard implements CanActivate {
     if (this.storageService.isAuthenticatedAdmin()) {
       return true;
     }
-    // not logged in so redirect to login page
+    this.router.navigate(['/inicio']);
+    return false;
+  }
+
+}
+
+@Injectable()
+export class AuthorizatedGuardProfesor implements CanActivate {
+  constructor(private router: Router,
+              private storageService: StorageService) { }
+  canActivate() {
+    if (this.storageService.isAuthenticatedProfesor()) {
+      return true;
+    }
     this.router.navigate(['/inicio']);
     return false;
   }

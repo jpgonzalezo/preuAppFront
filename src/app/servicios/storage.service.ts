@@ -41,6 +41,15 @@ export class StorageService {
       return false
     }
   }
+  isAuthenticatedProfesor(): boolean{
+    console.log(this.getCurrentToken())
+    if (this.getCurrentToken() == 'PROFESOR') {
+      return true
+    }
+    else{
+      return false
+    }
+  }
   getCurrentToken(): string {
     var session = this.getCurrentSession();
     return (session && session.token) ? session.token : null;

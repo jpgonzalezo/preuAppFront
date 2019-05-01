@@ -57,7 +57,7 @@ export class InicioComponent implements OnInit {
         }
         else{
           console.log(data['respuesta'])
-          this.correctLogin({token:"ADMINISTRADOR",user:
+          this.correctLogin({token:data['tipo'],user:
             { nombres:data['respuesta'].nombres,
               apellido_paterno:data['respuesta'].apellido_paterno,
               apellido_materno:data['respuesta'].apellido_materno,
@@ -81,7 +81,15 @@ export class InicioComponent implements OnInit {
 
   private correctLogin(data: Session){
     this._storageService.setCurrentSession(data);
-    this.router.navigate(['/admin']);
+    if(data['tipo']=="ADMINISTRADOR"){
+      this.router.navigate(['/admin']);
+    }
+    else if(data['tipo']=="PROFESOR"){
+      this.router.navigate(['/profesor']);
+    }
+    else{
+      this.router.navigate(['/inicio']);
+    }
   }
   cambiarPersona(tipo:string){
     this.persona = tipo;
