@@ -23,4 +23,20 @@ export class AsignaturaService {
   	}
     return this.httpClient.get(`${this.API_URL}/asignaturas/${id}`,options).pipe(map(res => res))
 	}
+
+	deleteAsignatura(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.delete(`${this.API_URL}/asignaturas/${id}`,options).pipe(map(res => res))
+	}
+
+	postAsignatura(data:any){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.post(`${this.API_URL}/asignaturas`, JSON.stringify(data), options).pipe(map(res => res))
+	}
 }

@@ -34,6 +34,7 @@ import { PuntajeComponent } from './puntaje/puntaje.component';
 import { ColegioComponent } from './colegio/colegio.component';
 import { DetalleCursoComponent } from './detalle-curso/detalle-curso.component';
 import { AsignaturaComponent } from './asignatura/asignatura.component';
+import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -73,7 +74,8 @@ const routes: Routes = [
         PuntajeComponent,
         ColegioComponent,
         DetalleCursoComponent,
-        AsignaturaComponent
+        AsignaturaComponent,
+        DetalleAsignaturaComponent
     ],
     exports: [
         RouterModule
