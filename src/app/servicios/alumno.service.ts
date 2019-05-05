@@ -9,6 +9,14 @@ export class AlumnoService {
   API_URL = Config.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 
+  getAlumnosCurso(id_curso:string){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/alumnos_curso/${id_curso}`,options).pipe(map(res => res))
+  }
+
   getAlumno():any{
   	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   	const options = {
