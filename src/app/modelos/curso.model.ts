@@ -1,4 +1,4 @@
-export class Asignatura{
+export class Curso{
     id: string
     nombre: string
 }

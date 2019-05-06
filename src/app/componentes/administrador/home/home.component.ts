@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.get_estadistica()
     this.usuario = this._storageService.getCurrentUser()
-    console.log(this.usuario)
   }
 
   get_estadistica(){

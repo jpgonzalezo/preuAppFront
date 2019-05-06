@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CursoService } from 'src/app/servicios/curso.service';
-import { Curso } from 'src/app/modelos/curso.models';
+import { Curso } from 'src/app/modelos/curso.model';
 import Swal from 'sweetalert2';
 
 @Component({

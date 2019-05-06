@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/servicios/asignatura.service';
-import { Asignatura } from 'src/app/modelos/asignatura.models';
+import { Asignatura } from 'src/app/modelos/asignatura.model';
 
 import Swal from 'sweetalert2';
 @Component({

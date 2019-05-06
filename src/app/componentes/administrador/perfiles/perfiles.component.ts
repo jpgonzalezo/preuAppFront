@@ -12,7 +12,7 @@ import { AdministradorService } from 'src/app/servicios/administrador.service';
 //MODELOS
 import { Colegio } from 'src/app/modelos/colegio.model';
 import { Alumno } from 'src/app/modelos/alumno.model';
-import { Curso } from 'src/app/modelos/curso.models';
+import { Curso } from 'src/app/modelos/curso.model';
 import { Profesor } from 'src/app/modelos/profesor';
 import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { Apoderado } from 'src/app/modelos/apoderado';

@@ -56,7 +56,6 @@ export class InicioComponent implements OnInit {
           })
         }
         else{
-          console.log(data['respuesta'])
           this.correctLogin({token:data['tipo'],user:
             { nombres:data['respuesta'].nombres,
               apellido_paterno:data['respuesta'].apellido_paterno,

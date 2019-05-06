@@ -1,5 +1,5 @@
-export interface Direccion{
-    calle: string,
-    numero: number,
+export class Direccion{
+    calle: string
+    numero: number
     comuna: string
 }

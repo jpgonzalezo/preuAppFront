@@ -116,7 +116,6 @@ export class ColegioComponent implements OnInit {
             'comuna': result.value[3]
           }).subscribe((data:any)=>{
             if(data['Response']=='exito'){
-              console.log("dsañlkd")
             }
           },
         (error)=>{

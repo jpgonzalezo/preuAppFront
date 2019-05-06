@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { Alumno } from 'src/app/modelos/alumno.model';
-import { Curso } from 'src/app/modelos/curso.models';
+import { Curso } from 'src/app/modelos/curso.model';
 import { Config } from 'src/app/config';
 @Component({
   selector: 'app-detalle-curso',
@@ -21,8 +21,8 @@ export class DetalleCursoComponent implements OnInit {
     private _alumnoService:AlumnoService,
     private _cursoService:CursoService,
     private _router: Router) {
-      this.pageSizeAlumno = 10;
       this.pageAlumno = 1;
+      this.pageSizeAlumno = 5;
       this.alumnos = [];
       this.curso = {'nombre':"",'id':''}
     }
@@ -56,7 +56,7 @@ export class DetalleCursoComponent implements OnInit {
   volver(){
     this._router.navigateByUrl('/admin/cursos');
   }
-  get alumnos_tabla(): any[] {
+  get alumnos_tabla(): Alumno[] {
     return this.alumnos
       .map((alumno, i) => ({id: i + 1, ...alumno}))
       .slice((this.pageAlumno - 1) * this.pageSizeAlumno, (this.pageAlumno - 1) * this.pageSizeAlumno + this.pageSizeAlumno);
