@@ -36,6 +36,7 @@ import { DetalleCursoComponent } from './detalle-curso/detalle-curso.component';
 import { AsignaturaComponent } from './asignatura/asignatura.component';
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 import { NuevaAsistenciaComponent } from './nueva-asistencia/nueva-asistencia.component';
+import { DetalleAsistenciaComponent } from './detalle-asistencia/detalle-asistencia.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -79,7 +80,8 @@ const routes: Routes = [
         DetalleCursoComponent,
         AsignaturaComponent,
         DetalleAsignaturaComponent,
-        NuevaAsistenciaComponent
+        NuevaAsistenciaComponent,
+        DetalleAsistenciaComponent
     ],
     exports: [
         RouterModule

@@ -53,4 +53,8 @@ export class AsistenciaComponent implements OnInit {
     this._router.navigateByUrl('/admin/asistencia/nueva_asistencia');
   }
 
+  detalleAsistencia(id_asistencia:string){
+    this._router.navigateByUrl('/admin/asistencia/detalle_asistencia/'+id_asistencia);
+  }
+
 }
