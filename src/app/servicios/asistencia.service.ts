@@ -8,6 +8,20 @@ export class AsistenciaService {
   API_URL = Config.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 
+	getJustificacionesAsistencia(id_asistencia:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/justificaciones_asistencia/${id_asistencia}`,options).pipe(map(res => res))
+	}
+	getAsistencia(id:string):any{
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/asistencias/${id}`,options).pipe(map(res => res))
+	}
   getAsistencias():any{
   	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   	const options = {
@@ -38,7 +52,15 @@ export class AsistenciaService {
       headers: headers
     }
     return this.httpClient.post(`${this.API_URL}/asistencias`, JSON.stringify(data), options).pipe(map(res => res))
-  }
+	}
+	
+	postJustificacion(data:any){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = {
+      headers: headers
+    }
+    return this.httpClient.post(`${this.API_URL}/justificaciones`, JSON.stringify(data), options).pipe(map(res => res))
+	}
 
 
 }

@@ -46,6 +46,7 @@ const routes: Routes = [
     { path: 'colegios', component: ColegioComponent},
     { path: 'asistencia', component: AsistenciaComponent},
     { path: 'asistencia/nueva_asistencia', component: NuevaAsistenciaComponent},
+    { path: 'asistencia/detalle_asistencia/:id', component: DetalleAsistenciaComponent},
     { path: 'asignaturas', component: AsignaturaComponent},
     { path: 'asignaturas/detalle_asignatura/:id', component: DetalleAsignaturaComponent},
     { path: 'cursos', component: CursoComponent},
