@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { AlumnoService } from '../../../servicios/alumno.service';
+import { JustificacionService } from 'src/app/servicios/justificacion.service';
 import { ObservacionService } from '../../../servicios/observacion.service';
 import { AdministradorCompartidoService } from '../administrador.compartido.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/servicios/storage.service';
+import { Justificacion } from 'src/app/modelos/justificacion.model';
 import swal from'sweetalert2';
 import { Config } from 'src/app/config';
 @Component({
@@ -16,9 +18,12 @@ export class HojaVidaComponent implements OnInit {
   pageAdministrador: number;
   pageProfesor: number;
   pagePsicologo: number;
+  pageJustificacion: number;
+  pageSizeJustificacion: number;
   pageSizeObservacionAdministrador: number;
   collectionSizeObservacionAdministrador: number;
   pageSizeObservacionProfesor: number;
+  collectionSizeJustificacion: number;
   collectionSizeObservacionProfesor: number;
   pageSizeObservacionPsicologo: number;
   collectionSizeObservacionPsicologo: number;
@@ -27,24 +32,28 @@ export class HojaVidaComponent implements OnInit {
   observaciones_psico:any
   hoja_vida:any;
   id_hoja_vida:string;
-
+  justificaciones: Justificacion[];
   constructor(private _alumnoService:AlumnoService, 
     private _observacionService: ObservacionService,
     private _administradorCompartidoService: AdministradorCompartidoService,
     private router: Router,
     private _activatedRoute: ActivatedRoute,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private _justificacionService: JustificacionService
     ) {
     this.hoja_vida=[]
     this.observaciones_admin = []
     this.observaciones_profe = []
     this.observaciones_psico = []
+    this.justificaciones = []
     this.pageAdministrador = 1;
     this.pageProfesor = 1;
     this.pagePsicologo = 1;
+    this.pageJustificacion = 1;
     this.pageSizeObservacionAdministrador = 4;
     this.pageSizeObservacionProfesor = 4;
     this.pageSizeObservacionPsicologo = 4;
+    this.pageSizeJustificacion = 4;
   }
 
   ngOnInit() {
@@ -53,7 +62,9 @@ export class HojaVidaComponent implements OnInit {
     this.getObservacionesAdministrador()
     this.getObservacionesProfesor()
     this.getObservacionesPsicologo()
+    this.getJustificaciones()
   }
+
   public getHojaVida(id:string){
   	this._alumnoService.getHojaVida(id).subscribe((data: Array<any>) => {
       this.hoja_vida = data;
@@ -86,10 +97,26 @@ export class HojaVidaComponent implements OnInit {
       }
     )
   }
+
+  public getJustificaciones(){
+    this._justificacionService.getJustificacionesAlumno(this.id_hoja_vida).subscribe((data: Justificacion[])=>{
+      this.justificaciones = data
+      console.log(data)
+      this.collectionSizeJustificacion = this.justificaciones.length
+    })
+  }
+
+
   get observaciones_administrador_tabla(): any[] {
     return this.observaciones_admin
       .map((observacion, i) => ({id: i + 1, ...observacion}))
       .slice((this.pageAdministrador - 1) * this.pageSizeObservacionAdministrador, (this.pageAdministrador - 1) * this.pageSizeObservacionAdministrador + this.pageSizeObservacionAdministrador);
+  }
+
+  get justificaciones_tabla(): Justificacion[] {
+    return this.justificaciones
+      .map((justificacion, i) => ({id: i + 1, ...justificacion}))
+      .slice((this.pageJustificacion - 1) * this.pageSizeJustificacion, (this.pageJustificacion - 1) * this.pageSizeJustificacion + this.pageSizeJustificacion);
   }
 
   get observaciones_psicologo_tabla(): any[] {

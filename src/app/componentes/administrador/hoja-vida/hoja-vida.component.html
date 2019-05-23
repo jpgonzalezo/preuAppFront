@@ -1,185 +1,253 @@
 <app-header></app-header>
 <main class="profile-page">
-<section class="section-profile-cover section-shaped my-0">
+  <section class="section-profile-cover section-shaped my-0">
 
-</section>
-<section class="section">
+  </section>
+  <section class="section">
     <div class="container">
-        <div class="card card-profile shadow mt--300">
-            <div class="px-4">
-                <div class="row justify-content-center">
-                    <div class="col-lg-4 order-lg-2">
-                        <div class="card-profile-image">
-                            <a>
-                                <img [src]='hoja_vida.imagen' class="rounded-circle">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
-                        <div class="card-profile-actions py-4 mt-lg-0">
-                            <a class="btn btn-sm btn-info mr-4" [routerLink]="" (click)="modalNuevaObservacion()">Nueva observación</a>
-                            <a class="btn btn-sm btn-default float-right" [routerLink]="">Editar</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 order-lg-1">
-                        <div class="card-profile-stats d-flex justify-content-center">
-                            <div>
-                                <span class="heading">{{hoja_vida.ponderacion_asistencia}} %</span>
-                                <span class="description">Asistencia</span>
-                            </div>
-                            <div>
-                                <span class="heading">{{hoja_vida.ponderacion_matematicas}} </span>
-                                <span class="description">Matemáticas</span>
-                            </div>
-                            <div>
-                                <span class="heading">{{hoja_vida.ponderacion_lenguaje}} </span>
-                                <span class="description">Lenguaje</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-5">
-                    <h3>{{hoja_vida.nombres}} {{hoja_vida.apellido_paterno}} {{hoja_vida.apellido_materno}}</h3>
-                    <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{hoja_vida.curso}}</div>
-                    <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{hoja_vida.email}} - {{hoja_vida.telefono}}</div>
-                    <div><i class="ni education_hat mr-2"></i>{{hoja_vida.colegio}}</div>
-                </div>
-                
-                <div class="mt-5 py-5 border-top text-center">
-                    <h4 class="display-3 pull-rigth">Observaciones</h4>
-                    <div class="row justify-content-center">
-                        <div class="col-xl-12">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="administrador-tab" data-toggle="tab" href="#administrador_observacion" role="tab" aria-controls="administrador"
-                                    aria-selected="false">Administrador</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profesor-tab" data-toggle="tab" href="#profesor_observacion" role="tab" aria-controls="profesor"
-                                    aria-selected="true">Profesores</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="psicologo-tab" data-toggle="tab" href="#psicologo_observacion" role="tab" aria-controls="psicologo"
-                                    aria-selected="true">Psicologo</a>
-                                </li>
-                            </ul>
-                            
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="administrador_observacion" role="tabpanel" aria-labelledby="administrador-tab">
-                                    <div class="mb-8 ">
-                                        <br>
-                                        <div class="table-responsive-lg"> 
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Titulo</th>
-                                                        <th scope="col">Contenido</th>
-                                                        <th scope="col">Fecha</th>
-                                                        <th scope="col">Administrador</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let observacion of observaciones_administrador_tabla">
-                                                        <td>{{observacion.titulo}}</td>
-                                                        <td>{{observacion.contenido}}</td>
-                                                        <td>{{observacion.fecha}}</td>
-                                                        <td>{{observacion.nombre_personal}}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="d-flex justify-content-between p-2">
-                                                <ngb-pagination [collectionSize]="collectionSizeObservacionAdministrador" [(page)]="pageAdministrador" [pageSize]="pageSizeObservacionAdministrador">     
-                                                </ngb-pagination>
-                                                        
-                                                <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeObservacionAdministrador">
-                                                    <option [ngValue]="2">2 observaciones por página</option>
-                                                    <option [ngValue]="4">4 observaciones por página</option>
-                                                    <option [ngValue]="6">6 observaciones por página</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade show" id="profesor_observacion" role="tabpanel" aria-labelledby="prfesor-tab">
-                                    <div class="mb-8 ">
-                                        <br>
-                                        <div class="table-responsive-lg"> 
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Titulo</th>
-                                                        <th scope="col">Contenido</th>
-                                                        <th scope="col">Fecha</th>
-                                                        <th scope="col">Profesor</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let observacion of observaciones_profesor_tabla">
-                                                        <td>{{observacion.titulo}}</td>
-                                                        <td>{{observacion.contenido}}</td>
-                                                        <td>{{observacion.fecha}}</td>
-                                                        <td>{{observacion.nombre_personal}}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="d-flex justify-content-between p-2">
-                                                <ngb-pagination [collectionSize]="collectionSizeObservacionProfesor" [(page)]="pageProfesor" [pageSize]="pageSizeObservacionProfesor">     
-                                                </ngb-pagination>        
-                                                <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeObservacionProfesor">
-                                                    <option [ngValue]="2">2 observaciones por página</option>
-                                                    <option [ngValue]="4">4 observaciones por página</option>
-                                                    <option [ngValue]="6">6 observaciones por página</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                    
-                                <div class="tab-pane fade show" id="psicologo_observacion" role="tabpanel" aria-labelledby="psicologo-tab">
-                                    <div class="mb-8 ">
-                                        <br>
-                                        <div class="table-responsive-lg"> 
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Titulo</th>
-                                                        <th scope="col">Contenido</th>
-                                                        <th scope="col">Fecha</th>
-                                                        <th scope="col">Psicologo</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let observacion of observaciones_psicologo_tabla">
-                                                        <td>{{observacion.titulo}}</td>
-                                                        <td>{{observacion.contenido}}</td>
-                                                        <td>{{observacion.fecha}}</td>
-                                                        <td>{{observacion.nombre_personal}}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="d-flex justify-content-between p-2">
-                                                <ngb-pagination [collectionSize]="collectionSizeObservacionPsicologo" [(page)]="pagePsicologo" [pageSize]="pageSizeObservacionPsicologo">     
-                                                </ngb-pagination>        
-                                                <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeObservacionPsicologo">
-                                                    <option [ngValue]="2">2 observaciones por página</option>
-                                                    <option [ngValue]="4">4 observaciones por página</option>
-                                                    <option [ngValue]="6">6 observaciones por página</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <div class="card card-profile shadow mt--300">
+        <div class="px-4">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 order-lg-2">
+              <div class="card-profile-image">
+                <a>
+                  <img [src]='hoja_vida.imagen' class="rounded-circle">
+                </a>
+              </div>
             </div>
+            <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
+              <div class="card-profile-actions py-4 mt-lg-0">
+                <a class="btn btn-sm btn-info mr-4" [routerLink]="" (click)="modalNuevaObservacion()">Nueva
+                  observación</a>
+                <a class="btn btn-sm btn-default float-right" [routerLink]="">Editar</a>
+              </div>
+            </div>
+            <div class="col-lg-4 order-lg-1">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading">{{hoja_vida.ponderacion_asistencia}} %</span>
+                  <span class="description">Asistencia</span>
+                </div>
+                <div>
+                  <span class="heading">{{hoja_vida.ponderacion_matematicas}} </span>
+                  <span class="description">Matemáticas</span>
+                </div>
+                <div>
+                  <span class="heading">{{hoja_vida.ponderacion_lenguaje}} </span>
+                  <span class="description">Lenguaje</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <h3>{{hoja_vida.nombres}} {{hoja_vida.apellido_paterno}} {{hoja_vida.apellido_materno}}</h3>
+            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{hoja_vida.curso}}</div>
+            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{hoja_vida.email}} -
+              {{hoja_vida.telefono}}</div>
+            <div><i class="ni education_hat mr-2"></i>{{hoja_vida.colegio}}</div>
+          </div>
+
+          <div class="mt-5 py-5 border-top text-center">
+            <h4 class="display-3 pull-rigth">Observaciones</h4>
+            <div class="row justify-content-center">
+              <div class="col-xl-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="administrador-tab" data-toggle="tab"
+                      href="#administrador_observacion" role="tab" aria-controls="administrador"
+                      aria-selected="false">Administrador</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profesor-tab" data-toggle="tab" href="#profesor_observacion" role="tab"
+                      aria-controls="profesor" aria-selected="true">Profesores</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="psicologo-tab" data-toggle="tab" href="#psicologo_observacion" role="tab"
+                      aria-controls="psicologo" aria-selected="true">Psicologo</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="administrador_observacion" role="tabpanel"
+                    aria-labelledby="administrador-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Titulo</th>
+                              <th scope="col">Contenido</th>
+                              <th scope="col">Fecha</th>
+                              <th scope="col">Administrador</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let observacion of observaciones_administrador_tabla">
+                              <td>{{observacion.titulo}}</td>
+                              <td>{{observacion.contenido}}</td>
+                              <td>{{observacion.fecha}}</td>
+                              <td>{{observacion.nombre_personal}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                          <ngb-pagination [collectionSize]="collectionSizeObservacionAdministrador"
+                            [(page)]="pageAdministrador" [pageSize]="pageSizeObservacionAdministrador">
+                          </ngb-pagination>
+
+                          <select class="custom-select" style="width: auto"
+                            [(ngModel)]="pageSizeObservacionAdministrador">
+                            <option [ngValue]="2">2 observaciones por página</option>
+                            <option [ngValue]="4">4 observaciones por página</option>
+                            <option [ngValue]="6">6 observaciones por página</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade show" id="profesor_observacion" role="tabpanel"
+                    aria-labelledby="prfesor-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Titulo</th>
+                              <th scope="col">Contenido</th>
+                              <th scope="col">Fecha</th>
+                              <th scope="col">Profesor</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let observacion of observaciones_profesor_tabla">
+                              <td>{{observacion.titulo}}</td>
+                              <td>{{observacion.contenido}}</td>
+                              <td>{{observacion.fecha}}</td>
+                              <td>{{observacion.nombre_personal}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                          <ngb-pagination [collectionSize]="collectionSizeObservacionProfesor" [(page)]="pageProfesor"
+                            [pageSize]="pageSizeObservacionProfesor">
+                          </ngb-pagination>
+                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeObservacionProfesor">
+                            <option [ngValue]="2">2 observaciones por página</option>
+                            <option [ngValue]="4">4 observaciones por página</option>
+                            <option [ngValue]="6">6 observaciones por página</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade show" id="psicologo_observacion" role="tabpanel"
+                    aria-labelledby="psicologo-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Titulo</th>
+                              <th scope="col">Contenido</th>
+                              <th scope="col">Fecha</th>
+                              <th scope="col">Psicologo</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let observacion of observaciones_psicologo_tabla">
+                              <td>{{observacion.titulo}}</td>
+                              <td>{{observacion.contenido}}</td>
+                              <td>{{observacion.fecha}}</td>
+                              <td>{{observacion.nombre_personal}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                          <ngb-pagination [collectionSize]="collectionSizeObservacionPsicologo" [(page)]="pagePsicologo"
+                            [pageSize]="pageSizeObservacionPsicologo">
+                          </ngb-pagination>
+                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeObservacionPsicologo">
+                            <option [ngValue]="2">2 observaciones por página</option>
+                            <option [ngValue]="4">4 observaciones por página</option>
+                            <option [ngValue]="6">6 observaciones por página</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="mt-5 py-5 border-top text-center">
+            <h4 class="display-3 pull-rigth">Justificaciones</h4>
+            <div class="row justify-content-center">
+              <div class="col-xl-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="justificacion-tab" data-toggle="tab"
+                      href="#justificacion_observacion" role="tab" aria-controls="justificacion"
+                      aria-selected="false">Justificaciones</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="justificacion_observacion" role="tabpanel"
+                    aria-labelledby="justificacion-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Asistencia</th>
+                              <th scope="col">Asignatura</th>
+                              <th scope="col">Fecha</th>
+                              <th scope="col">Causa</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let justificacion of justificaciones_tabla">
+                              <td>{{justificacion.asistencia.fecha}}</td>
+                              <td>{{justificacion.asistencia.asignatura.nombre}}</td>
+                              <td>{{justificacion.fecha}}</td>
+                              <td>{{justificacion.causa}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                          <ngb-pagination [collectionSize]="collectionSizeJustificacion"
+                            [(page)]="pageJustificacion" [pageSize]="pageSizeJustificacion">
+                          </ngb-pagination>
+
+                          <select class="custom-select" style="width: auto"
+                            [(ngModel)]="pageSizeJustificacion">
+                            <option [ngValue]="4">4 observaciones por página</option>
+                            <option [ngValue]="8">8 observaciones por página</option>
+                            <option [ngValue]="10">10 observaciones por página</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</section>
-    <div class="text-center">
-        <button type="button" class="btn btn-outline-danger" (click)="cancelar()"> Volver </button>
-    </div>
+  </section>
+  <div class="text-center">
+    <button type="button" class="btn btn-outline-danger" (click)="cancelar()"> Volver </button>
+  </div>
 </main>
 <app-footer></app-footer>

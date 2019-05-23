@@ -31,4 +31,12 @@ export class JustificacionService {
 		}
 		return this.httpClient.post(`${this.API_URL}/justificaciones`, JSON.stringify(data), options).pipe(map(res => res))
 	}
+
+	getJustificacionesAlumno(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.get(`${this.API_URL}/justificaciones_alumno/${id}`,options).pipe(map(res => res))
+	}
 }
