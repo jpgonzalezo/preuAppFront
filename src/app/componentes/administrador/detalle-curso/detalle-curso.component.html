@@ -1,124 +1,141 @@
 <app-header></app-header>
-<main class="profile-page">
-  <section class="section-profile-cover section-shaped my-0">
-  </section>
-  <section class="section">
+<main>
+  <section class="section ">
     <div class="container">
-      <div class="card card-profile shadow mt--300">
-        <div class="px-3">
-          <div class="mt-5 py-5 border-top text-center">
-            <h4 class="display-3 pull-rigth"> {{curso.nombre}}</h4>
-            <div class="row justify-content-center">
-              <div class="col-xl-12">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="alumno-tab" data-toggle="tab"
-                      href="#alumno" role="tab" aria-controls="alumno"
-                      aria-selected="false">Alumnos</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia" role="tab"
-                      aria-controls="asistencia" aria-selected="true">Asistencia</a>
-                  </li>
-                </ul>
-
-                <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="alumno" role="tabpanel"
-                    aria-labelledby="alumno-tab">
-                    <div class="mb-8 ">
-                      <br>
-                      <div class="table-responsive-lg">
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th scope="col"></th>
-                              <th scope="col">Rut</th>
-                              <th scope="col">Nombres</th>
-                              <th scope="col">Apellido Paterno</th>
-                              <th scope="col">Apellido Materno</th>
-                              <th scope="col">Acción</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let alumno of alumnos_tabla">
-                              <th scope="row">
-                                <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
-                              </th>
-                              <td>{{ alumno.rut }}</td>
-                              <td>{{ alumno.nombres }}</td>
-                              <td>{{ alumno.apellido_paterno}}</td>
-                              <td>{{ alumno.apellido_materno}}</td>
-                              <td>
-                                <div class="row">
-                                  <button type="button" class="btn btn-info btn-sm"
-                                    (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <div class="d-flex justify-content-between p-2">
-                          <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="pageAlumno"
-                            [pageSize]="pageSizeAlumno">
-                          </ngb-pagination>
-      
-                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
-                            <option [ngValue]="5">5 alumnos por página</option>
-                            <option [ngValue]="10">10 alumnos por página</option>
-                            <option [ngValue]="20">20 alumnos por página</option>
-                            <option [ngValue]="30">30 alumnos por página</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="tab-pane fade show" id="asistencia" role="tabpanel"
-                    aria-labelledby="asistencia-tab">
-                    <div class="mb-8 ">
-                      <br>
-                      <div class="table-responsive-lg">
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th scope="col">Fecha</th>
-                              <th scope="col">Asignatura</th>
-                              <th scope="col">Presentes</th>
-                              <th scope="col">Ausentes</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let observacion of asistencia_tabla">
-                              <td>{{observacion.titulo}}</td>
-                              <td>{{observacion.contenido}}</td>
-                              <td>{{observacion.fecha}}</td>
-                              <td>{{observacion.nombre_personal}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <div class="d-flex justify-content-between p-2">
-                          <ngb-pagination [collectionSize]="collectionSizeObservacionProfesor" [(page)]="pageProfesor"
-                            [pageSize]="pageSizeObservacionProfesor">
-                          </ngb-pagination>
-                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeObservacionProfesor">
-                            <option [ngValue]="2">2 observaciones por página</option>
-                            <option [ngValue]="4">4 observaciones por página</option>
-                            <option [ngValue]="6">6 observaciones por página</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      <h2 class="display-3">Detalle {{curso.nombre}}</h2>
+      <hr>
+      <div class="row row-grid align-items-center">
+        <div class="col-lg-6">
+          <div class="card shadow card-lift--hover border-0">
+            <div class="card-body py-5 text-center">
+              <div class="icon icon-shape icon-shape-primary rounded-circle mb-4 ">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+              <h6 class="text-primary text-uppercase">Estudiantes</h6>
+              <div class="text-center">
+                <span class="badge badge-pill badge-primary">500 Estudiantes Inscritos</span>
               </div>
             </div>
           </div>
         </div>
+
+        <div class="col-lg-6">
+          <div class="card shadow card-lift--hover border-0">
+            <div class="card-body py-5 text-center">
+              <div class="icon icon-shape icon-shape-success rounded-circle mb-4 ">
+                <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+              <h6 class="text-success text-uppercase">Profesores</h6>
+              <div class="text-center">
+                <span class="badge badge-pill badge-success">500 Profesores Inscritos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
       </div>
+      <hr>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="alumnos-tab" data-toggle="tab" href="#alumnos_existente" role="tab"
+                aria-controls="alumnos" aria-selected="false">Alumnos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia_existente" role="tab"
+                aria-controls="asistencia" aria-selected="false">Asistencia</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="alertas-tab" data-toggle="tab" href="#alertas_existente" role="tab"
+                aria-controls="alertas" aria-selected="false">Alertas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="asignaturas-tab" data-toggle="tab" href="#asignaturas_existente" role="tab"
+                aria-controls="asignaturas" aria-selected="false">Asignaturas</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <!--COLEGIOS EXISTENTE TAB-->
+            <div class="tab-pane fade show active" id="alumnos_existente" role="tabpanel" aria-labelledby="alumnos-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido Paterno</th>
+                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Teléfono</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let alumno of alumnos_tabla">
+                        <th scope="row">
+                          <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ alumno.rut }}</td>
+                        <td>{{ alumno.nombres }}</td>
+                        <td>{{ alumno.apellido_paterno }}</td>
+                        <td>{{ alumno.apellido_materno }}</td>
+                        <td>{{ alumno.email }}</td>
+                        <td>{{ alumno.telefono }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeCurso" [(page)]="pageCurso"
+                      [pageSize]="pageSizeCurso">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeCurso">
+                      <option [ngValue]="2">2 cursos por página</option>
+                      <option [ngValue]="4">4 cursos por página</option>
+                      <option [ngValue]="6">6 cursos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="asistencia_existente" role="tabpanel" aria-labelledby="asistencia-tab">
+              <div class="mb-8 ">
+                <br>
+                asistencia
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="alertas_existente" role="tabpanel" aria-labelledby="alertas-tab">
+              <div class="mb-8 ">
+                <br>
+                alertas
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="asignaturas_existente" role="tabpanel" aria-labelledby="asignaturas-tab">
+              <div class="mb-8 ">
+                <br>
+                asignaturas
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+          <button type="button" class="btn btn-outline-danger" (click)="cancelar()"> Volver
+          </button>
+          <br>
+        </div>
     </div>
   </section>
-  <div class="text-center">
-    <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver </button>
-  </div>
 </main>
 <app-footer></app-footer>
