@@ -16,7 +16,7 @@ export class CursoComponent implements OnInit {
   collectionSizeCurso: number;
   constructor(private _cursoService: CursoService, private router:Router) {
     this.pageCurso = 1;
-    this.pageSizeCurso = 10;
+    this.pageSizeCurso = 4;
     this.cursos = []
   }
 
