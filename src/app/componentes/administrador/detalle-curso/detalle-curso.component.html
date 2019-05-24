@@ -2,7 +2,7 @@
 <main>
   <section class="section ">
     <div class="container">
-      <h2 class="display-3">Detalle {{curso.nombre}}</h2>
+      <h2 class="display-3">{{curso.nombre}}</h2>
       <hr>
       <div class="row row-grid align-items-center">
         <div class="col-lg-6">
@@ -185,7 +185,42 @@
               aria-labelledby="asignaturas-tab">
               <div class="mb-8 ">
                 <br>
-                asignaturas
+                <div class="table-responsive-lg">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Acción</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let asignatura of asignaturas_tabla">
+                          <td>{{ asignatura.nombre }}</td>
+                          <td class="align-items-center">
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteAsignaturaCurso(asignatura.id)"><i
+                              class="fas fa-trash-alt"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between p-2">
+                      <ngb-pagination [collectionSize]="collectionSizeAsignatura" [(page)]="pageAsignatura"
+                        [pageSize]="pageSizeAsignatura">
+                      </ngb-pagination>
+  
+                      <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsignatura">
+                        <option [ngValue]="5">5 asignaturas por página</option>
+                        <option [ngValue]="10">10 asignaturas por página</option>
+                        <option [ngValue]="15">15 asignaturas por página</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-outline-info" (click)="agregarAsignatura()"> Agregar asignatura
+                    </button>
+                    <br><br><br>
+                  </div>
               </div>
             </div>
 

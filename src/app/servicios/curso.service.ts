@@ -38,5 +38,21 @@ export class CursoService {
       headers: headers
     }
     return this.httpClient.post(`${this.API_URL}/cursos`, JSON.stringify(data), options).pipe(map(res => res))
-  }
+	}
+	
+	addAsignatura(id_curso:string,id_asignatura:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.put(`${this.API_URL}/curso_asignatura/${id_curso}/${id_asignatura}`,options).pipe(map(res => res))
+	}
+
+	deleteCursoAsignatura(id_curso:string,id_asignatura:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.delete(`${this.API_URL}/curso_asignatura/${id_curso}/${id_asignatura}`,options).pipe(map(res => res))
+	}
 }

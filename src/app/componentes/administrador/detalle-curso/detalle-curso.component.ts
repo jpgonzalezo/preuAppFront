@@ -4,11 +4,14 @@ import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { AsistenciaService } from 'src/app/servicios/asistencia.service';
 import { AlertaService } from 'src/app/servicios/alerta.service';
+import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { Alumno } from 'src/app/modelos/alumno.model';
 import { Alerta } from 'src/app/modelos/alerta.model';
+import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { Curso } from 'src/app/modelos/curso.model';
 import { Config } from 'src/app/config';
 import { Asistencia } from 'src/app/modelos/asistencia.model';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-detalle-curso',
   templateUrl: './detalle-curso.component.html',
@@ -27,13 +30,18 @@ export class DetalleCursoComponent implements OnInit {
   pageAlerta: number;
   pageSizeAlerta: number;
   collectionSizeAlerta: number;
+  pageAsignatura: number;
+  pageSizeAsignatura: number;
+  collectionSizeAsignatura: number;
   alertas: Alerta[];
   asistencias: Asistencia[]
+  asignaturas: Asignatura[]
   constructor(private _activatedRoute:ActivatedRoute, 
     private _alumnoService:AlumnoService,
     private _cursoService:CursoService,
     private _asistenciaService: AsistenciaService,
     private _alertaService: AlertaService,
+    private _asignaturaService: AsignaturaService,
     private _router: Router) {
       this.pageAlumno = 1;
       this.pageSizeAlumno = 10;
@@ -41,10 +49,13 @@ export class DetalleCursoComponent implements OnInit {
       this.pageSizeAsistencia = 10;
       this.pageAlerta = 1;
       this.pageSizeAlerta = 10;
+      this.pageAsignatura = 1;
+      this.pageSizeAsignatura = 5;
       this.alumnos = [];
       this.asistencias = [];
       this.alertas = [];
-      this.curso = {'nombre':"",'id':''}
+      this.asignaturas = [];
+      this.curso = new Curso();
     }
 
   ngOnInit() {
@@ -58,6 +69,8 @@ export class DetalleCursoComponent implements OnInit {
   getCurso(){
     this._cursoService.getCurso(this.id_curso).subscribe((data:Curso)=>{
       this.curso = data;
+      this.asignaturas = data.asignaturas
+      this.collectionSizeAsignatura = data.asignaturas.length
     })
   }
 
@@ -98,6 +111,79 @@ export class DetalleCursoComponent implements OnInit {
       .slice((this.pageAlumno - 1) * this.pageSizeAlumno, (this.pageAlumno - 1) * this.pageSizeAlumno + this.pageSizeAlumno);
   }
 
+  deleteAsignaturaCurso(id_asignatura:string){
+    Swal.fire({
+      title: 'Desea eliminar la asignatura del curso?',
+      text: "Usted no podrá revertir los cambios!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result)=>{
+      if(result.dismiss==null){
+        this._cursoService.deleteCursoAsignatura(this.id_curso,id_asignatura).subscribe((data:any)=>{
+          if(data['Response']=="exito"){
+            Swal.fire({
+              title:'Eliminado!',
+              text:'Se ha eliminado la asignatura exitosamente.',
+              type:'success',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.getCurso()
+            })
+          }
+        })
+      }
+    })
+  }
+  
+  agregarAsignatura(){
+    this._asignaturaService.getAsignaturas().subscribe((data:Asignatura[])=>{
+      var asignaturas={}
+      for(let asignatura of data){
+        var bandera = true
+        for(let asignatura_curso of this.curso.asignaturas){
+          if(asignatura.id==asignatura_curso.id){
+            bandera = false
+          }
+        }
+        if(bandera){
+          asignaturas[asignatura.id] = asignatura.nombre
+        }
+      }
+
+      Swal.fire({
+        title: 'Agregar Asignatura',
+        text: 'Seleccione una asignatura',
+        input: 'select',
+        inputOptions: asignaturas,
+        inputPlaceholder: 'Asignaturas',
+        showCancelButton: true,
+        confirmButtonColor: '#2dce89',
+        cancelButtonColor: '#fb6340',
+        confirmButtonText: 'Agregar',
+        cancelButtonText: 'Cancelar',
+      }).then((result)=>{
+        if(result.dismiss==null){
+          this._cursoService.addAsignatura(this.id_curso,result.value).subscribe((data:any)=>{
+            if(data['Response']=="exito"){
+              Swal.fire({
+                title:'Agregado!',
+                text:'Se ha agregado la asignatura exitosamente.',
+                type:'success',
+                confirmButtonColor: '#2dce89',
+              }).then((result)=>{
+                this.getCurso()
+              })
+            }
+          })
+        }
+      })
+    })
+  }
+
   get asistencias_tabla(): Asistencia[] {
     return this.asistencias
       .map((asistencia, i) => ({id: i + 1, ...asistencia}))
@@ -108,5 +194,11 @@ export class DetalleCursoComponent implements OnInit {
     return this.alertas
       .map((alerta, i) => ({id: i + 1, ...alerta}))
       .slice((this.pageAlerta - 1) * this.pageSizeAlerta, (this.pageAlerta - 1) * this.pageSizeAlerta + this.pageSizeAlerta);
+  }
+
+  get asignaturas_tabla(): Asignatura[] {
+    return this.asignaturas
+      .map((asignatura, i) => ({id: i + 1, ...asignatura}))
+      .slice((this.pageAsignatura - 1) * this.pageSizeAsignatura, (this.pageAsignatura - 1) * this.pageSizeAsignatura + this.pageSizeAsignatura);
   }
 }

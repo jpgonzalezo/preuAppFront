@@ -113,7 +113,6 @@ export class PerfilesComponent implements OnInit {
   public getAdministradores(){
     this._administradorService.getAdministradores().subscribe((administradores:Administrador[])=>{
       this.administradores = administradores
-      console.log(this.administradores)
       this.collectionSizeAdministrador = this.administradores.length
       for(let administrador of this.administradores){
         administrador.imagen = Config.API_SERVER_URL+"/administrador_imagen/"+administrador.imagen
