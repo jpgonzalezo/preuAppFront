@@ -37,11 +37,13 @@ import { AsignaturaComponent } from './asignatura/asignatura.component';
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 import { NuevaAsistenciaComponent } from './nueva-asistencia/nueva-asistencia.component';
 import { DetalleAsistenciaComponent } from './detalle-asistencia/detalle-asistencia.component';
+import { DetalleProfesorComponent } from './detalle-profesor/detalle-profesor.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
+    { path: 'perfiles/detalle_profesor/:id', component: DetalleProfesorComponent},
     { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
     { path: 'colegios', component: ColegioComponent},
     { path: 'asistencia', component: AsistenciaComponent},
@@ -82,7 +84,8 @@ const routes: Routes = [
         AsignaturaComponent,
         DetalleAsignaturaComponent,
         NuevaAsistenciaComponent,
-        DetalleAsistenciaComponent
+        DetalleAsistenciaComponent,
+        DetalleProfesorComponent
     ],
     exports: [
         RouterModule

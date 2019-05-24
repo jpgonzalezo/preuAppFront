@@ -980,6 +980,10 @@ export class PerfilesComponent implements OnInit {
     this.router.navigateByUrl('/admin/perfiles/hoja_vida/'+id);
   }
 
+  verDetalleProfesor(id:string){
+    this.router.navigateByUrl('/admin/perfiles/detalle_profesor/'+id);
+  }
+
   asignarAlumno(id:string){
     swal.fire({
       type: 'question',
