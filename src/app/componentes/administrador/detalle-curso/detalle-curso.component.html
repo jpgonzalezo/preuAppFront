@@ -89,14 +89,14 @@
                     </tbody>
                   </table>
                   <div class="d-flex justify-content-between p-2">
-                    <ngb-pagination [collectionSize]="collectionSizeCurso" [(page)]="pageCurso"
-                      [pageSize]="pageSizeCurso">
+                    <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="pageAlumno"
+                      [pageSize]="pageSizeAlumno">
                     </ngb-pagination>
 
-                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeCurso">
-                      <option [ngValue]="2">2 cursos por página</option>
-                      <option [ngValue]="4">4 cursos por página</option>
-                      <option [ngValue]="6">6 cursos por página</option>
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
+                      <option [ngValue]="10">10 alumnos por página</option>
+                      <option [ngValue]="20">20 alumnos por página</option>
+                      <option [ngValue]="30">30 alumnos por página</option>
                     </select>
                   </div>
                 </div>
@@ -106,7 +106,37 @@
             <div class="tab-pane fade show" id="asistencia_existente" role="tabpanel" aria-labelledby="asistencia-tab">
               <div class="mb-8 ">
                 <br>
-                asistencia
+                <div class="table-responsive-lg">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Asignatura</th>
+                          <th scope="col">Alumnos Presentes</th>
+                          <th scope="col">Alumnos Ausentes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let asistencia of asistencias_tabla">
+                          <td>{{ asistencia.fecha }}</td>
+                          <td>{{ asistencia.asignatura.nombre }}</td>
+                          <td>{{ asistencia.alumnos_presentes.length }}</td>
+                          <td>{{ asistencia.alumnos_ausentes.length }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between p-2">
+                      <ngb-pagination [collectionSize]="collectionSizeAsistencia" [(page)]="pageAsistencia"
+                        [pageSize]="pageSizeAsistencia">
+                      </ngb-pagination>
+  
+                      <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsistencia">
+                        <option [ngValue]="10">10 asistencias por página</option>
+                        <option [ngValue]="20">20 asistencias por página</option>
+                        <option [ngValue]="30">30 asistencias por página</option>
+                      </select>
+                    </div>
+                  </div>
               </div>
             </div>
 
@@ -131,7 +161,7 @@
       </div>
 
       <div class="text-center">
-          <button type="button" class="btn btn-outline-danger" (click)="cancelar()"> Volver
+          <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
           </button>
           <br>
         </div>
