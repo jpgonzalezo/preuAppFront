@@ -9,6 +9,7 @@ import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { AsistenciaService } from 'src/app/servicios/asistencia.service';
 import { JustificacionService } from 'src/app/servicios/justificacion.service';
 import { AnotacionService } from 'src/app/servicios/anotacion.service';
+import { AlertaService } from 'src/app/servicios/alerta.service';
 @NgModule({
     imports: [HttpClientModule],
     providers:[
@@ -20,7 +21,8 @@ import { AnotacionService } from 'src/app/servicios/anotacion.service';
         AsignaturaService,
         AsistenciaService,
         JustificacionService,
-        AnotacionService
+        AnotacionService,
+        AlertaService
     ]
 })
 export class CompartidoModule { }

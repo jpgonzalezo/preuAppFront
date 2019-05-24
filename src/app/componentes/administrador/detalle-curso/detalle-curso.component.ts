@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { AsistenciaService } from 'src/app/servicios/asistencia.service';
+import { AlertaService } from 'src/app/servicios/alerta.service';
 import { Alumno } from 'src/app/modelos/alumno.model';
+import { Alerta } from 'src/app/modelos/alerta.model';
 import { Curso } from 'src/app/modelos/curso.model';
 import { Config } from 'src/app/config';
 import { Asistencia } from 'src/app/modelos/asistencia.model';
@@ -22,18 +24,26 @@ export class DetalleCursoComponent implements OnInit {
   pageAsistencia: number;
   pageSizeAsistencia: number;
   collectionSizeAsistencia: number;
+  pageAlerta: number;
+  pageSizeAlerta: number;
+  collectionSizeAlerta: number;
+  alertas: Alerta[];
   asistencias: Asistencia[]
   constructor(private _activatedRoute:ActivatedRoute, 
     private _alumnoService:AlumnoService,
     private _cursoService:CursoService,
     private _asistenciaService: AsistenciaService,
+    private _alertaService: AlertaService,
     private _router: Router) {
       this.pageAlumno = 1;
       this.pageSizeAlumno = 10;
       this.pageAsistencia = 1;
       this.pageSizeAsistencia = 10;
+      this.pageAlerta = 1;
+      this.pageSizeAlerta = 10;
       this.alumnos = [];
       this.asistencias = [];
+      this.alertas = [];
       this.curso = {'nombre':"",'id':''}
     }
 
@@ -42,6 +52,7 @@ export class DetalleCursoComponent implements OnInit {
     this.getCurso();
     this.getAlumnosCurso();
     this.getAsistenciaCurso();
+    this.getAlertasCurso();
   }
 
   getCurso(){
@@ -71,6 +82,13 @@ export class DetalleCursoComponent implements OnInit {
     this._router.navigateByUrl('/admin/perfiles/hoja_vida/'+id);
   }
 
+  getAlertasCurso(){
+    this._alertaService.getAlertasCurso(this.id_curso).subscribe((data:Alerta[])=>{
+      this.alertas = data
+      this.collectionSizeAlerta = this.alertas.length
+    })
+  }
+
   volver(){
     this._router.navigateByUrl('/admin/cursos');
   }
@@ -84,5 +102,11 @@ export class DetalleCursoComponent implements OnInit {
     return this.asistencias
       .map((asistencia, i) => ({id: i + 1, ...asistencia}))
       .slice((this.pageAsistencia - 1) * this.pageSizeAsistencia, (this.pageAsistencia - 1) * this.pageSizeAsistencia + this.pageSizeAsistencia);
+  }
+
+  get alertas_tabla(): Alerta[] {
+    return this.alertas
+      .map((alerta, i) => ({id: i + 1, ...alerta}))
+      .slice((this.pageAlerta - 1) * this.pageSizeAlerta, (this.pageAlerta - 1) * this.pageSizeAlerta + this.pageSizeAlerta);
   }
 }

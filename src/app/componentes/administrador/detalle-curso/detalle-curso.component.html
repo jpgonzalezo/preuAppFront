@@ -107,47 +107,82 @@
               <div class="mb-8 ">
                 <br>
                 <div class="table-responsive-lg">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col">Fecha</th>
-                          <th scope="col">Asignatura</th>
-                          <th scope="col">Alumnos Presentes</th>
-                          <th scope="col">Alumnos Ausentes</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let asistencia of asistencias_tabla">
-                          <td>{{ asistencia.fecha }}</td>
-                          <td>{{ asistencia.asignatura.nombre }}</td>
-                          <td>{{ asistencia.alumnos_presentes.length }}</td>
-                          <td>{{ asistencia.alumnos_ausentes.length }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="d-flex justify-content-between p-2">
-                      <ngb-pagination [collectionSize]="collectionSizeAsistencia" [(page)]="pageAsistencia"
-                        [pageSize]="pageSizeAsistencia">
-                      </ngb-pagination>
-  
-                      <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsistencia">
-                        <option [ngValue]="10">10 asistencias por página</option>
-                        <option [ngValue]="20">20 asistencias por página</option>
-                        <option [ngValue]="30">30 asistencias por página</option>
-                      </select>
-                    </div>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Asignatura</th>
+                        <th scope="col">Alumnos Presentes</th>
+                        <th scope="col">Alumnos Ausentes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let asistencia of asistencias_tabla">
+                        <td>{{ asistencia.fecha }}</td>
+                        <td>{{ asistencia.asignatura.nombre }}</td>
+                        <td>{{ asistencia.alumnos_presentes.length }}</td>
+                        <td>{{ asistencia.alumnos_ausentes.length }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAsistencia" [(page)]="pageAsistencia"
+                      [pageSize]="pageSizeAsistencia">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsistencia">
+                      <option [ngValue]="10">10 asistencias por página</option>
+                      <option [ngValue]="20">20 asistencias por página</option>
+                      <option [ngValue]="30">30 asistencias por página</option>
+                    </select>
                   </div>
+                </div>
               </div>
             </div>
 
             <div class="tab-pane fade show" id="alertas_existente" role="tabpanel" aria-labelledby="alertas-tab">
               <div class="mb-8 ">
                 <br>
-                alertas
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Contenido</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let alerta of alertas_tabla">
+                        <td>{{ alerta.fecha }}</td>
+                        <td>{{ alerta.alumno.nombres }} {{ alerta.alumno.apellido_paterno }}
+                          {{ alerta.alumno.apellido_materno }}</td>
+                        <td>
+                            <span *ngIf="alerta.tipo == 'RENDIMIENTO'"class="badge badge-pill badge-danger">{{ alerta.tipo }}</span>
+                            <span *ngIf="alerta.tipo == 'ASISTENCIA'"class="badge badge-pill badge-warning">{{ alerta.tipo }}</span>
+                        </td>
+                        <td>{{ alerta.data }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlerta" [(page)]="pageAlerta"
+                      [pageSize]="pageSizeAlerta">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlerta">
+                      <option [ngValue]="10">10 alertas por página</option>
+                      <option [ngValue]="20">20 alertas por página</option>
+                      <option [ngValue]="30">30 alertas por página</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="tab-pane fade show" id="asignaturas_existente" role="tabpanel" aria-labelledby="asignaturas-tab">
+            <div class="tab-pane fade show" id="asignaturas_existente" role="tabpanel"
+              aria-labelledby="asignaturas-tab">
               <div class="mb-8 ">
                 <br>
                 asignaturas
@@ -161,10 +196,10 @@
       </div>
 
       <div class="text-center">
-          <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
-          </button>
-          <br>
-        </div>
+        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
+        </button>
+        <br>
+      </div>
     </div>
   </section>
 </main>
