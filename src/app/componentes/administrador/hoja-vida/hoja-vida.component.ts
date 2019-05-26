@@ -11,6 +11,10 @@ import { Justificacion } from 'src/app/modelos/justificacion.model';
 import { Alerta } from 'src/app/modelos/alerta.model';
 import swal from'sweetalert2';
 import { Config } from 'src/app/config';
+import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
+import { Label,MultiDataSet } from 'ng2-charts';
+import { ChartOptions} from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-hoja-vida',
   templateUrl: './hoja-vida.component.html',
@@ -39,6 +43,56 @@ export class HojaVidaComponent implements OnInit {
   id_hoja_vida:string;
   justificaciones: Justificacion[];
   alertas: Alerta[];
+
+
+    // Radar
+    public radarChartOptions: RadialChartOptions = {
+      responsive: true,
+    };
+    public radarChartLabels: Label[] = [];
+  
+    public radarChartData: ChartDataSets[] = [{ data: [], label: '' }];
+    public radarChartType: ChartType = 'radar';
+
+
+
+    public barChartOptionsAsignatura: ChartOptions = {
+      responsive: true,
+      // We use these empty structures as placeholders for dynamic theming.
+      scales: { xAxes: [{}], yAxes: [{}] },
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'end',
+        }
+      }
+    };
+    public barChartLabelsAsignatura: Label[] = [];
+    public barChartTypeAsignatura: ChartType = 'bar';
+    public barChartLegendAsignatura = true;
+    public barChartPluginsAsignatura = [pluginDataLabels];
+  
+    public barChartDataAsignatura: ChartDataSets[] = [{ data: [], label: '' }];
+
+    public barChartOptionsAnual: ChartOptions = {
+      responsive: true,
+      // We use these empty structures as placeholders for dynamic theming.
+      scales: { xAxes: [{}], yAxes: [{}] },
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'end',
+        }
+      }
+    };
+    public barChartLabelsAnual: Label[] = [];
+    public barChartTypeAnual: ChartType = 'bar';
+    public barChartLegendAnual = true;
+    public barChartPluginsAnual = [pluginDataLabels];
+  
+    public barChartDataAnual: ChartDataSets[] = [{ data: [], label: '' }];
+
+
   constructor(private _alumnoService:AlumnoService, 
     private _observacionService: ObservacionService,
     private _administradorCompartidoService: AdministradorCompartidoService,
@@ -74,6 +128,25 @@ export class HojaVidaComponent implements OnInit {
     this.getObservacionesPsicologo()
     this.getJustificaciones()
     this.getAlertasAlumno()
+    this.getAlumnoGraficoRendimiento()
+    this.getAlumnoGraficoAsistencia()
+  }
+
+  public getAlumnoGraficoRendimiento(){
+    this._alumnoService.getAlumnoGraficoRendimiento(this.id_hoja_vida).subscribe((data:any)=>{
+      this.radarChartLabels = data['labels']
+      this.radarChartData = data['data']
+    })
+  }
+
+  public getAlumnoGraficoAsistencia(){
+    this._alumnoService.getAlumnoGraficoAsistencia(this.id_hoja_vida).subscribe((data:any)=>{
+      this.barChartLabelsAsignatura = data['grafico_asignatura'].labels
+      this.barChartDataAsignatura = data['grafico_asignatura'].data
+      this.barChartLabelsAnual = data['grafico_anual'].labels
+      this.barChartDataAnual = data['grafico_anual'].data
+      console.log(data)
+    })
   }
 
   public getHojaVida(id:string){

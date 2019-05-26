@@ -48,6 +48,74 @@
           </div>
 
           <div class="mt-5 py-5 border-top text-center">
+            <h4 class="display-3 pull-rigth">Rendimiento y Asistencia</h4>
+            <div class="row justify-content-center">
+              <div class="col-xl-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="rendimiento-tab" data-toggle="tab" href="#rendimiento_observacion"
+                      role="tab" aria-controls="rendimiento" aria-selected="false">Rendimiento</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia_observacion" role="tab"
+                      aria-controls="asistencia" aria-selected="true">Asistencia</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="rendimiento_observacion" role="tabpanel"
+                    aria-labelledby="rendimiento-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div>
+                        <div>
+                          <div style="display: block">
+                            <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions"
+                              [labels]="radarChartLabels" [chartType]="radarChartType">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade show" id="asistencia_observacion" role="tabpanel"
+                    aria-labelledby="asistencia-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div>
+                        <h5>Asistencia Anual</h5>
+                        <div>
+                          <div style="display: block">
+                            <canvas baseChart [datasets]="barChartDataAnual" [labels]="barChartLabelsAnual"
+                              [options]="barChartOptionsAnual" [plugins]="barChartPluginsAnual" [legend]="barChartLegendAnual"
+                              [chartType]="barChartTypeAnual">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div>
+                        <h5>Asistencia Asignaturas</h5>
+                        <div>
+                          <div style="display: block">
+                            <canvas baseChart [datasets]="barChartDataAsignatura" [labels]="barChartLabelsAsignatura"
+                              [options]="barChartOptionsAsignatura" [plugins]="barChartPluginsAsignatura" [legend]="barChartLegendAsignatura"
+                              [chartType]="barChartTypeAsignatura">
+                            </canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="mt-5 py-5 border-top text-center">
             <h4 class="display-3 pull-rigth">Observaciones</h4>
             <div class="row justify-content-center">
               <div class="col-xl-12">
@@ -259,7 +327,12 @@
                           <tbody>
                             <tr *ngFor="let alerta of alertas_tabla">
                               <td>{{alerta.fecha}}</td>
-                              <td>{{alerta.tipo}}</td>
+                              <td>
+                                <span *ngIf="alerta.tipo == 'RENDIMIENTO'"
+                                  class="badge badge-pill badge-danger">{{ alerta.tipo }}</span>
+                                <span *ngIf="alerta.tipo == 'ASISTENCIA'"
+                                  class="badge badge-pill badge-warning">{{ alerta.tipo }}</span>
+                              </td>
                               <td>{{alerta.data}}</td>
                             </tr>
                           </tbody>
@@ -283,6 +356,11 @@
               </div>
             </div>
           </div>
+
+
+
+
+
         </div>
       </div>
     </div>

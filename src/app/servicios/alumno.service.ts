@@ -64,4 +64,20 @@ export class AlumnoService {
     }
     return this.httpClient.get(`${this.API_URL}/alumno_imagen_default/${id}`,options).pipe(map(res => res))
   }
+
+  getAlumnoGraficoRendimiento(id:string){
+    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+    const options = {
+      headers:headers
+    }
+    return this.httpClient.get(`${this.API_URL}/alumno_grafico_rendimiento/${id}`,options).pipe(map(res => res))
+  }
+
+  getAlumnoGraficoAsistencia(id:string){
+    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+    const options = {
+      headers:headers
+    }
+    return this.httpClient.get(`${this.API_URL}/alumno_grafico_asistencia/${id}`,options).pipe(map(res => res))
+  }
 }
