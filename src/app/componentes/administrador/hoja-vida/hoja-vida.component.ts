@@ -3,10 +3,12 @@ import { AlumnoService } from '../../../servicios/alumno.service';
 import { JustificacionService } from 'src/app/servicios/justificacion.service';
 import { ObservacionService } from '../../../servicios/observacion.service';
 import { AdministradorCompartidoService } from '../administrador.compartido.service';
+import { AlertaService } from 'src/app/servicios/alerta.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { Justificacion } from 'src/app/modelos/justificacion.model';
+import { Alerta } from 'src/app/modelos/alerta.model';
 import swal from'sweetalert2';
 import { Config } from 'src/app/config';
 @Component({
@@ -19,9 +21,12 @@ export class HojaVidaComponent implements OnInit {
   pageProfesor: number;
   pagePsicologo: number;
   pageJustificacion: number;
+  pageAlerta: number;
+  pageSizeAlerta:number;
   pageSizeJustificacion: number;
   pageSizeObservacionAdministrador: number;
   collectionSizeObservacionAdministrador: number;
+  collectionSizeAlerta:number;
   pageSizeObservacionProfesor: number;
   collectionSizeJustificacion: number;
   collectionSizeObservacionProfesor: number;
@@ -33,23 +38,28 @@ export class HojaVidaComponent implements OnInit {
   hoja_vida:any;
   id_hoja_vida:string;
   justificaciones: Justificacion[];
+  alertas: Alerta[];
   constructor(private _alumnoService:AlumnoService, 
     private _observacionService: ObservacionService,
     private _administradorCompartidoService: AdministradorCompartidoService,
     private router: Router,
     private _activatedRoute: ActivatedRoute,
     private _storageService: StorageService,
-    private _justificacionService: JustificacionService
+    private _justificacionService: JustificacionService,
+    private _alertaService: AlertaService
     ) {
     this.hoja_vida=[]
     this.observaciones_admin = []
     this.observaciones_profe = []
     this.observaciones_psico = []
+    this.alertas = []
     this.justificaciones = []
     this.pageAdministrador = 1;
     this.pageProfesor = 1;
     this.pagePsicologo = 1;
     this.pageJustificacion = 1;
+    this.pageAlerta = 1;
+    this.pageSizeAlerta = 4;
     this.pageSizeObservacionAdministrador = 4;
     this.pageSizeObservacionProfesor = 4;
     this.pageSizeObservacionPsicologo = 4;
@@ -63,6 +73,7 @@ export class HojaVidaComponent implements OnInit {
     this.getObservacionesProfesor()
     this.getObservacionesPsicologo()
     this.getJustificaciones()
+    this.getAlertasAlumno()
   }
 
   public getHojaVida(id:string){
@@ -101,8 +112,14 @@ export class HojaVidaComponent implements OnInit {
   public getJustificaciones(){
     this._justificacionService.getJustificacionesAlumno(this.id_hoja_vida).subscribe((data: Justificacion[])=>{
       this.justificaciones = data
-      console.log(data)
       this.collectionSizeJustificacion = this.justificaciones.length
+    })
+  }
+
+  public getAlertasAlumno(){
+    this._alertaService.getAlertasAlumno(this.id_hoja_vida).subscribe((data:Alerta[])=>{
+      this.alertas = data
+      this.collectionSizeAlerta = this.alertas.length
     })
   }
 
@@ -117,6 +134,12 @@ export class HojaVidaComponent implements OnInit {
     return this.justificaciones
       .map((justificacion, i) => ({id: i + 1, ...justificacion}))
       .slice((this.pageJustificacion - 1) * this.pageSizeJustificacion, (this.pageJustificacion - 1) * this.pageSizeJustificacion + this.pageSizeJustificacion);
+  }
+
+  get alertas_tabla(): Alerta[] {
+    return this.alertas
+      .map((alerta, i) => ({id: i + 1, ...alerta}))
+      .slice((this.pageAlerta - 1) * this.pageSizeAlerta, (this.pageAlerta - 1) * this.pageSizeAlerta + this.pageSizeAlerta);
   }
 
   get observaciones_psicologo_tabla(): any[] {

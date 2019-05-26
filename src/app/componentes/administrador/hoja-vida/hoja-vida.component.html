@@ -188,7 +188,7 @@
 
 
           <div class="mt-5 py-5 border-top text-center">
-            <h4 class="display-3 pull-rigth">Justificaciones</h4>
+            <h4 class="display-3 pull-rigth">Justificaciones y Alertas</h4>
             <div class="row justify-content-center">
               <div class="col-xl-12">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -196,6 +196,10 @@
                     <a class="nav-link active" id="justificacion-tab" data-toggle="tab"
                       href="#justificacion_observacion" role="tab" aria-controls="justificacion"
                       aria-selected="false">Justificaciones</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="alerta-tab" data-toggle="tab" href="#alerta_observacion" role="tab"
+                      aria-controls="alerta" aria-selected="false">Alertas</a>
                   </li>
                 </ul>
 
@@ -224,12 +228,11 @@
                           </tbody>
                         </table>
                         <div class="d-flex justify-content-between p-2">
-                          <ngb-pagination [collectionSize]="collectionSizeJustificacion"
-                            [(page)]="pageJustificacion" [pageSize]="pageSizeJustificacion">
+                          <ngb-pagination [collectionSize]="collectionSizeJustificacion" [(page)]="pageJustificacion"
+                            [pageSize]="pageSizeJustificacion">
                           </ngb-pagination>
 
-                          <select class="custom-select" style="width: auto"
-                            [(ngModel)]="pageSizeJustificacion">
+                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeJustificacion">
                             <option [ngValue]="4">4 observaciones por página</option>
                             <option [ngValue]="8">8 observaciones por página</option>
                             <option [ngValue]="10">10 observaciones por página</option>
@@ -238,6 +241,44 @@
                       </div>
                     </div>
                   </div>
+
+
+                  <div class="tab-pane fade show" id="alerta_observacion" role="tabpanel"
+                    aria-labelledby="justificacion-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Fecha</th>
+                              <th scope="col">Tipo</th>
+                              <th scope="col">Contenido</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let alerta of alertas_tabla">
+                              <td>{{alerta.fecha}}</td>
+                              <td>{{alerta.tipo}}</td>
+                              <td>{{alerta.data}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                          <ngb-pagination [collectionSize]="collectionSizeAlerta" [(page)]="pageAlerta"
+                            [pageSize]="pageSizeAlerta">
+                          </ngb-pagination>
+
+                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlerta">
+                            <option [ngValue]="4">4 alertas por página</option>
+                            <option [ngValue]="8">8 alertas por página</option>
+                            <option [ngValue]="10">10 alertas por página</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
