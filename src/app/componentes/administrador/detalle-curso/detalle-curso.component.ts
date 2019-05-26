@@ -12,6 +12,12 @@ import { Curso } from 'src/app/modelos/curso.model';
 import { Config } from 'src/app/config';
 import { Asistencia } from 'src/app/modelos/asistencia.model';
 import Swal from 'sweetalert2';
+
+
+import { SingleDataSet, Label } from 'ng2-charts';
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+
 @Component({
   selector: 'app-detalle-curso',
   templateUrl: './detalle-curso.component.html',
@@ -36,6 +42,34 @@ export class DetalleCursoComponent implements OnInit {
   alertas: Alerta[];
   asistencias: Asistencia[]
   asignaturas: Asignatura[]
+  activoGrafico: boolean;
+
+  // PolarArea
+  public polarAreaChartLabels: Label[];
+  public polarAreaChartData: SingleDataSet = [];
+  public polarAreaLegend = true;
+  public polarAreaChartType: ChartType = 'polarArea';
+
+
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+  public barChartLabels: Label[] = [];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartPlugins = [pluginDataLabels];
+
+  public barChartData: ChartDataSets[] = [{ data:[], label: '' }];
+
+
   constructor(private _activatedRoute:ActivatedRoute, 
     private _alumnoService:AlumnoService,
     private _cursoService:CursoService,
@@ -56,6 +90,9 @@ export class DetalleCursoComponent implements OnInit {
       this.alertas = [];
       this.asignaturas = [];
       this.curso = new Curso();
+      this.barChartLabels = []
+      this.polarAreaChartLabels = []
+      this.activoGrafico = false;
     }
 
   ngOnInit() {
@@ -66,12 +103,37 @@ export class DetalleCursoComponent implements OnInit {
     this.getAlertasCurso();
   }
 
+
+
+  // events
+  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
+
+  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
+
+
+
   getCurso(){
     this._cursoService.getCurso(this.id_curso).subscribe((data:Curso)=>{
       this.curso = data;
       this.asignaturas = data.asignaturas
       this.collectionSizeAsignatura = data.asignaturas.length
     })
+
+    this._cursoService.getGraficoAsistencia(this.id_curso).subscribe((data:any)=>{
+      this.barChartLabels = data['labels']
+      this.barChartData = data['data']
+    })
+
+    this._cursoService.getGraficoAsignaturas(this.id_curso).subscribe((data:any)=>{
+      this.polarAreaChartData = data['data']
+      this.polarAreaChartLabels = data['labels']
+    })
+
+    this.activoGrafico = true
   }
 
   getAlumnosCurso(){
@@ -138,7 +200,7 @@ export class DetalleCursoComponent implements OnInit {
       }
     })
   }
-  
+
   agregarAsignatura(){
     this._asignaturaService.getAsignaturas().subscribe((data:Asignatura[])=>{
       var asignaturas={}
