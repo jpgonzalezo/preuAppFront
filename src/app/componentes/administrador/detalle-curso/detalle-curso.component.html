@@ -6,40 +6,71 @@
       <hr>
       <div class="row row-grid align-items-center">
 
-        <div class="col-lg-6" *ngIf="activoGrafico">
-          <div class="card shadow card-lift--hover border-0">
-            <div class="card-body py-5 text-center">
-              <div>
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="rendimiento-tab" data-toggle="tab" href="#rendimiento_observacion"
+                role="tab" aria-controls="rendimiento" aria-selected="false">Rendimiento</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia_observacion" role="tab"
+                aria-controls="asistencia" aria-selected="true">Asistencia</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="rendimiento_observacion" role="tabpanel"
+              aria-labelledby="rendimiento-tab">
+              <div class="mb-8 ">
+                <br>
                 <div>
-                  <div style="display: block">
-                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-                      [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
-                    </canvas>
+                  <h5>Promedio Puntaje Asignaturas</h5>
+                  <div>
+                    <div style="display: block">
+                      <canvas baseChart [data]="polarAreaChartData" [labels]="polarAreaChartLabels"
+                        [legend]="polarAreaLegend" [chartType]="polarAreaChartType">
+                      </canvas>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="col-lg-6" *ngIf="activoGrafico">
-          <div class="card shadow card-lift--hover border-0">
-            <div class="card-body py-5 text-center">
-              <div>
+            <div class="tab-pane fade show" id="asistencia_observacion" role="tabpanel"
+              aria-labelledby="asistencia-tab">
+              <div class="mb-8 ">
+                <br>
                 <div>
-                  <div style="display: block">
-                    <canvas baseChart [data]="polarAreaChartData" [labels]="polarAreaChartLabels"
-                      [legend]="polarAreaLegend" [chartType]="polarAreaChartType">
-                    </canvas>
+                  <h5>Asistencia Anual</h5>
+                  <div>
+                    <div>
+                      <div style="display: block">
+                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                          [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+                          [chartType]="barChartType">
+                        </canvas>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+                <br>
+                <div>
+                  <h5>Asistencia Asignaturas</h5>
+                  <div>
+                    <div style="display: block">
+                      <canvas baseChart [datasets]="barChartDataAsignatura" [labels]="barChartLabelsAsignatura"
+                        [options]="barChartOptionsAsignatura" [plugins]="barChartPluginsAsignatura"
+                        [legend]="barChartLegendAsignatura" [chartType]="barChartTypeAsignatura">
+                      </canvas>
+                    </div>
+                  </div>
+                </div>
 
+
+              </div>
             </div>
           </div>
         </div>
-
-
         <hr>
       </div>
       <hr>

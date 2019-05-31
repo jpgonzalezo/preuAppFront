@@ -39,4 +39,12 @@ export class AlertaService {
         }
         return this.httpClient.get(`${this.API_URL}/alertas_alumno/${id}`,options).pipe(map(res => res))
     }
+
+    getAlertasAsignatura(id:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        const options = {
+            headers: headers
+        }
+        return this.httpClient.get(`${this.API_URL}/alertas_asignatura/${id}`,options).pipe(map(res => res))
+    }
 }

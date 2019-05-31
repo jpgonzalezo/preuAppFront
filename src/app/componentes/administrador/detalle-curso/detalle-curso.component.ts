@@ -70,6 +70,25 @@ export class DetalleCursoComponent implements OnInit {
   public barChartData: ChartDataSets[] = [{ data:[], label: '' }];
 
 
+
+  public barChartOptionsAsignatura: ChartOptions = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+  public barChartLabelsAsignatura: Label[] = [];
+  public barChartTypeAsignatura: ChartType = 'bar';
+  public barChartLegendAsignatura = true;
+  public barChartPluginsAsignatura = [pluginDataLabels];
+  public barChartDataAsignatura: ChartDataSets[] = [{ data:[], label: '' }];
+
+
   constructor(private _activatedRoute:ActivatedRoute, 
     private _alumnoService:AlumnoService,
     private _cursoService:CursoService,
@@ -126,6 +145,11 @@ export class DetalleCursoComponent implements OnInit {
     this._cursoService.getGraficoAsistencia(this.id_curso).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
+    })
+
+    this._cursoService.getGraficoAsistenciaAsignatura(this.id_curso).subscribe((data:any)=>{
+      this.barChartLabelsAsignatura = data['labels']
+      this.barChartDataAsignatura = data['data']
     })
 
     this._cursoService.getGraficoAsignaturas(this.id_curso).subscribe((data:any)=>{

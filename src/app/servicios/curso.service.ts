@@ -63,6 +63,13 @@ export class CursoService {
   	}
     return this.httpClient.get(`${this.API_URL}/curso_grafico_asistencia/${id}`,options).pipe(map(res => res))
 	}
+	getGraficoAsistenciaAsignatura(id:string){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/curso_grafico_asistencia_asignatura/${id}`,options).pipe(map(res => res))
+	}
 
 	getGraficoAsignaturas(id:string){
   	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

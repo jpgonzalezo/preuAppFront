@@ -38,6 +38,14 @@ export class AsistenciaService {
     return this.httpClient.get(`${this.API_URL}/asistencias_curso/${id}`,options).pipe(map(res => res))
 	}
 
+	getAsistenciasAsignatura(id:string){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/asistencias_asignatura/${id}`,options).pipe(map(res => res))
+	}
+
 	deleteAsistencia(id:string){
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   	const options = {
