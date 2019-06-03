@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Curso } from 'src/app/modelos/curso.model';
+import { Justificacion } from 'src/app/modelos/justificacion.model';
 import { CursoService } from 'src/app/servicios/curso.service';
+import { JustificacionService } from'src/app/servicios/justificacion.service';
 import { Asistencia } from 'src/app/modelos/asistencia.model';
 import { AsistenciaService } from 'src/app/servicios/asistencia.service';
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-asistencia',
@@ -13,27 +16,41 @@ export class AsistenciaComponent implements OnInit {
   pageAsistencia: number;
   pageSizeAsistencia: number;
   collectionSizeAsistencia: number;
+  pageJustificacion: number;
+  pageSizeJustificacion: number;
+  collectionSizeJustificacion: number;
   cursos: Curso[];
   asistencias: Asistencia[]
+  justificaciones: Justificacion[]
   paginacionTabla: any[]
-  constructor(private _router:Router,private _asistenciaService: AsistenciaService,private _cursoService: CursoService) {
+  constructor(private _justificacionService: JustificacionService,private _router:Router,private _asistenciaService: AsistenciaService,private _cursoService: CursoService) {
     this.pageAsistencia=1;
     this.pageSizeAsistencia = 4;
+    this.pageJustificacion=1;
+    this.pageSizeJustificacion = 4;
     this.cursos = []
     this.asistencias = []
+    this.justificaciones = []
   }
 
   ngOnInit() {
     this.paginacionTabla = []
     this.getCursos()
     this.getAsistencias()
+    this.getJustificaciones()
   }
 
   getAsistencias(){
     this._asistenciaService.getAsistencias().subscribe((data:Asistencia[])=>{
       this.asistencias = data
-      console.log(data)
       this.collectionSizeAsistencia = this.asistencias.length
+    })
+  }
+
+  getJustificaciones(){
+    this._justificacionService.getJustificaciones().subscribe((data:Justificacion[])=>{
+      this.justificaciones = data
+      this.collectionSizeJustificacion = this.justificaciones.length
     })
   }
 
@@ -43,12 +60,46 @@ export class AsistenciaComponent implements OnInit {
     })
   }
 
+  deleteJustificacion(id:string){
+    Swal.fire({
+      title: 'Desea eliminar esta justificación?',
+      text: "Estos cambios son irreversibles!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#5cb85c',
+      cancelButtonColor: '#d9534f',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.dismiss==null) {
+        this._justificacionService.deleteJustificacion(id).subscribe((data:any)=>{
+          if(data['Response']=='exito'){
+            Swal.fire({
+              type: 'success',
+              title: 'Registro exitoso',
+              text: 'Se ha eliminado la justificación correctamente',
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#5cb85c',
+            }).then((result2)=>{
+              this.getJustificaciones()
+            })
+          }
+        })
+      }
+    })
+  }
+
   get asistencias_tabla(): any[] {
     return this.asistencias
       .map((asistencia, i) => ({id: i + 1, ...asistencia}))
       .slice((this.pageAsistencia - 1) * this.pageSizeAsistencia, (this.pageAsistencia - 1) * this.pageSizeAsistencia + this.pageSizeAsistencia);
   }
 
+  get justificaciones_tabla(): any[] {
+    return this.justificaciones
+      .map((justificacion, i) => ({id: i + 1, ...justificacion}))
+      .slice((this.pageJustificacion - 1) * this.pageSizeJustificacion, (this.pageJustificacion - 1) * this.pageSizeJustificacion + this.pageSizeJustificacion);
+  }
   generarNuevaAsistencia(){
     this._router.navigateByUrl('/admin/asistencia/nueva_asistencia');
   }

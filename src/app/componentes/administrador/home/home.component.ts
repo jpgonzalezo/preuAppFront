@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EstadisticaService } from 'src/app/servicios/estadistica.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-
+import swal from'sweetalert2';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { EventInput } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGrigPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
+import esLocale from '@fullcalendar/core/locales/es';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,54 +15,33 @@ import { StorageService } from 'src/app/servicios/storage.service';
 })
 export class HomeComponent implements OnInit {
   usuario: any
-  public data:any=[]
-  public barChartData:any[] = [
-    {data: [100,0,0,100,0,0,0,0,0,0,0,0], label: 'asignatura1'}
-  ];
   constructor(private _estadisticaService: EstadisticaService,
               private _storageService: StorageService
   ) {
   }
-
   ngOnInit() {
-    this.get_estadistica()
     this.usuario = this._storageService.getCurrentUser()
   }
 
-  get_estadistica(){
-    this._estadisticaService.getEstadisticaResumen().subscribe((data: any) => (
-      this.data = data)
-    );
-  }
 
-  public barChartOptions:any = {
-    scaleShowVerticalLines: true,
-    responsive: true
-  };
-
-
-  public barChartLabels:string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = true;
- 
-
- 
-  // events
-  public chartClicked(e:any):void {
-    //console.log(e);
-  }
- 
-  public chartHovered(e:any):void {
-    //console.log(e);
-  }
-
-  // Radar
-  public radarChartLabels:string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-  public radarChartData:any = [
-    {data: [65, 59, 90, 81, 56, 55, 40], label: 'Asistencia'},
-    {data: [28, 48, 40, 19, 96, 27, 100], label: 'Inasistencia'}
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent; // the #calendar in the template
+  esLocale = esLocale
+  monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+  calendarVisible = true;
+  calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
+  calendarWeekends = true;
+  calendarEvents: EventInput[] = [
+    { title: 'Event Now', start: new Date() }
   ];
-  public radarChartType:string = 'radar';
+
+  handleDateClick(arg) {
+    if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
+      this.calendarEvents = this.calendarEvents.concat({ // add new event data. must create new array
+        title: 'New Event',
+        start: arg.date,
+        allDay: arg.allDay
+      })
+    }
+  }
 
 }

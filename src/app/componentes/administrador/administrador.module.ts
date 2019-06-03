@@ -8,6 +8,7 @@ import localeEs from '@angular/common/locales/es';
 import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule} from '@angular/forms';
+import { FullCalendarModule } from '@fullcalendar/angular';
 // register 'es' locale
 registerLocaleData(localeEs);
 
@@ -68,7 +69,8 @@ const routes: Routes = [
         HttpClientModule,
         ReactiveFormsModule,
         ChartsModule,
-        NgbModule
+        NgbModule,
+        FullCalendarModule
     ],
     declarations: [
         HomeComponent,

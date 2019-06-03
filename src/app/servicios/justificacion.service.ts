@@ -39,4 +39,11 @@ export class JustificacionService {
 		}
 	  	return this.httpClient.get(`${this.API_URL}/justificaciones_alumno/${id}`,options).pipe(map(res => res))
 	}
+	deleteJustificacion(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.delete(`${this.API_URL}/justificaciones/${id}`,options).pipe(map(res => res))
+	}
 }
