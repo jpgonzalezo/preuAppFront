@@ -8,6 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import esLocale from '@fullcalendar/core/locales/es';
+import bootstrapPlugin from '@fullcalendar/bootstrap';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
 
 
   @ViewChild('calendar') calendarComponent: FullCalendarComponent; // the #calendar in the template
+  bootstrapPlugin = bootstrapPlugin
   esLocale = esLocale
   monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
   calendarVisible = true;
