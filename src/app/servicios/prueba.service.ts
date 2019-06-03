@@ -8,13 +8,45 @@ export class PruebaService {
     API_URL = Config.API_SERVER_URL;
     constructor(private httpClient: HttpClient) { }
 
-    getPruebas(){
-  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  	    const options = {
-  		    headers: headers
-  	    }
-        return this.httpClient.get(`${this.API_URL}/pruebas`,options).pipe(map(res => res))
-    }
+	getGraficoRendimientoPreguntas(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/preguntas/${id}`,options).pipe(map(res => res))
+	}
+	getGraficoRendimientoTopicos(id: string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/topicos/${id}`,options).pipe(map(res => res))
+	}
+
+	getGraficoRendimientoCursos(id: string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/cursos/${id}`,options).pipe(map(res => res))
+	}
+
+  getPruebas(){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/pruebas`,options).pipe(map(res => res))
+	}
+
+	
+	getPrueba(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.get(`${this.API_URL}/pruebas/${id}`,options).pipe(map(res => res))
+	}
 
 	getJustificacion(id:string){
   	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

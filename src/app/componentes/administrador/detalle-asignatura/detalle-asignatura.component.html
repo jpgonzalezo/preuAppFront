@@ -24,25 +24,8 @@
               <div class="mb-8 ">
                 <br>
                 <div>
-                  <h5>Promedio Puntaje Asignaturas</h5>
-                  <!--                   <div>
-                    <div style="display: block">
-                      <canvas baseChart [data]="polarAreaChartData" [labels]="polarAreaChartLabels"
-                        [legend]="polarAreaLegend" [chartType]="polarAreaChartType">
-                      </canvas>
-                    </div>
-                  </div> -->
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-pane fade show" id="asistencia_observacion" role="tabpanel"
-              aria-labelledby="asistencia-tab">
-              <div class="mb-8 ">
-                <br>
-                <div>
-                  <h5>Asistencia Anual</h5>
-                  <!--                   <div>
+                  <h5>Promedio tipo de evaluación cursos</h5>
+                  <div>
                     <div>
                       <div style="display: block">
                         <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
@@ -51,7 +34,27 @@
                         </canvas>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="asistencia_observacion" role="tabpanel"
+              aria-labelledby="asistencia-tab">
+              <div class="mb-8 ">
+                <br>
+                <div>
+                  <h5>Asistencia Cursos</h5>
+                  <div>
+                    <div style="display: block">
+                      <canvas baseChart [datasets]="barChartDataAsistencia" [labels]="barChartLabelsAsistencia"
+                        [options]="barChartOptionsAsistencia" [plugins]="barChartPluginsAsistencia"
+                        [legend]="barChartLegendAsistencia" [chartType]="barChartTypeAsistencia">
+                      </canvas>
+                    </div>
+                  </div>
                 </div>
 
 
@@ -172,7 +175,8 @@
             </div>
 
 
-            <div class="tab-pane fade show" id="evaluaciones_existente" role="tabpanel" aria-labelledby="evaluaciones-tab">
+            <div class="tab-pane fade show" id="evaluaciones_existente" role="tabpanel"
+              aria-labelledby="evaluaciones-tab">
               <div class="mb-8 ">
                 <br>
                 <div class="table-responsive-lg">
@@ -183,6 +187,7 @@
                         <th scope="col">Cantidad de Preguntas</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Tipo</th>
+                        <th scope="col">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -191,12 +196,16 @@
                         <td>{{ evaluacion.cantidad_preguntas }}</td>
                         <td>{{ evaluacion.fecha}}</td>
                         <td>
-                            <span *ngIf="evaluacion.tipo == 'ENSAYO'"
+                          <span *ngIf="evaluacion.tipo == 'ENSAYO'"
                             class="badge badge-pill badge-danger">{{ evaluacion.tipo }}</span>
                           <span *ngIf="evaluacion.tipo == 'TALLER'"
                             class="badge badge-pill badge-primary">{{ evaluacion.tipo }}</span>
-                            <span *ngIf="evaluacion.tipo == 'TAREA'"
+                          <span *ngIf="evaluacion.tipo == 'TAREA'"
                             class="badge badge-pill badge-success">{{ evaluacion.tipo }}</span>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-info btn-sm"
+                            (click)="verDetalleEvaluacion(evaluacion.id)"><i class="far fa-eye"></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -267,13 +276,11 @@
                     <thead>
                       <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let topico of topicos_tabla">
                         <td>{{ topico.nombre }}</td>
-                        <td>btn</td>
                       </tr>
                     </tbody>
                   </table>

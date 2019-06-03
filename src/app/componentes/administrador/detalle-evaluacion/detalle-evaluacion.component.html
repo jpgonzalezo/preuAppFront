@@ -1,0 +1,250 @@
+<app-header></app-header>
+<main>
+  <section class="section ">
+    <div class="container">
+      <h2 class="display-3">{{prueba.nombre}} ({{prueba.tipo}})</h2>
+      <hr>
+      <div class="row row-grid align-items-center">
+
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="preguntas-tab" data-toggle="tab" href="#preguntas_observacion" role="tab"
+                aria-controls="preguntas" aria-selected="false">Rendimiento Preguntas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " id="rendimiento-tab" data-toggle="tab" href="#rendimiento_observacion" role="tab"
+                aria-controls="rendimiento" aria-selected="false">Rendimiento Tópicos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia_observacion" role="tab"
+                aria-controls="asistencia" aria-selected="true">Rendimiento Curso</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="preguntas_observacion" role="tabpanel"
+              aria-labelledby="preguntas-tab">
+              <div class="mb-8 ">
+                <br>
+                <div>
+                  <h5>Rendimiento por pregunta de evaluación</h5>
+                  <div>
+                    <div>
+                      <div style="display: block">
+                        <canvas baseChart [datasets]="barChartDataPreguntas" [labels]="barChartLabelsPreguntas"
+                          [options]="barChartOptionsPreguntas" [plugins]="barChartPluginsPreguntas" [legend]="barChartLegendPreguntas"
+                          [chartType]="barChartTypePreguntas">
+                        </canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+
+            <div class="tab-pane fade show" id="rendimiento_observacion" role="tabpanel"
+              aria-labelledby="rendimiento-tab">
+              <div class="mb-8 ">
+                <br>
+                <div>
+                  <h5>Rendimiento por tópicos</h5>
+                  <div>
+                      <div>
+                        <div style="display: block">
+                          <canvas baseChart [datasets]="barChartDataTopicos" [labels]="barChartLabelsTopicos"
+                            [options]="barChartOptionsTopicos" [plugins]="barChartPluginsTopicos" [legend]="barChartLegendTopicos"
+                            [chartType]="barChartTypeTopicos">
+                          </canvas>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="asistencia_observacion" role="tabpanel"
+              aria-labelledby="asistencia-tab">
+              <div class="mb-8 ">
+                <br>
+                <div>
+                  <h5>Asistencia Cursos</h5>
+                  <div>
+                      <div>
+                        <div style="display: block">
+                          <canvas baseChart
+                            [data]="doughnutChartData"
+                            [labels]="doughnutChartLabels"
+                            [chartType]="doughnutChartType">
+                          </canvas>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <hr>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="pregunta-tab" data-toggle="tab" href="#pregunta_existente" role="tab"
+                aria-controls="pregunta" aria-selected="false">Preguntas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="topicos-tab" data-toggle="tab" href="#topicos_existente" role="tab"
+                aria-controls="topicos" aria-selected="false">Topicos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="evaluaciones-tab" data-toggle="tab" href="#evaluaciones_existente" role="tab"
+                aria-controls="evaluaciones" aria-selected="false">Evaluaciones Realizadas</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+
+            <div class="tab-pane fade show active" id="pregunta_existente" role="tabpanel"
+              aria-labelledby="pregunta-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Pregunta</th>
+                        <th scope="col" *ngIf="prueba.tipo != 'TAREA'">Alternativa Correcta</th>
+                        <th scope="col">Topico</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let pregunta of preguntas_tabla">
+                        <td>{{ pregunta.numero_pregunta }}</td>
+                        <td *ngIf="prueba.tipo != 'TAREA'">{{ pregunta.alternativa }}</td>
+                        <td>{{ pregunta.topico.nombre }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizePreguntas" [(page)]="pagePreguntas"
+                      [pageSize]="pageSizePreguntas">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizePreguntas">
+                      <option [ngValue]="10">10 preguntas por página</option>
+                      <option [ngValue]="20">20 preguntas por página</option>
+                      <option [ngValue]="30">30 preguntas por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="topicos_existente" role="tabpanel" aria-labelledby="topicos-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let topico of topicos_tabla">
+                        <td>{{ topico.nombre }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeTopico" [(page)]="pageTopico"
+                      [pageSize]="pageSizeTopico">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeTopico">
+                      <option [ngValue]="10">10 topicos por página</option>
+                      <option [ngValue]="20">20 topicos por página</option>
+                      <option [ngValue]="30">30 topicos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="evaluaciones_existente" role="tabpanel"
+              aria-labelledby="evaluaciones-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Correctas</th>
+                        <th scope="col">Incorrectas</th>
+                        <th scope="col">Omitidas</th>
+                        <th scope="col">Puntaje</th>
+                        <th scope="col" *ngIf="prueba.tipo != 'TAREA'">Respuestas</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let evaluacion of evaluaciones_realizadas_tabla">
+                        <td>{{ evaluacion.alumno.nombres }} {{ evaluacion.alumno.apellido_paterno }}
+                          {{ evaluacion.alumno.apellido_materno }}</td>
+                        <td>{{ evaluacion.alumno.curso.nombre }}</td>
+                        <td>
+                          <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
+                        </td>
+                        <td>
+                          <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
+                        </td>
+                        <td>
+                          <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
+                        </td>
+                        <td>
+                          {{evaluacion.puntaje}}
+                        </td>
+                        <td *ngIf="prueba.tipo != 'TAREA'">
+                          <button type="button" class="btn btn-info btn-sm"
+                            (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i class="far fa-eye"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeEvaluacionesRealizadas"
+                      [(page)]="pageEvaluacionesRealizadas" [pageSize]="pageSizeEvaluacionesRealizadas">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeEvaluacionesRealizadas">
+                      <option [ngValue]="10">10 evaluaciones por página</option>
+                      <option [ngValue]="20">20 evaluaciones por página</option>
+                      <option [ngValue]="30">30 evaluaciones por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
+        </button>
+        <br>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer></app-footer>

@@ -39,4 +39,20 @@ export class AsignaturaService {
 		}
 		return this.httpClient.post(`${this.API_URL}/asignaturas`, JSON.stringify(data), options).pipe(map(res => res))
 	}
+
+	getGraficoRendimientoEvaluacionesAsignatura(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/evaluaciones/asignatura/${id}`,options).pipe(map(res => res))
+	}
+
+	getGraficoAsistenciaAsignatura(id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/asistencia/asignatura/${id}`,options).pipe(map(res => res))
+	}
 }

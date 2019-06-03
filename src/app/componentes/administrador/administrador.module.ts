@@ -38,6 +38,7 @@ import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignat
 import { NuevaAsistenciaComponent } from './nueva-asistencia/nueva-asistencia.component';
 import { DetalleAsistenciaComponent } from './detalle-asistencia/detalle-asistencia.component';
 import { DetalleProfesorComponent } from './detalle-profesor/detalle-profesor.component';
+import { DetalleEvaluacionComponent } from './detalle-evaluacion/detalle-evaluacion.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -49,6 +50,7 @@ const routes: Routes = [
     { path: 'asistencia', component: AsistenciaComponent},
     { path: 'asistencia/nueva_asistencia', component: NuevaAsistenciaComponent},
     { path: 'asistencia/detalle_asistencia/:id', component: DetalleAsistenciaComponent},
+    { path: 'asignaturas/detalle_asignatura/:id_asignatura/detalle_evaluacion/:id_evaluacion', component: DetalleEvaluacionComponent},
     { path: 'asignaturas', component: AsignaturaComponent},
     { path: 'asignaturas/detalle_asignatura/:id', component: DetalleAsignaturaComponent},
     { path: 'cursos', component: CursoComponent},
@@ -85,7 +87,8 @@ const routes: Routes = [
         DetalleAsignaturaComponent,
         NuevaAsistenciaComponent,
         DetalleAsistenciaComponent,
-        DetalleProfesorComponent
+        DetalleProfesorComponent,
+        DetalleEvaluacionComponent
     ],
     exports: [
         RouterModule

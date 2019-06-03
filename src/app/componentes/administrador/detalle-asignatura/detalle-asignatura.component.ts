@@ -13,6 +13,11 @@ import { PruebaService } from 'src/app/servicios/prueba.service';
 import { AlertaService} from 'src/app/servicios/alerta.service';
 import { TopicoService } from 'src/app/servicios/topico.service';
 import { Config } from 'src/app/config';
+import swal from'sweetalert2';
+import { ChartType } from 'chart.js';
+import { MultiDataSet, Label } from 'ng2-charts';
+import { ChartOptions, ChartDataSets } from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-detalle-asignatura',
@@ -39,6 +44,48 @@ export class DetalleAsignaturaComponent implements OnInit {
   pageAlerta: number;
   pageSizeAlerta: number;
   collectionSizeAlerta: number;
+  pageTopico: number;
+  pageSizeTopico: number;
+  collectionSizeTopico: number;
+
+
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+  public barChartLabels: Label[] = [];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartPlugins = [pluginDataLabels];
+
+  public barChartData: ChartDataSets[] = [{ data: [], label: '' }];
+
+
+  public barChartOptionsAsistencia: ChartOptions = {
+    responsive: true,
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+  public barChartLabelsAsistencia: Label[] = [];
+  public barChartTypeAsistencia: ChartType = 'bar';
+  public barChartLegendAsistencia = true;
+  public barChartPluginsAsistencia = [pluginDataLabels];
+
+  public barChartDataAsistencia: ChartDataSets[] = [{ data: [], label: '' }];
+
+
+
   constructor(private _asignaturaService: AsignaturaService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
@@ -63,6 +110,8 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.pageSizeEvaluacion = 10;
     this.pageAlerta = 1;
     this.pageSizeAlerta = 10;
+    this.pageTopico = 1;
+    this.pageSizeTopico = 10;
    }
 
   ngOnInit() {
@@ -73,6 +122,8 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.getPruebasAsignatura()
     this.getAlertasAsignatura()
     this.getTopicosAsignatura()
+    this.getGraficoRendimientoEvaluacionesAsignatura()
+    this.getGraficoAsistenciaAsignatura()
   }
 
   get profesores_tabla(): Profesor[] {
@@ -99,6 +150,24 @@ export class DetalleAsignaturaComponent implements OnInit {
     .slice((this.pageAlerta - 1) * this.pageSizeAlerta, (this.pageAlerta - 1) * this.pageSizeAlerta + this.pageSizeAlerta);
   }
 
+  get topicos_tabla(): Topico[]{
+    return this.topicos
+    .map((topico, i) => ({id: i + 1, ...topico}))
+    .slice((this.pageTopico - 1) * this.pageSizeTopico, (this.pageTopico - 1) * this.pageSizeTopico + this.pageSizeTopico);
+  }
+
+  getGraficoAsistenciaAsignatura(){
+    this._asignaturaService.getGraficoAsistenciaAsignatura(this.id_asignatura).subscribe((data:any)=>{
+      this.barChartDataAsistencia = data['data']
+      this.barChartLabelsAsistencia = data['labels']
+    })
+  }
+  getGraficoRendimientoEvaluacionesAsignatura(){
+    this._asignaturaService.getGraficoRendimientoEvaluacionesAsignatura(this.id_asignatura).subscribe((data:any)=>{
+      this.barChartLabels = data['labels']
+      this.barChartData = data['data']
+    })
+  }
   getProfesoresAsignatura(){
     this._profesorService.getProfesoresAsignatura(this.id_asignatura).subscribe((data:Profesor[])=>{
       this.profesores = data
@@ -139,11 +208,44 @@ export class DetalleAsignaturaComponent implements OnInit {
   getTopicosAsignatura(){
     this._topicoService.getTopicosAsignatura(this.id_asignatura).subscribe((data:Topico[])=>{
       this.topicos = data;
-      console.log(data)
+      this.collectionSizeTopico = this.topicos.length
     })
+  }
+
+  verDetalleEvaluacion(id_evaluacion:string){
+    this._router.navigateByUrl('/admin/asignaturas/detalle_asignatura/'+this.id_asignatura+'/detalle_evaluacion/'+id_evaluacion)
   }
 
   volver(){
     this._router.navigateByUrl('/admin/asignaturas');
+  }
+
+  deleteTopico(id:string){
+    swal.fire({
+      title: 'Desea borrar este Tópico?',
+      text: "Usted no podrá revertir los cambios!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.value) {
+        this._topicoService.deleteTopico(id).subscribe((data:any)=>{
+          if(data['Response']=='borrado'){
+            swal.fire({
+              title:'Borrado!',
+              text:'Se ha borrado el tópico exitosamente.',
+              type:'success',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.getTopicosAsignatura();
+            })
+          }
+        })
+      }
+
+    })
   }
 }
