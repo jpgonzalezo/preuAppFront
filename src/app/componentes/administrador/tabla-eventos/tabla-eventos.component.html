@@ -1,0 +1,109 @@
+<app-header></app-header>
+<main>
+  <section class="section section-lg">
+    <div class="container">
+
+      <h3 class="display-3">Eventos Preuniversitario</h3>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="evento-tab" data-toggle="tab" href="#evento_existente" role="tab"
+                aria-controls="evento" aria-selected="false">Eventos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="solicitud-tab" data-toggle="tab" href="#solicitud_existente" role="tab"
+                aria-controls="solicitud" aria-selected="false">Solicitudes</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="evento_existente" role="tabpanel" aria-labelledby="evento-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let evento of eventos_tabla">
+                        <td>{{ evento.start }}</td>
+                        <td>{{ evento.title }}</td>
+                        <td>{{ evento.curso.nombre }}</td>
+                        <th>
+                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteEvento(evento.id)"><i
+                              class="fas fa-trash-alt"></i></button>
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeEvento" [(page)]="pageEvento"
+                      [pageSize]="pageSizeEvento">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeEvento">
+                      <option [ngValue]="10">10 eventos por página</option>
+                      <option [ngValue]="15">15 eventos por página</option>
+                      <option [ngValue]="20">20 eventos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="solicitud_existente" role="tabpanel" aria-labelledby="solicitud-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let evento of solicitudes_tabla">
+                        <td>{{ evento.start }}</td>
+                        <td>{{ evento.title }}</td>
+                        <td>{{ evento.curso.nombre }}</td>
+                        <th>
+                          <button type="button" class="btn btn-success btn-sm" (click)="aceptarEvento(evento.id)">
+                            <i class="fas fa-check"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeSolicitud" [(page)]="pageSolicitud"
+                      [pageSize]="pageSizeSolicitud">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeSolicitud">
+                      <option [ngValue]="10">10 eventos por página</option>
+                      <option [ngValue]="15">15 eventos por página</option>
+                      <option [ngValue]="20">20 eventos por página</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+<app-footer></app-footer>

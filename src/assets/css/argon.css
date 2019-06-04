@@ -28,7 +28,7 @@
 }
 :root
 {
-    --blue: #11cdef;
+    --blue: #1179ef;
     --indigo: #5603ad;
     --purple: #8965e0;
     --pink: #f3a4b5;
@@ -3018,7 +3018,7 @@ fieldset:disabled a.btn
 {
     color: #fff;
     border-color: #11cdef; 
-    background-color: #324cdd;
+    background-color: #3290dd;
 }
 .btn-primary:not(:disabled):not(.disabled):active:focus,
 .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -6225,7 +6225,7 @@ input[type='button'].btn-block
     text-decoration: none;
 
     color: #fff;
-    background-color: #324cdd;
+    background-color: #3290dd;
 }
 
 .badge-secondary
@@ -6454,7 +6454,7 @@ input[type='button'].btn-block
 }
 .alert-primary .alert-link
 {
-    color: #324cdd;
+    color: #3290dd;
 }
 
 .alert-secondary
@@ -7951,7 +7951,7 @@ a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus
 {
-    background-color: #324cdd !important;
+    background-color: #3290dd !important;
 }
 
 .bg-secondary
@@ -12335,7 +12335,7 @@ button.bg-darker:focus
 a.text-primary:hover,
 a.text-primary:focus
 {
-    color: #324cdd !important;
+    color: #3290dd !important;
 }
 
 .text-secondary
@@ -12811,7 +12811,7 @@ a.bg-blue:focus,
 button.bg-blue:hover,
 button.bg-blue:focus
 {
-    background-color: #324cdd !important;
+    background-color: #3290dd !important;
 }
 
 .bg-indigo
@@ -18080,7 +18080,7 @@ article h5 + figure
 .datepicker table tr td.range.day.disabled:hover
 {
     color: #8a98eb; 
-    background: #324cdd;
+    background: #3290dd;
 }
 .datepicker table tr td.range.highlighted.focused
 {

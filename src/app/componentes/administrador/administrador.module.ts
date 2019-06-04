@@ -40,10 +40,13 @@ import { NuevaAsistenciaComponent } from './nueva-asistencia/nueva-asistencia.co
 import { DetalleAsistenciaComponent } from './detalle-asistencia/detalle-asistencia.component';
 import { DetalleProfesorComponent } from './detalle-profesor/detalle-profesor.component';
 import { DetalleEvaluacionComponent } from './detalle-evaluacion/detalle-evaluacion.component';
+import { TablaEventosComponent } from './tabla-eventos/tabla-eventos.component';
+import { AlertasComponent } from './alertas/alertas.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent},
+    { path: 'eventos', component: TablaEventosComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
     { path: 'perfiles/detalle_profesor/:id', component: DetalleProfesorComponent},
     { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
@@ -55,6 +58,7 @@ const routes: Routes = [
     { path: 'asignaturas', component: AsignaturaComponent},
     { path: 'asignaturas/detalle_asignatura/:id', component: DetalleAsignaturaComponent},
     { path: 'cursos', component: CursoComponent},
+    { path: 'alertas', component: AlertasComponent},
     { path: 'cursos/detalle_curso/:id', component: DetalleCursoComponent}
 ];
 
@@ -90,7 +94,9 @@ const routes: Routes = [
         NuevaAsistenciaComponent,
         DetalleAsistenciaComponent,
         DetalleProfesorComponent,
-        DetalleEvaluacionComponent
+        DetalleEvaluacionComponent,
+        TablaEventosComponent,
+        AlertasComponent
     ],
     exports: [
         RouterModule
