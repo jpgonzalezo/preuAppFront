@@ -30,7 +30,8 @@
             ],
             "scripts": [
               "./node_modules/moment/min/moment.min.js",
-              "./node_modules/fullcalendar/dist/fullcalendar.min.js"
+              "./node_modules/fullcalendar/dist/fullcalendar.min.js",
+              "./node_modules/handsontable/dist/handsontable.full.css"
             ],
             "es5BrowserSupport": true
           },
