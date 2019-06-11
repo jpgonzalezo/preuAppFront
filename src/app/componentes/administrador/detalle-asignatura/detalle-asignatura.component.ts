@@ -173,7 +173,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       this.profesores = data
       this.collectionSizeProfesor = this.profesores.length;
       for(let alumno of this.profesores){
-        alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+        alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
     })   
   }

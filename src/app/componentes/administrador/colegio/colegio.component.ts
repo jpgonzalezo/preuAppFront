@@ -116,6 +116,15 @@ export class ColegioComponent implements OnInit {
             'comuna': result.value[3]
           }).subscribe((data:any)=>{
             if(data['Response']=='exito'){
+              Swal.fire({
+                type:'success',
+                title:'Registro Exitoso',
+                text:'Se ha creado el colegio exitosamente',
+                confirmButtonColor: '#5cb85c',
+                confirmButtonText: 'Aceptar',
+              }).then((result)=>{
+                this.getColegios()
+              })
             }
           },
         (error)=>{

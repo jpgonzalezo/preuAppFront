@@ -43,6 +43,16 @@ import { DetalleEvaluacionComponent } from './detalle-evaluacion/detalle-evaluac
 import { TablaEventosComponent } from './tabla-eventos/tabla-eventos.component';
 import { AlertasComponent } from './alertas/alertas.component';
 
+
+
+
+
+
+
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgbdSortableHeader } from 'src/app/servicios/sorteable.directive';
+
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent},
@@ -74,7 +84,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         ChartsModule,
         NgbModule,
-        FullCalendarModule
+        FullCalendarModule,
     ],
     declarations: [
         HomeComponent,
@@ -96,7 +106,8 @@ const routes: Routes = [
         DetalleProfesorComponent,
         DetalleEvaluacionComponent,
         TablaEventosComponent,
-        AlertasComponent
+        AlertasComponent,
+        NgbdSortableHeader
     ],
     exports: [
         RouterModule
@@ -109,7 +120,7 @@ const routes: Routes = [
         ObservacionService,
         ColegioService,
         ApoderadoService,
-        AdministradorService
+        AdministradorService,
     ]
 })
 export class AdministradorModule { }

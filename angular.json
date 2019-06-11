@@ -26,12 +26,15 @@
               "src/styles.scss",
               "src/theme.scss",
               "node_modules/@fullcalendar/core/main.css",
-              "node_modules/@fullcalendar/daygrid/main.css"
+              "node_modules/@fullcalendar/daygrid/main.css",
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
             ],
             "scripts": [
               "./node_modules/moment/min/moment.min.js",
               "./node_modules/fullcalendar/dist/fullcalendar.min.js",
-              "./node_modules/handsontable/dist/handsontable.full.css"
+              "./node_modules/handsontable/dist/handsontable.full.css",
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js"
             ],
             "es5BrowserSupport": true
           },

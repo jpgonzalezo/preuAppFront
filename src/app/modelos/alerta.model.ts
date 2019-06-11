@@ -6,4 +6,5 @@ export class Alerta{
     data: string
     fecha: string
     asignatura: Asignatura
+    tipo:string 
 }

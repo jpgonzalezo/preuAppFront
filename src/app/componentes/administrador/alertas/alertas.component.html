@@ -9,41 +9,38 @@
 
       <div class="row row-grid align-items-center">
 
-          <div class="col-xl-12">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="rendimiento-tab" data-toggle="tab" href="#rendimiento_observacion"
-                  role="tab" aria-controls="rendimiento" aria-selected="false">Alertas</a>
-              </li>
-            </ul>
-  
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="rendimiento_observacion" role="tabpanel"
-                aria-labelledby="rendimiento-tab">
-                <div class="mb-8 ">
-                  <br>
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="rendimiento-tab" data-toggle="tab" href="#rendimiento_observacion"
+                role="tab" aria-controls="rendimiento" aria-selected="false">Alertas</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="rendimiento_observacion" role="tabpanel"
+              aria-labelledby="rendimiento-tab">
+              <div class="mb-8 ">
+                <br>
+                <div>
+                  <h5>Cantidad de alertas por curso</h5>
                   <div>
-                    <h5>Cantidad de alertas por curso</h5>
                     <div>
-                        <div>
-                          <div style="display: block">
-                            <canvas baseChart
-                              [datasets]="radarChartData"
-                              [options]="radarChartOptions"
-                              [labels]="radarChartLabels"
-                              [chartType]="radarChartType">
-                            </canvas>
-                          </div>
-                        </div>
+                      <div style="display: block">
+                        <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions"
+                          [labels]="radarChartLabels" [chartType]="radarChartType">
+                        </canvas>
                       </div>
+                    </div>
                   </div>
                 </div>
               </div>
-
             </div>
+
           </div>
-          <hr>
         </div>
+        <hr>
+      </div>
       <div class="row row-grid align-items-center">
         <div class="col-xl-12">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -57,46 +54,66 @@
             <div class="tab-pane fade show active" id="alerta_existente" role="tabpanel" aria-labelledby="alerta-tab">
               <div class="mb-8 ">
                 <br>
-                <div class="table-responsive-lg">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">Alumno</th>
-                        <th scope="col">Curso</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Asignatura</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Contenido</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let alerta of alertas_tabla">
-                        <td>{{ alerta.alumno.nombres }} {{ alerta.alumno.apellido_paterno }} {{ alerta.alumno.apellido_materno }}</td>
-                        <td>{{ alerta.alumno.curso.nombre }}</td>
-                        <td>{{ alerta.fecha }}</td>
-                        <td>{{ alerta.asignatura.nombre }}</td>
-                        <td>
-                          <span *ngIf="alerta.tipo == 'RENDIMIENTO'"
-                            class="badge badge-pill badge-danger">{{ alerta.tipo }}</span>
-                          <span *ngIf="alerta.tipo == 'ASISTENCIA'"
-                            class="badge badge-pill badge-warning">{{ alerta.tipo }}</span>
-                        </td>
-                        <td>{{alerta.data}}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="d-flex justify-content-between p-2">
-                    <ngb-pagination [collectionSize]="collectionSizeAlerta" [(page)]="pageAlerta"
-                      [pageSize]="pageSizeAlerta">
-                    </ngb-pagination>
+                <form>
+                  <div class="table-responsive-lg">
+                    <div class="form-group form-inline">
+                      Buscar: <input class="form-control ml-2" type="text" name="searchTerm"
+                        [(ngModel)]="_alertaTablaService.searchTerm" />
+                      <span class="ml-3" *ngIf="_alertaTablaService.loading$ | async">Cargando...</span>
+                    </div>
+                    <table class="table table-striped">
+                      <thead>
+                        <tr class="bg-info text-white">
+                          <th scope="col" sortable="alumno.nombres" (sort)="onSort($event)">Nombre</th>
+                          <th scope="col" sortable="curso.nombre" (sort)="onSort($event)">Curso</th>
+                          <th scope="col" sortable="fecha" (sort)="onSort($event)">Fecha</th>
+                          <th scope="col" sortable="asignatura.nombre" (sort)="onSort($event)">Asignatura</th>
+                          <th scope="col" sortable="tipo" (sort)="onSort($event)">Tipo</th>
+                          <th scope="col">Contenido</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let alerta of alertas$ | async">
+                          <td scope="row">
+                            <ngb-highlight [result]="alerta.alumno.nombres" [term]="_alertaTablaService.searchTerm"></ngb-highlight>
+                          </td>
+                          <td scope="row">
+                            <ngb-highlight [result]="alerta.alumno.curso.nombre" [term]="_alertaTablaService.searchTerm">
+                            </ngb-highlight>
+                          </td>
+                          <td scope="row">
+                            <ngb-highlight [result]="alerta.fecha" [term]="_alertaTablaService.searchTerm">
+                            </ngb-highlight>
+                          </td>
+                          <td scope="row"> 
+                            <ngb-highlight [result]="alerta.asignatura.nombre" [term]="_alertaTablaService.searchTerm">
+                            </ngb-highlight>
+                          </td>
+                          <td scope="row">
+                            <ngb-highlight [result]="alerta.tipo" [term]="_alertaTablaService.searchTerm">
+                            </ngb-highlight>
+                          </td>
+                          <td scope="row">
+                            <ngb-highlight [result]="alerta.data" [term]="_alertaTablaService.searchTerm">
+                            </ngb-highlight>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between p-2">
+                      <ngb-pagination [collectionSize]="total$ | async" [(page)]="_alertaTablaService.page"
+                        [pageSize]="_alertaTablaService.pageSize">
+                      </ngb-pagination>
 
-                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlerta">
-                      <option [ngValue]="10">10 alertas por página</option>
-                      <option [ngValue]="20">20 alertas por página</option>
-                      <option [ngValue]="30">30 alertas por página</option>
-                    </select>
+                      <select class="custom-select" style="width: auto" name="pageSize"
+                        [(ngModel)]="_alertaTablaService.pageSize">
+                        <option [ngValue]="10">10 items per page</option>
+                        <option [ngValue]="20">20 items per page</option>
+                        <option [ngValue]="30">30 items per page</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -105,5 +122,13 @@
 
     </div>
   </section>
+
+
+
+
+
+
+
+
 </main>
 <app-footer></app-footer>

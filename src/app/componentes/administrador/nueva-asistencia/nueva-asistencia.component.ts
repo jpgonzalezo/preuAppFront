@@ -56,7 +56,6 @@ export class NuevaAsistenciaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAsignaturas()
     this.getCursos()
   }
 
@@ -66,8 +65,8 @@ export class NuevaAsistenciaComponent implements OnInit {
     })
   }
 
-  getAsignaturas(){
-    this._asignaturaService.getAsignaturas().subscribe((data:Asignatura[])=>{
+  getAsignaturas(id:string){
+    this._asignaturaService.getAsignaturasCurso(id).subscribe((data:Asignatura[])=>{
       this.asignaturas = data
     })
   }
@@ -76,7 +75,10 @@ export class NuevaAsistenciaComponent implements OnInit {
     this.cursoSeleccionado = nombre
     if(nombre != "Seleccione un curso"){
       this.seleccionCurso = false
+      this.asignaturaSeleccionada = "Seleccione una asignatura"
+      this.id_asignatura_seleccionada=""
       this.id_curso_seleccionado = id_curso
+      this.getAsignaturas(this.id_curso_seleccionado)
       this._alumnoService.getAlumnosCurso(this.id_curso_seleccionado).subscribe((data:Alumno[])=>{
         this.alumnos_curso = data
         this.collectionSizeAlumnosCurso = this.alumnos_curso.length
