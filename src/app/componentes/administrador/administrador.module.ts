@@ -9,6 +9,7 @@ import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { Ng2Rut } from 'ng2-rut';
 // register 'es' locale
 registerLocaleData(localeEs);
 
@@ -85,6 +86,7 @@ const routes: Routes = [
         ChartsModule,
         NgbModule,
         FullCalendarModule,
+        Ng2Rut
     ],
     declarations: [
         HomeComponent,

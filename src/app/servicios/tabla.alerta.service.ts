@@ -1,13 +1,11 @@
 import {Injectable, PipeTransform,OnInit} from '@angular/core';
-
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
-
 import {Alerta} from 'src/app/modelos/alerta.model';
-//import {COUNTRIES} from './countries';
 import { AlertaService } from 'src/app/servicios/alerta.service';
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import {SortDirection} from './sorteable.directive';
+import { Config } from 'src/app/config';
 
 interface SearchResult {
   alertas: Array<Alerta>;
@@ -27,11 +25,59 @@ function compare(v1, v2) {
 }
 
 function sort(alertas: Alerta[], column: string, direction: string): Array<Alerta> {
+  for(let alerta of alertas){
+    alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+  }
   if (direction === '') {
     return alertas;
   } else {
     return [...alertas].sort((a, b) => {
       const res = compare(a[column], b[column]);
+      return direction === 'asc' ? res : -res;
+    });
+  }
+}
+
+function sortAsignatura(alertas: Alerta[], column: string, direction: string): Alerta[]{
+  for(let alerta of alertas){
+    alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+  }
+  if(direction === ''){
+    return alertas;
+  }
+  else{
+    return [...alertas].sort((a,b) => {
+      const res = compare(a.asignatura.nombre,b.asignatura.nombre);
+      return direction === 'asc' ? res : -res;
+    });
+  }
+}
+
+function sortAlumno(alertas: Alerta[], column: string, direction: string): Alerta[]{
+  for(let alerta of alertas){
+    alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+  }
+  if(direction === ''){
+    return alertas;
+  }
+  else{
+    return [...alertas].sort((a,b) => {
+      const res = compare(a.alumno.nombres,b.alumno.nombres);
+      return direction === 'asc' ? res : -res;
+    });
+  }
+}
+
+function sortCurso(alertas: Alerta[], column: string, direction: string): Alerta[]{
+  for(let alerta of alertas){
+    alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+  }
+  if(direction === ''){
+    return alertas;
+  }
+  else{
+    return [...alertas].sort((a,b) => {
+      const res = compare(a.alumno.curso.nombre,b.alumno.curso.nombre);
       return direction === 'asc' ? res : -res;
     });
   }
@@ -64,9 +110,11 @@ export class AlertaTablaService {
   };
 
   constructor(private pipe: DecimalPipe, private _alertaService: AlertaService) {
-    //this.getAlertas()
     this._alertaService.getAlertas().subscribe((data: Alerta[])=>{
         this.alertas = data
+        for(let alerta of this.alertas){
+          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+        }
         this._search$.pipe(
             tap(()=>this.getAlertas()),
             tap(() => this._loading$.next(true)),
@@ -113,19 +161,23 @@ export class AlertaTablaService {
   private _search(): Observable<SearchResult> {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
     let alertas = this.alertas
-/*     for(let alerta of this.alertas){
-        alertas.push({
-            "id":alerta.id,
-            "alumno": alerta.alumno.nombres+" "+alerta.alumno.apellido_paterno+" "+alerta.alumno.apellido_materno,
-            "tipo": alerta.tipo,
-            "curso": alerta.alumno.curso.nombre,
-            "asignatura": alerta.asignatura.nombre,
-            "fecha": alerta.fecha,
-            "data": alerta
-        })
-    } */
     // 1. sort
-    alertas = sort(alertas, sortColumn, sortDirection);
+    if(this._state.sortColumn=""){
+      alertas = sort(alertas, sortColumn, sortDirection);
+    }
+
+    if(this._state.sortColumn="asignatura"){
+      alertas = sortAsignatura(alertas,sortColumn,sortDirection)
+    }
+
+    if(this._state.sortColumn="alumno"){
+      alertas = sortAlumno(alertas,sortColumn,sortDirection)
+    }
+
+    if(this._state.sortColumn="curso"){
+      alertas = sortCurso(alertas,sortColumn,sortDirection)
+    }
+    
     // 2. filter
     alertas = alertas.filter(alerta => matches(alerta, searchTerm, this.pipe));
     const total = this.alertas.length;

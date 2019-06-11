@@ -47,6 +47,7 @@
     "handsontable-pro": "^6.2.2",
     "jquery": "^3.4.1",
     "ng2-charts": "^2.0.3",
+    "ng2-rut": "^0.3.2",
     "rxjs": "~6.3.3",
     "sweetalert2": "^8.5.0",
     "terser": "3.14.1",

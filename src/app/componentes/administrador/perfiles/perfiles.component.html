@@ -33,7 +33,7 @@
                 <div class="table-responsive-lg">
                   <table class="table table-striped">
                     <thead>
-                      <tr>
+                      <tr class="bg-info text-white">
                         <th scope="col"></th>
                         <th scope="col">Rut</th>
                         <th scope="col">Nombres</th>
@@ -48,7 +48,7 @@
                         <th scope="row">
                           <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
                         </th>
-                        <td>{{ alumno.rut }}</td>
+                        <td>{{ alumno.rut | rut }}</td>
                         <td>{{ alumno.nombres }}</td>
                         <td>{{ alumno.apellido_paterno}}</td>
                         <td>{{ alumno.apellido_materno}}</td>
@@ -107,7 +107,7 @@
                         <th scope="row">
                           <img [src]='profesor.imagen' class="mr-2" style="width: 50px">
                         </th>
-                        <td>{{ profesor.rut }}</td>
+                        <td>{{ profesor.rut | rut}}</td>
                         <td>{{ profesor.nombres}}</td>
                         <td>{{ profesor.apellido_paterno}}</td>
                         <td>{{ profesor.apellido_materno}}</td>
@@ -164,7 +164,7 @@
                         <th scope="row">
                           <img [src]='apoderado.imagen' class="mr-2" style="width: 50px">
                         </th>
-                        <td>{{ apoderado.rut }}</td>
+                        <td>{{ apoderado.rut | rut}}</td>
                         <td>{{ apoderado.nombres}}</td>
                         <td>{{ apoderado.apellido_paterno}}</td>
                         <td>{{ apoderado.apellido_materno}}</td>
@@ -220,7 +220,7 @@
                         <th scope="row">
                           <img [src]='administrador.imagen' class="mr-2" style="width: 50px">
                         </th>
-                        <td>{{ administrador.rut }}</td>
+                        <td>{{ administrador.rut | rut}}</td>
                         <td>{{ administrador.nombres}}</td>
                         <td>{{ administrador.apellido_paterno}}</td>
                         <td>{{ administrador.apellido_materno}}</td>
