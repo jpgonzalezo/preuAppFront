@@ -7,6 +7,7 @@ import { StorageService } from 'src/app/servicios/storage.service';
 import { ProfesorService } from 'src/app/servicios/profesor.service';
 import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { AsistenciaService } from 'src/app/servicios/asistencia.service';
+import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { JustificacionService } from 'src/app/servicios/justificacion.service';
 import { AnotacionService } from 'src/app/servicios/anotacion.service';
 import { AlertaService } from 'src/app/servicios/alerta.service';
@@ -16,6 +17,7 @@ import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
 import { EventoService } from 'src/app/servicios/evento.service';
 import { AlertaTablaService } from 'src/app/servicios/tablas/tabla.alerta.service';
 import { SolicitudEventoTablaService } from 'src/app/servicios/tablas/tabla.solicitudes.service';
+import { AlumnoTablaService } from 'src/app/servicios/tablas/tabla.perfiles.alumnos.service';
 import { DecimalPipe } from '@angular/common';
 
 @NgModule({
@@ -31,13 +33,15 @@ import { DecimalPipe } from '@angular/common';
         JustificacionService,
         AnotacionService,
         AlertaService,
+        AlumnoService,
         PruebaService,
         TopicoService,
         EvaluacionService,
         EventoService,
         DecimalPipe,
         AlertaTablaService,
-        SolicitudEventoTablaService
+        SolicitudEventoTablaService,
+        AlumnoTablaService
     ]
 })
 export class CompartidoModule { }

@@ -29,7 +29,7 @@ export class TablaEventosComponent implements OnInit {
     this.totalEventos$ = this._eventoTablaService.total$;
     this.filtroSort= ['','','']
     this.solicitudes$ = this._solicitudEventoService.eventos$;
-    this.totalEventos$ = this._solicitudEventoService.total$;
+    this.totalSolicitudes$ = this._solicitudEventoService.total$;
     this.filtroSortSolicitud= ['','','']
   }
 

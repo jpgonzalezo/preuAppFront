@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 //SERVICIOS
@@ -9,6 +9,9 @@ import { ProfesorService } from 'src/app/servicios/profesor.service';
 import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { ApoderadoService } from 'src/app/servicios/apoderado.service';
 import { AdministradorService } from 'src/app/servicios/administrador.service';
+import { AlumnoTablaService } from 'src/app/servicios/tablas/tabla.perfiles.alumnos.service';
+import { Observable } from 'rxjs';
+import { NgbdSortableHeader , SortEvent} from 'src/app/servicios/sorteable.directive';
 //MODELOS
 import { Colegio } from 'src/app/modelos/colegio.model';
 import { Alumno } from 'src/app/modelos/alumno.model';
@@ -28,124 +31,76 @@ import { from } from 'rxjs';
 })
 
 export class PerfilesComponent implements OnInit {
-  pageAlumno: number;
-  pageSizeAlumno: number;
-  collectionSizeAlumno: number;
-  pageProfesor: number;
-  pageSizeProfesor: number;
-  collectionSizeProfesor: number;
-  pageApoderado: number;
-  pageSizeApoderado: number;
-  collectionSizeApoderado: number;
-  pageAdministrador: number;
-  pageSizeAdministrador: number;
-  collectionSizeAdministrador: number;
-  alumnos:Alumno[];
-  profesores:Profesor[];
   colegios: Colegio[];
   cursos: Curso[];
   asignaturas: Asignatura[];
-  apoderados: Apoderado[];
-  administradores: Administrador[];
-  constructor(private _alumnoService: AlumnoService, 
-              private formBuilder: FormBuilder,
-              private _cursoService: CursoService,
-              private router: Router,
-              private _profesorService: ProfesorService,
-              private _asignaturaService: AsignaturaService,
-              private _colegioService: ColegioService,
-              private _apoderadoService: ApoderadoService,
-              private _administradorService: AdministradorService
+  alumnos: Alumno[]
+  profesores: Profesor[]
+  apoderados: Apoderado[]
+  administradores: Administrador[]
+  alumnos$: Observable<Alumno[]>;
+  totalAlumnos$: Observable<number>;
+  filtroSortAlumno: any[]
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+  constructor(
+    private _alumnoService: AlumnoService,
+    private formBuilder: FormBuilder,
+    private _cursoService: CursoService,
+    private router: Router,
+    private _profesorService: ProfesorService,
+    private _asignaturaService: AsignaturaService,
+    private _colegioService: ColegioService,
+    private _apoderadoService: ApoderadoService,
+    private _administradorService: AdministradorService,
+    private _alumnoTablaService: AlumnoTablaService
     )
   { 
-    this.apoderados=[]
     this.asignaturas= []
     this.cursos = []
     this.colegios = []
+    this.alumnos = []
+    this.profesores = []
     this.administradores = []
-    this.pageAlumno = 1;
-    this.pageProfesor = 1;
-    this.pageApoderado = 1;
-    this.pageAdministrador = 1;
-    this.pageSizeAdministrador = 10;
-    this.pageSizeApoderado = 10;
-    this.pageSizeAlumno = 10;
-    this.pageSizeProfesor = 10;
-    this.alumnos=[];
-    this.profesores = [];
+    this.alumnos$ = this._alumnoTablaService.alumnos$;
+    this.totalAlumnos$ = this._alumnoTablaService.total$;
+    this.filtroSortAlumno= ['','','','','']
   }
 
   ngOnInit() {
-    this.getAlumnos();
-    this.getProfesores();
-    this.getColegios();
     this.getCursos();
+    this.getColegios();
     this.getAsignaturas();
-    this.getApoderados();
-    this.getAdministradores();
+    this.getAlumnos();
   }
 
 
-  get alumnos_tabla(): any[] {
-    return this.alumnos
-      .map((alumno, i) => ({id: i + 1, ...alumno}))
-      .slice((this.pageAlumno - 1) * this.pageSizeAlumno, (this.pageAlumno - 1) * this.pageSizeAlumno + this.pageSizeAlumno);
-  }
+  onSortAlumno({column, direction}: SortEvent) {
+    // resetting other headers
+    this.filtroSortAlumno= ['','','','','']
+    if(column=="rut"){
+      this.filtroSortAlumno[0]= direction
+    }
+    if(column=="nombres"){
+      this.filtroSortAlumno[1]= direction
+    }
+    if(column=="apellido_paterno"){
+      this.filtroSortAlumno[2]= direction
+    }
+    if(column=="apellido_materno"){
+      this.filtroSortAlumno[3]= direction
+    }
+    if(column=="curso"){
+      this.filtroSortAlumno[4]= direction
+    }
 
-  get apoderados_tabla(): any[] {
-    return this.apoderados
-      .map((apoderado, i) => ({id: i + 1, ...apoderado}))
-      .slice((this.pageApoderado - 1) * this.pageSizeApoderado, (this.pageApoderado - 1) * this.pageSizeApoderado + this.pageSizeApoderado);
-  }
-
-  get administradores_tabla(): any[] {
-    return this.administradores
-      .map((administrador, i) => ({id: i + 1, ...administrador}))
-      .slice((this.pageAdministrador - 1) * this.pageSizeAdministrador, (this.pageAdministrador - 1) * this.pageSizeAdministrador + this.pageSizeAdministrador);
-  }
-
-  get profesores_tabla(): any[] {
-    return this.profesores
-      .map((profesor, i) => ({id: i + 1, ...profesor}))
-      .slice((this.pageProfesor - 1) * this.pageSizeProfesor, (this.pageProfesor - 1) * this.pageSizeProfesor + this.pageSizeProfesor);
-  }
-
-  public getAdministradores(){
-    this._administradorService.getAdministradores().subscribe((administradores:Administrador[])=>{
-      this.administradores = administradores
-      this.collectionSizeAdministrador = this.administradores.length
-      for(let administrador of this.administradores){
-        administrador.imagen = Config.API_SERVER_URL+"/administrador_imagen/"+administrador.imagen
-      }
-    })
-  } 
-  public getApoderados(){
-    this._apoderadoService.getApoderados().subscribe((apoderados:Apoderado[])=>{
-      this.apoderados = apoderados
-      this.collectionSizeApoderado = this.apoderados.length
-      for(let apoderado of this.apoderados){
-        apoderado.imagen = Config.API_SERVER_URL+"/apoderado_imagen/"+apoderado.imagen
-      }
-    })
-  }
-  public getAlumnos(){
-  	this._alumnoService.getAlumno().subscribe((data:Alumno[]) => {
-      this.alumnos = data;
-      this.collectionSizeAlumno = this.alumnos.length;
-      for(let alumno of this.alumnos){
-        alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
       }
     });
-  }
 
-  public getProfesores(){
-    this._profesorService.getProfesores().subscribe((data:Profesor[])=>{
-      this.profesores = data;
-      this.collectionSizeProfesor = this.profesores.length;
-      for(let profesor of this.profesores){
-        profesor.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+profesor.imagen
-      }
-    })
+    this._alumnoTablaService.sortColumn = column;
+    this._alumnoTablaService.sortDirection = direction;
   }
 
   public deleteAlumno(id:string){
@@ -168,12 +123,7 @@ export class PerfilesComponent implements OnInit {
               type:'success',
               confirmButtonColor: '#2dce89',
             }).then((result)=>{
-              if(result.value){
-                this.getAlumnos();
-              }
-              if(result.dismiss){
-                this.getAlumnos();
-              }
+              this._alumnoTablaService.getAlumnos()
             })
           }
         })
@@ -244,6 +194,29 @@ export class PerfilesComponent implements OnInit {
     })
   }
 
+  public getAlumnos(){
+    this._alumnoService.getAlumno().subscribe((data:Alumno[])=>{
+      this.alumnos = data
+    })
+  }
+
+  public getProfesores(){
+    this._profesorService.getProfesores().subscribe((data:Profesor[])=>{
+      this.profesores = data
+    })
+  }
+
+  public getAdministradores(){
+    this._administradorService.getAdministradores().subscribe((data:Administrador[])=>{
+      this.administradores = data
+    })
+  }
+
+  public getApoderados(){
+    this._apoderadoService.getApoderados().subscribe((data:Apoderado[])=>{
+      this.apoderados = data
+    })
+  }
   public getColegios(){
     this._colegioService.getColegios().subscribe((colegios: Array<Colegio>)=>{
       this.colegios = colegios
@@ -432,7 +405,7 @@ export class PerfilesComponent implements OnInit {
                             type: 'success',
                             confirmButtonColor: '#2dce89',
                           }).then((result)=>{
-                            this.getAlumnos()
+                            this._alumnoTablaService.getAlumnos()
                           })
                         }
                       })
@@ -446,7 +419,7 @@ export class PerfilesComponent implements OnInit {
                             type: 'success',
                             confirmButtonColor: '#2dce89',
                           }).then((result)=>{
-                            this.getAlumnos()
+                            this._alumnoTablaService.getAlumnos()
                           })
                         }
                       },
@@ -463,7 +436,7 @@ export class PerfilesComponent implements OnInit {
                         type: 'success',
                         confirmButtonColor: '#2dce89',
                       }).then((result)=>{
-                        this.getAlumnos()
+                        this._alumnoTablaService.getAlumnos()
                       })
                     }
                   },
@@ -993,7 +966,7 @@ export class PerfilesComponent implements OnInit {
       text: 'Digite el rut del alumno ej:(11111111-1)',
     }).then((result)=>{
       if(result.dismiss == null){
-        this.getAlumnos()
+        this._alumnoTablaService.getAlumnos()
         var bandera = false
         var id_alumno = ""
         for(let alumno of this.alumnos){
