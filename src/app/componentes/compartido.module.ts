@@ -14,7 +14,8 @@ import { PruebaService } from 'src/app/servicios/prueba.service';
 import {  TopicoService } from 'src/app/servicios/topico.service';
 import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
 import { EventoService } from 'src/app/servicios/evento.service';
-import { AlertaTablaService } from 'src/app/servicios/tabla.alerta.service';
+import { AlertaTablaService } from 'src/app/servicios/tablas/tabla.alerta.service';
+import { SolicitudEventoTablaService } from 'src/app/servicios/tablas/tabla.solicitudes.service';
 import { DecimalPipe } from '@angular/common';
 
 @NgModule({
@@ -36,6 +37,7 @@ import { DecimalPipe } from '@angular/common';
         EventoService,
         DecimalPipe,
         AlertaTablaService,
+        SolicitudEventoTablaService
     ]
 })
 export class CompartidoModule { }

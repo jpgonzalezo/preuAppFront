@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   usuario: any
   cursos: Curso[]
 
-  @ViewChild('calendar') calendarComponent: FullCalendarComponent; // the #calendar in the template
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent// the #calendar in the template
   bootstrapPlugin = bootstrapPlugin
   esLocale = esLocale
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin];

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { CursoService } from 'src/app/servicios/curso.service';
-import { StorageService } from 'src/app/servicios/storage.service';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { EventoService } from 'src/app/servicios/evento.service';
-import { Curso } from 'src/app/modelos/curso.model';
+import { EventoTablaService } from 'src/app/servicios/tablas/tabla.evento.service';
+import { SolicitudEventoTablaService } from 'src/app/servicios/tablas/tabla.solicitudes.service';
 import { Evento } from 'src/app/modelos/evento.model';
 import swal from'sweetalert2';
+import { Observable } from 'rxjs';
+import { NgbdSortableHeader , SortEvent} from 'src/app/servicios/sorteable.directive';
 
 @Component({
   selector: 'app-tabla-eventos',
@@ -12,56 +13,71 @@ import swal from'sweetalert2';
   styleUrls: ['./tabla-eventos.component.css']
 })
 export class TablaEventosComponent implements OnInit {
-  pageEvento: number;
-  pageSizeEvento: number;
-  collectionSizeEvento: number;
-  pageSolicitud: number;
-  pageSizeSolicitud: number;
-  collectionSizeSolicitud: number;
-  calendarEvents: Evento[];
-  solicitudes: Evento[];
+  eventos$: Observable<Evento[]>;
+  totalEventos$: Observable<number>;
+  filtroSort: any[]
+  solicitudes$: Observable<Evento[]>;
+  totalSolicitudes$: Observable<number>;
+  filtroSortSolicitud: any[]
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   constructor(
-    private _cursoService: CursoService,
-    private _storageService: StorageService,
+    private _eventoTablaService: EventoTablaService,
+    private _solicitudEventoService: SolicitudEventoTablaService,
     private _eventoService: EventoService
   ) {
-    this.pageEvento =1
-    this.pageSizeEvento=10
-    this.pageSolicitud =1
-    this.pageSizeSolicitud=10
-    this.calendarEvents = []
-    this.solicitudes = []
+    this.eventos$ = this._eventoTablaService.eventos$;
+    this.totalEventos$ = this._eventoTablaService.total$;
+    this.filtroSort= ['','','']
+    this.solicitudes$ = this._solicitudEventoService.eventos$;
+    this.totalEventos$ = this._solicitudEventoService.total$;
+    this.filtroSortSolicitud= ['','','']
   }
 
   ngOnInit() {
-    this.getEventos()
-    this.getSolicitudesEvento()
   }
 
-  get eventos_tabla(): any[] {
-    return this.calendarEvents
-      .map((evento, i) => ({id: i + 1, ...evento}))
-      .slice((this.pageEvento - 1) * this.pageSizeEvento, (this.pageEvento - 1) * this.pageSizeEvento + this.pageSizeEvento);
+  onSort({column, direction}: SortEvent) {
+    // resetting other headers
+    this.filtroSort= ['','','','','']
+    if(column=="start"){
+      this.filtroSort[0]= direction
+    }
+    if(column=="title"){
+      this.filtroSort[1]= direction
+    }
+    if(column=="curso"){
+      this.filtroSort[2]= direction
+    }
+
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+    this._eventoTablaService.sortColumn = column;
+    this._eventoTablaService.sortDirection = direction;
   }
 
-  get solicitudes_tabla(): any[] {
-    return this.solicitudes
-      .map((solicitud, i) => ({id: i + 1, ...solicitud}))
-      .slice((this.pageSolicitud - 1) * this.pageSizeSolicitud, (this.pageSolicitud - 1) * this.pageSizeSolicitud + this.pageSizeSolicitud);
-  }
+  onSortSolicitud({column, direction}: SortEvent) {
+    // resetting other headers
+    this.filtroSort= ['','','','','']
+    if(column=="start"){
+      this.filtroSort[0]= direction
+    }
+    if(column=="title"){
+      this.filtroSort[1]= direction
+    }
+    if(column=="curso"){
+      this.filtroSort[2]= direction
+    }
 
-  getEventos(){
-    this._eventoService.getEventos().subscribe((data: Evento[])=>{
-      this.calendarEvents = data
-      this.collectionSizeEvento = this.calendarEvents.length
-    })
-  }
-
-  getSolicitudesEvento(){
-    this._eventoService.getSolicitudesEventos().subscribe((data: Evento[])=>{
-      this.solicitudes = data
-      this.collectionSizeSolicitud = this.solicitudes.length
-    })
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+    this._solicitudEventoService.sortColumn = column;
+    this._solicitudEventoService.sortDirection = direction;
   }
 
   aceptarEvento(id:string){
@@ -87,8 +103,8 @@ export class TablaEventosComponent implements OnInit {
               confirmButtonColor: '#5cb85c',
             }).then((result2)=>{
               if(result2 || result2.dismiss){
-                this.getEventos()
-                this.getSolicitudesEvento()
+                this._solicitudEventoService.getEventos()
+                this._eventoTablaService.getEventos()
               }
             })
           }
@@ -120,8 +136,8 @@ export class TablaEventosComponent implements OnInit {
               confirmButtonColor: '#5cb85c',
             }).then((result2)=>{
               if(result2 || result2.dismiss){
-                this.getEventos()
-                this.getSolicitudesEvento()
+                this._solicitudEventoService.getEventos()
+                this._eventoTablaService.getEventos()
               }
             })
           }
@@ -129,5 +145,6 @@ export class TablaEventosComponent implements OnInit {
       }
     })
   }
+
 
 }

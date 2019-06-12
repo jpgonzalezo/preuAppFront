@@ -4,7 +4,7 @@ import {Alerta} from 'src/app/modelos/alerta.model';
 import { AlertaService } from 'src/app/servicios/alerta.service';
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
-import {SortDirection} from './sorteable.directive';
+import {SortDirection} from '../sorteable.directive';
 import { Config } from 'src/app/config';
 
 interface SearchResult {
@@ -162,25 +162,25 @@ export class AlertaTablaService {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
     let alertas = this.alertas
     // 1. sort
-    if(this._state.sortColumn=""){
+    if(this._state.sortColumn==""){
       alertas = sort(alertas, sortColumn, sortDirection);
     }
 
-    if(this._state.sortColumn="asignatura"){
+    if(this._state.sortColumn=="asignatura"){
       alertas = sortAsignatura(alertas,sortColumn,sortDirection)
     }
 
-    if(this._state.sortColumn="alumno"){
+    if(this._state.sortColumn=="alumno"){
       alertas = sortAlumno(alertas,sortColumn,sortDirection)
     }
 
-    if(this._state.sortColumn="curso"){
+    if(this._state.sortColumn=="curso"){
       alertas = sortCurso(alertas,sortColumn,sortDirection)
     }
     
     // 2. filter
     alertas = alertas.filter(alerta => matches(alerta, searchTerm, this.pipe));
-    const total = this.alertas.length;
+    const total = alertas.length;
     // 3. paginate
     alertas = alertas.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
     return of({alertas, total});
