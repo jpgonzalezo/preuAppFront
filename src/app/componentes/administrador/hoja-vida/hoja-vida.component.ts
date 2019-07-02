@@ -145,7 +145,6 @@ export class HojaVidaComponent implements OnInit {
       this.barChartDataAsignatura = data['grafico_asignatura'].data
       this.barChartLabelsAnual = data['grafico_anual'].labels
       this.barChartDataAnual = data['grafico_anual'].data
-      console.log(data)
     })
   }
 
@@ -301,3 +300,6 @@ export class HojaVidaComponent implements OnInit {
     })
   }
 }
+
+
+

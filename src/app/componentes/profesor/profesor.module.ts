@@ -15,6 +15,8 @@ registerLocaleData(localeEs);
 
 //COMPONENTES
 import { HomeComponent } from './home/home.component';
+import { HeaderProfesorComponent } from './header-profesor/header-profesor.component';
+import { FooterProfesorComponent } from './footer-profesor/footer-profesor.component';
 const routes: Routes = [
     { path: '', component: HomeComponent }
 ];
@@ -33,7 +35,9 @@ const routes: Routes = [
         NgbModule
     ],
     declarations: [
-        HomeComponent
+        HomeComponent,
+        HeaderProfesorComponent,
+        FooterProfesorComponent
     ],
     exports: [
         RouterModule
