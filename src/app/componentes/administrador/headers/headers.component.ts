@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/servicios/storage.service';
 })
 export class HeadersComponent implements OnInit {
 
+  //dentro del constructor se declaran los servicios que se van a utilizar
   constructor(private _loginService: LoginService,
               private _storageService: StorageService)
   {}

@@ -74,6 +74,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+    //en los imports van los modulos que utiliza este modulo
     imports: [
         ChartsModule,
         NgbModule,
@@ -88,6 +89,7 @@ const routes: Routes = [
         FullCalendarModule,
         Ng2Rut
     ],
+    //en declarations van los componentes que utiliza el modulo
     declarations: [
         HomeComponent,
         PerfilesComponent,
@@ -114,6 +116,7 @@ const routes: Routes = [
     exports: [
         RouterModule
     ],
+    //En los providers va los servicios que utiliza el modulo
     providers:[
         AdministradorCompartidoService,
         EstadisticaService,
