@@ -48,6 +48,14 @@ export class StorageService {
       return false
     }
   }
+  isAuthenticatedAlumno(): boolean{
+    if (this.getCurrentToken() == 'ALUMNO') {
+      return true
+    }
+    else{
+      return false
+    }
+  }
   getCurrentToken(): string {
     var session = this.getCurrentSession();
     return (session && session.token) ? session.token : null;

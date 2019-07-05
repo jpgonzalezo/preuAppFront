@@ -28,3 +28,17 @@ export class AuthorizatedGuardProfesor implements CanActivate {
   }
 
 }
+
+@Injectable()
+export class AuthorizatedGuardAlumno implements CanActivate {
+  constructor(private router: Router,
+              private storageService: StorageService) { }
+  canActivate() {
+    if (this.storageService.isAuthenticatedAlumno()) {
+      return true;
+    }
+    this.router.navigate(['/inicio']);
+    return false;
+  }
+
+}

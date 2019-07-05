@@ -86,6 +86,10 @@ export class InicioComponent implements OnInit {
     else if(data['token']=="PROFESOR"){
       this.router.navigate(['/profesor']);
     }
+    else if(data['token']=="ALUMNO"){
+      console.log("sup")
+      this.router.navigate(['/alumno']);
+    }
     else{
       this.router.navigate(['/inicio']);
     }

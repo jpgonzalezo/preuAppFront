@@ -19,7 +19,6 @@ import { AlertaTablaService } from 'src/app/servicios/tablas/tabla.alerta.servic
 import { SolicitudEventoTablaService } from 'src/app/servicios/tablas/tabla.solicitudes.service';
 import { AlumnoTablaService } from 'src/app/servicios/tablas/tabla.perfiles.alumnos.service';
 import { DecimalPipe } from '@angular/common';
-import { HeaderAlumnoComponent } from './alumno/header-alumno/header-alumno.component';
 
 @NgModule({
     imports: [HttpClientModule],
@@ -44,6 +43,5 @@ import { HeaderAlumnoComponent } from './alumno/header-alumno/header-alumno.comp
         SolicitudEventoTablaService,
         AlumnoTablaService
     ],
-    declarations: [HeaderAlumnoComponent]
 })
 export class CompartidoModule { }
