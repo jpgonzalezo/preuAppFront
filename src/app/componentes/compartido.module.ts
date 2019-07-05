@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthorizatedGuard, AuthorizatedGuardProfesor } from 'src/app/componentes/authorizated.guard';
+import { AuthorizatedGuard, AuthorizatedGuardProfesor, AuthorizatedGuardAlumno } from 'src/app/componentes/authorizated.guard';
 //SERVICIOS
 import { LoginService } from 'src/app/servicios/login.service';
 import { StorageService } from 'src/app/servicios/storage.service';
@@ -19,6 +19,7 @@ import { AlertaTablaService } from 'src/app/servicios/tablas/tabla.alerta.servic
 import { SolicitudEventoTablaService } from 'src/app/servicios/tablas/tabla.solicitudes.service';
 import { AlumnoTablaService } from 'src/app/servicios/tablas/tabla.perfiles.alumnos.service';
 import { DecimalPipe } from '@angular/common';
+import { ObservacionService } from 'src/app/servicios/observacion.service';
 
 @NgModule({
     imports: [HttpClientModule],
@@ -27,6 +28,7 @@ import { DecimalPipe } from '@angular/common';
         StorageService, 
         AuthorizatedGuard,
         AuthorizatedGuardProfesor,
+        AuthorizatedGuardAlumno,
         ProfesorService,
         AsignaturaService,
         AsistenciaService,
@@ -41,7 +43,8 @@ import { DecimalPipe } from '@angular/common';
         DecimalPipe,
         AlertaTablaService,
         SolicitudEventoTablaService,
-        AlumnoTablaService
+        AlumnoTablaService,
+        ObservacionService
     ],
 })
 export class CompartidoModule { }
