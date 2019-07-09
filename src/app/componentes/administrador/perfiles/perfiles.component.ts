@@ -52,7 +52,7 @@ export class PerfilesComponent implements OnInit {
     private _colegioService: ColegioService,
     private _apoderadoService: ApoderadoService,
     private _administradorService: AdministradorService,
-    private _alumnoTablaService: AlumnoTablaService
+    public _alumnoTablaService: AlumnoTablaService
     )
   { 
     this.asignaturas= []
