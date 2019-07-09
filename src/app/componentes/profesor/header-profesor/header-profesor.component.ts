@@ -11,5 +11,6 @@ export class HeaderProfesorComponent implements OnInit {
 
   ngOnInit() {
   }
+  logout(){}
 
 }
