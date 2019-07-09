@@ -32,7 +32,6 @@
             "scripts": [
               "./node_modules/moment/min/moment.min.js",
               "./node_modules/fullcalendar/dist/fullcalendar.min.js",
-              "./node_modules/handsontable/dist/handsontable.full.css",
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js"
             ],
@@ -48,7 +47,7 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,

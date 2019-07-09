@@ -33,8 +33,6 @@
     "@fullcalendar/daygrid": "^4.2.0",
     "@fullcalendar/interaction": "^4.2.0",
     "@fullcalendar/timegrid": "^4.2.0",
-    "@handsontable-pro/angular": "^3.0.0",
-    "@handsontable/angular": "^3.0.0",
     "@ng-bootstrap/ng-bootstrap": "^4.1.0",
     "angular-datatables": "^7.0.0",
     "chart.js": "^2.8.0",
@@ -43,8 +41,6 @@
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "fullcalendar": "^3.10.0",
-    "handsontable": "^6.2.2",
-    "handsontable-pro": "^6.2.2",
     "jquery": "^3.4.1",
     "ng2-charts": "^2.0.3",
     "ng2-rut": "^0.3.2",
@@ -74,9 +70,9 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "node-sass": "^4.12.0",
     "protractor": "~5.4.0",
+    "terser": "3.14.1",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2",
-    "terser": "3.14.1"
+    "typescript": "~3.2.2"
   }
 }
