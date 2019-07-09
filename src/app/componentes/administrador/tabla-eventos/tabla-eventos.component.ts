@@ -21,9 +21,9 @@ export class TablaEventosComponent implements OnInit {
   filtroSortSolicitud: any[]
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   constructor(
-    private _eventoTablaService: EventoTablaService,
-    private _solicitudEventoService: SolicitudEventoTablaService,
-    private _eventoService: EventoService
+    public _eventoTablaService: EventoTablaService,
+    public _solicitudEventoService: SolicitudEventoTablaService,
+    public _eventoService: EventoService
   ) {
     this.eventos$ = this._eventoTablaService.eventos$;
     this.totalEventos$ = this._eventoTablaService.total$;

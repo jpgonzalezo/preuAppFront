@@ -19,7 +19,7 @@ export class AlertasComponent implements OnInit {
   filtroSort: any[]
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  constructor(private _alertaService: AlertaService, private _alertaTablaService: AlertaTablaService) 
+  constructor(private _alertaService: AlertaService, public _alertaTablaService: AlertaTablaService) 
   { 
     this.alertas$ = this._alertaTablaService.alertas$;
     this.total$ = this._alertaTablaService.total$;
