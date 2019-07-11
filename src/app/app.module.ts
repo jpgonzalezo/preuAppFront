@@ -33,7 +33,7 @@ import { StorageService } from './servicios/storage.service';
     RoutesModule,
     ReactiveFormsModule,
     ChartsModule,
-    NgbModule,
+    NgbModule.forRoot(),
     CompartidoModule,
     InicioModule
   ],

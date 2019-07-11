@@ -30,7 +30,6 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         ChartsModule,
-        NgbModule,
     ],
     declarations: [
         InicioComponent,

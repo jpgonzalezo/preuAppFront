@@ -85,7 +85,6 @@ const routes: Routes = [
         HttpClientModule,
         ReactiveFormsModule,
         ChartsModule,
-        NgbModule,
         FullCalendarModule,
         Ng2Rut
     ],
