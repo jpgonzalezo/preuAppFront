@@ -23,7 +23,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         ChartsModule,
-        NgbModule,
+        NgbModule.forRoot(),
         NgbPaginationModule,
         RouterModule.forChild(routes),
         CommonModule,

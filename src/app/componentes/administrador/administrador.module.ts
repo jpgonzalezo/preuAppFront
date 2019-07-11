@@ -77,7 +77,7 @@ const routes: Routes = [
     //en los imports van los modulos que utiliza este modulo
     imports: [
         ChartsModule,
-        NgbModule,
+        NgbModule.forRoot(),
         NgbPaginationModule,
         RouterModule.forChild(routes),
         CommonModule,
