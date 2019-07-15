@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 //import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import localeEs from '@angular/common/locales/es';
 import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
@@ -23,11 +24,12 @@ const routes: Routes = [
 @NgModule({
     imports: [
         ChartsModule,
-        NgbModule,
+        NgbModule.forRoot(),
         NgbPaginationModule,
         RouterModule.forChild(routes),
         CommonModule,
         FormsModule,
+        HttpClientModule,
         ReactiveFormsModule
     ],
     declarations: [

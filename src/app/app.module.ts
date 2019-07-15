@@ -34,8 +34,7 @@ import { StorageService } from './servicios/storage.service';
     ReactiveFormsModule,
     ChartsModule,
     NgbModule.forRoot(),
-    CompartidoModule,
-    InicioModule
+    CompartidoModule
   ],
   providers: [
     StorageService,
