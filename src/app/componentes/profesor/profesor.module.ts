@@ -30,8 +30,7 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         HttpClientModule,
-        ReactiveFormsModule,
-        ChartsModule
+        ReactiveFormsModule
     ],
     declarations: [
         HomeComponent,

@@ -37,7 +37,6 @@ const routes: Routes = [
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        ChartsModule,
         CompartidoModule
     ],
     declarations: [

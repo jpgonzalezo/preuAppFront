@@ -28,8 +28,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         CommonModule,
         FormsModule,
-        ReactiveFormsModule,
-        ChartsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         InicioComponent,
