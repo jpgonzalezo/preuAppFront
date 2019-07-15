@@ -2,21 +2,19 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-//import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import localeEs from '@angular/common/locales/es';
 import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts-x';
 import { ReactiveFormsModule} from '@angular/forms';
-// register 'es' locale
 registerLocaleData(localeEs);
 
 
 //COMPONENTES
 import { InicioComponent } from './inicio/inicio.component';
 //SERVICIOS
-//import { LoginService } from 'src/app/servicios/login.service';
+import { LoginService } from 'src/app/servicios/login.service';
 const routes: Routes = [
     { path: '', component: InicioComponent },
 ];
@@ -38,6 +36,8 @@ const routes: Routes = [
     exports: [
         RouterModule
     ],
-    providers:[]
+    providers:[
+        LoginService
+    ]
 })
 export class InicioModule { }

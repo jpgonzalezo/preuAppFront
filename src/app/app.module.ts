@@ -10,7 +10,7 @@ import localeEs from '@angular/common/locales/es';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { RoutesModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts-x';
 import { ReactiveFormsModule} from '@angular/forms';
 import { CompartidoModule } from 'src/app/componentes/compartido.module';
 import { InicioModule } from 'src/app/componentes/inicio/inicio.module';
