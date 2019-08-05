@@ -9,8 +9,7 @@ import { Session } from 'src/app/modelos/session.model';
 import swal from'sweetalert2';
 @Component({
   selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.css'],
+  templateUrl: './inicio.component.html'
 })
 export class InicioComponent implements OnInit {
   persona: string;
