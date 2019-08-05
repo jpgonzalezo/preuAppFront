@@ -14,9 +14,11 @@ import { ChartsModule } from 'ng2-charts-x';
 import { ReactiveFormsModule} from '@angular/forms';
 import { CompartidoModule } from 'src/app/componentes/compartido.module';
 import { InicioModule } from 'src/app/componentes/inicio/inicio.module';
+import { AdministradorModule } from 'src/app/componentes/administrador/administrador.module';
 // register 'es' locale
 registerLocaleData(localeEs);
 import { StorageService } from './servicios/storage.service';
+import { LocalService } from 'src/app/servicios/local.service';
 //import { LoginService } from 'src/app/servicios/login.service';
 
 @NgModule({
@@ -34,10 +36,12 @@ import { StorageService } from './servicios/storage.service';
     ReactiveFormsModule,
     ChartsModule,
     NgbModule.forRoot(),
-    CompartidoModule
+    CompartidoModule,
+    AdministradorModule
   ],
   providers: [
     StorageService,
+    LocalService
   ],
   entryComponents: [ ],
   bootstrap: [ AppComponent],

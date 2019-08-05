@@ -20,7 +20,10 @@ import { SolicitudEventoTablaService } from 'src/app/servicios/tablas/tabla.soli
 import { AlumnoTablaService } from 'src/app/servicios/tablas/tabla.perfiles.alumnos.service';
 import { DecimalPipe } from '@angular/common';
 import { ObservacionService } from 'src/app/servicios/observacion.service';
-
+import { ColegioService } from 'src/app/servicios/colegio.service';
+import { CursoService } from 'src/app/servicios/curso.service';
+import { ApoderadoService } from 'src/app/servicios/apoderado.service';
+import { AdministradorService } from 'src/app/servicios/administrador.service';
 @NgModule({
     imports: [HttpClientModule],
     providers:[
@@ -44,7 +47,11 @@ import { ObservacionService } from 'src/app/servicios/observacion.service';
         AlertaTablaService,
         SolicitudEventoTablaService,
         AlumnoTablaService,
-        ObservacionService
+        ObservacionService,
+        ColegioService,
+        CursoService,
+        ApoderadoService,
+        AdministradorService
     ],
 })
 export class CompartidoModule { }
