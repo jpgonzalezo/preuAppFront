@@ -1,33 +1,31 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Alerta } from 'src/app/modelos/alerta.model';
 import { AlertaService} from 'src/app/servicios/alerta.service';
-import { AlertaTablaService } from 'src/app/servicios/tablas/tabla.alerta.service';
 import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { Observable } from 'rxjs';
-import { NgbdSortableHeader , SortEvent} from 'src/app/servicios/sorteable.directive';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
+import { Config } from 'src/app/config';
 @Component({
   selector: 'app-alertas',
   templateUrl: './alertas.component.html',
   styleUrls: ['./alertas.component.css']
 })
 export class AlertasComponent implements OnInit {
-  alertas$: Observable<Alerta[]>;
-  total$: Observable<number>;
-  filtroSort: any[]
+  alertas: Alerta[]
   token: string
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
-
+  pageAlerta: number;
+  pageSizeAlerta: number;
+  collectionSizeAlerta: number;
   constructor(private _localService: LocalService,
     private _alertaService: AlertaService,
     private _storageService: StorageService,
-    public _alertaTablaService: AlertaTablaService) 
+  ) 
   { 
-    this.alertas$ = this._alertaTablaService.alertas$;
-    this.total$ = this._alertaTablaService.total$;
-    this.filtroSort= ['','','','','']
+    this.pageAlerta = 1;
+    this.pageSizeAlerta = 10;
+    this.alertas = []
   }
 
   ngOnInit() {
@@ -38,37 +36,29 @@ export class AlertasComponent implements OnInit {
       this.token = this._storageService.getCurrentToken()
     }
     this.getGraficoAlertasCursos()
+    this.getAlertas()
   }
 
-  onSort({column, direction}: SortEvent) {
-    // resetting other headers
-    this.filtroSort= ['','','','','']
-    if(column=="alumno"){
-      this.filtroSort[0]= direction
-    }
-    if(column=="curso"){
-      this.filtroSort[1]= direction
-    }
-    if(column=="fecha"){
-      this.filtroSort[2]= direction
-    }
-    if(column=="asignatura"){
-      this.filtroSort[3]= direction
-    }
-    if(column=="tipo"){
-      this.filtroSort[4]= direction
-    }
-
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
+  getAlertas(){
+    this._alertaService.getAlertas(this.token).subscribe((data:Alerta[])=>{
+      this.alertas = data
+      for(let alerta of this.alertas){
+        if(alerta.alumno.imagen==''){
+          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/default"
+        }
+        else{
+          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.imagen
+        }
       }
-    });
-
-    this._alertaTablaService.sortColumn = column;
-    this._alertaTablaService.sortDirection = direction;
+      this.collectionSizeAlerta = this.alertas.length
+    })
   }
 
+  get alertas_tabla(): any[] {
+    return this.alertas
+      .map((alerta, i) => ({id: i + 1, ...alerta}))
+      .slice((this.pageAlerta - 1) * this.pageSizeAlerta, (this.pageAlerta - 1) * this.pageSizeAlerta + this.pageSizeAlerta);
+  }
   // Radar
   public radarChartOptions: RadialChartOptions = {
     responsive: true,
