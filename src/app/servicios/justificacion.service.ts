@@ -8,39 +8,39 @@ export class JustificacionService {
     API_URL = Config.API_SERVER_URL;
     constructor(private httpClient: HttpClient) { }
 
-    getJustificaciones(){
-  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getJustificaciones(token:string){
+  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token});
   	    const options = {
   		    headers: headers
   	    }
         return this.httpClient.get(`${this.API_URL}/justificaciones`,options).pipe(map(res => res))
     }
 
-	getJustificacion(id:string){
-  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	getJustificacion(id:string,token:string){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
   	const options = {
   		headers: headers
   	}
     return this.httpClient.get(`${this.API_URL}/justificaciones/${id}`,options).pipe(map(res => res))
 	}
 
-	postJustificacion(data:any){
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	postJustificacion(data:any,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
 		const options = {
 			headers: headers
 		}
 		return this.httpClient.post(`${this.API_URL}/justificaciones`, JSON.stringify(data), options).pipe(map(res => res))
 	}
 
-	getJustificacionesAlumno(id:string){
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	getJustificacionesAlumno(id:string,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token });
 		const options = {
 			headers: headers
 		}
 	  	return this.httpClient.get(`${this.API_URL}/justificaciones_alumno/${id}`,options).pipe(map(res => res))
 	}
-	deleteJustificacion(id:string){
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	deleteJustificacion(id:string,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
 		const options = {
 			headers: headers
 		}

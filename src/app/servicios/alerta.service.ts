@@ -9,48 +9,48 @@ export class AlertaService {
     API_URL = Config.API_SERVER_URL;
     constructor(private httpClient: HttpClient, private http: Http) { }
 
-    getAlertas(){
-  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getAlertas(token:string){
+  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token});
   	    const options = {
   		    headers: headers
   	    }
         return this.httpClient.get(`${this.API_URL}/alertas`).pipe(map(res => res))
     }
 
-	getAlerta(id:string){
-  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	getAlerta(id:string,token:string){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token });
   	const options = {
   		headers: headers
   	}
     return this.httpClient.get(`${this.API_URL}/alertas/${id}`,options).pipe(map(res => res))
 	}
 
-    getAlertasCurso(id:string){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getAlertasCurso(id:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token });
         const options = {
             headers: headers
         }
         return this.httpClient.get(`${this.API_URL}/alertas_curso/${id}`,options).pipe(map(res => res))
     }
 
-    getAlertasAlumno(id:string){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getAlertasAlumno(id:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token  });
         const options = {
             headers: headers
         }
         return this.httpClient.get(`${this.API_URL}/alertas_alumno/${id}`,options).pipe(map(res => res))
     }
 
-    getAlertasAsignatura(id:string){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getAlertasAsignatura(id:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token });
         const options = {
             headers: headers
         }
         return this.httpClient.get(`${this.API_URL}/alertas_asignatura/${id}`,options).pipe(map(res => res))
     }
 
-    getGraficoAlertasCursos(){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getGraficoAlertasCursos(token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token });
         const options = {
             headers: headers
         }

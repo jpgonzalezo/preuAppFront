@@ -8,24 +8,24 @@ export class AnotacionService {
     API_URL = Config.API_SERVER_URL;
     constructor(private httpClient: HttpClient) { }
 
-    getAnotaciones(){
-  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getAnotaciones(token:string){
+  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
   	    const options = {
   		    headers: headers
   	    }
         return this.httpClient.get(`${this.API_URL}/anotaciones`,options).pipe(map(res => res))
     }
 
-	getAnotacion(id:string){
-  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	getAnotacion(id:string,token:string){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
   	const options = {
   		headers: headers
   	}
     return this.httpClient.get(`${this.API_URL}/anotaciones/${id}`,options).pipe(map(res => res))
 	}
 
-    getAnotacionesProfesor(id:string){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getAnotacionesProfesor(id:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
         const options = {
             headers: headers
         }

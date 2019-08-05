@@ -9,8 +9,8 @@ export class EstadisticaService {
   API_URL = Config.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 
-  getEstadisticaResumen():any{
-  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  getEstadisticaResumen(token:string):any{
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
   	const options = {
   		headers: headers
   	}

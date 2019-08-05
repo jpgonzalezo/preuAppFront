@@ -8,24 +8,24 @@ export class ObservacionService {
     API_URL = Config.API_SERVER_URL;
     constructor(private httpClient: HttpClient) { }
 
-    getObservaciones():any{
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getObservaciones(token:string):any{
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
         const options = {
             headers: headers
         }
         return this.httpClient.get(`${this.API_URL}/observaciones`,options).pipe(map(res => res))
     }
 
-    postObservacion(data:any):any{
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    postObservacion(data:any,token:string):any{
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
         const options = {
           headers: headers
         }
         return this.httpClient.post(`${this.API_URL}/observaciones`, JSON.stringify(data), options).pipe(map(res => res))
     }
 
-    getObservacionesAlumno(id:any, tipo:any){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getObservacionesAlumno(id:any, tipo:any,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
         const options = {
             headers: headers
         }

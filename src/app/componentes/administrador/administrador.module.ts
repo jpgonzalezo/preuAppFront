@@ -10,6 +10,7 @@ import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { Ng2Rut } from 'ng2-rut';
+import { CompartidoModule } from 'src/app/componentes/compartido.module';
 // register 'es' locale
 registerLocaleData(localeEs);
 
@@ -85,7 +86,8 @@ const routes: Routes = [
         HttpClientModule,
         ReactiveFormsModule,
         FullCalendarModule,
-        Ng2Rut
+        Ng2Rut,
+        CompartidoModule
     ],
     //en declarations van los componentes que utiliza el modulo
     declarations: [
@@ -116,14 +118,6 @@ const routes: Routes = [
     ],
     //En los providers va los servicios que utiliza el modulo
     providers:[
-        AdministradorCompartidoService,
-        EstadisticaService,
-        CursoService,
-        AlumnoService,
-        ObservacionService,
-        ColegioService,
-        ApoderadoService,
-        AdministradorService,
     ]
 })
 export class AdministradorModule { }

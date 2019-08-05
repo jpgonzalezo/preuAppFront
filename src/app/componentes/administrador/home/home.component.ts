@@ -3,6 +3,7 @@ import { CursoService } from 'src/app/servicios/curso.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { EventoService } from 'src/app/servicios/evento.service';
 import { Curso } from 'src/app/modelos/curso.model';
+import { LocalService } from 'src/app/servicios/local.service';
 import { Evento } from 'src/app/modelos/evento.model';
 import swal from'sweetalert2';
 import { FullCalendarComponent } from '@fullcalendar/angular';
@@ -20,7 +21,7 @@ import bootstrapPlugin from '@fullcalendar/bootstrap';
 export class HomeComponent implements OnInit {
   usuario: any
   cursos: Curso[]
-
+  token: string
   @ViewChild('calendar') calendarComponent: FullCalendarComponent// the #calendar in the template
   bootstrapPlugin = bootstrapPlugin
   esLocale = esLocale
@@ -30,13 +31,20 @@ export class HomeComponent implements OnInit {
   
   constructor(private _cursoService: CursoService,
               private _storageService: StorageService,
-              private _eventoService: EventoService
+              private _eventoService: EventoService,
+              private _localService: LocalService
   ) {
     this.cursos=[]
     this.calendarEvents = []
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.usuario = this._storageService.getCurrentUser()
     this.getCursos()
     this.getEventos()
@@ -44,7 +52,7 @@ export class HomeComponent implements OnInit {
 
 
   getCursos(){
-    this._cursoService.getCursos().subscribe((data:Curso[])=>{
+    this._cursoService.getCursos(this.token).subscribe((data:Curso[])=>{
       this.cursos = data
     })
   }

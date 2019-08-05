@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/servicios/login.service';
+import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { Session } from 'src/app/modelos/session.model';
@@ -20,6 +21,7 @@ export class InicioComponent implements OnInit {
   constructor(private router: Router,
     private formBuilderLogin: FormBuilder,
     private _loginService: LoginService,
+    private localService: LocalService,
     private _storageService: StorageService) { 
     this.persona = "Seleccione perfil";
     this.perfil_seleccion = new FormControl("");
@@ -56,15 +58,7 @@ export class InicioComponent implements OnInit {
           })
         }
         else{
-          this.correctLogin({token:data['tipo'],user:
-            { nombres:data['respuesta'].nombres,
-              apellido_paterno:data['respuesta'].apellido_paterno,
-              apellido_materno:data['respuesta'].apellido_materno,
-              email:data['respuesta'].email,
-              telefono:data['respuesta'].telefono,
-              id:data['respuesta'].id,
-            }
-          })
+          this.correctLogin({token:data['token'],user: {tipo: data['tipo'] }}, data['tipo'])
         }
       },
       (error) =>{
@@ -78,20 +72,17 @@ export class InicioComponent implements OnInit {
     }
   }
 
-  private correctLogin(data: Session){
+  private correctLogin(data: Session, tipo:string){
     this._storageService.setCurrentSession(data);
-    if(data['token']=="ADMINISTRADOR"){
+    this.localService.setToken(this._storageService.getCurrentToken())
+    if(tipo == 'ADMINISTRADOR'){
       this.router.navigate(['/admin']);
     }
-    else if(data['token']=="PROFESOR"){
+    if(tipo == 'PROFESOR'){
       this.router.navigate(['/profesor']);
     }
-    else if(data['token']=="ALUMNO"){
-      console.log("sup")
-      this.router.navigate(['/alumno']);
-    }
-    else{
-      this.router.navigate(['/inicio']);
+    if(tipo == 'ALUMNO'){
+      this.router.navigate(['/alumno']); 
     }
   }
   cambiarPersona(tipo:string){

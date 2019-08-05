@@ -9,72 +9,72 @@ export class AlumnoService {
   API_URL = Config.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 
-  getAlumnosCurso(id_curso:string){
-  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  getAlumnosCurso(id_curso:string, token:string){
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'auth-token':token });
   	const options = {
   		headers: headers
   	}
     return this.httpClient.get(`${this.API_URL}/alumnos_curso/${id_curso}`,options).pipe(map(res => res))
   }
 
-  getAlumno():any{
-  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  getAlumno(token:string):any{
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token });
   	const options = {
   		headers: headers
   	}
     return this.httpClient.get(`${this.API_URL}/alumnos`,options).pipe(map(res => res))
 	}
 
-	postAlumno(data:any):any{
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	postAlumno(data:any,token:string):any{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'auth-token':token});
     const options = {
       headers: headers
     }
     return this.httpClient.post(`${this.API_URL}/alumnos`, JSON.stringify(data), options).pipe(map(res => res))
   }
   
-  deleteAlumno(id:any){
-    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+  deleteAlumno(id:any,token:string){
+    const headers = new HttpHeaders({ 'Content-type':'application/json', 'auth-token':token});
     const options = {
       headers:headers
     }
     return this.httpClient.delete(`${this.API_URL}/alumno/${id}`, options).pipe(map(res => res))
   }
 
-  getHojaVida(id:any){
-    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+  getHojaVida(id:any,token:string){
+    const headers = new HttpHeaders({ 'Content-type':'application/json', 'auth-token':token});
     const options = {
       headers:headers
     }
     return this.httpClient.get(`${this.API_URL}/hoja_vida/${id}`,options).pipe(map(res => res))
   }
 
-  uploadImage(data:FormData, id:string){
-    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+  uploadImage(data:FormData, id:string,token:string){
+    const headers = new HttpHeaders({ 'Content-type':'application/json', 'auth-token':token});
     const options = {
       headers:headers
     }
     return this.httpClient.post(`${this.API_URL}/alumno_imagen/${id}`,data).pipe(map(res => res)) 
   }
 
-  uploadImageDefault(id:string){
-    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+  uploadImageDefault(id:string,token:string){
+    const headers = new HttpHeaders({ 'Content-type':'application/json', 'auth-token':token});
     const options = {
       headers:headers
     }
     return this.httpClient.get(`${this.API_URL}/alumno_imagen_default/${id}`,options).pipe(map(res => res))
   }
 
-  getAlumnoGraficoRendimiento(id:string){
-    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+  getAlumnoGraficoRendimiento(id:string,token:string){
+    const headers = new HttpHeaders({ 'Content-type':'application/json', 'auth-token':token});
     const options = {
       headers:headers
     }
     return this.httpClient.get(`${this.API_URL}/alumno_grafico_rendimiento/${id}`,options).pipe(map(res => res))
   }
 
-  getAlumnoGraficoAsistencia(id:string){
-    const headers = new HttpHeaders({ 'Content-type':'application/json'});
+  getAlumnoGraficoAsistencia(id:string,token:string){
+    const headers = new HttpHeaders({ 'Content-type':'application/json', 'auth-token':token});
     const options = {
       headers:headers
     }

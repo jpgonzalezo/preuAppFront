@@ -8,8 +8,8 @@ export class EvaluacionService {
     API_URL = Config.API_SERVER_URL;
     constructor(private httpClient: HttpClient) { }
 
-    getEvaluacionesPrueba(id_prueba:string){
-  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getEvaluacionesPrueba(id_prueba:string,token:string){
+  	    const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
   	    const options = {
   		    headers: headers
   	    }

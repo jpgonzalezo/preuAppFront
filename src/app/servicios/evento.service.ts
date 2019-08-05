@@ -8,40 +8,40 @@ export class EventoService {
   API_URL = Config.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 
-    getEventos():any{
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getEventos(token:string):any{
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
         const options = {
             headers: headers
         }
         return this.httpClient.get(`${this.API_URL}/eventos`,options).pipe(map(res => res))
     }
 
-    postEvento(data:any){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    postEvento(data:any,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
         const options = {
           headers: headers
         }
         return this.httpClient.post(`${this.API_URL}/eventos`, JSON.stringify(data), options).pipe(map(res => res))
     }
 
-    deleteEvento(id:string){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    deleteEvento(id:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
         const options = {
             headers: headers
         }
         return this.httpClient.delete(`${this.API_URL}/eventos/${id}`,options).pipe(map(res => res))
     }
 
-    getSolicitudesEventos(){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    getSolicitudesEventos(token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token });
         const options = {
             headers: headers
         }
         return this.httpClient.get(`${this.API_URL}/eventos/solicitudes`,options).pipe(map(res => res))
     }
 
-    aceptarEvento(id:string){
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    aceptarEvento(id:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
         const options = {
             headers: headers
         }

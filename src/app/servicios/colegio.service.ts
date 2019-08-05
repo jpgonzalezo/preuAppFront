@@ -8,24 +8,24 @@ export class ColegioService {
   API_URL = Config.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 
-  getColegios():any{
-  	const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  getColegios(token:string):any{
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token});
   	const options = {
   		headers: headers
   	}
     return this.httpClient.get(`${this.API_URL}/colegios`,options).pipe(map(res => res))
 	}
 
-	deleteColegio(id:string){
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	deleteColegio(id:string,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token});
   	const options = {
   		headers: headers
   	}
     return this.httpClient.delete(`${this.API_URL}/colegios/${id}`,options).pipe(map(res => res))
 	}
 
-	postColegio(data:any){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+	postColegio(data:any,token:string){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token});
     const options = {
       headers: headers
     }
