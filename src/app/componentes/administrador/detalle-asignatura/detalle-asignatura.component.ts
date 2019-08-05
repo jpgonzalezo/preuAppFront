@@ -18,7 +18,8 @@ import { ChartType } from 'chart.js';
 import { MultiDataSet, Label } from 'ng2-charts';
 import { ChartOptions, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-detalle-asignatura',
   templateUrl: './detalle-asignatura.component.html',
@@ -83,9 +84,7 @@ export class DetalleAsignaturaComponent implements OnInit {
   public barChartPluginsAsistencia = [pluginDataLabels];
 
   public barChartDataAsistencia: ChartDataSets[] = [{ data: [], label: '' }];
-
-
-
+  token: string
   constructor(private _asignaturaService: AsignaturaService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
@@ -93,7 +92,9 @@ export class DetalleAsignaturaComponent implements OnInit {
     private _asistenciaService: AsistenciaService,
     private _pruebaService: PruebaService,
     private _alertaService: AlertaService,
-    private _topicoService: TopicoService
+    private _topicoService: TopicoService,
+    private _localService: LocalService,
+    private _storageService: StorageService
     ) {
     this.asignatura = new Asignatura();
     this.profesores = [];
@@ -115,6 +116,12 @@ export class DetalleAsignaturaComponent implements OnInit {
    }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.id_asignatura = this._activatedRoute.snapshot.paramMap.get('id');
     this.getProfesoresAsignatura()
     this.getAsignatura()
@@ -157,19 +164,19 @@ export class DetalleAsignaturaComponent implements OnInit {
   }
 
   getGraficoAsistenciaAsignatura(){
-    this._asignaturaService.getGraficoAsistenciaAsignatura(this.id_asignatura).subscribe((data:any)=>{
+    this._asignaturaService.getGraficoAsistenciaAsignatura(this.id_asignatura,this.token).subscribe((data:any)=>{
       this.barChartDataAsistencia = data['data']
       this.barChartLabelsAsistencia = data['labels']
     })
   }
   getGraficoRendimientoEvaluacionesAsignatura(){
-    this._asignaturaService.getGraficoRendimientoEvaluacionesAsignatura(this.id_asignatura).subscribe((data:any)=>{
+    this._asignaturaService.getGraficoRendimientoEvaluacionesAsignatura(this.id_asignatura,this.token).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
     })
   }
   getProfesoresAsignatura(){
-    this._profesorService.getProfesoresAsignatura(this.id_asignatura).subscribe((data:Profesor[])=>{
+    this._profesorService.getProfesoresAsignatura(this.id_asignatura,this.token).subscribe((data:Profesor[])=>{
       this.profesores = data
       this.collectionSizeProfesor = this.profesores.length;
       for(let alumno of this.profesores){
@@ -179,34 +186,34 @@ export class DetalleAsignaturaComponent implements OnInit {
   }
 
   getAsignatura(){
-    this._asignaturaService.getAsignatura(this.id_asignatura).subscribe((data:Asignatura)=>{
+    this._asignaturaService.getAsignatura(this.id_asignatura,this.token).subscribe((data:Asignatura)=>{
       this.asignatura = data;
     })
   }
 
   getAsistenciasAsignatura(){
-    this._asistenciaService.getAsistenciasAsignatura(this.id_asignatura).subscribe((data:Asistencia[])=>{
+    this._asistenciaService.getAsistenciasAsignatura(this.id_asignatura,this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
       this.collectionSizeAsistencia = this.asistencias.length
     })
   }
 
   getPruebasAsignatura(){
-    this._pruebaService.getPruebasAsignaturas(this.id_asignatura).subscribe((data:Prueba[])=>{
+    this._pruebaService.getPruebasAsignaturas(this.id_asignatura,this.token).subscribe((data:Prueba[])=>{
       this.pruebas = data
       this.collectionSizeEvaluacion = this.pruebas.length
     })
   }
 
   getAlertasAsignatura(){
-    this._alertaService.getAlertasAsignatura(this.id_asignatura).subscribe((data:Alerta[])=>{
+    this._alertaService.getAlertasAsignatura(this.id_asignatura,this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
     })
   }
 
   getTopicosAsignatura(){
-    this._topicoService.getTopicosAsignatura(this.id_asignatura).subscribe((data:Topico[])=>{
+    this._topicoService.getTopicosAsignatura(this.id_asignatura,this.token).subscribe((data:Topico[])=>{
       this.topicos = data;
       this.collectionSizeTopico = this.topicos.length
     })
@@ -232,7 +239,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
-        this._topicoService.deleteTopico(id).subscribe((data:any)=>{
+        this._topicoService.deleteTopico(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='borrado'){
             swal.fire({
               title:'Borrado!',

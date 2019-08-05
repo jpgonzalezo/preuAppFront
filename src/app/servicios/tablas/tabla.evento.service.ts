@@ -6,7 +6,8 @@ import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import { SortDirection } from '../sorteable.directive';
 import { Config } from 'src/app/config';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 interface SearchResult {
   eventos: Evento[];
   total: number;
@@ -91,13 +92,23 @@ export class EventoTablaService {
     sortColumn: '',
     sortDirection: ''
   };
-
-  constructor(private pipe: DecimalPipe, private _eventoService: EventoService) {
+  token: string
+  constructor(private pipe: DecimalPipe,
+    private _localService: LocalService,
+    private _storageService: StorageService,
+    private _eventoService: EventoService) 
+  {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.getEventos()
   }
 
   getEventos(){
-    this._eventoService.getEventos().subscribe((data: Evento[])=>{
+    this._eventoService.getEventos(this.token).subscribe((data: Evento[])=>{
       this.eventos = data
       this._search$.pipe(
           tap(() => this._loading$.next(true)),

@@ -30,127 +30,55 @@
               aria-labelledby="estudiante-tab">
               <div class="mb-8 ">
                 <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido Paterno</th>
+                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let alumno of alumnos_tabla">
+                        <th scope="row">
+                          <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ alumno.rut | rut}}</td>
+                        <td>{{ alumno.nombres}}</td>
+                        <td>{{ alumno.apellido_paterno}}</td>
+                        <td>{{ alumno.apellido_materno}}</td>
+                        <td>{{ alumno.curso.nombre }}</td>
+                        <td>
+                          <button type="button" class="btn btn-info btn-sm" (click)="generarVistaHojaVida(alumno.id)"><i
+                              class="far fa-eye"></i></button>
+                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i
+                              class="fas fa-trash-alt"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="pageAlumno"
+                      [pageSize]="pageSizeAlumno">
+                    </ngb-pagination>
 
-
-
-
-                <form>
-                  <div class="row col-md-12">
-                    <div class="form-group form-inline col-md-9">
-                      <input class="form-control ml-2" type="text" name="searchTerm"
-                        [(ngModel)]="_alumnoTablaService.searchTerm" placeholder="Buscar..." />
-                      <span class="ml-3" *ngIf="_alumnoTablaService.loading$ | async">Cargando...</span>
-                    </div>
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
+                      <option [ngValue]="10">10 alumnos por página</option>
+                      <option [ngValue]="20">20 alumnos por página</option>
+                      <option [ngValue]="30">30 alumnos por página</option>
+                    </select>
                   </div>
-                  <div class="table-responsive-lg">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr class="bg-info text-white">
-                          <th scope="col"></th>
-                          <th scope="col" sortable="rut" (sort)="onSortAlumno($event)">
-                            <a [routerLink]="" class="text-white">
-                              <div class="row">
-                                Rut
-                                <i *ngIf="filtroSortAlumno[0]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                <i *ngIf="filtroSortAlumno[0]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                              </div>
-                            </a>
-                          </th>
-                          <th scope="col" sortable="nombres" (sort)="onSortAlumno($event)">
-                            <a [routerLink]="" class="text-white">
-                              <div class="row">
-                                Nombres
-                                <i *ngIf="filtroSortAlumno[1]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                <i *ngIf="filtroSortAlumno[1]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                              </div>
-                            </a>
-                          </th>
-                          <th scope="col" sortable="apellido_paterno" (sort)="onSortAlumno($event)">
-                            <a [routerLink]="" class="text-white">
-                              <div class="row">
-                                Apellido Paterno
-                                <i *ngIf="filtroSortAlumno[2]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                <i *ngIf="filtroSortAlumno[2]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                              </div>
-                            </a>
-                          </th>
-                          <th scope="col" sortable="apellido_materno" (sort)="onSortAlumno($event)">
-                            <a [routerLink]="" class="text-white">
-                              <div class="row">
-                                Apellido Materno
-                                <i *ngIf="filtroSortAlumno[3]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                <i *ngIf="filtroSortAlumno[3]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                              </div>
-                            </a>
-                          </th>
-                          <th scope="col" sortable="curso" (sort)="onSortAlumno($event)">
-                            <a [routerLink]="" class="text-white">
-                              <div class="row">
-                                Curso
-                                <i *ngIf="filtroSortAlumno[4]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                <i *ngIf="filtroSortAlumno[4]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                              </div>
-                            </a>
-                          </th>
-                          <th scope="col">Accion</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let alumno of alumnos$ | async">
-                          <td scope="row">
-                            <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
-                          </td>
-                          <td scope="row">
-                            <ngb-highlight [result]="alumno.rut | rut" [term]="_alumnoTablaService.searchTerm">
-                            </ngb-highlight>
-                          </td>
-                          <td scope="row">
-                            <ngb-highlight [result]="alumno.nombres" [term]="_alumnoTablaService.searchTerm">
-                            </ngb-highlight>
-                          </td>
-                          <td scope="row">
-                            <ngb-highlight [result]="alumno.apellido_paterno" [term]="_alumnoTablaService.searchTerm">
-                            </ngb-highlight>
-                          </td>
-                          <td scope="row">
-                            <ngb-highlight [result]="alumno.apellido_materno" [term]="_alumnoTablaService.searchTerm">
-                            </ngb-highlight>
-
-                          </td>
-                          <td scope="row">
-                            <ngb-highlight [result]="alumno.curso.nombre" [term]="_alumnoTablaService.searchTerm">
-                            </ngb-highlight>
-                          </td>
-                          <td scope="row">
-                            <div class="row">
-                              <button type="button" class="btn btn-info btn-sm"
-                                (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
-                              <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i
-                                  class="fas fa-trash-alt"></i></button>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="d-flex justify-content-between p-2">
-                      <ngb-pagination [collectionSize]="totalAlumnos$ | async" [(page)]="_alumnoTablaService.page"
-                        [pageSize]="_alumnoTablaService.pageSize">
-                      </ngb-pagination>
-
-                      <select class="custom-select" style="width: auto" name="pageSize"
-                        [(ngModel)]="_alumnoTablaService.pageSize">
-                        <option [ngValue]="10">10 alumnos por pagina</option>
-                        <option [ngValue]="20">20 alumnos por pagina</option>
-                        <option [ngValue]="30">30 alumnos por pagina</option>
-                      </select>
-                    </div>
-                    <div class="text-center">
-                      <button type="button" class="btn btn-outline-primary" (click)="nuevo_estudiante()">Nuevo
-                        Estudiante</button>
-                      <br>
-                    </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-outline-primary" (click)="nuevo_profesor()">Nuevo
+                      Profesor</button>
+                    <br>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
 
@@ -158,7 +86,7 @@
             <div class="tab-pane fade show" id="profesor_existente" role="tabpanel" aria-labelledby="profesor-tab">
               <div class="mb-8">
                 <br>
-<!--                 <div class="table-responsive-lg">
+                <div class="table-responsive-lg">
                   <table class="table table-striped">
                     <thead>
                       <tr>
@@ -207,7 +135,7 @@
                       Profesor</button>
                     <br>
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
 
@@ -215,7 +143,7 @@
             <div class="tab-pane fade show" id="apoderado_existente" role="tabpanel" aria-labelledby="apoderado-tab">
               <div class="mb-8">
                 <br>
-<!--                 <div class="table-responsive-lg">
+                <div class="table-responsive-lg">
                   <table class="table table-striped">
                     <thead>
                       <tr>
@@ -230,7 +158,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let apoderado of apoderados_tabla">
+                      <tr *ngFor="let apoderado of []">
                         <th scope="row">
                           <img [src]='apoderado.imagen' class="mr-2" style="width: 50px">
                         </th>
@@ -264,7 +192,7 @@
                       Apoderado</button>
                     <br>
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
 
@@ -273,7 +201,7 @@
               aria-labelledby="administrador-tab">
               <div class="mb-8">
                 <br>
-<!--                 <div class="table-responsive-lg">
+                <div class="table-responsive-lg">
                   <table class="table table-striped">
                     <thead>
                       <tr>
@@ -317,7 +245,7 @@
                       Administrador</button>
                     <br>
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
 

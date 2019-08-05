@@ -8,7 +8,8 @@ import { Alumno } from 'src/app/modelos/alumno.model';
 import { Justificacion } from 'src/app/modelos/justificacion.model';
 import { Config } from 'src/app/config';
 import Swal from 'sweetalert2';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-detalle-asistencia',
   templateUrl: './detalle-asistencia.component.html',
@@ -31,7 +32,13 @@ export class DetalleAsistenciaComponent implements OnInit {
   justificaciones: Justificacion[]
   alumnosPresentes: Alumno[]
   alumnosAusentes: Alumno[]
-  constructor(private _router:Router,private _asistenciaService: AsistenciaService, private _activatedRoute: ActivatedRoute)
+  token: string
+  constructor(private _router:Router,
+    private _asistenciaService: AsistenciaService, 
+    private _activatedRoute: ActivatedRoute,
+    private _localService: LocalService,
+    private _storageService: StorageService
+    )
   { 
     this.asistencia = new Asistencia();
     this.curso = new Curso();
@@ -48,13 +55,19 @@ export class DetalleAsistenciaComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.id_asistencia = this._activatedRoute.snapshot.paramMap.get('id');
     this.getAsistencia();
     this.getJustificaciones()
   }
 
   getAsistencia(){
-    this._asistenciaService.getAsistencia(this.id_asistencia).subscribe((data:Asistencia)=>{
+    this._asistenciaService.getAsistencia(this.id_asistencia,this.token).subscribe((data:Asistencia)=>{
       this.asistencia = data;
       for(let alumno of this.asistencia.alumnos_presentes){
         alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
@@ -72,7 +85,7 @@ export class DetalleAsistenciaComponent implements OnInit {
   }
 
   getJustificaciones(){
-    this._asistenciaService.getJustificacionesAsistencia(this.id_asistencia).subscribe((data:Justificacion[])=>{
+    this._asistenciaService.getJustificacionesAsistencia(this.id_asistencia,this.token).subscribe((data:Justificacion[])=>{
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
     })
@@ -94,7 +107,7 @@ export class DetalleAsistenciaComponent implements OnInit {
       showCancelButton: true
     }).then((result)=>{
       if(result.dismiss == null){
-        this._asistenciaService.postJustificacion({'id_alumno':id_alumno,'id_asistencia':this.id_asistencia,'causa':result.value}).subscribe((data:any)=>{
+        this._asistenciaService.postJustificacion({'id_alumno':id_alumno,'id_asistencia':this.id_asistencia,'causa':result.value},this.token).subscribe((data:any)=>{
           if(data['Response']=="exito"){
             Swal.fire({
               type: 'success',

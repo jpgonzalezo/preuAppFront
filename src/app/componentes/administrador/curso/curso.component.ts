@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { Curso } from 'src/app/modelos/curso.model';
 import Swal from 'sweetalert2';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-curso',
   templateUrl: './curso.component.html',
@@ -14,13 +15,24 @@ export class CursoComponent implements OnInit {
   pageCurso: number;
   pageSizeCurso: number;
   collectionSizeCurso: number;
-  constructor(private _cursoService: CursoService, private router:Router) {
+  token: string
+  constructor(private _cursoService: CursoService,
+    private _localService: LocalService,
+    private _storageService: StorageService,
+    private router:Router) 
+  {
     this.pageCurso = 1;
     this.pageSizeCurso = 4;
     this.cursos = []
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.getCursos()
   }
 
@@ -43,7 +55,7 @@ export class CursoComponent implements OnInit {
     }).then((result) => {
       if(result.dismiss){}
       if (result.value) {
-        this._cursoService.deleteCurso(id).subscribe((data:any)=>{
+        this._cursoService.deleteCurso(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='exito'){
             Swal.fire({
               type: 'success',
@@ -63,7 +75,7 @@ export class CursoComponent implements OnInit {
   }
 
   getCursos(){
-    this._cursoService.getCursos().subscribe((data:Curso[])=>{
+    this._cursoService.getCursos(this.token).subscribe((data:Curso[])=>{
       this.cursos = data
       this.collectionSizeCurso = this.cursos.length
     })
@@ -82,7 +94,7 @@ export class CursoComponent implements OnInit {
       showCancelButton: true
     }).then((result)=>{
       if(result.value){
-        this._cursoService.postCurso({'nombre':result.value}).subscribe((data:any)=>{
+        this._cursoService.postCurso({'nombre':result.value},this.token).subscribe((data:any)=>{
           if(data['Response']=="exito"){
             Swal.fire({
               type: 'success',

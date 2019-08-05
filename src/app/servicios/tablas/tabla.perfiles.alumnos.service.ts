@@ -6,7 +6,8 @@ import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import { SortDirection } from '../sorteable.directive';
 import { Config } from 'src/app/config';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 interface SearchResult {
   alumnos: Alumno[];
   total: number;
@@ -135,13 +136,23 @@ export class AlumnoTablaService {
     sortColumn: '',
     sortDirection: ''
   };
-
-  constructor(private pipe: DecimalPipe, private _alumnoService: AlumnoService) {
+  token: string
+  constructor(private pipe: DecimalPipe,
+    private _localService: LocalService,
+    private _storageService: StorageService, 
+    private _alumnoService: AlumnoService) 
+  {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.getAlumnos()
   }
 
   getAlumnos(){
-    this._alumnoService.getAlumno().subscribe((data: Alumno[])=>{
+    this._alumnoService.getAlumno(this.token).subscribe((data: Alumno[])=>{
       this.alumnos = data
       this._search$.pipe(
           tap(() => this._loading$.next(true)),

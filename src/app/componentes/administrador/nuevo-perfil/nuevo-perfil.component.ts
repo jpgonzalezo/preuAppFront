@@ -6,7 +6,8 @@ import { ApoderadoService} from '../../../servicios/apoderado.service';
 import { CursoService } from '../../../servicios/curso.service';
 import { ActivatedRoute, Router } from '@angular/router'
 import swal from'sweetalert2';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-nuevo-perfil',
   templateUrl: './nuevo-perfil.component.html',
@@ -28,6 +29,7 @@ export class NuevoPerfilComponent implements OnInit {
   tipo_nuevo_perfil:string;
   @Output()
   guardado_exitoso = new EventEmitter<any>()
+  token: string
   constructor(private formBuilderDatosEstudiante: FormBuilder, 
     private formBuilderAcademicoEstudiante: FormBuilder,
     private formBuilderContactoEstudiante: FormBuilder, 
@@ -36,6 +38,8 @@ export class NuevoPerfilComponent implements OnInit {
     private _apoderadoService: ApoderadoService,
     private _cursoService: CursoService,
     private _activatedRoute: ActivatedRoute,
+    private _localService: LocalService,
+    private _storageService: StorageService,
     private _router: Router) 
     { 
     this.sexo_dropdown = "Seleccione sexo";
@@ -50,6 +54,12 @@ export class NuevoPerfilComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.tipo_nuevo_perfil = this._activatedRoute.snapshot.paramMap.get('tipo_perfil')
     this.getCursos();
     this.getColegios();
@@ -100,19 +110,19 @@ export class NuevoPerfilComponent implements OnInit {
   }
 
   public getColegios(){
-  	this._colegioService.getColegios().subscribe((data: Array<any>) => {
+  	this._colegioService.getColegios(this.token).subscribe((data: Array<any>) => {
       this.colegios = data;
     });
   }
 
   public getApoderado(){
-  	this._apoderadoService.getApoderados().subscribe((data: Array<any>) => {
+  	this._apoderadoService.getApoderados(this.token).subscribe((data: Array<any>) => {
       this.apoderados = data;
     });
   }
 
   public getCursos(){
-  	this._cursoService.getCursos().subscribe((data: Array<any>) => {
+  	this._cursoService.getCursos(this.token).subscribe((data: Array<any>) => {
       this.cursos = data;
     });
   }
@@ -166,7 +176,7 @@ export class NuevoPerfilComponent implements OnInit {
     else{
       this._alumnoService.postAlumno({'data_personal':alumnoPersonal,
         'data_academico':alumnoAcademico, 
-        'data_contacto':alumnoContacto}).subscribe((data:any)=>{
+        'data_contacto':alumnoContacto},this.token).subscribe((data:any)=>{
         if(data['Response']=='exito'){
           swal.fire({title:'Registro exitoso',
                      text:'Se registrado a '+ data['nombres']+" "+data['apellido_paterno']+" "+data['apellido_materno'] +' exitosamente',

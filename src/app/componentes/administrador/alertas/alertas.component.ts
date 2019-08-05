@@ -6,8 +6,8 @@ import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { Observable } from 'rxjs';
 import { NgbdSortableHeader , SortEvent} from 'src/app/servicios/sorteable.directive';
-
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-alertas',
   templateUrl: './alertas.component.html',
@@ -17,9 +17,13 @@ export class AlertasComponent implements OnInit {
   alertas$: Observable<Alerta[]>;
   total$: Observable<number>;
   filtroSort: any[]
+  token: string
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  constructor(private _alertaService: AlertaService, public _alertaTablaService: AlertaTablaService) 
+  constructor(private _localService: LocalService,
+    private _alertaService: AlertaService,
+    private _storageService: StorageService,
+    public _alertaTablaService: AlertaTablaService) 
   { 
     this.alertas$ = this._alertaTablaService.alertas$;
     this.total$ = this._alertaTablaService.total$;
@@ -27,6 +31,12 @@ export class AlertasComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.getGraficoAlertasCursos()
   }
 
@@ -69,7 +79,7 @@ export class AlertasComponent implements OnInit {
   public radarChartType: ChartType = 'radar';
 
   getGraficoAlertasCursos(){
-    this._alertaService.getGraficoAlertasCursos().subscribe((data:any)=>{
+    this._alertaService.getGraficoAlertasCursos(this.token).subscribe((data:any)=>{
       this.radarChartLabels = data['labels']
       this.radarChartData = data['data']
     })

@@ -21,172 +21,82 @@
             <div class="tab-pane fade show active" id="evento_existente" role="tabpanel" aria-labelledby="evento-tab">
               <div class="mb-8 ">
                 <br>
-                <form>
-                  <div class="row col-md-12">
-                    <div class="form-group form-inline col-md-9">
-                      <input class="form-control ml-2" type="text" name="searchTerm"
-                        [(ngModel)]="_eventoTablaService.searchTerm" placeholder="Buscar..."/>
-                      <span class="ml-3" *ngIf="_eventoTablaService.loading$ | async">Cargando...</span>
-                    </div>
-                  </div>
-                  <div class="table-responsive-lg">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr class="bg-info text-white">
-                          <th scope="col"></th>
-                          <th scope="col" sortable="start" (sort)="onSort($event)">
-                            <a [routerLink]="" class="text-white">
-                              <div class="row">
-                                Fecha
-                                <i *ngIf="filtroSort[0]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                <i *ngIf="filtroSort[0]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                              </div>
-                            </a>
-                          </th>
-                          <th scope="col" sortable="title" (sort)="onSort($event)">
-                            <a [routerLink]="" class="text-white">
-                              <div class="row">
-                                Titulo
-                                <i *ngIf="filtroSort[1]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                <i *ngIf="filtroSort[1]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                              </div>
-                            </a>
-                          </th>
-                          <th scope="col" sortable="curso" (sort)="onSort($event)">
-                            <a [routerLink]="" class="text-white">
-                              <div class="row">
-                                Curso
-                                <i *ngIf="filtroSort[2]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                <i *ngIf="filtroSort[2]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                              </div>
-                            </a>
-                          </th>
-                          <th scope="col">Acción</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let evento of eventos$ | async">
-                          <td scope="row"></td>
-                          <td scope="row">
-                            <ngb-highlight [result]="evento.start" [term]="_eventoTablaService.searchTerm">
-                            </ngb-highlight>
-                          </td>
-                          <td scope="row">
-                            <ngb-highlight [result]="evento.title" [term]="_eventoTablaService.searchTerm">
-                            </ngb-highlight>
-                          </td>
-                          <td scope="row">
-                            <ngb-highlight [result]="evento.curso.nombre" [term]="_eventoTablaService.searchTerm">
-                            </ngb-highlight>
-                          </td>
-                          <td scope="row">
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Evento</th>
+                        <th scope="col">Curso</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let evento of eventos_tabla">
+                        <td>{{ evento.start }}</td>
+                        <td>{{ evento.title }}</td>
+                        <td>{{ evento.curso.nombre }}</td>
+                        <td>
+                          <div class="row">
                             <button type="button" class="btn btn-danger btn-sm" (click)="deleteEvento(evento.id)"><i
-                              class="fas fa-trash-alt"></i></button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="d-flex justify-content-between p-2">
-                      <ngb-pagination [collectionSize]="totalEventos$ | async" [(page)]="_eventoTablaService.page"
-                        [pageSize]="_eventoTablaService.pageSize">
-                      </ngb-pagination>
+                                class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeEvento" [(page)]="pageEvento"
+                      [pageSize]="pageSizeEvento">
+                    </ngb-pagination>
 
-                      <select class="custom-select" style="width: auto" name="pageSize"
-                        [(ngModel)]="_eventoTablaService.pageSize">
-                        <option [ngValue]="10">10 eventos por pagina</option>
-                        <option [ngValue]="20">20 eventos por pagina</option>
-                        <option [ngValue]="30">30 eventos por pagina</option>
-                      </select>
-                    </div>
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeEvento">
+                      <option [ngValue]="10">10 eventos por página</option>
+                      <option [ngValue]="20">20 eventos por página</option>
+                      <option [ngValue]="30">30 eventos por página</option>
+                    </select>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
 
             <div class="tab-pane fade show" id="solicitud_existente" role="tabpanel" aria-labelledby="solicitud-tab">
               <div class="mb-8 ">
                 <br>
-
-                <form>
-                    <div class="row col-md-12">
-                      <div class="form-group form-inline col-md-9">
-                        <input class="form-control ml-2" type="text" name="searchTerm"
-                          [(ngModel)]="_solicitudEventoService.searchTerm" placeholder="Buscar..."/>
-                        <span class="ml-3" *ngIf="_solicitudEventoService.loading$ | async">Cargando...</span>
-                      </div>
-                    </div>
-                    <div class="table-responsive-lg">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr class="bg-info text-white">
-                            <th scope="col"></th>
-                            <th scope="col" sortable="start" (sort)="onSortSolicitud($event)">
-                              <a [routerLink]="" class="text-white">
-                                <div class="row">
-                                  Fecha
-                                  <i *ngIf="filtroSort[0]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                  <i *ngIf="filtroSort[0]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                                </div>
-                              </a>
-                            </th>
-                            <th scope="col" sortable="title" (sort)="onSortSolicitud($event)">
-                              <a [routerLink]="" class="text-white">
-                                <div class="row">
-                                  Titulo
-                                  <i *ngIf="filtroSort[1]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                  <i *ngIf="filtroSort[1]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                                </div>
-                              </a>
-                            </th>
-                            <th scope="col" sortable="curso" (sort)="onSortSolicitud($event)">
-                              <a [routerLink]="" class="text-white">
-                                <div class="row">
-                                  Curso
-                                  <i *ngIf="filtroSort[2]=='asc'" class="fas fa-long-arrow-alt-up"></i>
-                                  <i *ngIf="filtroSort[2]=='desc'" class="fas fa-long-arrow-alt-down"></i>
-                                </div>
-                              </a>
-                            </th>
-                            <th scope="col">Acción</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let evento of solicitudes$ | async">
-                            <td scope="row"></td>
-                            <td scope="row">
-                              <ngb-highlight [result]="evento.start" [term]="_solicitudEventoService.searchTerm">
-                              </ngb-highlight>
-                            </td>
-                            <td scope="row">
-                              <ngb-highlight [result]="evento.title" [term]="_solicitudEventoService.searchTerm">
-                              </ngb-highlight>
-                            </td>
-                            <td scope="row">
-                              <ngb-highlight [result]="evento.curso.nombre" [term]="_solicitudEventoService.searchTerm">
-                              </ngb-highlight>
-                            </td>
-                            <td scope="row">
-                              <button type="button" class="btn btn-danger btn-sm" (click)="deleteEvento(evento.id)"><i
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Evento</th>
+                        <th scope="col">Curso</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let evento of solicitudes_tabla">
+                        <td>{{ evento.start }}</td>
+                        <td>{{ evento.title }}</td>
+                        <td>{{ evento.curso.nombre }}</td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteEvento(evento.id)"><i
                                 class="fas fa-trash-alt"></i></button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="d-flex justify-content-between p-2">
-                        <ngb-pagination [collectionSize]="totalSolicitudes$ | async" [(page)]="_solicitudEventoService.page"
-                          [pageSize]="_solicitudEventoService.pageSize">
-                        </ngb-pagination>
-  
-                        <select class="custom-select" style="width: auto" name="pageSize"
-                          [(ngModel)]="_solicitudEventoService.pageSize">
-                          <option [ngValue]="10">10 solicitudes por pagina</option>
-                          <option [ngValue]="20">20 solicitudes por pagina</option>
-                          <option [ngValue]="30">30 solicitudes por pagina</option>
-                        </select>
-                      </div>
-                    </div>
-                  </form>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeSolicitud" [(page)]="pageSolicitud"
+                      [pageSize]="pageSizeSolicitud">
+                    </ngb-pagination>
 
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeSolicitud">
+                      <option [ngValue]="10">10 solicitudes por página</option>
+                      <option [ngValue]="20">20 eventos por página</option>
+                      <option [ngValue]="30">30 eventos por página</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

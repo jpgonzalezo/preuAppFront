@@ -7,6 +7,8 @@ import { Asistencia } from 'src/app/modelos/asistencia.model';
 import { AsistenciaService } from 'src/app/servicios/asistencia.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-asistencia',
   templateUrl: './asistencia.component.html',
@@ -23,7 +25,14 @@ export class AsistenciaComponent implements OnInit {
   asistencias: Asistencia[]
   justificaciones: Justificacion[]
   paginacionTabla: any[]
-  constructor(private _justificacionService: JustificacionService,private _router:Router,private _asistenciaService: AsistenciaService,private _cursoService: CursoService) {
+  token: string
+  constructor(private _justificacionService: JustificacionService,
+    private _router:Router,
+    private _asistenciaService: AsistenciaService,
+    private _cursoService: CursoService,
+    private _localService: LocalService,
+    private _storageService: StorageService) 
+  {
     this.pageAsistencia=1;
     this.pageSizeAsistencia = 4;
     this.pageJustificacion=1;
@@ -34,6 +43,12 @@ export class AsistenciaComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.paginacionTabla = []
     this.getCursos()
     this.getAsistencias()
@@ -41,21 +56,21 @@ export class AsistenciaComponent implements OnInit {
   }
 
   getAsistencias(){
-    this._asistenciaService.getAsistencias().subscribe((data:Asistencia[])=>{
+    this._asistenciaService.getAsistencias(this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
       this.collectionSizeAsistencia = this.asistencias.length
     })
   }
 
   getJustificaciones(){
-    this._justificacionService.getJustificaciones().subscribe((data:Justificacion[])=>{
+    this._justificacionService.getJustificaciones(this.token).subscribe((data:Justificacion[])=>{
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
     })
   }
 
   getCursos(){
-    this._cursoService.getCursos().subscribe((data:Curso[])=>{
+    this._cursoService.getCursos(this.token).subscribe((data:Curso[])=>{
       this.cursos=data
     })
   }
@@ -72,7 +87,7 @@ export class AsistenciaComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.dismiss==null) {
-        this._justificacionService.deleteJustificacion(id).subscribe((data:any)=>{
+        this._justificacionService.deleteJustificacion(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='exito'){
             Swal.fire({
               type: 'success',

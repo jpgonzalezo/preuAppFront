@@ -9,7 +9,8 @@ import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { AsistenciaService } from 'src/app/servicios/asistencia.service';
 import { Config } from 'src/app/config';
 import Swal from 'sweetalert2';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-nueva-asistencia',
   templateUrl: './nueva-asistencia.component.html',
@@ -35,7 +36,15 @@ export class NuevaAsistenciaComponent implements OnInit {
   asignaturaSeleccionada: string
   id_curso_seleccionado:string
   id_asignatura_seleccionada:string
-  constructor(private _asistenciaService: AsistenciaService,private _router:Router,private _alumnoService: AlumnoService,private _cursoService: CursoService, private _asignaturaService: AsignaturaService) 
+  token: string
+  constructor(private _asistenciaService: AsistenciaService,
+    private _router:Router,
+    private _alumnoService: AlumnoService,
+    private _cursoService: CursoService, 
+    private _asignaturaService: AsignaturaService,
+    private _localService: LocalService,
+    private _storageService: StorageService,
+  ) 
   {
     this.pageAlumnosCurso = 1;
     this.pageSizeAlumnosCurso = 10;
@@ -56,17 +65,23 @@ export class NuevaAsistenciaComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.getCursos()
   }
 
   getCursos(){
-    this._cursoService.getCursos().subscribe((data:Curso[])=>{
+    this._cursoService.getCursos(this.token).subscribe((data:Curso[])=>{
       this.cursos = data
     })
   }
 
   getAsignaturas(id:string){
-    this._asignaturaService.getAsignaturasCurso(id).subscribe((data:Asignatura[])=>{
+    this._asignaturaService.getAsignaturasCurso(id,this.token).subscribe((data:Asignatura[])=>{
       this.asignaturas = data
     })
   }
@@ -79,7 +94,7 @@ export class NuevaAsistenciaComponent implements OnInit {
       this.id_asignatura_seleccionada=""
       this.id_curso_seleccionado = id_curso
       this.getAsignaturas(this.id_curso_seleccionado)
-      this._alumnoService.getAlumnosCurso(this.id_curso_seleccionado).subscribe((data:Alumno[])=>{
+      this._alumnoService.getAlumnosCurso(this.id_curso_seleccionado,this.token).subscribe((data:Alumno[])=>{
         this.alumnos_curso = data
         this.collectionSizeAlumnosCurso = this.alumnos_curso.length
         for(let alumno of this.alumnos_curso){
@@ -192,7 +207,7 @@ export class NuevaAsistenciaComponent implements OnInit {
             'id_asignatura': this.id_asignatura_seleccionada,
             'presentes': this.alumnos_presentes,
             'ausentes': this.alumnos_ausentes
-          }
+          },this.token
         ).subscribe((data:any)=>{
           if(data['Response']=="exito"){
             Swal.fire({

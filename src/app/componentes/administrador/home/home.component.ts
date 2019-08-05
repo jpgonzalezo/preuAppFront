@@ -19,7 +19,6 @@ import bootstrapPlugin from '@fullcalendar/bootstrap';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  usuario: any
   cursos: Curso[]
   token: string
   @ViewChild('calendar') calendarComponent: FullCalendarComponent// the #calendar in the template
@@ -45,7 +44,6 @@ export class HomeComponent implements OnInit {
     else{
       this.token = this._storageService.getCurrentToken()
     }
-    this.usuario = this._storageService.getCurrentUser()
     this.getCursos()
     this.getEventos()
   }
@@ -127,7 +125,7 @@ export class HomeComponent implements OnInit {
               })
             }
             else{
-              this._eventoService.postEvento({"fecha":arg.dateStr,"title":result.value[0],"backgroundColor": result.value[1],"curso":result.value[2]}).subscribe((data:any)=>{
+              this._eventoService.postEvento({"fecha":arg.dateStr,"title":result.value[0],"backgroundColor": result.value[1],"curso":result.value[2]},this.token).subscribe((data:any)=>{
                 if(data['Response']=="exito"){
                   swal.fire({
                     type:'success',
@@ -148,7 +146,7 @@ export class HomeComponent implements OnInit {
   }
 
   getEventos(){
-    this._eventoService.getEventos().subscribe((data: Evento[])=>{
+    this._eventoService.getEventos(this.token).subscribe((data: Evento[])=>{
       this.calendarEvents = data
     })
   }
@@ -167,7 +165,7 @@ export class HomeComponent implements OnInit {
     }).then((result) => {
       if(result.dismiss){}
       if (result.value) {
-        this._eventoService.deleteEvento(id).subscribe((data:any)=>{
+        this._eventoService.deleteEvento(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='exito'){
             swal.fire({
               type: 'success',

@@ -6,7 +6,8 @@ import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import {SortDirection} from '../sorteable.directive';
 import { Config } from 'src/app/config';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 interface SearchResult {
   alertas: Array<Alerta>;
   total: number;
@@ -108,9 +109,20 @@ export class AlertaTablaService {
     sortColumn: '',
     sortDirection: ''
   };
-
-  constructor(private pipe: DecimalPipe, private _alertaService: AlertaService) {
-    this._alertaService.getAlertas().subscribe((data: Alerta[])=>{
+  token: string
+  constructor(
+    private _localService: LocalService,
+    private _storageService: StorageService,
+    private pipe: DecimalPipe, 
+    private _alertaService: AlertaService) 
+  {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
+    this._alertaService.getAlertas(this.token).subscribe((data: Alerta[])=>{
         this.alertas = data
         for(let alerta of this.alertas){
           alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
@@ -132,10 +144,15 @@ export class AlertaTablaService {
 
   }
   ngOnInit(){
-
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
   }
   getAlertas(){
-    this._alertaService.getAlertas().subscribe((data: Alerta[])=>{
+    this._alertaService.getAlertas(this.token).subscribe((data: Alerta[])=>{
         this.alertas = data
     })
   }

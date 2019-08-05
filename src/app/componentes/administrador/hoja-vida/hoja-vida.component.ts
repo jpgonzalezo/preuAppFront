@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { AlumnoService } from '../../../servicios/alumno.service';
 import { JustificacionService } from 'src/app/servicios/justificacion.service';
 import { ObservacionService } from '../../../servicios/observacion.service';
-import { AdministradorCompartidoService } from '../administrador.compartido.service';
 import { AlertaService } from 'src/app/servicios/alerta.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +14,7 @@ import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
 import { Label,MultiDataSet } from 'ng2-charts';
 import { ChartOptions} from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { LocalService } from 'src/app/servicios/local.service';
 @Component({
   selector: 'app-hoja-vida',
   templateUrl: './hoja-vida.component.html',
@@ -92,13 +92,13 @@ export class HojaVidaComponent implements OnInit {
   
     public barChartDataAnual: ChartDataSets[] = [{ data: [], label: '' }];
 
-
+  token: string
   constructor(private _alumnoService:AlumnoService, 
     private _observacionService: ObservacionService,
-    private _administradorCompartidoService: AdministradorCompartidoService,
     private router: Router,
     private _activatedRoute: ActivatedRoute,
     private _storageService: StorageService,
+    private _localService: LocalService,
     private _justificacionService: JustificacionService,
     private _alertaService: AlertaService
     ) {
@@ -121,6 +121,12 @@ export class HojaVidaComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.id_hoja_vida=this._activatedRoute.snapshot.paramMap.get('id')
     this.getHojaVida(this.id_hoja_vida);
     this.getObservacionesAdministrador()
@@ -133,14 +139,14 @@ export class HojaVidaComponent implements OnInit {
   }
 
   public getAlumnoGraficoRendimiento(){
-    this._alumnoService.getAlumnoGraficoRendimiento(this.id_hoja_vida).subscribe((data:any)=>{
+    this._alumnoService.getAlumnoGraficoRendimiento(this.id_hoja_vida,this.token).subscribe((data:any)=>{
       this.radarChartLabels = data['labels']
       this.radarChartData = data['data']
     })
   }
 
   public getAlumnoGraficoAsistencia(){
-    this._alumnoService.getAlumnoGraficoAsistencia(this.id_hoja_vida).subscribe((data:any)=>{
+    this._alumnoService.getAlumnoGraficoAsistencia(this.id_hoja_vida,this.token).subscribe((data:any)=>{
       this.barChartLabelsAsignatura = data['grafico_asignatura'].labels
       this.barChartDataAsignatura = data['grafico_asignatura'].data
       this.barChartLabelsAnual = data['grafico_anual'].labels
@@ -149,14 +155,14 @@ export class HojaVidaComponent implements OnInit {
   }
 
   public getHojaVida(id:string){
-  	this._alumnoService.getHojaVida(id).subscribe((data: Array<any>) => {
+  	this._alumnoService.getHojaVida(id,this.token).subscribe((data: Array<any>) => {
       this.hoja_vida = data;
       this.hoja_vida.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+this.hoja_vida.imagen
     });
   }
 
   public getObservacionesAdministrador(){
-    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_ADMINISTRADOR').subscribe(
+    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_ADMINISTRADOR',this.token).subscribe(
       (data:any)=>{
         this.observaciones_admin = data
         this.collectionSizeObservacionAdministrador = this.observaciones_admin.length
@@ -164,7 +170,7 @@ export class HojaVidaComponent implements OnInit {
   }
 
   public getObservacionesProfesor(){
-    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PROFESOR').subscribe(
+    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PROFESOR',this.token).subscribe(
       (data:any)=>{
         this.observaciones_profe = data
         this.collectionSizeObservacionProfesor = this.observaciones_profe.length
@@ -173,7 +179,7 @@ export class HojaVidaComponent implements OnInit {
   }
 
   public getObservacionesPsicologo(){
-    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PSICOLOGO').subscribe(
+    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PSICOLOGO',this.token).subscribe(
       (data:any)=>{
         this.observaciones_psico = data
         this.collectionSizeObservacionPsicologo = this.observaciones_psico.length
@@ -182,14 +188,14 @@ export class HojaVidaComponent implements OnInit {
   }
 
   public getJustificaciones(){
-    this._justificacionService.getJustificacionesAlumno(this.id_hoja_vida).subscribe((data: Justificacion[])=>{
+    this._justificacionService.getJustificacionesAlumno(this.id_hoja_vida,this.token).subscribe((data: Justificacion[])=>{
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
     })
   }
 
   public getAlertasAlumno(){
-    this._alertaService.getAlertasAlumno(this.id_hoja_vida).subscribe((data:Alerta[])=>{
+    this._alertaService.getAlertasAlumno(this.id_hoja_vida,this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
     })
@@ -279,7 +285,7 @@ export class HojaVidaComponent implements OnInit {
               'titulo':result.value[1],
               'contenido':result.value[2],
               'nombre_personal': usuario
-            }
+            },this.token
           ).subscribe((data:any)=>{
             if(data['Response']=='exito'){
               swal.fire({

@@ -1,83 +1,73 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { EventoService } from 'src/app/servicios/evento.service';
-import { EventoTablaService } from 'src/app/servicios/tablas/tabla.evento.service';
-import { SolicitudEventoTablaService } from 'src/app/servicios/tablas/tabla.solicitudes.service';
 import { Evento } from 'src/app/modelos/evento.model';
 import swal from'sweetalert2';
-import { Observable } from 'rxjs';
-import { NgbdSortableHeader , SortEvent} from 'src/app/servicios/sorteable.directive';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-tabla-eventos',
   templateUrl: './tabla-eventos.component.html',
   styleUrls: ['./tabla-eventos.component.css']
 })
 export class TablaEventosComponent implements OnInit {
-  eventos$: Observable<Evento[]>;
-  totalEventos$: Observable<number>;
-  filtroSort: any[]
-  solicitudes$: Observable<Evento[]>;
-  totalSolicitudes$: Observable<number>;
-  filtroSortSolicitud: any[]
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+  token: string
+  eventos: Evento[]
+  solicitudes: Evento[]
+  pageEvento: number;
+  pageSizeEvento: number;
+  collectionSizeEvento: number;
+  pageSolicitud: number;
+  pageSizeSolicitud: number;
+  collectionSizeSolicitud: number;
   constructor(
-    public _eventoTablaService: EventoTablaService,
-    public _solicitudEventoService: SolicitudEventoTablaService,
-    public _eventoService: EventoService
+    public _eventoService: EventoService,
+    private _localService: LocalService,
+    private _storageService: StorageService,
   ) {
-    this.eventos$ = this._eventoTablaService.eventos$;
-    this.totalEventos$ = this._eventoTablaService.total$;
-    this.filtroSort= ['','','']
-    this.solicitudes$ = this._solicitudEventoService.eventos$;
-    this.totalSolicitudes$ = this._solicitudEventoService.total$;
-    this.filtroSortSolicitud= ['','','']
+    this.eventos = []
+    this.solicitudes = []
+    this.pageEvento = 1
+    this.pageSizeEvento = 10
+    this.pageEvento = 1
+    this.pageSizeSolicitud =10
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
+
+    this.getEventos()
+    this.getSolicitudes()
   }
 
-  onSort({column, direction}: SortEvent) {
-    // resetting other headers
-    this.filtroSort= ['','','','','']
-    if(column=="start"){
-      this.filtroSort[0]= direction
-    }
-    if(column=="title"){
-      this.filtroSort[1]= direction
-    }
-    if(column=="curso"){
-      this.filtroSort[2]= direction
-    }
-
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-    this._eventoTablaService.sortColumn = column;
-    this._eventoTablaService.sortDirection = direction;
+  getEventos(){
+    this._eventoService.getEventos(this.token).subscribe((data:Evento[])=>{
+      this.eventos = data
+      this.collectionSizeEvento = this.eventos.length
+    })
   }
 
-  onSortSolicitud({column, direction}: SortEvent) {
-    // resetting other headers
-    this.filtroSort= ['','','','','']
-    if(column=="start"){
-      this.filtroSort[0]= direction
-    }
-    if(column=="title"){
-      this.filtroSort[1]= direction
-    }
-    if(column=="curso"){
-      this.filtroSort[2]= direction
-    }
+  getSolicitudes(){
+    this._eventoService.getSolicitudesEventos(this.token).subscribe((data:Evento[])=>{
+      this.solicitudes = data
+      this.collectionSizeSolicitud = this.solicitudes.length
+    })
+  }
 
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-    this._solicitudEventoService.sortColumn = column;
-    this._solicitudEventoService.sortDirection = direction;
+  get eventos_tabla(): any[] {
+    return this.eventos
+      .map((evento, i) => ({id: i + 1, ...evento}))
+      .slice((this.pageEvento - 1) * this.pageSizeEvento, (this.pageEvento - 1) * this.pageSizeEvento + this.pageSizeEvento);
+  }
+
+  get solicitudes_tabla(): any[] {
+    return this.solicitudes
+      .map((solicitud, i) => ({id: i + 1, ...solicitud}))
+      .slice((this.pageSolicitud - 1) * this.pageSizeSolicitud, (this.pageSolicitud - 1) * this.pageSizeSolicitud + this.pageSizeSolicitud);
   }
 
   aceptarEvento(id:string){
@@ -93,7 +83,7 @@ export class TablaEventosComponent implements OnInit {
     }).then((result) => {
       if(result.dismiss){}
       if (result.value) {
-        this._eventoService.aceptarEvento(id).subscribe((data:any)=>{
+        this._eventoService.aceptarEvento(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='exito'){
             swal.fire({
               type: 'success',
@@ -103,8 +93,8 @@ export class TablaEventosComponent implements OnInit {
               confirmButtonColor: '#5cb85c',
             }).then((result2)=>{
               if(result2 || result2.dismiss){
-                this._solicitudEventoService.getEventos()
-                this._eventoTablaService.getEventos()
+                this.getEventos()
+                this.getSolicitudes()
               }
             })
           }
@@ -126,7 +116,7 @@ export class TablaEventosComponent implements OnInit {
     }).then((result) => {
       if(result.dismiss){}
       if (result.value) {
-        this._eventoService.deleteEvento(id).subscribe((data:any)=>{
+        this._eventoService.deleteEvento(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='exito'){
             swal.fire({
               type: 'success',
@@ -136,8 +126,8 @@ export class TablaEventosComponent implements OnInit {
               confirmButtonColor: '#5cb85c',
             }).then((result2)=>{
               if(result2 || result2.dismiss){
-                this._solicitudEventoService.getEventos()
-                this._eventoTablaService.getEventos()
+                this.getEventos()
+                this.getSolicitudes()
               }
             })
           }

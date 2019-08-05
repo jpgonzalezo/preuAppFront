@@ -22,14 +22,12 @@
                     <thead>
                       <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Estudiantes</th>
                         <th scope="col">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let curso of cursos_tabla">
                         <td>{{ curso.nombre }}</td>
-                        <td>{{ curso.cantidad_estudiantes }}</td>
                         <td>
                           <div class="row">
                             <button type="button" class="btn btn-info btn-sm"

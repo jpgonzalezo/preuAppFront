@@ -11,18 +11,18 @@ import { ApoderadoService } from 'src/app/servicios/apoderado.service';
 import { AdministradorService } from 'src/app/servicios/administrador.service';
 import { AlumnoTablaService } from 'src/app/servicios/tablas/tabla.perfiles.alumnos.service';
 import { Observable } from 'rxjs';
-import { NgbdSortableHeader , SortEvent} from 'src/app/servicios/sorteable.directive';
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 //MODELOS
 import { Colegio } from 'src/app/modelos/colegio.model';
 import { Alumno } from 'src/app/modelos/alumno.model';
 import { Curso } from 'src/app/modelos/curso.model';
 import { Profesor } from 'src/app/modelos/profesor';
 import { Asignatura } from 'src/app/modelos/asignatura.model';
-import { Apoderado } from 'src/app/modelos/apoderado';
+import { Apoderado } from 'src/app/modelos/apoderado.model';
 import { Administrador } from 'src/app/modelos/administrador.model';
 import swal from'sweetalert2';
 import { Config } from 'src/app/config';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-perfiles',
@@ -38,13 +38,22 @@ export class PerfilesComponent implements OnInit {
   profesores: Profesor[]
   apoderados: Apoderado[]
   administradores: Administrador[]
-  alumnos$: Observable<Alumno[]>;
   totalAlumnos$: Observable<number>;
-  filtroSortAlumno: any[]
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+  token: string
+  pageProfesor: number;
+  pageSizeProfesor: number;
+  collectionSizeProfesor: number;
+  pageAdministrador: number;
+  pageSizeAdministrador: number;
+  collectionSizeAdministrador: number;
+  pageAlumno: number;
+  pageSizeAlumno: number;
+  collectionSizeAlumno: number;
+  pageApoderado: number;
+  pageSizeApoderado: number;
+  collectionSizeApoderado: number;
   constructor(
     private _alumnoService: AlumnoService,
-    private formBuilder: FormBuilder,
     private _cursoService: CursoService,
     private router: Router,
     private _profesorService: ProfesorService,
@@ -52,7 +61,9 @@ export class PerfilesComponent implements OnInit {
     private _colegioService: ColegioService,
     private _apoderadoService: ApoderadoService,
     private _administradorService: AdministradorService,
-    public _alumnoTablaService: AlumnoTablaService
+    public _alumnoTablaService: AlumnoTablaService,
+    private _localService: LocalService,
+    private _storageService: StorageService,
     )
   { 
     this.asignaturas= []
@@ -61,46 +72,55 @@ export class PerfilesComponent implements OnInit {
     this.alumnos = []
     this.profesores = []
     this.administradores = []
-    this.alumnos$ = this._alumnoTablaService.alumnos$;
-    this.totalAlumnos$ = this._alumnoTablaService.total$;
-    this.filtroSortAlumno= ['','','','','']
+    this.pageProfesor = 1
+    this.pageSizeProfesor = 10
+    this.pageAdministrador = 1
+    this.pageSizeAdministrador = 10
+    this.pageAlumno = 1
+    this.pageSizeAlumno = 10
+    this.pageApoderado = 1
+    this.pageSizeApoderado = 10
   }
 
   ngOnInit() {
-    this.getCursos();
-    this.getColegios();
-    this.getAsignaturas();
-    this.getAlumnos();
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
+    this.getApoderados()
+    this.getCursos()
+    this.getColegios()
+    this.getAsignaturas()
+    this.getAlumnos()
+    this.getProfesores()
+    
+    this.getAdministradores()
   }
 
+  get profesores_tabla(): any[] {
+    return this.profesores
+      .map((profesor, i) => ({id: i + 1, ...profesor}))
+      .slice((this.pageProfesor - 1) * this.pageSizeProfesor, (this.pageProfesor - 1) * this.pageSizeProfesor + this.pageSizeProfesor);
+  }
 
-  onSortAlumno({column, direction}: SortEvent) {
-    // resetting other headers
-    this.filtroSortAlumno= ['','','','','']
-    if(column=="rut"){
-      this.filtroSortAlumno[0]= direction
-    }
-    if(column=="nombres"){
-      this.filtroSortAlumno[1]= direction
-    }
-    if(column=="apellido_paterno"){
-      this.filtroSortAlumno[2]= direction
-    }
-    if(column=="apellido_materno"){
-      this.filtroSortAlumno[3]= direction
-    }
-    if(column=="curso"){
-      this.filtroSortAlumno[4]= direction
-    }
+  get administradores_tabla(): any[] {
+    return this.administradores
+      .map((administrador, i) => ({id: i + 1, ...administrador}))
+      .slice((this.pageAdministrador - 1) * this.pageSizeAdministrador, (this.pageAdministrador - 1) * this.pageSizeAdministrador + this.pageSizeAdministrador);
+  }
 
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
+  get alumnos_tabla(): any[] {
+    return this.alumnos
+      .map((asignatura, i) => ({id: i + 1, ...asignatura}))
+      .slice((this.pageAlumno - 1) * this.pageSizeAlumno, (this.pageAlumno - 1) * this.pageSizeAlumno + this.pageSizeAlumno);
+  }
 
-    this._alumnoTablaService.sortColumn = column;
-    this._alumnoTablaService.sortDirection = direction;
+  get apoderados_tabla(): any[] {
+    return this.apoderados
+      .map((apoderado, i) => ({id: i + 1, ...apoderado}))
+      .slice((this.pageApoderado - 1) * this.pageSizeApoderado, (this.pageApoderado - 1) * this.pageSizeApoderado + this.pageSizeApoderado);
   }
 
   public deleteAlumno(id:string){
@@ -115,7 +135,7 @@ export class PerfilesComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
-        this._alumnoService.deleteAlumno(id).subscribe((data:any)=>{
+        this._alumnoService.deleteAlumno(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='borrado'){
             swal.fire({
               title:'Borrado!',
@@ -143,7 +163,7 @@ export class PerfilesComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
-        this._profesorService.deleteProfesor(id).subscribe((data:any)=>{
+        this._profesorService.deleteProfesor(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='borrado'){
             swal.fire({
               title:'Borrado!',
@@ -177,7 +197,7 @@ export class PerfilesComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
-        this._apoderadoService.deleteApoderado(id).subscribe((data:any)=>{
+        this._apoderadoService.deleteApoderado(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='borrado'){
             swal.fire({
               title:'Borrado!',
@@ -195,42 +215,78 @@ export class PerfilesComponent implements OnInit {
   }
 
   public getAlumnos(){
-    this._alumnoService.getAlumno().subscribe((data:Alumno[])=>{
+    this._alumnoService.getAlumno(this.token).subscribe((data:Alumno[])=>{
       this.alumnos = data
+      for(let alumno of this.alumnos){
+        if(alumno.imagen==''){
+          alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/default"
+        }
+        else{
+          alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+        }
+      }
+      this.collectionSizeAlumno = this.alumnos.length
     })
   }
 
   public getProfesores(){
-    this._profesorService.getProfesores().subscribe((data:Profesor[])=>{
+    this._profesorService.getProfesores(this.token).subscribe((data:Profesor[])=>{
       this.profesores = data
+      for(let profesor of this.profesores){
+        if(profesor.imagen==''){
+          profesor.imagen = Config.API_SERVER_URL+"/profesor_imagen/default"
+        }
+        else{
+          profesor.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+profesor.imagen
+        }
+      }
+      this.collectionSizeProfesor = this.profesores.length
     })
   }
 
   public getAdministradores(){
-    this._administradorService.getAdministradores().subscribe((data:Administrador[])=>{
+    this._administradorService.getAdministradores(this.token).subscribe((data:Administrador[])=>{
       this.administradores = data
+      for(let administrador of this.administradores){
+        if(administrador.imagen==''){
+          administrador.imagen = Config.API_SERVER_URL+"/administrador_imagen/default"
+        }
+        else{
+          administrador.imagen = Config.API_SERVER_URL+"/administrador_imagen/"+administrador.imagen
+        }
+      }
+      this.collectionSizeAdministrador = this.administradores.length
     })
   }
 
   public getApoderados(){
-    this._apoderadoService.getApoderados().subscribe((data:Apoderado[])=>{
+    this._apoderadoService.getApoderados(this.token).subscribe((data:Apoderado[])=>{
       this.apoderados = data
+      for(let apoderado of this.apoderados){
+        if(apoderado.imagen==''){
+          apoderado.imagen = Config.API_SERVER_URL+"/apoderado_imagen/default"
+        }
+        else{
+          apoderado.imagen = Config.API_SERVER_URL+"/apoderado_imagen/"+apoderado.imagen
+        }
+      }
+      this.collectionSizeApoderado = this.apoderados.length
     })
   }
   public getColegios(){
-    this._colegioService.getColegios().subscribe((colegios: Array<Colegio>)=>{
+    this._colegioService.getColegios(this.token).subscribe((colegios: Array<Colegio>)=>{
       this.colegios = colegios
     })
   }
 
   public getCursos(){
-    this._cursoService.getCursos().subscribe((cursos: Array<Curso>)=>{
+    this._cursoService.getCursos(this.token).subscribe((cursos: Array<Curso>)=>{
       this.cursos = cursos
     })
   }
 
   public getAsignaturas(){
-    this._asignaturaService.getAsignaturas().subscribe((asignaturas: Asignatura[])=>{
+    this._asignaturaService.getAsignaturas(this.token).subscribe((asignaturas: Asignatura[])=>{
       this.asignaturas = asignaturas
     })
   }
@@ -371,7 +427,7 @@ export class PerfilesComponent implements OnInit {
               "curso":result1.value[3],
               "colegio":result1.value[4],
           }
-          this._alumnoService.postAlumno(data).subscribe((data:any)=>{
+          this._alumnoService.postAlumno(data,this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
               swal.fire({
                 title: 'Foto de Perfil',
@@ -397,7 +453,7 @@ export class PerfilesComponent implements OnInit {
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
-                      this._alumnoService.uploadImage(formData, data['id']).subscribe((data:any)=>{
+                      this._alumnoService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           swal.fire({
                             title: 'Registro exitoso',
@@ -411,7 +467,7 @@ export class PerfilesComponent implements OnInit {
                       })
                     }
                     else{
-                      this._alumnoService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                      this._alumnoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           swal.fire({
                             title: 'Registro exitoso',
@@ -428,7 +484,7 @@ export class PerfilesComponent implements OnInit {
                   })
                 }
                 else{
-                  this._alumnoService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                  this._alumnoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
                       swal.fire({
                         title: 'Registro exitoso',
@@ -556,7 +612,7 @@ export class PerfilesComponent implements OnInit {
               "comuna":result1.value[1].comuna,
               "asignatura":result1.value[2]
           }
-          this._profesorService.postProfesor(data).subscribe((data:any)=>{
+          this._profesorService.postProfesor(data,this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
               swal.fire({
                 title: 'Foto de Perfil',
@@ -582,7 +638,7 @@ export class PerfilesComponent implements OnInit {
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
-                      this._profesorService.uploadImage(formData, data['id']).subscribe((data:any)=>{
+                      this._profesorService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           swal.fire({
                             title: 'Registro exitoso',
@@ -596,7 +652,7 @@ export class PerfilesComponent implements OnInit {
                       })
                     }
                     else{
-                      this._profesorService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                      this._profesorService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           swal.fire({
                             title: 'Registro exitoso',
@@ -613,7 +669,7 @@ export class PerfilesComponent implements OnInit {
                   })
                 }
                 else{
-                  this._profesorService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                  this._profesorService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
                       swal.fire({
                         title: 'Registro exitoso',
@@ -727,7 +783,7 @@ export class PerfilesComponent implements OnInit {
               "numero":result1.value[1].numero,
               "comuna":result1.value[1].comuna
           }
-          this._apoderadoService.postApoderado(data).subscribe((data:any)=>{
+          this._apoderadoService.postApoderado(data,this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
               swal.fire({
                 title: 'Foto de Perfil',
@@ -753,14 +809,14 @@ export class PerfilesComponent implements OnInit {
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
-                      this._apoderadoService.uploadImage(formData, data['id']).subscribe((data:any)=>{
+                      this._apoderadoService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           this.asignarAlumno(data['id'])
                         }
                       })
                     }
                     else{
-                      this._apoderadoService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                      this._apoderadoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           this.asignarAlumno(data['id'])
                         }
@@ -770,7 +826,7 @@ export class PerfilesComponent implements OnInit {
                   })
                 }
                 else{
-                  this._apoderadoService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                  this._apoderadoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
                       this.asignarAlumno(data['id'])
                     }
@@ -866,7 +922,7 @@ export class PerfilesComponent implements OnInit {
               "numero":result1.value[1].numero,
               "comuna":result1.value[1].comuna
           }
-          this._administradorService.postAdministrador(data).subscribe((data:any)=>{
+          this._administradorService.postAdministrador(data,this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
               swal.fire({
                 title: 'Foto de Perfil',
@@ -892,7 +948,7 @@ export class PerfilesComponent implements OnInit {
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
-                      this._administradorService.uploadImage(formData, data['id']).subscribe((data:any)=>{
+                      this._administradorService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           swal.fire({
                             title: 'Registro exitoso',
@@ -906,7 +962,7 @@ export class PerfilesComponent implements OnInit {
                       })
                     }
                     else{
-                      this._administradorService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                      this._administradorService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           swal.fire({
                             title: 'Registro exitoso',
@@ -923,7 +979,7 @@ export class PerfilesComponent implements OnInit {
                   })
                 }
                 else{
-                  this._administradorService.uploadImageDefault(data['id']).subscribe((data:any)=>{
+                  this._administradorService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
                       swal.fire({
                         title: 'Registro exitoso',
@@ -976,7 +1032,7 @@ export class PerfilesComponent implements OnInit {
           }
         }
         if(bandera){
-          this._apoderadoService.asignarAlumno(id,id_alumno).subscribe((data:any)=>{
+          this._apoderadoService.asignarAlumno(id,id_alumno,this.token).subscribe((data:any)=>{
             if(data['Response']=="exito"){
               swal.fire({
                 title: 'Registro exitoso',

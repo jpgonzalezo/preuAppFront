@@ -12,7 +12,8 @@ import { Curso } from 'src/app/modelos/curso.model';
 import { Config } from 'src/app/config';
 import { Asistencia } from 'src/app/modelos/asistencia.model';
 import Swal from 'sweetalert2';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 
 import { SingleDataSet, Label } from 'ng2-charts';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
@@ -88,13 +89,15 @@ export class DetalleCursoComponent implements OnInit {
   public barChartPluginsAsignatura = [pluginDataLabels];
   public barChartDataAsignatura: ChartDataSets[] = [{ data:[], label: '' }];
 
-
+  token: string
   constructor(private _activatedRoute:ActivatedRoute, 
     private _alumnoService:AlumnoService,
     private _cursoService:CursoService,
     private _asistenciaService: AsistenciaService,
     private _alertaService: AlertaService,
     private _asignaturaService: AsignaturaService,
+    private _localService: LocalService,
+    private _storageService: StorageService,
     private _router: Router) {
       this.pageAlumno = 1;
       this.pageSizeAlumno = 10;
@@ -115,6 +118,12 @@ export class DetalleCursoComponent implements OnInit {
     }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.id_curso=this._activatedRoute.snapshot.paramMap.get('id');
     this.getCurso();
     this.getAlumnosCurso();
@@ -136,23 +145,23 @@ export class DetalleCursoComponent implements OnInit {
 
 
   getCurso(){
-    this._cursoService.getCurso(this.id_curso).subscribe((data:Curso)=>{
+    this._cursoService.getCurso(this.id_curso,this.token).subscribe((data:Curso)=>{
       this.curso = data;
       this.asignaturas = data.asignaturas
       this.collectionSizeAsignatura = data.asignaturas.length
     })
 
-    this._cursoService.getGraficoAsistencia(this.id_curso).subscribe((data:any)=>{
+    this._cursoService.getGraficoAsistencia(this.id_curso,this.token).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
     })
 
-    this._cursoService.getGraficoAsistenciaAsignatura(this.id_curso).subscribe((data:any)=>{
+    this._cursoService.getGraficoAsistenciaAsignatura(this.id_curso,this.token).subscribe((data:any)=>{
       this.barChartLabelsAsignatura = data['labels']
       this.barChartDataAsignatura = data['data']
     })
 
-    this._cursoService.getGraficoAsignaturas(this.id_curso).subscribe((data:any)=>{
+    this._cursoService.getGraficoAsignaturas(this.id_curso,this.token).subscribe((data:any)=>{
       this.polarAreaChartData = data['data']
       this.polarAreaChartLabels = data['labels']
     })
@@ -161,7 +170,7 @@ export class DetalleCursoComponent implements OnInit {
   }
 
   getAlumnosCurso(){
-    this._alumnoService.getAlumnosCurso(this.id_curso).subscribe((data:Alumno[])=>{
+    this._alumnoService.getAlumnosCurso(this.id_curso,this.token).subscribe((data:Alumno[])=>{
       this.alumnos = data
       this.collectionSizeAlumno = this.alumnos.length;
       for(let alumno of this.alumnos){
@@ -171,7 +180,7 @@ export class DetalleCursoComponent implements OnInit {
   }
 
   getAsistenciaCurso(){
-    this._asistenciaService.getAsistenciasCurso(this.id_curso).subscribe((data:Asistencia[])=>{
+    this._asistenciaService.getAsistenciasCurso(this.id_curso,this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data;
       this.collectionSizeAsistencia = this.asistencias.length
     })
@@ -182,7 +191,7 @@ export class DetalleCursoComponent implements OnInit {
   }
 
   getAlertasCurso(){
-    this._alertaService.getAlertasCurso(this.id_curso).subscribe((data:Alerta[])=>{
+    this._alertaService.getAlertasCurso(this.id_curso,this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
     })
@@ -209,7 +218,7 @@ export class DetalleCursoComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result)=>{
       if(result.dismiss==null){
-        this._cursoService.deleteCursoAsignatura(this.id_curso,id_asignatura).subscribe((data:any)=>{
+        this._cursoService.deleteCursoAsignatura(this.id_curso,id_asignatura,this.token).subscribe((data:any)=>{
           if(data['Response']=="exito"){
             Swal.fire({
               title:'Eliminado!',
@@ -226,7 +235,7 @@ export class DetalleCursoComponent implements OnInit {
   }
 
   agregarAsignatura(){
-    this._asignaturaService.getAsignaturas().subscribe((data:Asignatura[])=>{
+    this._asignaturaService.getAsignaturas(this.token).subscribe((data:Asignatura[])=>{
       var asignaturas={}
       for(let asignatura of data){
         var bandera = true
@@ -253,7 +262,9 @@ export class DetalleCursoComponent implements OnInit {
         cancelButtonText: 'Cancelar',
       }).then((result)=>{
         if(result.dismiss==null){
-          this._cursoService.addAsignatura(this.id_curso,result.value).subscribe((data:any)=>{
+          console.log("token para agregar asignatura es")
+          console.log(this.token)
+          this._cursoService.addAsignatura(this.id_curso,result.value,this.token).subscribe((data:any)=>{
             if(data['Response']=="exito"){
               Swal.fire({
                 title:'Agregado!',

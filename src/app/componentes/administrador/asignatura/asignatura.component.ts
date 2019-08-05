@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { Asignatura } from 'src/app/modelos/asignatura.model';
-
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-asignatura',
@@ -14,13 +15,24 @@ export class AsignaturaComponent implements OnInit {
   pageAsignatura: number;
   pageSizeAsignatura: number;
   collectionSizeAsignatura: number;
-  constructor(private _asignaturaService: AsignaturaService, private router:Router) {
+  token: string
+  constructor(private _asignaturaService: AsignaturaService,
+    private _localService: LocalService,
+    private _storageService: StorageService,
+    private router:Router) 
+  {
     this.pageAsignatura = 1;
     this.pageSizeAsignatura = 4;
     this.asignaturas = []
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.getAsignaturas()
   }
 
@@ -43,7 +55,7 @@ export class AsignaturaComponent implements OnInit {
     }).then((result) => {
       if(result.dismiss){}
       if (result.value) {
-        this._asignaturaService.deleteAsignatura(id).subscribe((data:any)=>{
+        this._asignaturaService.deleteAsignatura(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='exito'){
             Swal.fire({
               type: 'success',
@@ -63,7 +75,7 @@ export class AsignaturaComponent implements OnInit {
   }
 
   getAsignaturas(){
-    this._asignaturaService.getAsignaturas().subscribe((data:Asignatura[])=>{
+    this._asignaturaService.getAsignaturas(this.token).subscribe((data:Asignatura[])=>{
       this.asignaturas = data
       this.collectionSizeAsignatura = this.asignaturas.length
     })
@@ -82,7 +94,7 @@ export class AsignaturaComponent implements OnInit {
       showCancelButton: true
     }).then((result)=>{
       if(result.value){
-        this._asignaturaService.postAsignatura({'nombre':result.value}).subscribe((data:any)=>{
+        this._asignaturaService.postAsignatura({'nombre':result.value},this.token).subscribe((data:any)=>{
           if(data['Response']=="exito"){
             Swal.fire({
               type: 'success',

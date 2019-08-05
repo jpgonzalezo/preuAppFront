@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-//SERVICIOS
 import { ColegioService } from 'src/app/servicios/colegio.service';
-//MODELO
+import { LocalService } from 'src/app/servicios/local.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 import { Colegio } from 'src/app/modelos/colegio.model';
 import Swal from 'sweetalert2';
 @Component({
@@ -14,18 +14,29 @@ export class ColegioComponent implements OnInit {
   pageSizeColegio: number;
   collectionSizeColegio: number;
   colegios:Colegio[];
-  constructor(private _colegioService: ColegioService) {
+  token: string
+  constructor(private _colegioService: ColegioService,
+    private _localService: LocalService,
+    private _storageService: StorageService
+    ) 
+  {
     this.pageColegio = 1;
     this.pageSizeColegio = 10;
     this.colegios = [];
   }
 
   ngOnInit() {
+    if(this._storageService.getCurrentToken()==null){
+      this.token = this._localService.getToken() 
+    }
+    else{
+      this.token = this._storageService.getCurrentToken()
+    }
     this.getColegios()
   }
 
   getColegios(){
-    this._colegioService.getColegios().subscribe((data:Colegio[])=>{
+    this._colegioService.getColegios(this.token).subscribe((data:Colegio[])=>{
       this.colegios = data;
       this.collectionSizeColegio = this.colegios.length
     })
@@ -44,7 +55,7 @@ export class ColegioComponent implements OnInit {
     }).then((result) => {
       if(result.dismiss){}
       if (result.value) {
-        this._colegioService.deleteColegio(id).subscribe((data:any)=>{
+        this._colegioService.deleteColegio(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='exito'){
             Swal.fire({
               type: 'success',
@@ -114,7 +125,7 @@ export class ColegioComponent implements OnInit {
             'calle': result.value[1],
             'numero': result.value[2],
             'comuna': result.value[3]
-          }).subscribe((data:any)=>{
+          },this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
               Swal.fire({
                 type:'success',
