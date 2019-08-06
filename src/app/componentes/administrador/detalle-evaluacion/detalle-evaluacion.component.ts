@@ -17,8 +17,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-detalle-evaluacion',
-  templateUrl: './detalle-evaluacion.component.html',
-  styleUrls: ['./detalle-evaluacion.component.css']
+  templateUrl: './detalle-evaluacion.component.html'
 })
 export class DetalleEvaluacionComponent implements OnInit {
   id_asignatura: string;

@@ -12,8 +12,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-detalle-asistencia',
-  templateUrl: './detalle-asistencia.component.html',
-  styleUrls: ['./detalle-asistencia.component.css']
+  templateUrl: './detalle-asistencia.component.html'
 })
 export class DetalleAsistenciaComponent implements OnInit {
   id_asistencia:string;

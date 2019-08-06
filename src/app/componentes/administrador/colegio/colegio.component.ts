@@ -6,8 +6,7 @@ import { Colegio } from 'src/app/modelos/colegio.model';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-colegio',
-  templateUrl: './colegio.component.html',
-  styleUrls: ['./colegio.component.css']
+  templateUrl: './colegio.component.html'
 })
 export class ColegioComponent implements OnInit {
   pageColegio: number;

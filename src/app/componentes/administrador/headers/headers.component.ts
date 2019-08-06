@@ -3,8 +3,7 @@ import { LoginService } from 'src/app/servicios/login.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-header',
-  templateUrl: './headers.component.html',
-  styleUrls: ['./headers.component.css']
+  templateUrl: './headers.component.html'
 })
 export class HeadersComponent implements OnInit {
 

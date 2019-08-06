@@ -12,8 +12,7 @@ import { Config } from 'src/app/config';
 import { LocalService } from 'src/app/servicios/local.service';
 @Component({
   selector: 'app-detalle-profesor',
-  templateUrl: './detalle-profesor.component.html',
-  styleUrls: ['./detalle-profesor.component.css']
+  templateUrl: './detalle-profesor.component.html'
 })
 export class DetalleProfesorComponent implements OnInit {
   pageAnotacion: number;

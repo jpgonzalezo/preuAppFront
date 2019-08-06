@@ -11,8 +11,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-asistencia',
-  templateUrl: './asistencia.component.html',
-  styleUrls: ['./asistencia.component.css']
+  templateUrl: './asistencia.component.html'
 })
 export class AsistenciaComponent implements OnInit {
   pageAsistencia: number;

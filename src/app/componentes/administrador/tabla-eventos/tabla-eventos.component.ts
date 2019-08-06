@@ -6,8 +6,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-tabla-eventos',
-  templateUrl: './tabla-eventos.component.html',
-  styleUrls: ['./tabla-eventos.component.css']
+  templateUrl: './tabla-eventos.component.html'
 })
 export class TablaEventosComponent implements OnInit {
   token: string

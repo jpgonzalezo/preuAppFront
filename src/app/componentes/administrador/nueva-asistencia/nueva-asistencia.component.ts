@@ -13,8 +13,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-nueva-asistencia',
-  templateUrl: './nueva-asistencia.component.html',
-  styleUrls: ['./nueva-asistencia.component.css']
+  templateUrl: './nueva-asistencia.component.html'
 })
 export class NuevaAsistenciaComponent implements OnInit {
   pageAlumnosCurso: number;

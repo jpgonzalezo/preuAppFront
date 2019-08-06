@@ -26,8 +26,7 @@ import { Config } from 'src/app/config';
 
 @Component({
   selector: 'app-perfiles',
-  templateUrl: './perfiles.component.html',
-  styleUrls: ['./perfiles.component.css']
+  templateUrl: './perfiles.component.html'
 })
 
 export class PerfilesComponent implements OnInit {

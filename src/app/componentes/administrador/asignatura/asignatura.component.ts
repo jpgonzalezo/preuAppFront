@@ -7,8 +7,7 @@ import { StorageService } from 'src/app/servicios/storage.service';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-asignatura',
-  templateUrl: './asignatura.component.html',
-  styleUrls: ['./asignatura.component.css']
+  templateUrl: './asignatura.component.html'
 })
 export class AsignaturaComponent implements OnInit {
   asignaturas: Asignatura[]

@@ -17,8 +17,7 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { LocalService } from 'src/app/servicios/local.service';
 @Component({
   selector: 'app-hoja-vida',
-  templateUrl: './hoja-vida.component.html',
-  styleUrls: ['./hoja-vida.component.css']
+  templateUrl: './hoja-vida.component.html'
 })
 export class HojaVidaComponent implements OnInit {
   pageAdministrador: number;

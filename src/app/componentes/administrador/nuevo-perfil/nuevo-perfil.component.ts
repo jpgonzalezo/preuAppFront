@@ -10,8 +10,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-nuevo-perfil',
-  templateUrl: './nuevo-perfil.component.html',
-  styleUrls: ['./nuevo-perfil.component.css']
+  templateUrl: './nuevo-perfil.component.html'
 })
 export class NuevoPerfilComponent implements OnInit {
   colegios:any;

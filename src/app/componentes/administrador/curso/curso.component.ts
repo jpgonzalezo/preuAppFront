@@ -7,8 +7,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-curso',
-  templateUrl: './curso.component.html',
-  styleUrls: ['./curso.component.css']
+  templateUrl: './curso.component.html'
 })
 export class CursoComponent implements OnInit {
   cursos: Curso[]

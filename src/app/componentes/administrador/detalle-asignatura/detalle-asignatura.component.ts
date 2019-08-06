@@ -22,8 +22,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 @Component({
   selector: 'app-detalle-asignatura',
-  templateUrl: './detalle-asignatura.component.html',
-  styleUrls: ['./detalle-asignatura.component.css']
+  templateUrl: './detalle-asignatura.component.html'
 })
 export class DetalleAsignaturaComponent implements OnInit {
   asignatura: Asignatura;

@@ -21,8 +21,7 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-detalle-curso',
-  templateUrl: './detalle-curso.component.html',
-  styleUrls: ['./detalle-curso.component.css']
+  templateUrl: './detalle-curso.component.html'
 })
 export class DetalleCursoComponent implements OnInit {
   id_curso:string;

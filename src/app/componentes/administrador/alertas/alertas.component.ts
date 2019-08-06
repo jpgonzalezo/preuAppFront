@@ -9,8 +9,7 @@ import { StorageService } from 'src/app/servicios/storage.service';
 import { Config } from 'src/app/config';
 @Component({
   selector: 'app-alertas',
-  templateUrl: './alertas.component.html',
-  styleUrls: ['./alertas.component.css']
+  templateUrl: './alertas.component.html'
 })
 export class AlertasComponent implements OnInit {
   alertas: Alerta[]
