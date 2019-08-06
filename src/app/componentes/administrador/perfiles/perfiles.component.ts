@@ -51,6 +51,7 @@ export class PerfilesComponent implements OnInit {
   pageApoderado: number;
   pageSizeApoderado: number;
   collectionSizeApoderado: number;
+  loading:boolean = false
   constructor(
     private _alumnoService: AlumnoService,
     private _cursoService: CursoService,
@@ -134,8 +135,10 @@ export class PerfilesComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
+        this.loading = true
         this._alumnoService.deleteAlumno(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='borrado'){
+            this.loading = false
             swal.fire({
               title:'Borrado!',
               text:'Se ha borrado registro exitosamente.',
@@ -146,6 +149,7 @@ export class PerfilesComponent implements OnInit {
             })
           }
         })
+        this.loading = false
       }
     })
   }
@@ -162,7 +166,9 @@ export class PerfilesComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
+        this.loading = true
         this._profesorService.deleteProfesor(id,this.token).subscribe((data:any)=>{
+          this.loading = false
           if(data['Response']=='borrado'){
             swal.fire({
               title:'Borrado!',
@@ -179,6 +185,7 @@ export class PerfilesComponent implements OnInit {
             })
           }
         })
+        this.loading = false
       }
 
     })
@@ -196,7 +203,9 @@ export class PerfilesComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
+        this.loading = true
         this._apoderadoService.deleteApoderado(id,this.token).subscribe((data:any)=>{
+          this.loading = false
           if(data['Response']=='borrado'){
             swal.fire({
               title:'Borrado!',
@@ -208,6 +217,7 @@ export class PerfilesComponent implements OnInit {
             })
           }
         })
+        this.loading = false
       }
 
     })
@@ -426,8 +436,10 @@ export class PerfilesComponent implements OnInit {
               "curso":result1.value[3],
               "colegio":result1.value[4],
           }
+          this.loading = true
           this._alumnoService.postAlumno(data,this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
+              this.loading = false
               swal.fire({
                 title: 'Foto de Perfil',
                 text: "Desea agregar una foto de perfil?",
@@ -452,8 +464,10 @@ export class PerfilesComponent implements OnInit {
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
+                      this.loading = true
                       this._alumnoService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
+                          this.loading = false
                           swal.fire({
                             title: 'Registro exitoso',
                             text: 'Se ha guardado al alumno exitosamente!',
@@ -464,10 +478,13 @@ export class PerfilesComponent implements OnInit {
                           })
                         }
                       })
+                      this.loading = false
                     }
                     else{
+                      this.loading = true
                       this._alumnoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
+                          this.loading = false
                           swal.fire({
                             title: 'Registro exitoso',
                             text: 'Se ha guardado al alumno exitosamente!',
@@ -479,12 +496,15 @@ export class PerfilesComponent implements OnInit {
                         }
                       },
                       (error=>{}))
+                      this.loading = false
                     }
                   })
                 }
                 else{
+                  this.loading = true
                   this._alumnoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
+                      this.loading = false
                       swal.fire({
                         title: 'Registro exitoso',
                         text: 'Se ha guardado al alumno exitosamente!',
@@ -496,11 +516,12 @@ export class PerfilesComponent implements OnInit {
                     }
                   },
                   (error=>{}))
+                  this.loading = false
                 }
               })
             }
           },
-          (error)=>{console.log("error")})
+          (error)=>{this.loading = false})
         }
       }
     })
@@ -611,8 +632,10 @@ export class PerfilesComponent implements OnInit {
               "comuna":result1.value[1].comuna,
               "asignatura":result1.value[2]
           }
+          this.loading = true
           this._profesorService.postProfesor(data,this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
+              this.loading = false
               swal.fire({
                 title: 'Foto de Perfil',
                 text: "Desea agregar una foto de perfil?",
@@ -637,8 +660,10 @@ export class PerfilesComponent implements OnInit {
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
+                      this.loading = true
                       this._profesorService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
+                          this.loading = false
                           swal.fire({
                             title: 'Registro exitoso',
                             text: 'Se ha guardado al profesor exitosamente!',
@@ -649,10 +674,13 @@ export class PerfilesComponent implements OnInit {
                           })
                         }
                       })
+                      this.loading = false
                     }
                     else{
+                      this.loading = true
                       this._profesorService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
+                          this.loading = false
                           swal.fire({
                             title: 'Registro exitoso',
                             text: 'Se ha guardado al profesor exitosamente!',
@@ -662,14 +690,17 @@ export class PerfilesComponent implements OnInit {
                             this.getProfesores()
                           })
                         }
+                        this.loading = false
                       },
-                      (error=>{}))
+                      (error=>{this.loading = false}))
                     }
                   })
                 }
                 else{
+                  this.loading = true
                   this._profesorService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
+                      this.loading = false
                       swal.fire({
                         title: 'Registro exitoso',
                         text: 'Se ha guardado al profesor exitosamente!',
@@ -679,14 +710,14 @@ export class PerfilesComponent implements OnInit {
                         this.getProfesores()
                       })
                     }
+                    this.loading = false
                   },
-                  (error=>{}))
-                  //agregar foto de perfil por defecto
+                  (error=>{this.loading = false}))
                 }
               })
             }
           },
-          (error)=>{console.log("error")})
+          (error)=>{this.loading = false})
         }
       }
     })
@@ -782,8 +813,10 @@ export class PerfilesComponent implements OnInit {
               "numero":result1.value[1].numero,
               "comuna":result1.value[1].comuna
           }
+          this.loading = true
           this._apoderadoService.postApoderado(data,this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
+              this.loading = false
               swal.fire({
                 title: 'Foto de Perfil',
                 text: "Desea agregar una foto de perfil?",
@@ -808,36 +841,45 @@ export class PerfilesComponent implements OnInit {
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
+                      this.loading = true
                       this._apoderadoService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
+                          this.loading = false
                           this.asignarAlumno(data['id'])
                         }
+                        this.loading = false
                       })
                     }
                     else{
+                      this.loading = true
                       this._apoderadoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
+                          this.loading = false
                           this.asignarAlumno(data['id'])
                         }
+                        this.loading = false
                       },
-                      (error=>{}))
+                      (error=>{this.loading = false}))
                     }
                   })
                 }
                 else{
+                  this.loading = true
                   this._apoderadoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
+                      this.loading = false
                       this.asignarAlumno(data['id'])
                     }
+                    this.loading = false
                   },
-                  (error=>{}))
+                  (error=>{this.loading = false}))
                   //agregar foto de perfil por defecto
                 }
               })
             
             }
           },
-          (error)=>{console.log("error")})
+          (error)=>{this.loading = false})
         }
       }
     })
@@ -921,8 +963,10 @@ export class PerfilesComponent implements OnInit {
               "numero":result1.value[1].numero,
               "comuna":result1.value[1].comuna
           }
+          this.loading = true
           this._administradorService.postAdministrador(data,this.token).subscribe((data:any)=>{
             if(data['Response']=='exito'){
+              this.loading = false
               swal.fire({
                 title: 'Foto de Perfil',
                 text: "Desea agregar una foto de perfil?",
@@ -947,8 +991,10 @@ export class PerfilesComponent implements OnInit {
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
+                      this.loading = true
                       this._administradorService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
+                          this.loading = false
                           swal.fire({
                             title: 'Registro exitoso',
                             text: 'Se ha guardado al administrador exitosamente!',
@@ -958,11 +1004,15 @@ export class PerfilesComponent implements OnInit {
                             this.getAdministradores()
                           })
                         }
+                        this.loading = false
                       })
+                      this.loading = false
                     }
                     else{
+                      this.loading = true
                       this._administradorService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
+                          this.loading = false
                           swal.fire({
                             title: 'Registro exitoso',
                             text: 'Se ha guardado al administrador exitosamente!',
@@ -972,14 +1022,17 @@ export class PerfilesComponent implements OnInit {
                             this.getAdministradores()
                           })
                         }
+                        this.loading = false
                       },
-                      (error=>{}))
+                      (error=>{this.loading = false}))
                     }
                   })
                 }
                 else{
+                  this.loading = true
                   this._administradorService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
                     if(data['Response']=="exito"){
+                      this.loading = false
                       swal.fire({
                         title: 'Registro exitoso',
                         text: 'Se ha guardado al administrador exitosamente!',
@@ -989,15 +1042,17 @@ export class PerfilesComponent implements OnInit {
                         this.getAdministradores()
                       })
                     }
+                    this.loading = false
                   },
-                  (error=>{}))
+                  (error=>{this.loading = false}))
                   //agregar foto de perfil por defecto
                 }
               })
+              this.loading = false
             
             }
           },
-          (error)=>{console.log("error")})
+          (error)=>{this.loading = false})
         }
       }
     })
@@ -1031,8 +1086,10 @@ export class PerfilesComponent implements OnInit {
           }
         }
         if(bandera){
+          this.loading = true
           this._apoderadoService.asignarAlumno(id,id_alumno,this.token).subscribe((data:any)=>{
             if(data['Response']=="exito"){
+              this.loading = false
               swal.fire({
                 title: 'Registro exitoso',
                 text: 'Se ha guardado al profesor exitosamente!',
@@ -1042,6 +1099,7 @@ export class PerfilesComponent implements OnInit {
                 this.getApoderados()
               })
             }
+            this.loading = false
           })
         }
         else{

@@ -13,7 +13,7 @@ import { Ng2Rut } from 'ng2-rut';
 import { CompartidoModule } from 'src/app/componentes/compartido.module';
 // register 'es' locale
 registerLocaleData(localeEs);
-
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 //SERVICIOS
 import { AdministradorCompartidoService } from './administrador.compartido.service';
 import { EstadisticaService } from 'src/app/servicios/estadistica.service';
@@ -87,7 +87,15 @@ const routes: Routes = [
         ReactiveFormsModule,
         FullCalendarModule,
         Ng2Rut,
-        CompartidoModule
+        CompartidoModule,
+        NgxLoadingModule.forRoot({  
+            animationType: ngxLoadingAnimationTypes.circleSwish,
+            backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+            backdropBorderRadius: '4px',
+            primaryColour: '#ffffff', 
+            secondaryColour: '#ffffff', 
+            tertiaryColour: '#ffffff'
+        })
     ],
     //en declarations van los componentes que utiliza el modulo
     declarations: [
