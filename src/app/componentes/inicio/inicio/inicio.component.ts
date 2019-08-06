@@ -17,6 +17,7 @@ export class InicioComponent implements OnInit {
   password:string;
   formGroupLogin: FormGroup;
   perfil_seleccion: FormControl;
+  loading:boolean = false
   constructor(private router: Router,
     private formBuilderLogin: FormBuilder,
     private _loginService: LoginService,
@@ -48,8 +49,10 @@ export class InicioComponent implements OnInit {
       })
     }
     else{
+      this.loading = true
       this._loginService.login(dataLogin).subscribe((data:any)=>{
         if(data['respuesta']=='no_existe'){
+          this.loading = false
           swal.fire({
             title : 'Error Login',
             text: 'Usuario no existe',
@@ -61,6 +64,7 @@ export class InicioComponent implements OnInit {
         }
       },
       (error) =>{
+        this.loading = false
         swal.fire({
           title : 'Error Login',
           text: 'Verifique sus credenciales',
@@ -75,6 +79,7 @@ export class InicioComponent implements OnInit {
     this._storageService.setCurrentSession(data);
     this.localService.setToken(this._storageService.getCurrentToken())
     if(tipo == 'ADMINISTRADOR'){
+      this.loading = false
       this.router.navigate(['/admin']);
     }
     if(tipo == 'PROFESOR'){

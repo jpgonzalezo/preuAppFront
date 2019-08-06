@@ -9,7 +9,7 @@ import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts-x';
 import { ReactiveFormsModule} from '@angular/forms';
 registerLocaleData(localeEs);
-
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 //COMPONENTES
 import { InicioComponent } from './inicio/inicio.component';
@@ -28,7 +28,15 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgxLoadingModule.forRoot({  
+            animationType: ngxLoadingAnimationTypes.circleSwish,
+            backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+            backdropBorderRadius: '4px',
+            primaryColour: '#ffffff', 
+            secondaryColour: '#ffffff', 
+            tertiaryColour: '#ffffff'
+        })
     ],
     declarations: [
         InicioComponent,

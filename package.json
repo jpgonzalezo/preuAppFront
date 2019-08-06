@@ -45,6 +45,7 @@
     "ng2-charts": "^2.0.3",
     "ng2-charts-x": "^2.0.6",
     "ng2-rut": "^0.3.2",
+    "ngx-loading": "^3.0.1",
     "rxjs": "~6.3.3",
     "sweetalert2": "^8.5.0",
     "terser": "3.14.1",
