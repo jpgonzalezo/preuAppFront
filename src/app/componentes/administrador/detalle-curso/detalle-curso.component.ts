@@ -261,20 +261,30 @@ export class DetalleCursoComponent implements OnInit {
         cancelButtonText: 'Cancelar',
       }).then((result)=>{
         if(result.dismiss==null){
-          console.log("token para agregar asignatura es")
-          console.log(this.token)
-          this._cursoService.addAsignatura(this.id_curso,result.value,this.token).subscribe((data:any)=>{
-            if(data['Response']=="exito"){
-              Swal.fire({
-                title:'Agregado!',
-                text:'Se ha agregado la asignatura exitosamente.',
-                type:'success',
-                confirmButtonColor: '#2dce89',
-              }).then((result)=>{
-                this.getCurso()
-              })
-            }
-          })
+          if(result.value != ''){
+            this._cursoService.addAsignatura(this.id_curso,result.value,this.token).subscribe((data:any)=>{
+              if(data['Response']=="exito"){
+                Swal.fire({
+                  title:'Agregado!',
+                  text:'Se ha agregado la asignatura exitosamente.',
+                  type:'success',
+                  confirmButtonColor: '#2dce89',
+                }).then((result)=>{
+                  this.getCurso()
+                })
+              }
+            })
+          }
+          else{
+            Swal.fire({
+              title:'Error al agregar asignatura',
+              text:'Debe seleccionar una asignatura valida.',
+              type:'error',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.agregarAsignatura()
+            })
+          }
         }
       })
     })
