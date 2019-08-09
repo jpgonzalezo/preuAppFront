@@ -474,7 +474,7 @@ export class PerfilesComponent implements OnInit {
                             type: 'success',
                             confirmButtonColor: '#2dce89',
                           }).then((result)=>{
-                            this._alumnoTablaService.getAlumnos()
+                            this.getAlumnos()
                           })
                         }
                       })
@@ -491,7 +491,7 @@ export class PerfilesComponent implements OnInit {
                             type: 'success',
                             confirmButtonColor: '#2dce89',
                           }).then((result)=>{
-                            this._alumnoTablaService.getAlumnos()
+                            this.getAlumnos()
                           })
                         }
                       },
@@ -511,7 +511,7 @@ export class PerfilesComponent implements OnInit {
                         type: 'success',
                         confirmButtonColor: '#2dce89',
                       }).then((result)=>{
-                        this._alumnoTablaService.getAlumnos()
+                        this.getAlumnos()
                       })
                     }
                   },
