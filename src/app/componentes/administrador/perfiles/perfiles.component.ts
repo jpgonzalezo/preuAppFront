@@ -461,10 +461,10 @@ export class PerfilesComponent implements OnInit {
                     confirmButtonColor: '#2dce89',
                   }).then((result3)=>{
                     if(result3.value){
+                      this.loading = true
                       var file = result3.value
                       var formData = new FormData()
                       formData.append('imagen',file)
-                      this.loading = true
                       this._alumnoService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
                         if(data['Response']=="exito"){
                           this.loading = false
@@ -477,8 +477,8 @@ export class PerfilesComponent implements OnInit {
                             this.getAlumnos()
                           })
                         }
+                        this.loading = false
                       })
-                      this.loading = false
                     }
                     else{
                       this.loading = true
