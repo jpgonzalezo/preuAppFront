@@ -41,7 +41,7 @@ export class StorageService {
     }
   }
   isAuthenticatedProfesor(): boolean{
-    if (this.getCurrentToken() == 'PROFESOR') {
+    if (this.getCurrentToken() != '') {
       return true
     }
     else{
@@ -49,7 +49,7 @@ export class StorageService {
     }
   }
   isAuthenticatedAlumno(): boolean{
-    if (this.getCurrentToken() == 'ALUMNO') {
+    if (this.getCurrentToken() != '') {
       return true
     }
     else{

@@ -32,6 +32,14 @@ export class TopicoService {
         return this.httpClient.get(`${this.API_URL}/topicos_asignatura/${id}`,options).pipe(map(res => res))
     }
 
+    getTopicosAsignaturaToken(token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+        const options = {
+            headers: headers
+        }
+        return this.httpClient.get(`${this.API_URL}/topicos/asignatura`,options).pipe(map(res => res))
+    }
+
     deleteTopico(id:string,token:string){
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
         const options = {

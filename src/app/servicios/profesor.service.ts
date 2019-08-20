@@ -24,6 +24,14 @@ export class ProfesorService {
 		return this.httpClient.get(`${this.API_URL}/profesores_asignatura/${id_asignatura}`,options).pipe(map(res => res))
 	}
 
+	getProfesoresAsignaturaToken(token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.get(`${this.API_URL}/profesores/asignatura`,options).pipe(map(res => res))
+	}
+
 	getProfesor(id:string,token:string){
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json'  ,'auth-token':token});
 		const options = {

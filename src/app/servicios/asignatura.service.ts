@@ -24,6 +24,14 @@ export class AsignaturaService {
     return this.httpClient.get(`${this.API_URL}/asignaturas/${id}`,options).pipe(map(res => res))
 	}
 
+	getAsignaturaToken(token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.get(`${this.API_URL}/asignatura`,options).pipe(map(res => res))
+	}
+
 	getAsignaturasCurso(id:string,token:string){
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token });
 		const options = {
@@ -56,11 +64,27 @@ export class AsignaturaService {
 	  	return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/evaluaciones/asignatura/${id}`,options).pipe(map(res => res))
 	}
 
+	getGraficoRendimientoEvaluacionesAsignaturaToken(token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/evaluaciones/asignatura`,options).pipe(map(res => res))
+	}
+
 	getGraficoAsistenciaAsignatura(id:string,token:string){
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
 		const options = {
 			headers: headers
 		}
 	  	return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/asistencia/asignatura/${id}`,options).pipe(map(res => res))
+	}
+
+	getGraficoAsistenciaAsignaturaToken(token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.get(`${this.API_URL}/grafico/rendimiento/asistencia/asignatura`,options).pipe(map(res => res))
 	}
 }
