@@ -83,9 +83,11 @@ export class InicioComponent implements OnInit {
       this.router.navigate(['/admin']);
     }
     if(tipo == 'PROFESOR'){
+      this.loading = false
       this.router.navigate(['/profesor']);
     }
     if(tipo == 'ALUMNO'){
+      this.loading = false
       this.router.navigate(['/alumno']); 
     }
   }

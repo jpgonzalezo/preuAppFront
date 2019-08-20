@@ -1,3 +1,9 @@
+<div class="my-container">
+  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true,
+      backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+      primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
 <app-header></app-header>
 <main class="profile-page">
   <section class="section-profile-cover section-shaped my-0">
@@ -17,9 +23,8 @@
             </div>
             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
               <div class="card-profile-actions py-4 mt-lg-0">
-                <a class="btn btn-sm btn-info mr-4" [routerLink]="" (click)="modalNuevaObservacion()">Nueva
-                  observación</a>
-                <a class="btn btn-sm btn-default float-right" [routerLink]="">Editar</a>
+                <a class="btn btn-sm btn-info mr-4" [routerLink]="" (click)="modalNuevaObservacion()">Observación</a>
+                <a class="btn btn-sm btn-default float-right" (click)="cambiarFoto()" [routerLink]="">Foto Perfil</a>
               </div>
             </div>
             <div class="col-lg-4 order-lg-1">

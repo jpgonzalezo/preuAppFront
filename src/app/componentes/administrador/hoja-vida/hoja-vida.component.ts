@@ -42,6 +42,7 @@ export class HojaVidaComponent implements OnInit {
   id_hoja_vida:string;
   justificaciones: Justificacion[];
   alertas: Alerta[];
+  loading:boolean = false
 
 
     // Radar
@@ -233,6 +234,52 @@ export class HojaVidaComponent implements OnInit {
 
   public cancelar(){
     this.router.navigateByUrl('/admin/perfiles');
+  }
+
+  public cambiarFoto(){
+    swal.fire({
+      title: 'Foto de Perfil',
+      text: "Desea cambiar la foto de perfil?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+    }).then((result2) => {
+      if (result2.dismiss==null) {
+        swal.fire({
+          title: 'Foto de perfil',
+          text: 'Seleccione una foto de perfil',
+          input: 'file',
+          inputAttributes: {
+            'accept': 'image/*'
+          },
+          confirmButtonColor: '#2dce89',
+        }).then((result3)=>{
+          if(result3.dismiss==null){
+            this.loading = true
+            var file = result3.value
+            var formData = new FormData()
+            formData.append('imagen',file)
+            this._alumnoService.uploadImage(formData, this.id_hoja_vida,this.token).subscribe((data:any)=>{
+              if(data['Response']=="exito"){
+                this.loading = false
+                swal.fire({
+                  title: 'Registro exitoso',
+                  text: 'Se ha guardado al alumno exitosamente!',
+                  type: 'success',
+                  confirmButtonColor: '#2dce89',
+                }).then((result)=>{
+                  this.cancelar()
+                })
+              }
+              this.loading = false
+            })
+          }
+        })
+      }
+    })
   }
 
   public modalNuevaObservacion(){
