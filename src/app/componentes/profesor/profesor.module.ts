@@ -17,8 +17,11 @@ registerLocaleData(localeEs);
 import { HomeComponent } from './home/home.component';
 import { HeaderProfesorComponent } from './header-profesor/header-profesor.component';
 import { FooterProfesorComponent } from './footer-profesor/footer-profesor.component';
+import { AsignaturaComponent } from './asignatura/asignatura.component';
 const routes: Routes = [
-    { path: '', component: HomeComponent }
+    { path: '', component: AsignaturaComponent },
+    { path: 'calendario', component: HomeComponent},
+
 ];
 
 @NgModule({
@@ -35,7 +38,8 @@ const routes: Routes = [
     declarations: [
         HomeComponent,
         HeaderProfesorComponent,
-        FooterProfesorComponent
+        FooterProfesorComponent,
+        AsignaturaComponent
     ],
     exports: [
         RouterModule

@@ -27,28 +27,23 @@
         </div>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" routerLink="/admin">
-              <i class="fas fa-home"></i>
-              <span class="nav-link-inner--text">Home</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link nav-link-icon" routerLink="/admin/eventos">
-              <i class="far fa-calendar-alt"></i>
-              <span class="nav-link-inner--text">Eventos</span>
+            <a class="nav-link nav-link-icon" routerLink="/profesor">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <span class="nav-link-inner--text">Mi Asignatura</span>
             </a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link nav-link-icon" href="#" id="navbar-primary_dropdown_1" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-users"></i>
-              <span class="nav-link-inner--text">Perfiles</span>
+              <span class="nav-link-inner--text">Calendario</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-primary_dropdown_1">
-              <a class="dropdown-item text-black" routerLink="/admin/perfiles"><i class="fas fa-user"></i> Usuarios</a>
-              <a class="dropdown-item" routerLink="/admin/colegios"><i class="fas fa-school"></i> Colegios</a>
+              <a class="dropdown-item text-black" routerLink="/profesor/calendario"><i class="fas fa-user"></i> Calendario Academico</a>
+              <a class="dropdown-item" routerLink="/profesor/eventos"><i class="fas fa-school"></i> Eventos</a>
             </div>
           </li>
+
           <li class="nav-item dropdown">
             <a class="nav-link nav-link-icon" href="#" id="navbar-primary_dropdown_1" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

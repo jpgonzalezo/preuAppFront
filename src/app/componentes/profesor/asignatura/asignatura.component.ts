@@ -20,11 +20,14 @@ import { ChartOptions, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
+import { Color, BaseChartDirective} from 'ng2-charts';
+
 @Component({
-  selector: 'app-detalle-asignatura',
-  templateUrl: './detalle-asignatura.component.html'
+  selector: 'app-asignatura',
+  templateUrl: './asignatura.component.html',
+  styleUrls: ['./asignatura.component.css']
 })
-export class DetalleAsignaturaComponent implements OnInit {
+export class AsignaturaComponent implements OnInit {
   asignatura: Asignatura;
   profesores: Profesor[]
   asistencias: Asistencia[]
@@ -48,6 +51,22 @@ export class DetalleAsignaturaComponent implements OnInit {
   pageSizeTopico: number;
   collectionSizeTopico: number;
 
+  public barChartOptionsAsistencia: ChartOptions = {
+    responsive: true,
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+  public barChartLabelsAsistencia: Label[] = [];
+  public barChartTypeAsistencia: ChartType = 'bar';
+  public barChartLegendAsistencia = true;
+  public barChartPluginsAsistencia = [pluginDataLabels];
+
+  public barChartDataAsistencia: ChartDataSets[] = [{ data: [], label: '' }];
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -65,26 +84,9 @@ export class DetalleAsignaturaComponent implements OnInit {
   public barChartPlugins = [pluginDataLabels];
 
   public barChartData: ChartDataSets[] = [{ data: [], label: '' }];
-
-
-  public barChartOptionsAsistencia: ChartOptions = {
-    responsive: true,
-    scales: { xAxes: [{}], yAxes: [{}] },
-    plugins: {
-      datalabels: {
-        anchor: 'end',
-        align: 'end',
-      }
-    }
-  };
-  public barChartLabelsAsistencia: Label[] = [];
-  public barChartTypeAsistencia: ChartType = 'bar';
-  public barChartLegendAsistencia = true;
-  public barChartPluginsAsistencia = [pluginDataLabels];
-
-  public barChartDataAsistencia: ChartDataSets[] = [{ data: [], label: '' }];
   token: string
-  constructor(private _asignaturaService: AsignaturaService,
+  constructor(
+    private _asignaturaService: AsignaturaService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _profesorService: ProfesorService,
@@ -94,7 +96,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     private _topicoService: TopicoService,
     private _localService: LocalService,
     private _storageService: StorageService
-    ) {
+  ) { 
     this.asignatura = new Asignatura();
     this.profesores = [];
     this.pruebas = [];
@@ -112,7 +114,7 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.pageSizeAlerta = 10;
     this.pageTopico = 1;
     this.pageSizeTopico = 10;
-   }
+  }
 
   ngOnInit() {
     if(this._storageService.getCurrentToken()==null){
@@ -131,7 +133,6 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.getGraficoRendimientoEvaluacionesAsignatura()
     this.getGraficoAsistenciaAsignatura()
   }
-
   get profesores_tabla(): Profesor[] {
     return this.profesores
     .map((profesor, i) => ({id: i + 1, ...profesor}))
@@ -163,19 +164,19 @@ export class DetalleAsignaturaComponent implements OnInit {
   }
 
   getGraficoAsistenciaAsignatura(){
-    this._asignaturaService.getGraficoAsistenciaAsignatura(this.id_asignatura,this.token).subscribe((data:any)=>{
+    this._asignaturaService.getGraficoAsistenciaAsignaturaToken(this.token).subscribe((data:any)=>{
       this.barChartDataAsistencia = data['data']
       this.barChartLabelsAsistencia = data['labels']
     })
   }
   getGraficoRendimientoEvaluacionesAsignatura(){
-    this._asignaturaService.getGraficoRendimientoEvaluacionesAsignatura(this.id_asignatura,this.token).subscribe((data:any)=>{
+    this._asignaturaService.getGraficoRendimientoEvaluacionesAsignaturaToken(this.token).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
     })
   }
   getProfesoresAsignatura(){
-    this._profesorService.getProfesoresAsignatura(this.id_asignatura,this.token).subscribe((data:Profesor[])=>{
+    this._profesorService.getProfesoresAsignaturaToken(this.token).subscribe((data:Profesor[])=>{
       this.profesores = data
       this.collectionSizeProfesor = this.profesores.length;
       for(let alumno of this.profesores){
@@ -185,35 +186,34 @@ export class DetalleAsignaturaComponent implements OnInit {
   }
 
   getAsignatura(){
-    this._asignaturaService.getAsignatura(this.id_asignatura,this.token).subscribe((data:Asignatura)=>{
+    this._asignaturaService.getAsignaturaToken(this.token).subscribe((data:Asignatura)=>{
       this.asignatura = data;
     })
   }
 
   getAsistenciasAsignatura(){
-    this._asistenciaService.getAsistenciasAsignatura(this.id_asignatura,this.token).subscribe((data:Asistencia[])=>{
+    this._asistenciaService.getAsistenciasAsignaturaToken(this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
-      console.log(data)
       this.collectionSizeAsistencia = this.asistencias.length
     })
   }
 
   getPruebasAsignatura(){
-    this._pruebaService.getPruebasAsignaturas(this.id_asignatura,this.token).subscribe((data:Prueba[])=>{
+    this._pruebaService.getPruebasAsignaturaToken(this.token).subscribe((data:Prueba[])=>{
       this.pruebas = data
       this.collectionSizeEvaluacion = this.pruebas.length
     })
   }
 
   getAlertasAsignatura(){
-    this._alertaService.getAlertasAsignatura(this.id_asignatura,this.token).subscribe((data:Alerta[])=>{
+    this._alertaService.getAlertasAsignaturaToken(this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
     })
   }
 
   getTopicosAsignatura(){
-    this._topicoService.getTopicosAsignatura(this.id_asignatura,this.token).subscribe((data:Topico[])=>{
+    this._topicoService.getTopicosAsignaturaToken(this.token).subscribe((data:Topico[])=>{
       this.topicos = data;
       this.collectionSizeTopico = this.topicos.length
     })
@@ -255,4 +255,5 @@ export class DetalleAsignaturaComponent implements OnInit {
 
     })
   }
+
 }
