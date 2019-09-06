@@ -8,6 +8,7 @@ import localeEs from '@angular/common/locales/es';
 import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule} from '@angular/forms';
+import { Ng2Rut } from 'ng2-rut';
 // register 'es' locale
 registerLocaleData(localeEs);
 
@@ -18,10 +19,11 @@ import { HomeComponent } from './home/home.component';
 import { HeaderProfesorComponent } from './header-profesor/header-profesor.component';
 import { FooterProfesorComponent } from './footer-profesor/footer-profesor.component';
 import { AsignaturaComponent } from './asignatura/asignatura.component';
+import { DetalleEvaluacionComponent } from './detalle-evaluacion/detalle-evaluacion.component';
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
     { path: 'calendario', component: HomeComponent},
-
+    { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent}
 ];
 
 @NgModule({
@@ -33,13 +35,15 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        Ng2Rut
     ],
     declarations: [
         HomeComponent,
         HeaderProfesorComponent,
         FooterProfesorComponent,
-        AsignaturaComponent
+        AsignaturaComponent,
+        DetalleEvaluacionComponent
     ],
     exports: [
         RouterModule

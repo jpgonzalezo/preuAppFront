@@ -12,6 +12,7 @@ import { AsistenciaService  } from 'src/app/servicios/asistencia.service';
 import { PruebaService } from 'src/app/servicios/prueba.service';
 import { AlertaService} from 'src/app/servicios/alerta.service';
 import { TopicoService } from 'src/app/servicios/topico.service';
+import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
 import { Config } from 'src/app/config';
 import swal from'sweetalert2';
 import { ChartType } from 'chart.js';
@@ -50,7 +51,7 @@ export class AsignaturaComponent implements OnInit {
   pageTopico: number;
   pageSizeTopico: number;
   collectionSizeTopico: number;
-
+  loading = false;
   public barChartOptionsAsistencia: ChartOptions = {
     responsive: true,
     scales: { xAxes: [{}], yAxes: [{}] },
@@ -82,7 +83,6 @@ export class AsignaturaComponent implements OnInit {
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
-
   public barChartData: ChartDataSets[] = [{ data: [], label: '' }];
   token: string
   constructor(
@@ -95,7 +95,8 @@ export class AsignaturaComponent implements OnInit {
     private _alertaService: AlertaService,
     private _topicoService: TopicoService,
     private _localService: LocalService,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private _evaluacionService: EvaluacionService
   ) { 
     this.asignatura = new Asignatura();
     this.profesores = [];
@@ -220,7 +221,7 @@ export class AsignaturaComponent implements OnInit {
   }
 
   verDetalleEvaluacion(id_evaluacion:string){
-    this._router.navigateByUrl('/admin/asignaturas/detalle_asignatura/'+this.id_asignatura+'/detalle_evaluacion/'+id_evaluacion)
+    this._router.navigateByUrl('/profesor/detalle/evaluacion/'+id_evaluacion)
   }
 
   volver(){
@@ -253,6 +254,122 @@ export class AsignaturaComponent implements OnInit {
         })
       }
 
+    })
+  }
+
+  deleteEvaluacion(id:string){
+    swal.fire({
+      title: 'Desea borrar esta Evaluación?',
+      text: "Usted no podrá revertir los cambios!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.value) {
+        this._pruebaService.deletePrueba(id,this.token).subscribe((data:any)=>{
+          if(data['Response']=='borrado'){
+            swal.fire({
+              title:'Borrado!',
+              text:'Se ha borrado la evaluación exitosamente.',
+              type:'success',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.getPruebasAsignatura();
+            })
+          }
+          else{
+            swal.fire({
+              title: 'Error en el registro',
+              text: 'Ocurrió un error al borrar la evaluación.',
+              type: 'error',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.getPruebasAsignatura()
+            })
+          }
+        })
+      }
+    })
+  }
+
+  nuevaEvaluacion(){
+    swal.mixin({
+      title: 'Nueva Evaluación',
+      confirmButtonText: 'Siguiente',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+      progressSteps: ['1', '2'],
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+    }).queue([
+      {
+        title: 'Nombre Evaluación',
+        text: 'Ingrese el nombre para la evaluación',
+        input: 'text',
+        showCancelButton: true,
+        onOpen: function (){
+          swal.disableConfirmButton();
+          swal.getInput().addEventListener('keyup', function(e) {
+            if((<HTMLInputElement>event.target).value == "" || parseInt((<HTMLInputElement>event.target).value)<=0) {
+              swal.disableConfirmButton();
+            } 
+            else {
+              swal.enableConfirmButton();
+            }
+            })
+        }
+      },
+      {
+        title: 'Tipo de Evaluación',
+        text: 'Seleccione el tipo de Evaluación',
+        input: 'select',
+        inputOptions: {
+          '': 'Seleccione una evaluación',
+          'TALLER': 'Taller',
+          'TAREA': 'Tarea',
+          'ENSAYO': 'Ensayo'
+        },
+        showCancelButton: true,
+        inputValidator: function (value) {
+          return new Promise(function (resolve, reject) {
+            if (value === "") {
+              resolve('Debes seleccionar un tipo')
+            } else {
+              resolve()
+            }
+          })
+        }
+      }
+    ]).then((result) => {
+      if (result.dismiss==null) {
+        this.loading = true
+        this._pruebaService.postPrueba(result.value[0],result.value[1],this.token).subscribe((data)=>{
+          if(data['Response']=="exito"){
+            this.loading = false
+            swal.fire({
+              title: 'Registro exitoso',
+              text: 'Se ha guardado la evaluación exitosamente!',
+              type: 'success',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.getPruebasAsignatura()
+            })
+          }
+          else{
+            swal.fire({
+              title: 'Error en el registro',
+              text: 'Ocurrió un error al guardar la evaluación.',
+              type: 'error',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.getPruebasAsignatura()
+            })
+          }
+        })
+      }
     })
   }
 

@@ -71,4 +71,20 @@ export class PruebaService {
 		}
 	  	return this.httpClient.get(`${this.API_URL}/pruebas/asignatura`,options).pipe(map(res => res))
 	}
+
+	postPrueba(nombre:string,tipo:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+        const options = {
+          headers: headers
+        }
+        return this.httpClient.post(`${this.API_URL}/pruebas`, {"nombre":nombre,"tipo":tipo}, options).pipe(map(res => res))
+	}
+	
+	deletePrueba(id:string,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+  		const options = {
+  			headers: headers
+  		}
+    	return this.httpClient.delete(`${this.API_URL}/pruebas/${id}`,options).pipe(map(res => res))
+	}
 }

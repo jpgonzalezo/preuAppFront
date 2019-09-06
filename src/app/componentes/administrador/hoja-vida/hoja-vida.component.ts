@@ -296,6 +296,7 @@ export class HojaVidaComponent implements OnInit {
         inputOptions: {
           'OBSERVACION_ADMINISTRADOR': 'Administrador',
           'OBSERVACION_PSICOLOGO': 'Psicologo',
+          'OBSERVACION_PSICOPEDAGOGO': 'Psicopedagogo'
         },
         inputPlaceholder: 'Seleccione un tipo',
       },
