@@ -235,6 +235,7 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
+                        <th scope="col"></th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Alumno</th>
                         <th scope="col">Tipo</th>
@@ -243,9 +244,12 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let alerta of alertas_tabla">
-                        <td>{{ alerta.fecha }}</td>
+                        <th scope="row">
+                          <img [src]='alerta.alumno.imagen' class="mr-2" style="width: 50px">
+                        </th>
                         <td>{{ alerta.alumno.nombres }} {{ alerta.alumno.apellido_paterno }}
                           {{ alerta.alumno.apellido_materno }}</td>
+                        <td>{{ alerta.fecha }}</td>
                         <td>
                           <span *ngIf="alerta.tipo == 'RENDIMIENTO'"
                             class="badge badge-pill badge-danger">{{ alerta.tipo }}</span>
@@ -306,7 +310,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-outline-primary" >
+                  <button type="button" class="btn btn-outline-primary" (click)="nuevoTopico()">
                     Nuevo Tópico</button>
                   <br>
                 </div>

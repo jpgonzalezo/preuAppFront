@@ -209,6 +209,14 @@ export class AsignaturaComponent implements OnInit {
   getAlertasAsignatura(){
     this._alertaService.getAlertasAsignaturaToken(this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
+      for(let alerta of this.alertas){
+        if(alerta.alumno.imagen==''){
+          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/default"
+        }
+        else{
+          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.imagen
+        }
+      }
       this.collectionSizeAlerta = this.alertas.length
     })
   }
@@ -294,6 +302,46 @@ export class AsignaturaComponent implements OnInit {
       }
     })
   }
+
+  nuevoTopico(){
+    swal.fire({
+      input:'text',
+      title:'Nuevo Tópico',
+      text:'Ingrese el nombre del nuevo tópico',
+      confirmButtonText: 'Siguiente',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      onOpen: function (){
+        swal.disableConfirmButton();
+        swal.getInput().addEventListener('keyup', function(e) {
+          if((<HTMLInputElement>event.target).value == "" || parseInt((<HTMLInputElement>event.target).value)<=0) {
+            swal.disableConfirmButton();
+          } 
+          else {
+            swal.enableConfirmButton();
+          }
+          })
+      }
+    }).then((result)=>{
+      if(result.dismiss==null){
+        this._topicoService.postTopico(result.value,this.token).subscribe((data)=>{
+          if(data['Response']=="exito"){
+            swal.fire({
+              title:'Borrado!',
+              text:'Se ha guardado el registro exitosamente.',
+              type:'success',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.getTopicosAsignatura();
+            })
+          }
+        })
+      }
+    })
+  }
+
 
   nuevaEvaluacion(){
     swal.mixin({

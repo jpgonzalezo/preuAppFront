@@ -16,12 +16,12 @@ export class TopicoService {
         return this.httpClient.get(`${this.API_URL}/topicos`,options).pipe(map(res => res))
     }
 
-    postTopico(data:any,token:string):any{
+    postTopico(nombre:any,token:string):any{
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
         const options = {
           headers: headers
         }
-        return this.httpClient.post(`${this.API_URL}/topico`, JSON.stringify(data), options).pipe(map(res => res))
+        return this.httpClient.post(`${this.API_URL}/topicos`, {'nombre':nombre}, options).pipe(map(res => res))
     }
 
     getTopicosAsignatura(id:any,token:string){
