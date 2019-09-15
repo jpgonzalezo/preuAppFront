@@ -77,14 +77,16 @@ export class DetalleEvaluacionComponent implements OnInit {
   public doughnutChartData: MultiDataSet = [[]];
   public doughnutChartType: ChartType = 'doughnut';
   token: string
-
-
+  banderaAgregarPregunta = false
+  banderaPosicionarPregunta = false
+  banderaEliminarPregunta = false
   constructor(
     private _pruebaService: PruebaService, 
     private _activatedRoute: ActivatedRoute,
     private _evaluacionService: EvaluacionService,
     private _localService: LocalService,
     private _storageService: StorageService,
+    private _topicoService: TopicoService,
     private _router: Router) 
   { 
     this.prueba = new Prueba()
@@ -109,9 +111,9 @@ export class DetalleEvaluacionComponent implements OnInit {
     this.id_evaluacion = this._activatedRoute.snapshot.paramMap.get('id');
     this.getPrueba()
     this.getEvaluacionesRealizadas()
-    //this.getGraficoRendimientoPreguntas()
-    //this.getGraficoRendimientoTopicos()
-    //this.getGraficoRendimientoCursos()
+    this.getGraficoRendimientoPreguntas()
+    this.getGraficoRendimientoTopicos()
+    this.getGraficoRendimientoCursos()
   }
 
   getPrueba(){
@@ -124,9 +126,35 @@ export class DetalleEvaluacionComponent implements OnInit {
     })
   }
 
+  getGraficoRendimientoPreguntas(){
+    this._pruebaService.getGraficoRendimientoPreguntas(this.id_evaluacion,this.token).subscribe((data:any)=>{
+      this.barChartLabelsPreguntas= data['labels']
+      this.barChartDataPreguntas= data['data']
+    })
+  }
+
+  getGraficoRendimientoTopicos(){
+    this._pruebaService.getGraficoRendimientoTopicos(this.id_evaluacion,this.token).subscribe((data:any)=>{
+      this.barChartLabelsTopicos= data['labels']
+      this.barChartDataTopicos= data['data']
+    })
+  }
+
+  getGraficoRendimientoCursos(){
+    this._pruebaService.getGraficoRendimientoCursos(this.id_evaluacion,this.token).subscribe((data:any)=>{
+      this.doughnutChartLabels= data['labels']
+      this.doughnutChartData= data['data']
+    })
+  }
+
   getEvaluacionesRealizadas(){
     this._evaluacionService.getEvaluacionesPrueba(this.id_evaluacion,this.token).subscribe((data:Evaluacion[])=>{
       this.evaluaciones = data
+      if (this.evaluaciones.length>0){
+        this.banderaAgregarPregunta = true
+        this.banderaPosicionarPregunta  =true
+        this.banderaEliminarPregunta = true
+      }
       this.collectionSizeEvaluacionesRealizadas = this.evaluaciones.length
     })
   }
@@ -168,6 +196,306 @@ export class DetalleEvaluacionComponent implements OnInit {
       confirmButtonColor: '#2dce89',
       confirmButtonText: 'Ok'
     });
+  }
+
+  asignarTopico(){
+    this._topicoService.getTopicosAsignaturaToken(this.token).subscribe((data:Topico[])=>{
+      var topicosDisponibles = {}
+      topicosDisponibles[''] = "Seleccione un tópico"
+      for(let topico of data){
+        var bandera = false
+        for(let topicoPrueba of this.prueba.topicos){
+          if(topicoPrueba.id == topico.id){
+            bandera = true
+          }
+        }
+        if(!bandera){
+          topicosDisponibles[topico.id] = topico.nombre
+        }
+      }
+      swal.fire({
+        title: 'Tópicos Disponibles',
+        text: 'Seleccione el tópico que desea agregar',
+        input: 'select',
+        inputOptions: topicosDisponibles,
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#2dce89',
+        cancelButtonColor: '#fb6340',
+        inputValidator: function (value) {
+          return new Promise(function (resolve, reject) {
+            if (value === "") {
+              resolve('Debes seleccionar un tópico')
+            } else {
+              resolve()
+            }
+          })
+        }
+      }).then((result)=>{
+        if(result.dismiss==null){
+          this._pruebaService.agregarTopico(result.value,this.id_evaluacion,this.token).subscribe((data)=>{
+            if(data['Response']=="exito"){
+              swal.fire({
+                title: 'Registro exitoso',
+                text: 'Se ha agregado el tópico exitosamente!',
+                type: 'success',
+                confirmButtonColor: '#2dce89',
+              }).then((result)=>{
+                this.getPrueba()
+                this.getEvaluacionesRealizadas()
+                this.getGraficoRendimientoCursos()
+                this.getGraficoRendimientoPreguntas()
+                this.getGraficoRendimientoTopicos()
+              })
+            }
+          })
+        }
+      })
+    })
+  }
+
+  agregarPregunta(){
+    var topicos = {}
+    topicos[''] = "Seleccione un tópico"
+    for( let topico of this.topicos){
+      topicos[topico.id] = topico.nombre
+    }
+    //AGREGAR UNA PREGUNTA TIPO TAREA
+    if (this.prueba.tipo =="TAREA"){
+      swal.fire({
+        title: 'Nueva Pregunta',
+        text: 'Seleccione el tópico al que pertenece la pregunta',
+        input: 'select',
+        inputOptions: topicos,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        showCancelButton: true,
+        confirmButtonColor: '#2dce89',
+        cancelButtonColor: '#fb6340',
+        inputValidator: function (value) {
+          return new Promise(function (resolve, reject) {
+            if (value === "") {
+              resolve('Debes seleccionar un TÓPICO')
+            } else {
+              resolve()
+            }
+          })
+        }
+      }).then((result)=>{
+        if(result.dismiss==null){
+          this._pruebaService.agregarPregunta(this.id_evaluacion,this.token,result.value,'TAREA','').subscribe((data)=>{
+            if(data['Response']=="exito"){
+              swal.fire({
+                title:'Registro exitoso',
+                text:'Se ha agregado la pregunta correctamente.',
+                type:'success',
+                confirmButtonColor: '#2dce89',
+              }).then((result)=>{
+                this.getPrueba()
+                this.getEvaluacionesRealizadas()
+                this.getGraficoRendimientoCursos()
+                this.getGraficoRendimientoPreguntas()
+                this.getGraficoRendimientoTopicos()
+              })
+            }
+          })
+        }
+      })
+    }
+    //AGREGAR UNA PREGUNTA TIPO ENSAYO O TALLER
+    else{
+      swal.mixin({
+        title: 'Nueva Pregunta',
+        confirmButtonText: 'Siguiente',
+        cancelButtonText: 'Cancelar',
+        showCancelButton: true,
+        progressSteps: ['1', '2'],
+        confirmButtonColor: '#2dce89',
+        cancelButtonColor: '#fb6340',
+      }).queue([
+        {
+          title: 'Tópico Pregunta',
+          text: 'Seleccione el tópico al que pertenece la pregunta',
+          input: 'select',
+          inputOptions: topicos,
+          confirmButtonText: 'Aceptar',
+          cancelButtonText: 'Cancelar',
+          showCancelButton: true,
+          confirmButtonColor: '#2dce89',
+          cancelButtonColor: '#fb6340',
+          inputValidator: function (value) {
+            return new Promise(function (resolve, reject) {
+              if (value === "") {
+                resolve('Debes seleccionar un TÓPICO')
+              } else {
+                resolve()
+              }
+            })
+          }
+        },
+        {
+          title: 'Alternativa Pregunta',
+          text: 'Seleccione la alternativa correcta para la pregunta',
+          input: 'select',
+          inputOptions: {
+            '':'Seleccione una alternativa',
+            'A':'A',
+            'B':'B',
+            'C':'C',
+            'D':'D',
+            'E':'E'
+          },
+          confirmButtonText: 'Aceptar',
+          cancelButtonText: 'Cancelar',
+          showCancelButton: true,
+          confirmButtonColor: '#2dce89',
+          cancelButtonColor: '#fb6340',
+          inputValidator: function (value) {
+            return new Promise(function (resolve, reject) {
+              if (value === "") {
+                resolve('Debes seleccionar una alternativa')
+              } else {
+                resolve()
+              }
+            })
+          }
+        }
+      ]).then((result)=>{
+        if(result.dismiss==null){
+          this._pruebaService.agregarPregunta(this.id_evaluacion,this.token,result.value[0],'ENSAYOTALLER',result.value[1]).subscribe((data)=>{
+            if(data['Response']=="exito"){
+              swal.fire({
+                title:'Registro exitoso',
+                text:'Se ha agregado la pregunta correctamente.',
+                type:'success',
+                confirmButtonColor: '#2dce89',
+              }).then((result)=>{
+                this.getPrueba()
+                this.getEvaluacionesRealizadas()
+                this.getGraficoRendimientoCursos()
+                this.getGraficoRendimientoPreguntas()
+                this.getGraficoRendimientoTopicos()
+              })
+            }
+          })
+        }
+      })
+
+    }
+  }
+
+
+  eliminarPregunta(numero:number){
+    swal.fire({
+      title: 'Borrar Pregunta de la Evaluación',
+      text: "Desea borrar esta pregunta de la evaluación?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.dismiss==null) {
+        this._pruebaService.deletePregunta(this.id_evaluacion,numero,this.token).subscribe((data)=>{
+          if(data['Response']=='borrado'){
+            swal.fire({
+              title:'Borrado!',
+              text:'Se ha borrado la pregunta exitosamente.',
+              type:'success',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.getPrueba()
+              this.getEvaluacionesRealizadas()
+              this.getGraficoRendimientoCursos()
+              this.getGraficoRendimientoPreguntas()
+              this.getGraficoRendimientoTopicos()
+            })
+          }
+        })
+      }
+    })
+  }
+  
+  deleteTopicoPrueba(id:string){
+    swal.fire({
+      title: 'Borrar Tópico de Evaluación',
+      text: "Desea borrar este Tópico de la evaluación?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.dismiss==null) {
+        var bandera = false
+        for(let pregunta of this.prueba.preguntas){
+          if(pregunta.topico.id==id){
+            bandera = true
+          }
+        }
+
+        if(!bandera){
+          this._topicoService.deleteTopicoPrueba(id,this.id_evaluacion,this.token).subscribe((data:any)=>{
+            if(data['Response']=='borrado'){
+              swal.fire({
+                title:'Borrado!',
+                text:'Se ha borrado el tópico exitosamente.',
+                type:'success',
+                confirmButtonColor: '#2dce89',
+              }).then((result)=>{
+                this.getPrueba()
+                this.getEvaluacionesRealizadas()
+                this.getGraficoRendimientoCursos()
+                this.getGraficoRendimientoPreguntas()
+                this.getGraficoRendimientoTopicos()
+              })
+            }
+          })
+        }
+
+        else{
+          swal.fire({
+            title:'Error al eliminar Tópico',
+            text:'Actualmente hay una o más pregunta asignadas a este tópico.',
+            type:'error',
+            confirmButtonColor: '#2dce89',
+          }).then((result)=>{
+            this.getPrueba()
+            this.getEvaluacionesRealizadas()
+            this.getGraficoRendimientoCursos()
+            this.getGraficoRendimientoPreguntas()
+            this.getGraficoRendimientoTopicos()
+          })
+        }
+      }
+    })
+  }
+
+  subirPosicionPregunta(numero:number){
+    this._pruebaService.subirPregunta(this.id_evaluacion,numero,this.token).subscribe((data)=>{
+      if(data['Response']=='exito'){
+        this.getPrueba()
+        this.getEvaluacionesRealizadas()
+        this.getGraficoRendimientoCursos()
+        this.getGraficoRendimientoPreguntas()
+        this.getGraficoRendimientoTopicos()
+      }
+    })
+  }
+
+  bajarPosicionPregunta(numero:number){
+    this._pruebaService.bajarPregunta(this.id_evaluacion,numero,this.token).subscribe((data)=>{
+      if(data['Response']=='exito'){
+        this.getPrueba()
+        this.getEvaluacionesRealizadas()
+        this.getGraficoRendimientoCursos()
+        this.getGraficoRendimientoPreguntas()
+        this.getGraficoRendimientoTopicos()
+      }
+    })
   }
 
   get topicos_tabla(): Topico[]{

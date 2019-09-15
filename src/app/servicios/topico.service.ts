@@ -47,4 +47,20 @@ export class TopicoService {
         }
         return this.httpClient.delete(`${this.API_URL}/topicos/${id}`,options).pipe(map(res => res))
     }
+
+    deleteTopicoPrueba(id_topico:string,id_prueba:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+        const options = {
+            headers: headers
+        }
+        return this.httpClient.delete(`${this.API_URL}/topicos/${id_topico}/prueba/${id_prueba}`,options).pipe(map(res => res))
+    }
+
+    getTopicosPrueba(id_prueba:string,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+        const options = {
+            headers: headers
+        }
+        return this.httpClient.get(`${this.API_URL}/topicos/prueba/${id_prueba}`,options).pipe(map(res => res))
+    }
 }

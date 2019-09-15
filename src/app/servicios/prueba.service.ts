@@ -87,4 +87,44 @@ export class PruebaService {
   		}
     	return this.httpClient.delete(`${this.API_URL}/pruebas/${id}`,options).pipe(map(res => res))
 	}
+
+	deletePregunta(id:string,numero:number,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.delete(`${this.API_URL}/pruebas/${id}/pregunta/${numero}`,options).pipe(map(res => res))
+	}
+
+	agregarTopico(id_topico:string,id_prueba:string,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.put(`${this.API_URL}/pruebas/${id_prueba}/topico`,{'id':id_topico},options).pipe(map(res => res))
+	}
+
+	agregarPregunta(id_prueba:string,token:string,id_topico:string,tipo:string,alternativa:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.post(`${this.API_URL}/pruebas/${id_prueba}/pregunta`,{'tipo':tipo,'alternativa':alternativa,'topico':id_topico},options).pipe(map(res => res))
+	}
+
+	subirPregunta(id_prueba:string,numero_pregunta:number,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.post(`${this.API_URL}/pruebas/${id_prueba}/pregunta/subir`,{'numero':numero_pregunta},options).pipe(map(res => res))
+	}
+
+	bajarPregunta(id_prueba:string,numero_pregunta:number,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.post(`${this.API_URL}/pruebas/${id_prueba}/pregunta/bajar`,{'numero':numero_pregunta},options).pipe(map(res => res))
+	}
 }
