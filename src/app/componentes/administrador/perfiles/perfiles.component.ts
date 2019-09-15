@@ -52,6 +52,7 @@ export class PerfilesComponent implements OnInit {
   pageSizeApoderado: number;
   collectionSizeApoderado: number;
   loading:boolean = false
+  loadalumno:boolean = false
   constructor(
     private _alumnoService: AlumnoService,
     private _cursoService: CursoService,
@@ -95,7 +96,6 @@ export class PerfilesComponent implements OnInit {
     this.getAsignaturas()
     this.getAlumnos()
     this.getProfesores()
-    
     this.getAdministradores()
   }
 
@@ -224,6 +224,7 @@ export class PerfilesComponent implements OnInit {
   }
 
   public getAlumnos(){
+    this.loading = true
     this._alumnoService.getAlumno(this.token).subscribe((data:Alumno[])=>{
       this.alumnos = data
       for(let alumno of this.alumnos){
@@ -235,6 +236,7 @@ export class PerfilesComponent implements OnInit {
         }
       }
       this.collectionSizeAlumno = this.alumnos.length
+      this.loading = false
     })
   }
 
