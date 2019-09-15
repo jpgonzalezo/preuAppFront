@@ -20,10 +20,10 @@ import { HeaderProfesorComponent } from './header-profesor/header-profesor.compo
 import { FooterProfesorComponent } from './footer-profesor/footer-profesor.component';
 import { AsignaturaComponent } from './asignatura/asignatura.component';
 import { DetalleEvaluacionComponent } from './detalle-evaluacion/detalle-evaluacion.component';
-import { CalendarioComponent } from './calendario/calendario.component';
+//import { CalendarioComponent } from './calendario/calendario.component';
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
-    { path: 'calendario', component: CalendarioComponent},
+    //{ path: 'calendario', component: CalendarioComponent},
     { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent}
 ];
 
@@ -45,7 +45,7 @@ const routes: Routes = [
         FooterProfesorComponent,
         AsignaturaComponent,
         DetalleEvaluacionComponent,
-        CalendarioComponent
+        //CalendarioComponent
     ],
     exports: [
         RouterModule

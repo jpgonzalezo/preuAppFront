@@ -241,6 +241,7 @@ export class PerfilesComponent implements OnInit {
   }
 
   public getProfesores(){
+    this.loading = true
     this._profesorService.getProfesores(this.token).subscribe((data:Profesor[])=>{
       this.profesores = data
       for(let profesor of this.profesores){
@@ -252,10 +253,12 @@ export class PerfilesComponent implements OnInit {
         }
       }
       this.collectionSizeProfesor = this.profesores.length
+      this.loading = false
     })
   }
 
   public getAdministradores(){
+    this.loading = true
     this._administradorService.getAdministradores(this.token).subscribe((data:Administrador[])=>{
       this.administradores = data
       for(let administrador of this.administradores){
@@ -267,10 +270,12 @@ export class PerfilesComponent implements OnInit {
         }
       }
       this.collectionSizeAdministrador = this.administradores.length
+      this.loading = false
     })
   }
 
   public getApoderados(){
+    this.loading  = true
     this._apoderadoService.getApoderados(this.token).subscribe((data:Apoderado[])=>{
       this.apoderados = data
       for(let apoderado of this.apoderados){
@@ -282,23 +287,30 @@ export class PerfilesComponent implements OnInit {
         }
       }
       this.collectionSizeApoderado = this.apoderados.length
+      this.loading = false
     })
   }
   public getColegios(){
+    this.loading = true
     this._colegioService.getColegios(this.token).subscribe((colegios: Array<Colegio>)=>{
       this.colegios = colegios
+      this.loading = false
     })
   }
 
   public getCursos(){
+    this.loading = true
     this._cursoService.getCursos(this.token).subscribe((cursos: Array<Curso>)=>{
       this.cursos = cursos
+      this.loading = false
     })
   }
 
   public getAsignaturas(){
+    this.loading = true
     this._asignaturaService.getAsignaturas(this.token).subscribe((asignaturas: Asignatura[])=>{
       this.asignaturas = asignaturas
+      this.loading = false
     })
   }
 
