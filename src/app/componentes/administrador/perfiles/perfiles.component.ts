@@ -53,6 +53,9 @@ export class PerfilesComponent implements OnInit {
   collectionSizeApoderado: number;
   loading:boolean = false
   loadalumno:boolean = false
+  loadapoderado:boolean = false
+  loadprofesor:boolean = false
+  loadadministrador:boolean = false
   constructor(
     private _alumnoService: AlumnoService,
     private _cursoService: CursoService,
@@ -224,7 +227,7 @@ export class PerfilesComponent implements OnInit {
   }
 
   public getAlumnos(){
-    this.loading = true
+    this.loadalumno = true
     this._alumnoService.getAlumno(this.token).subscribe((data:Alumno[])=>{
       this.alumnos = data
       for(let alumno of this.alumnos){
@@ -236,12 +239,12 @@ export class PerfilesComponent implements OnInit {
         }
       }
       this.collectionSizeAlumno = this.alumnos.length
-      this.loading = false
+      this.loadalumno = false
     })
   }
 
   public getProfesores(){
-    //this.loading = true
+    this.loadprofesor = true
     this._profesorService.getProfesores(this.token).subscribe((data:Profesor[])=>{
       this.profesores = data
       for(let profesor of this.profesores){
@@ -253,12 +256,12 @@ export class PerfilesComponent implements OnInit {
         }
       }
       this.collectionSizeProfesor = this.profesores.length
-      //this.loading = false
+      this.loadprofesor = false
     })
   }
 
   public getAdministradores(){
-    //this.loading = true
+    this.loadadministrador = true
     this._administradorService.getAdministradores(this.token).subscribe((data:Administrador[])=>{
       this.administradores = data
       for(let administrador of this.administradores){
@@ -270,12 +273,12 @@ export class PerfilesComponent implements OnInit {
         }
       }
       this.collectionSizeAdministrador = this.administradores.length
-      //this.loading = false
+      this.loadadministrador = false
     })
   }
 
   public getApoderados(){
-    //this.loading  = true
+    this.loadapoderado  = true
     this._apoderadoService.getApoderados(this.token).subscribe((data:Apoderado[])=>{
       this.apoderados = data
       for(let apoderado of this.apoderados){
@@ -287,7 +290,7 @@ export class PerfilesComponent implements OnInit {
         }
       }
       this.collectionSizeApoderado = this.apoderados.length
-      //this.loading = false
+      this.loadapoderado = false
     })
   }
   public getColegios(){
