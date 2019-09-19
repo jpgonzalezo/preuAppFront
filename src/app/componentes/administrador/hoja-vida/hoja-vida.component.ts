@@ -1,20 +1,58 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { AlumnoService } from '../../../servicios/alumno.service';
-import { JustificacionService } from 'src/app/servicios/justificacion.service';
-import { ObservacionService } from '../../../servicios/observacion.service';
-import { AlertaService } from 'src/app/servicios/alerta.service';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { StorageService } from 'src/app/servicios/storage.service';
-import { Justificacion } from 'src/app/modelos/justificacion.model';
-import { Alerta } from 'src/app/modelos/alerta.model';
-import swal from'sweetalert2';
-import { Config } from 'src/app/config';
-import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
-import { Label,MultiDataSet } from 'ng2-charts';
-import { ChartOptions} from 'chart.js';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import {
+  AlumnoService
+} from '../../../servicios/alumno.service';
+import {
+  JustificacionService
+} from 'src/app/servicios/justificacion.service';
+import {
+  ObservacionService
+} from '../../../servicios/observacion.service';
+import {
+  AlertaService
+} from 'src/app/servicios/alerta.service';
+import {
+  Router
+} from '@angular/router';
+import {
+  ActivatedRoute
+} from '@angular/router';
+import {
+  StorageService
+} from 'src/app/servicios/storage.service';
+import {
+  Justificacion
+} from 'src/app/modelos/justificacion.model';
+import {
+  Alerta
+} from 'src/app/modelos/alerta.model';
+import swal from 'sweetalert2';
+import {
+  Config
+} from 'src/app/config';
+import {
+  ChartDataSets,
+  ChartType,
+  RadialChartOptions
+} from 'chart.js';
+import {
+  Label,
+  MultiDataSet
+} from 'ng2-charts';
+import {
+  ChartOptions
+} from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import { LocalService } from 'src/app/servicios/local.service';
+import {
+  LocalService
+} from 'src/app/servicios/local.service';
 @Component({
   selector: 'app-hoja-vida',
   templateUrl: './hoja-vida.component.html'
@@ -25,75 +63,90 @@ export class HojaVidaComponent implements OnInit {
   pagePsicologo: number;
   pageJustificacion: number;
   pageAlerta: number;
-  pageSizeAlerta:number;
+  pageSizeAlerta: number;
   pageSizeJustificacion: number;
   pageSizeObservacionAdministrador: number;
   collectionSizeObservacionAdministrador: number;
-  collectionSizeAlerta:number;
+  collectionSizeAlerta: number;
   pageSizeObservacionProfesor: number;
   collectionSizeJustificacion: number;
   collectionSizeObservacionProfesor: number;
   pageSizeObservacionPsicologo: number;
   collectionSizeObservacionPsicologo: number;
-  observaciones_admin:any
-  observaciones_profe:any
-  observaciones_psico:any
-  hoja_vida:any;
-  id_hoja_vida:string;
+  observaciones_admin: any
+  observaciones_profe: any
+  observaciones_psico: any
+  hoja_vida: any;
+  id_hoja_vida: string;
   justificaciones: Justificacion[];
   alertas: Alerta[];
-  loading:boolean = false
+  loading: boolean = false
 
 
-    // Radar
-    public radarChartOptions: RadialChartOptions = {
-      responsive: true,
-    };
-    public radarChartLabels: Label[] = [];
-  
-    public radarChartData: ChartDataSets[] = [{ data: [], label: '' }];
-    public radarChartType: ChartType = 'radar';
+  // Radar
+  public radarChartOptions: RadialChartOptions = {
+    responsive: true,
+  };
+  public radarChartLabels: Label[] = [];
+
+  public radarChartData: ChartDataSets[] = [{
+    data: [],
+    label: ''
+  }];
+  public radarChartType: ChartType = 'radar';
 
 
 
-    public barChartOptionsAsignatura: ChartOptions = {
-      responsive: true,
-      // We use these empty structures as placeholders for dynamic theming.
-      scales: { xAxes: [{}], yAxes: [{}] },
-      plugins: {
-        datalabels: {
-          anchor: 'end',
-          align: 'end',
-        }
+  public barChartOptionsAsignatura: ChartOptions = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      xAxes: [{}],
+      yAxes: [{}]
+    },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
       }
-    };
-    public barChartLabelsAsignatura: Label[] = [];
-    public barChartTypeAsignatura: ChartType = 'bar';
-    public barChartLegendAsignatura = true;
-    public barChartPluginsAsignatura = [pluginDataLabels];
-  
-    public barChartDataAsignatura: ChartDataSets[] = [{ data: [], label: '' }];
+    }
+  };
+  public barChartLabelsAsignatura: Label[] = [];
+  public barChartTypeAsignatura: ChartType = 'bar';
+  public barChartLegendAsignatura = true;
+  public barChartPluginsAsignatura = [pluginDataLabels];
 
-    public barChartOptionsAnual: ChartOptions = {
-      responsive: true,
-      // We use these empty structures as placeholders for dynamic theming.
-      scales: { xAxes: [{}], yAxes: [{}] },
-      plugins: {
-        datalabels: {
-          anchor: 'end',
-          align: 'end',
-        }
+  public barChartDataAsignatura: ChartDataSets[] = [{
+    data: [],
+    label: ''
+  }];
+
+  public barChartOptionsAnual: ChartOptions = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      xAxes: [{}],
+      yAxes: [{}]
+    },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
       }
-    };
-    public barChartLabelsAnual: Label[] = [];
-    public barChartTypeAnual: ChartType = 'bar';
-    public barChartLegendAnual = true;
-    public barChartPluginsAnual = [pluginDataLabels];
-  
-    public barChartDataAnual: ChartDataSets[] = [{ data: [], label: '' }];
+    }
+  };
+  public barChartLabelsAnual: Label[] = [];
+  public barChartTypeAnual: ChartType = 'bar';
+  public barChartLegendAnual = true;
+  public barChartPluginsAnual = [pluginDataLabels];
 
+  public barChartDataAnual: ChartDataSets[] = [{
+    data: [],
+    label: ''
+  }];
+  contador = 0
   token: string
-  constructor(private _alumnoService:AlumnoService, 
+  constructor(private _alumnoService: AlumnoService,
     private _observacionService: ObservacionService,
     private router: Router,
     private _activatedRoute: ActivatedRoute,
@@ -101,8 +154,8 @@ export class HojaVidaComponent implements OnInit {
     private _localService: LocalService,
     private _justificacionService: JustificacionService,
     private _alertaService: AlertaService
-    ) {
-    this.hoja_vida=[]
+  ) {
+    this.hoja_vida = []
     this.observaciones_admin = []
     this.observaciones_profe = []
     this.observaciones_psico = []
@@ -121,13 +174,12 @@ export class HojaVidaComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this._storageService.getCurrentToken()==null){
-      this.token = this._localService.getToken() 
-    }
-    else{
+    if (this._storageService.getCurrentToken() == null) {
+      this.token = this._localService.getToken()
+    } else {
       this.token = this._storageService.getCurrentToken()
     }
-    this.id_hoja_vida=this._activatedRoute.snapshot.paramMap.get('id')
+    this.id_hoja_vida = this._activatedRoute.snapshot.paramMap.get('id')
     this.getHojaVida(this.id_hoja_vida);
     this.getObservacionesAdministrador()
     this.getObservacionesProfesor()
@@ -138,105 +190,128 @@ export class HojaVidaComponent implements OnInit {
     this.getAlumnoGraficoAsistencia()
   }
 
-  public getAlumnoGraficoRendimiento(){
-    this._alumnoService.getAlumnoGraficoRendimiento(this.id_hoja_vida,this.token).subscribe((data:any)=>{
+  public getAlumnoGraficoRendimiento() {
+    this._alumnoService.getAlumnoGraficoRendimiento(this.id_hoja_vida, this.token).subscribe((data: any) => {
       this.radarChartLabels = data['labels']
       this.radarChartData = data['data']
+      this.contador = this.contador + 1
     })
   }
 
-  public getAlumnoGraficoAsistencia(){
-    this._alumnoService.getAlumnoGraficoAsistencia(this.id_hoja_vida,this.token).subscribe((data:any)=>{
+  public getAlumnoGraficoAsistencia() {
+    this._alumnoService.getAlumnoGraficoAsistencia(this.id_hoja_vida, this.token).subscribe((data: any) => {
       this.barChartLabelsAsignatura = data['grafico_asignatura'].labels
       this.barChartDataAsignatura = data['grafico_asignatura'].data
       this.barChartLabelsAnual = data['grafico_anual'].labels
       this.barChartDataAnual = data['grafico_anual'].data
+      this.contador = this.contador + 1
     })
   }
 
-  public getHojaVida(id:string){
-  	this._alumnoService.getHojaVida(id,this.token).subscribe((data: Array<any>) => {
+  public getHojaVida(id: string) {
+    this._alumnoService.getHojaVida(id, this.token).subscribe((data: Array < any > ) => {
       this.hoja_vida = data;
-      this.hoja_vida.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+this.hoja_vida.imagen
+      this.hoja_vida.imagen = Config.API_SERVER_URL + "/alumno_imagen/" + this.hoja_vida.imagen
+      this.contador = this.contador + 1
     });
   }
 
-  public getObservacionesAdministrador(){
-    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_ADMINISTRADOR',this.token).subscribe(
-      (data:any)=>{
+  public getObservacionesAdministrador() {
+    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_ADMINISTRADOR', this.token).subscribe(
+      (data: any) => {
         this.observaciones_admin = data
         this.collectionSizeObservacionAdministrador = this.observaciones_admin.length
+        this.contador = this.contador + 1
       })
   }
 
-  public getObservacionesProfesor(){
-    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PROFESOR',this.token).subscribe(
-      (data:any)=>{
+  public getObservacionesProfesor() {
+    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PROFESOR', this.token).subscribe(
+      (data: any) => {
         this.observaciones_profe = data
         this.collectionSizeObservacionProfesor = this.observaciones_profe.length
+        this.contador = this.contador + 1
       }
     )
   }
 
-  public getObservacionesPsicologo(){
-    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PSICOLOGO',this.token).subscribe(
-      (data:any)=>{
+  public getObservacionesPsicologo() {
+    this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PSICOLOGO', this.token).subscribe(
+      (data: any) => {
         this.observaciones_psico = data
         this.collectionSizeObservacionPsicologo = this.observaciones_psico.length
+        this.contador = this.contador + 1
       }
     )
   }
 
-  public getJustificaciones(){
-    this._justificacionService.getJustificacionesAlumno(this.id_hoja_vida,this.token).subscribe((data: Justificacion[])=>{
+  public getJustificaciones() {
+    this._justificacionService.getJustificacionesAlumno(this.id_hoja_vida, this.token).subscribe((data: Justificacion[]) => {
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
+      this.contador = this.contador + 1
     })
   }
 
-  public getAlertasAlumno(){
-    this._alertaService.getAlertasAlumno(this.id_hoja_vida,this.token).subscribe((data:Alerta[])=>{
+  public getAlertasAlumno() {
+    this._alertaService.getAlertasAlumno(this.id_hoja_vida, this.token).subscribe((data: Alerta[]) => {
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
+      this.contador = this.contador + 1
     })
   }
 
 
   get observaciones_administrador_tabla(): any[] {
     return this.observaciones_admin
-      .map((observacion, i) => ({id: i + 1, ...observacion}))
+      .map((observacion, i) => ({
+        id: i + 1,
+        ...observacion
+      }))
       .slice((this.pageAdministrador - 1) * this.pageSizeObservacionAdministrador, (this.pageAdministrador - 1) * this.pageSizeObservacionAdministrador + this.pageSizeObservacionAdministrador);
   }
 
   get justificaciones_tabla(): Justificacion[] {
     return this.justificaciones
-      .map((justificacion, i) => ({id: i + 1, ...justificacion}))
+      .map((justificacion, i) => ({
+        id: i + 1,
+        ...justificacion
+      }))
       .slice((this.pageJustificacion - 1) * this.pageSizeJustificacion, (this.pageJustificacion - 1) * this.pageSizeJustificacion + this.pageSizeJustificacion);
   }
 
   get alertas_tabla(): Alerta[] {
     return this.alertas
-      .map((alerta, i) => ({id: i + 1, ...alerta}))
+      .map((alerta, i) => ({
+        id: i + 1,
+        ...alerta
+      }))
       .slice((this.pageAlerta - 1) * this.pageSizeAlerta, (this.pageAlerta - 1) * this.pageSizeAlerta + this.pageSizeAlerta);
   }
 
   get observaciones_psicologo_tabla(): any[] {
     return this.observaciones_psico
-      .map((observacion, i) => ({id: i + 1, ...observacion}))
+      .map((observacion, i) => ({
+        id: i + 1,
+        ...observacion
+      }))
       .slice((this.pagePsicologo - 1) * this.pageSizeObservacionPsicologo, (this.pagePsicologo - 1) * this.pageSizeObservacionPsicologo + this.pageSizeObservacionPsicologo);
   }
 
   get observaciones_profesor_tabla(): any[] {
     return this.observaciones_profe
-      .map((observacion, i) => ({id: i + 1, ...observacion}))
+      .map((observacion, i) => ({
+        id: i + 1,
+        ...observacion
+      }))
       .slice((this.pageProfesor - 1) * this.pageSizeObservacionProfesor, (this.pageProfesor - 1) * this.pageSizeObservacionProfesor + this.pageSizeObservacionProfesor);
   }
 
-  public cancelar(){
+  public cancelar() {
     this.router.navigateByUrl('/admin/perfiles');
   }
 
-  public cambiarFoto(){
+  public cambiarFoto() {
     swal.fire({
       title: 'Foto de Perfil',
       text: "Desea cambiar la foto de perfil?",
@@ -247,7 +322,7 @@ export class HojaVidaComponent implements OnInit {
       confirmButtonText: 'Si',
       cancelButtonText: 'No'
     }).then((result2) => {
-      if (result2.dismiss==null) {
+      if (result2.dismiss == null) {
         swal.fire({
           title: 'Foto de perfil',
           text: 'Seleccione una foto de perfil',
@@ -256,21 +331,21 @@ export class HojaVidaComponent implements OnInit {
             'accept': 'image/*'
           },
           confirmButtonColor: '#2dce89',
-        }).then((result3)=>{
-          if(result3.dismiss==null){
+        }).then((result3) => {
+          if (result3.dismiss == null) {
             this.loading = true
             var file = result3.value
             var formData = new FormData()
-            formData.append('imagen',file)
-            this._alumnoService.uploadImage(formData, this.id_hoja_vida,this.token).subscribe((data:any)=>{
-              if(data['Response']=="exito"){
+            formData.append('imagen', file)
+            this._alumnoService.uploadImage(formData, this.id_hoja_vida, this.token).subscribe((data: any) => {
+              if (data['Response'] == "exito") {
                 this.loading = false
                 swal.fire({
                   title: 'Registro exitoso',
                   text: 'Se ha guardado al alumno exitosamente!',
                   type: 'success',
                   confirmButtonColor: '#2dce89',
-                }).then((result)=>{
+                }).then((result) => {
                   this.cancelar()
                 })
               }
@@ -282,15 +357,14 @@ export class HojaVidaComponent implements OnInit {
     })
   }
 
-  public modalNuevaObservacion(){
+  public modalNuevaObservacion() {
     swal.mixin({
       input: 'text',
       confirmButtonText: 'Siguiente',
       cancelButtonColor: '#d33',
       showCancelButton: true,
       progressSteps: ['1', '2', '3']
-    }).queue([
-      {
+    }).queue([{
         title: 'Tipo de observación',
         input: 'select',
         inputOptions: {
@@ -312,35 +386,33 @@ export class HojaVidaComponent implements OnInit {
       }
     ]).then((result) => {
       if (result.value) {
-        if(result.value[0]=="" || result.value[1]=="" || result.value[2]=="" ){
+        if (result.value[0] == "" || result.value[1] == "" || result.value[2] == "") {
           swal.fire({
             title: 'Error',
             type: 'error',
-            text : 'Debe completar todos los campos para realizar una observación'
-          }).then((result)=>{
-            if(result){
+            text: 'Debe completar todos los campos para realizar una observación'
+          }).then((result) => {
+            if (result) {
               this.modalNuevaObservacion();
             }
           })
-        }
-        else{
+        } else {
           this._storageService.getCurrentUser().nombres
-          var usuario = this._storageService.getCurrentUser().nombres+" "+this._storageService.getCurrentUser().apellido_paterno+" "+this._storageService.getCurrentUser().apellido_materno
-          this._observacionService.postObservacion(
-            { 'alumno': this.id_hoja_vida,
-              'tipo':result.value[0],
-              'titulo':result.value[1],
-              'contenido':result.value[2],
-              'nombre_personal': usuario
-            },this.token
-          ).subscribe((data:any)=>{
-            if(data['Response']=='exito'){
+          var usuario = this._storageService.getCurrentUser().nombres + " " + this._storageService.getCurrentUser().apellido_paterno + " " + this._storageService.getCurrentUser().apellido_materno
+          this._observacionService.postObservacion({
+            'alumno': this.id_hoja_vida,
+            'tipo': result.value[0],
+            'titulo': result.value[1],
+            'contenido': result.value[2],
+            'nombre_personal': usuario
+          }, this.token).subscribe((data: any) => {
+            if (data['Response'] == 'exito') {
               swal.fire({
                 title: 'Registro exitoso',
                 text: 'Se ha registrado una nueva observación exitosamente!',
                 type: 'success'
-              }).then((result)=>{
-                if(result){
+              }).then((result) => {
+                if (result) {
                   this.getObservacionesAdministrador();
                   this.getObservacionesProfesor();
                   this.getObservacionesPsicologo();
@@ -353,6 +425,3 @@ export class HojaVidaComponent implements OnInit {
     })
   }
 }
-
-
-

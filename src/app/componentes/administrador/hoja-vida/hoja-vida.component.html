@@ -1,5 +1,5 @@
 <div class="my-container">
-  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true,
+  <ngx-loading [show]="contador!=8" [config]="{ fullScreenBackdrop: true,
       backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
       primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
   </ngx-loading>
@@ -49,6 +49,7 @@
             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{hoja_vida.curso}}</div>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{hoja_vida.email}} -
               {{hoja_vida.telefono}}</div>
+              {{contador}}
             <div><i class="ni education_hat mr-2"></i>{{hoja_vida.calegio}}</div>
             <div><i class="ni education_hat mr-2"></i>{{hoja_vida.direccion}}</div>
           </div>
