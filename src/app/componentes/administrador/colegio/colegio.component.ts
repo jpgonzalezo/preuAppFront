@@ -14,6 +14,7 @@ export class ColegioComponent implements OnInit {
   collectionSizeColegio: number;
   colegios:Colegio[];
   token: string
+  load=false
   constructor(private _colegioService: ColegioService,
     private _localService: LocalService,
     private _storageService: StorageService
@@ -35,9 +36,11 @@ export class ColegioComponent implements OnInit {
   }
 
   getColegios(){
+    this.load=true
     this._colegioService.getColegios(this.token).subscribe((data:Colegio[])=>{
       this.colegios = data;
       this.collectionSizeColegio = this.colegios.length
+      this.load=false
     })
   }
 

@@ -1,3 +1,9 @@
+<div class="my-container">
+  <ngx-loading [show]="load" [config]="{ fullScreenBackdrop: true,
+            backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+            primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
 <app-header></app-header>
 <main>
   <section class="section ">
@@ -25,7 +31,6 @@
                         <th scope="col">Calle</th>
                         <th scope="col">Número</th>
                         <th scope="col">Comuna</th>
-                        <th scope="col">Estudiantes</th>
                         <th scope="col">Acción</th>
                       </tr>
                     </thead>
@@ -35,27 +40,28 @@
                         <td>{{ colegio.direccion.calle }}</td>
                         <td>{{ colegio.direccion.numero }}</td>
                         <td>{{ colegio.direccion.comuna }}</td>
-                        <td>{{ colegio.cantidad_estudiantes }}</td>
                         <td>
-                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteColegio(colegio.id)"><i class="fas fa-trash-alt"></i>
+                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteColegio(colegio.id)"><i
+                              class="fas fa-trash-alt"></i>
                           </button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                   <div class="d-flex justify-content-between p-2">
-                    <ngb-pagination [collectionSize]="collectionSizeColegio" [(page)]="pageColegio" [pageSize]="pageSizeColegio">
+                    <ngb-pagination [collectionSize]="collectionSizeColegio" [(page)]="pageColegio"
+                      [pageSize]="pageSizeColegio">
                     </ngb-pagination>
-                    
+
                     <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeColegio">
-                        <option [ngValue]="10">10 colegios por página</option>
-                        <option [ngValue]="20">20 colegios por página</option>
-                        <option [ngValue]="30">30 colegios por página</option>
+                      <option [ngValue]="10">10 colegios por página</option>
+                      <option [ngValue]="20">20 colegios por página</option>
+                      <option [ngValue]="30">30 colegios por página</option>
                     </select>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-outline-info"
-                      (click)="generarNuevoColegio()"> Nuevo Colegio </button>
+                    <button type="button" class="btn btn-outline-info" (click)="generarNuevoColegio()"> Nuevo Colegio
+                    </button>
                     <br>
                   </div>
                 </div>
