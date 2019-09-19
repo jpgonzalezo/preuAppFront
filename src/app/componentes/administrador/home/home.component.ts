@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin];
   calendarWeekends = true;
   calendarEvents: Evento[];
+  load = false
   
   constructor(private _cursoService: CursoService,
               private _storageService: StorageService,
@@ -145,13 +146,14 @@ export class HomeComponent implements OnInit {
   }
 
   getEventos(){
+    this.load = true
     this._eventoService.getEventos(this.token).subscribe((data: Evento[])=>{
       this.calendarEvents = data
+      this.load = false
     })
   }
 
   deleteEvento(id:string){
-    console.log(id)
     swal.fire({
       title: 'Desea eliminar este evento?',
       text: "Estos cambios son irreversibles!",

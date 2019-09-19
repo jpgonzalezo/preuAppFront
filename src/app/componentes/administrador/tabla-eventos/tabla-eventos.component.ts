@@ -18,6 +18,7 @@ export class TablaEventosComponent implements OnInit {
   pageSolicitud: number;
   pageSizeSolicitud: number;
   collectionSizeSolicitud: number;
+  load=false
   constructor(
     public _eventoService: EventoService,
     private _localService: LocalService,
@@ -44,9 +45,11 @@ export class TablaEventosComponent implements OnInit {
   }
 
   getEventos(){
+    this.load = true
     this._eventoService.getEventos(this.token).subscribe((data:Evento[])=>{
       this.eventos = data
       this.collectionSizeEvento = this.eventos.length
+      this.load=false
     })
   }
 
