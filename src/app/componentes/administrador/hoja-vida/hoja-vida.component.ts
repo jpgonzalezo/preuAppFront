@@ -194,7 +194,9 @@ export class HojaVidaComponent implements OnInit {
     this._alumnoService.getAlumnoGraficoRendimiento(this.id_hoja_vida, this.token).subscribe((data: any) => {
       this.radarChartLabels = data['labels']
       this.radarChartData = data['data']
-      this.contador = this.contador + 1
+      if(this.contador < 8){
+        this.contador = this.contador + 1
+      }
     })
   }
 
@@ -204,7 +206,9 @@ export class HojaVidaComponent implements OnInit {
       this.barChartDataAsignatura = data['grafico_asignatura'].data
       this.barChartLabelsAnual = data['grafico_anual'].labels
       this.barChartDataAnual = data['grafico_anual'].data
-      this.contador = this.contador + 1
+      if(this.contador < 8){
+        this.contador = this.contador + 1
+      }
     })
   }
 
@@ -212,7 +216,9 @@ export class HojaVidaComponent implements OnInit {
     this._alumnoService.getHojaVida(id, this.token).subscribe((data: Array < any > ) => {
       this.hoja_vida = data;
       this.hoja_vida.imagen = Config.API_SERVER_URL + "/alumno_imagen/" + this.hoja_vida.imagen
-      this.contador = this.contador + 1
+      if(this.contador < 8){
+        this.contador = this.contador + 1
+      }
     });
   }
 
@@ -221,7 +227,9 @@ export class HojaVidaComponent implements OnInit {
       (data: any) => {
         this.observaciones_admin = data
         this.collectionSizeObservacionAdministrador = this.observaciones_admin.length
-        this.contador = this.contador + 1
+        if(this.contador < 8){
+          this.contador = this.contador + 1
+        }
       })
   }
 
@@ -230,7 +238,9 @@ export class HojaVidaComponent implements OnInit {
       (data: any) => {
         this.observaciones_profe = data
         this.collectionSizeObservacionProfesor = this.observaciones_profe.length
-        this.contador = this.contador + 1
+        if(this.contador < 8){
+          this.contador = this.contador + 1
+        }
       }
     )
   }
@@ -240,7 +250,9 @@ export class HojaVidaComponent implements OnInit {
       (data: any) => {
         this.observaciones_psico = data
         this.collectionSizeObservacionPsicologo = this.observaciones_psico.length
-        this.contador = this.contador + 1
+        if(this.contador < 8){
+          this.contador = this.contador + 1
+        }
       }
     )
   }
@@ -249,7 +261,9 @@ export class HojaVidaComponent implements OnInit {
     this._justificacionService.getJustificacionesAlumno(this.id_hoja_vida, this.token).subscribe((data: Justificacion[]) => {
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
-      this.contador = this.contador + 1
+      if(this.contador < 8){
+        this.contador = this.contador + 1
+      }
     })
   }
 
@@ -257,7 +271,9 @@ export class HojaVidaComponent implements OnInit {
     this._alertaService.getAlertasAlumno(this.id_hoja_vida, this.token).subscribe((data: Alerta[]) => {
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
-      this.contador = this.contador + 1
+      if(this.contador < 8){
+        this.contador = this.contador + 1
+      }
     })
   }
 

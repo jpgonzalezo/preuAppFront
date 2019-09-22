@@ -1,3 +1,9 @@
+<div class="my-container">
+  <ngx-loading [show]="contador!=2 || loading" [config]="{ fullScreenBackdrop: true,
+                backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+                primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
 <app-header></app-header>
 <main class="profile-page">
   <section class="section-profile-cover section-shaped my-0">
@@ -30,7 +36,7 @@
                 </ul>
 
                 <div class="tab-content" id="myTabContent">
-                  
+
                   <div class="tab-pane fade show active" id="presente" role="tabpanel" aria-labelledby="presente-tab">
                     <div class="mb-8 ">
                       <br>
@@ -106,11 +112,11 @@
                               <td>{{ alumno.email }}</td>
                               <td>{{ alumno.telefono }}</td>
                               <td>
-                                  <div class="row text-center">
-                                    <button type="button" class="btn btn-success btn-sm"
-                                      (click)="generarJustificacion(alumno.id)"><i class="fas fa-plus"></i></button>
-                                  </div>
-                                </td>
+                                <div class="row text-center">
+                                  <button type="button" class="btn btn-success btn-sm"
+                                    (click)="generarJustificacion(alumno.id)"><i class="fas fa-plus"></i></button>
+                                </div>
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -147,7 +153,8 @@
                           </thead>
                           <tbody>
                             <tr *ngFor="let justificacion of justificaciones_tabla">
-                              <td>{{justificacion.alumno.nombres}} {{justificacion.alumno.apellido_paterno}} {{justificacion.alumno.apellido_materno}}</td>
+                              <td>{{justificacion.alumno.nombres}} {{justificacion.alumno.apellido_paterno}}
+                                {{justificacion.alumno.apellido_materno}}</td>
                               <td>{{justificacion.asistencia.curso.nombre}}</td>
                               <td>{{justificacion.asistencia.asignatura.nombre}}</td>
                               <td>{{justificacion.fecha}}</td>

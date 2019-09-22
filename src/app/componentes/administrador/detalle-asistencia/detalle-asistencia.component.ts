@@ -32,6 +32,8 @@ export class DetalleAsistenciaComponent implements OnInit {
   alumnosPresentes: Alumno[]
   alumnosAusentes: Alumno[]
   token: string
+  contador = 0
+  loading = false
   constructor(private _router:Router,
     private _asistenciaService: AsistenciaService, 
     private _activatedRoute: ActivatedRoute,
@@ -80,6 +82,9 @@ export class DetalleAsistenciaComponent implements OnInit {
       this.alumnosPresentes = this.asistencia.alumnos_presentes
       this.alumnosAusentes = this.asistencia.alumnos_ausentes
       this.asignatura = this.asistencia.asignatura;
+      if(this.contador<2){
+        this.contador=this.contador+1
+      }
     })
   }
 
@@ -87,6 +92,9 @@ export class DetalleAsistenciaComponent implements OnInit {
     this._asistenciaService.getJustificacionesAsistencia(this.id_asistencia,this.token).subscribe((data:Justificacion[])=>{
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
+      if(this.contador<2){
+        this.contador=this.contador+1
+      }
     })
   }
 
@@ -106,8 +114,10 @@ export class DetalleAsistenciaComponent implements OnInit {
       showCancelButton: true
     }).then((result)=>{
       if(result.dismiss == null){
+        this.loading = true
         this._asistenciaService.postJustificacion({'id_alumno':id_alumno,'id_asistencia':this.id_asistencia,'causa':result.value},this.token).subscribe((data:any)=>{
           if(data['Response']=="exito"){
+            this.loading = false
             Swal.fire({
               type: 'success',
               title: 'Registro exitoso',
@@ -118,6 +128,7 @@ export class DetalleAsistenciaComponent implements OnInit {
               this.getJustificaciones()
             })
           }
+          this.loading = false
         })
       }
     })

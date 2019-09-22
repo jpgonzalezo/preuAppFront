@@ -15,6 +15,7 @@ export class CursoComponent implements OnInit {
   pageSizeCurso: number;
   collectionSizeCurso: number;
   token: string
+  load = false
   constructor(private _cursoService: CursoService,
     private _localService: LocalService,
     private _storageService: StorageService,
@@ -74,9 +75,11 @@ export class CursoComponent implements OnInit {
   }
 
   getCursos(){
+    this.load=true
     this._cursoService.getCursos(this.token).subscribe((data:Curso[])=>{
       this.cursos = data
       this.collectionSizeCurso = this.cursos.length
+      this.load=false
     })
   }
 

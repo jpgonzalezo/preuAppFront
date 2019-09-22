@@ -47,7 +47,7 @@ export class DetalleAsignaturaComponent implements OnInit {
   pageTopico: number;
   pageSizeTopico: number;
   collectionSizeTopico: number;
-
+  contador = 0
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -166,12 +166,18 @@ export class DetalleAsignaturaComponent implements OnInit {
     this._asignaturaService.getGraficoAsistenciaAsignatura(this.id_asignatura,this.token).subscribe((data:any)=>{
       this.barChartDataAsistencia = data['data']
       this.barChartLabelsAsistencia = data['labels']
+      if(this.contador<8){
+        this.contador = this.contador +1 
+      }
     })
   }
   getGraficoRendimientoEvaluacionesAsignatura(){
     this._asignaturaService.getGraficoRendimientoEvaluacionesAsignatura(this.id_asignatura,this.token).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
+      if(this.contador<8){
+        this.contador = this.contador +1 
+      }
     })
   }
   getProfesoresAsignatura(){
@@ -181,20 +187,28 @@ export class DetalleAsignaturaComponent implements OnInit {
       for(let alumno of this.profesores){
         alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
+      if(this.contador<8){
+        this.contador = this.contador +1 
+      }
     })   
   }
 
   getAsignatura(){
     this._asignaturaService.getAsignatura(this.id_asignatura,this.token).subscribe((data:Asignatura)=>{
       this.asignatura = data;
+      if(this.contador<8){
+        this.contador = this.contador +1 
+      }
     })
   }
 
   getAsistenciasAsignatura(){
     this._asistenciaService.getAsistenciasAsignatura(this.id_asignatura,this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
-      console.log(data)
       this.collectionSizeAsistencia = this.asistencias.length
+      if(this.contador<8){
+        this.contador = this.contador +1 
+      }
     })
   }
 
@@ -202,6 +216,9 @@ export class DetalleAsignaturaComponent implements OnInit {
     this._pruebaService.getPruebasAsignaturas(this.id_asignatura,this.token).subscribe((data:Prueba[])=>{
       this.pruebas = data
       this.collectionSizeEvaluacion = this.pruebas.length
+      if(this.contador<8){
+        this.contador = this.contador +1 
+      }
     })
   }
 
@@ -209,6 +226,9 @@ export class DetalleAsignaturaComponent implements OnInit {
     this._alertaService.getAlertasAsignatura(this.id_asignatura,this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
+      if(this.contador<8){
+        this.contador = this.contador +1 
+      }
     })
   }
 
@@ -216,6 +236,9 @@ export class DetalleAsignaturaComponent implements OnInit {
     this._topicoService.getTopicosAsignatura(this.id_asignatura,this.token).subscribe((data:Topico[])=>{
       this.topicos = data;
       this.collectionSizeTopico = this.topicos.length
+      if(this.contador<8){
+        this.contador = this.contador +1 
+      }
     })
   }
 

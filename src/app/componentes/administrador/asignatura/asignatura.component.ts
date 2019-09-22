@@ -15,6 +15,7 @@ export class AsignaturaComponent implements OnInit {
   pageSizeAsignatura: number;
   collectionSizeAsignatura: number;
   token: string
+  load=false
   constructor(private _asignaturaService: AsignaturaService,
     private _localService: LocalService,
     private _storageService: StorageService,
@@ -74,9 +75,11 @@ export class AsignaturaComponent implements OnInit {
   }
 
   getAsignaturas(){
+    this.load=true
     this._asignaturaService.getAsignaturas(this.token).subscribe((data:Asignatura[])=>{
       this.asignaturas = data
       this.collectionSizeAsignatura = this.asignaturas.length
+      this.load = false
     })
   }
 

@@ -25,6 +25,7 @@ export class AsistenciaComponent implements OnInit {
   justificaciones: Justificacion[]
   paginacionTabla: any[]
   token: string
+  load = false
   constructor(private _justificacionService: JustificacionService,
     private _router:Router,
     private _asistenciaService: AsistenciaService,
@@ -55,9 +56,11 @@ export class AsistenciaComponent implements OnInit {
   }
 
   getAsistencias(){
+    this.load = true
     this._asistenciaService.getAsistencias(this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
       this.collectionSizeAsistencia = this.asistencias.length
+      this.load= false
     })
   }
 

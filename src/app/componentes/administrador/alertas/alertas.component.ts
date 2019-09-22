@@ -17,6 +17,7 @@ export class AlertasComponent implements OnInit {
   pageAlerta: number;
   pageSizeAlerta: number;
   collectionSizeAlerta: number;
+  contador= 0
   constructor(private _localService: LocalService,
     private _alertaService: AlertaService,
     private _storageService: StorageService,
@@ -50,6 +51,9 @@ export class AlertasComponent implements OnInit {
         }
       }
       this.collectionSizeAlerta = this.alertas.length
+      if(this.contador <2 ){
+        this.contador = this.contador +1
+      }
     })
   }
 
@@ -71,6 +75,9 @@ export class AlertasComponent implements OnInit {
     this._alertaService.getGraficoAlertasCursos(this.token).subscribe((data:any)=>{
       this.radarChartLabels = data['labels']
       this.radarChartData = data['data']
+      if(this.contador <2 ){
+        this.contador = this.contador +1
+      }
     })
   }
 

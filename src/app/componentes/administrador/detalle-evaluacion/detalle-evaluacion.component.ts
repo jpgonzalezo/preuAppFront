@@ -35,8 +35,7 @@ export class DetalleEvaluacionComponent implements OnInit {
   pageEvaluacionesRealizadas: number;
   pageSizeEvaluacionesRealizadas: number;
   collectionSizeEvaluacionesRealizadas: number;
-
-
+  contador=0
   public barChartOptionsPreguntas: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
@@ -117,6 +116,9 @@ export class DetalleEvaluacionComponent implements OnInit {
     this._pruebaService.getGraficoRendimientoPreguntas(this.id_evaluacion,this.token).subscribe((data:any)=>{
       this.barChartLabelsPreguntas= data['labels']
       this.barChartDataPreguntas= data['data']
+      if(this.contador<5){
+        this.contador = this.contador + 1
+      }
     })
   }
 
@@ -124,6 +126,9 @@ export class DetalleEvaluacionComponent implements OnInit {
     this._pruebaService.getGraficoRendimientoTopicos(this.id_evaluacion,this.token).subscribe((data:any)=>{
       this.barChartLabelsTopicos= data['labels']
       this.barChartDataTopicos= data['data']
+      if(this.contador<5){
+        this.contador = this.contador + 1
+      }
     })
   }
 
@@ -131,6 +136,9 @@ export class DetalleEvaluacionComponent implements OnInit {
     this._pruebaService.getGraficoRendimientoCursos(this.id_evaluacion,this.token).subscribe((data:any)=>{
       this.doughnutChartLabels= data['labels']
       this.doughnutChartData= data['data']
+      if(this.contador<5){
+        this.contador = this.contador + 1
+      }
     })
   }
   volver(){
@@ -144,6 +152,9 @@ export class DetalleEvaluacionComponent implements OnInit {
       this.preguntas = data.preguntas
       this.collectionSizeTopico = this.topicos.length
       this.collectionSizePreguntas = this.prueba.preguntas.length
+      if(this.contador<5){
+        this.contador = this.contador + 1
+      }
     })
   }
 
@@ -151,6 +162,9 @@ export class DetalleEvaluacionComponent implements OnInit {
     this._evaluacionService.getEvaluacionesPrueba(this.id_evaluacion,this.token).subscribe((data:Evaluacion[])=>{
       this.evaluaciones = data
       this.collectionSizeEvaluacionesRealizadas = this.evaluaciones.length
+      if(this.contador<5){
+        this.contador = this.contador + 1
+      }
     })
   }
 

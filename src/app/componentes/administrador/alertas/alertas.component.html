@@ -1,3 +1,9 @@
+<div class="my-container">
+  <ngx-loading [show]="contador!=2" [config]="{ fullScreenBackdrop: true,
+                      backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+                      primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
 <app-header></app-header>
 <main>
   <section class="section section-lg">
@@ -72,7 +78,8 @@
                         <th scope="row">
                           <img [src]='alerta.alumno.imagen' class="mr-2" style="width: 50px">
                         </th>
-                        <td>{{ alerta.alumno.nombres }} {{ alerta.alumno.apellido_paterno }} {{ alerta.alumno.apellido_materno }}</td>
+                        <td>{{ alerta.alumno.nombres }} {{ alerta.alumno.apellido_paterno }}
+                          {{ alerta.alumno.apellido_materno }}</td>
                         <td>{{alerta.alumno.curso.nombre}}</td>
                         <td>{{alerta.asignatura.nombre}}</td>
                         <td>{{alerta.fecha}}</td>

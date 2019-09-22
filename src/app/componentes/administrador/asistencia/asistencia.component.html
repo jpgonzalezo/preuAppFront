@@ -1,3 +1,9 @@
+<div class="my-container">
+  <ngx-loading [show]="load" [config]="{ fullScreenBackdrop: true,
+                backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+                primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
 <app-header></app-header>
 <main>
   <section class="section ">
@@ -7,11 +13,11 @@
         <div class="col-xl-12">
 
           <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" >
+            <li class="nav-item">
               <a class="nav-link active" id="asistencia-tab" data-toggle="tab" [attr.href]="'#asistencia'" role="tab"
                 aria-controls="asistencia" aria-selected="false">Asistencia</a>
             </li>
-            <li class="nav-item" >
+            <li class="nav-item">
               <a class="nav-link" id="justificacion-tab" data-toggle="tab" [attr.href]="'#justificacion'" role="tab"
                 aria-controls="justificacion" aria-selected="false"> Justificaciones
               </a>
@@ -42,15 +48,15 @@
                         <td>{{ asistencia.alumnos_presentes.length }}</td>
                         <td>{{ asistencia.alumnos_ausentes.length }}</td>
                         <td>
-                          <button type="button" class="btn btn-info btn-sm" (click)="detalleAsistencia(asistencia.id)"><i
-                              class="fas fa-eye"></i>
+                          <button type="button" class="btn btn-info btn-sm"
+                            (click)="detalleAsistencia(asistencia.id)"><i class="fas fa-eye"></i>
                           </button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                   <div class="d-flex justify-content-between p-2">
-                    
+
                     <ngb-pagination [collectionSize]="collectionSizeAsistencia" [(page)]="pageAsistencia"
                       [pageSize]="pageSizeAsistencia">
                     </ngb-pagination>
@@ -63,7 +69,8 @@
 
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-outline-info" (click)="generarNuevaAsistencia()"> Nueva Asistencia
+                    <button type="button" class="btn btn-outline-info" (click)="generarNuevaAsistencia()"> Nueva
+                      Asistencia
                     </button>
                     <br>
                   </div>
@@ -75,53 +82,55 @@
               <div class="mb-8 ">
                 <br>
                 <div class="table-responsive-lg">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col">Fecha</th>
-                          <th scope="col">Alumno</th>
-                          <th scope="col">Curso</th>
-                          <th scope="col">Asignatura</th>
-                          <th scope="col">Asistencia</th>
-                          <th scope="col">Causa</th>
-                          <th scope="col">Acción</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let justificacion of justificaciones_tabla">
-                          <td>{{ justificacion.fecha }}</td>
-                          <td>{{ justificacion.alumno.nombres }} {{ justificacion.alumno.apellido_paterno }} {{ justificacion.alumno.apellido_materno }}</td>
-                          <td>{{ justificacion.alumno.curso.nombre }}</td>
-                          <td>{{ justificacion.asistencia.asignatura.nombre }}</td>
-                          <td>{{ justificacion.asistencia.fecha }}</td>
-                          <td>{{ justificacion.causa }}</td>
-                          <td>
-                              <button type="button" class="btn btn-danger btn-sm" (click)="deleteJustificacion(justificacion.id)">
-                                <i class="fas fa-trash-alt">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Asignatura</th>
+                        <th scope="col">Asistencia</th>
+                        <th scope="col">Causa</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let justificacion of justificaciones_tabla">
+                        <td>{{ justificacion.fecha }}</td>
+                        <td>{{ justificacion.alumno.nombres }} {{ justificacion.alumno.apellido_paterno }}
+                          {{ justificacion.alumno.apellido_materno }}</td>
+                        <td>{{ justificacion.alumno.curso.nombre }}</td>
+                        <td>{{ justificacion.asistencia.asignatura.nombre }}</td>
+                        <td>{{ justificacion.asistencia.fecha }}</td>
+                        <td>{{ justificacion.causa }}</td>
+                        <td>
+                          <button type="button" class="btn btn-danger btn-sm"
+                            (click)="deleteJustificacion(justificacion.id)">
+                            <i class="fas fa-trash-alt">
 
-                              </i>
-                              </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="d-flex justify-content-between p-2">
-                      
-                      <ngb-pagination [collectionSize]="collectionSizeJustificacion" [(page)]="pageJustificacion"
-                        [pageSize]="pageSizeJustificacion">
-                      </ngb-pagination>
-  
-                      <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeJustificacion">
-                        <option [ngValue]="2">2 justificaciones por página</option>
-                        <option [ngValue]="4">4 justificaciones por página</option>
-                        <option [ngValue]="6">6 justificaciones por página</option>
-                      </select>
-  
-                    </div>
+                            </i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+
+                    <ngb-pagination [collectionSize]="collectionSizeJustificacion" [(page)]="pageJustificacion"
+                      [pageSize]="pageSizeJustificacion">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeJustificacion">
+                      <option [ngValue]="2">2 justificaciones por página</option>
+                      <option [ngValue]="4">4 justificaciones por página</option>
+                      <option [ngValue]="6">6 justificaciones por página</option>
+                    </select>
+
                   </div>
+                </div>
               </div>
             </div>
-          
+
           </div>
         </div>
       </div>

@@ -1,3 +1,9 @@
+<div class="my-container">
+  <ngx-loading [show]="contador!=5" [config]="{ fullScreenBackdrop: true,
+                  backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+                  primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
 <app-header></app-header>
 <main>
   <section class="section ">
@@ -33,8 +39,8 @@
                     <div>
                       <div style="display: block">
                         <canvas baseChart [datasets]="barChartDataPreguntas" [labels]="barChartLabelsPreguntas"
-                          [options]="barChartOptionsPreguntas" [plugins]="barChartPluginsPreguntas" [legend]="barChartLegendPreguntas"
-                          [chartType]="barChartTypePreguntas">
+                          [options]="barChartOptionsPreguntas" [plugins]="barChartPluginsPreguntas"
+                          [legend]="barChartLegendPreguntas" [chartType]="barChartTypePreguntas">
                         </canvas>
                       </div>
                     </div>
@@ -53,15 +59,15 @@
                 <div>
                   <h5>Rendimiento por tópicos</h5>
                   <div>
-                      <div>
-                        <div style="display: block">
-                          <canvas baseChart [datasets]="barChartDataTopicos" [labels]="barChartLabelsTopicos"
-                            [options]="barChartOptionsTopicos" [plugins]="barChartPluginsTopicos" [legend]="barChartLegendTopicos"
-                            [chartType]="barChartTypeTopicos">
-                          </canvas>
-                        </div>
+                    <div>
+                      <div style="display: block">
+                        <canvas baseChart [datasets]="barChartDataTopicos" [labels]="barChartLabelsTopicos"
+                          [options]="barChartOptionsTopicos" [plugins]="barChartPluginsTopicos"
+                          [legend]="barChartLegendTopicos" [chartType]="barChartTypeTopicos">
+                        </canvas>
                       </div>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -73,16 +79,14 @@
                 <div>
                   <h5>Asistencia Cursos</h5>
                   <div>
-                      <div>
-                        <div style="display: block">
-                          <canvas baseChart
-                            [data]="doughnutChartData"
-                            [labels]="doughnutChartLabels"
-                            [chartType]="doughnutChartType">
-                          </canvas>
-                        </div>
+                    <div>
+                      <div style="display: block">
+                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
+                          [chartType]="doughnutChartType">
+                        </canvas>
                       </div>
                     </div>
+                  </div>
                 </div>
 
 
@@ -215,7 +219,8 @@
                         </td>
                         <td *ngIf="prueba.tipo != 'TAREA'">
                           <button type="button" class="btn btn-info btn-sm"
-                            (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i class="far fa-eye"></i></button>
+                            (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
+                              class="far fa-eye"></i></button>
                         </td>
                       </tr>
                     </tbody>

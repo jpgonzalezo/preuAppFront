@@ -1,3 +1,9 @@
+<div class="my-container">
+  <ngx-loading [show]="contador!=2" [config]="{ fullScreenBackdrop: true,
+                    backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+                    primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
 <app-header></app-header>
 <main class="profile-page">
   <section class="section-profile-cover section-shaped my-0">
@@ -22,18 +28,18 @@
             </div>
             <div class="col-lg-4 order-lg-1">
               <div class="card-profile-stats d-flex justify-content-center">
-                  <div>
-                      <span class="heading"></span>
-                      <span class="description"></span>
-                    </div>
-                    <div>
-                      <span class="heading"></span>
-                      <span class="description"></span>
-                    </div>
-                    <div>
-                      <span class="heading"></span>
-                      <span class="description"></span>
-                    </div>
+                <div>
+                  <span class="heading"></span>
+                  <span class="description"></span>
+                </div>
+                <div>
+                  <span class="heading"></span>
+                  <span class="description"></span>
+                </div>
+                <div>
+                  <span class="heading"></span>
+                  <span class="description"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -76,7 +82,8 @@
                           <tbody>
                             <tr *ngFor="let anotacion of anotaciones_tabla">
                               <td>{{anotacion.fecha}}</td>
-                              <td>{{anotacion.alumno.nombres}} {{anotacion.alumno.apellido_paterno}} {{anotacion.alumno.apellido_materno}}</td>
+                              <td>{{anotacion.alumno.nombres}} {{anotacion.alumno.apellido_paterno}}
+                                {{anotacion.alumno.apellido_materno}}</td>
                               <td>{{anotacion.alumno.rut}}</td>
                               <td>{{anotacion.titulo}}</td>
                               <td>{{anotacion.contenido}}</td>
@@ -84,12 +91,11 @@
                           </tbody>
                         </table>
                         <div class="d-flex justify-content-between p-2">
-                          <ngb-pagination [collectionSize]="collectionSizeAnotacion"
-                            [(page)]="pageAnotacion" [pageSize]="pageSizeAnotacion">
+                          <ngb-pagination [collectionSize]="collectionSizeAnotacion" [(page)]="pageAnotacion"
+                            [pageSize]="pageSizeAnotacion">
                           </ngb-pagination>
 
-                          <select class="custom-select" style="width: auto"
-                            [(ngModel)]="pageSizeAnotacion">
+                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAnotacion">
                             <option [ngValue]="4">4 anotaciones por página</option>
                             <option [ngValue]="8">8 anotaciones por página</option>
                             <option [ngValue]="10">10 anotaciones por página</option>

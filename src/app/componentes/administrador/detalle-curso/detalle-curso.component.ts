@@ -89,6 +89,7 @@ export class DetalleCursoComponent implements OnInit {
   public barChartDataAsignatura: ChartDataSets[] = [{ data:[], label: '' }];
 
   token: string
+  contador = 0
   constructor(private _activatedRoute:ActivatedRoute, 
     private _alumnoService:AlumnoService,
     private _cursoService:CursoService,
@@ -148,6 +149,9 @@ export class DetalleCursoComponent implements OnInit {
       this.curso = data;
       this.asignaturas = data.asignaturas
       this.collectionSizeAsignatura = data.asignaturas.length
+      if(this.contador<4){
+        this.contador = this.contador + 1
+      }
     })
 
     this._cursoService.getGraficoAsistencia(this.id_curso,this.token).subscribe((data:any)=>{
@@ -175,6 +179,9 @@ export class DetalleCursoComponent implements OnInit {
       for(let alumno of this.alumnos){
         alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
       }
+      if(this.contador<4){
+        this.contador = this.contador + 1
+      }
     })   
   }
 
@@ -182,6 +189,9 @@ export class DetalleCursoComponent implements OnInit {
     this._asistenciaService.getAsistenciasCurso(this.id_curso,this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data;
       this.collectionSizeAsistencia = this.asistencias.length
+      if(this.contador<4){
+        this.contador = this.contador + 1
+      }
     })
   }
 
@@ -193,6 +203,9 @@ export class DetalleCursoComponent implements OnInit {
     this._alertaService.getAlertasCurso(this.id_curso,this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
+      if(this.contador<4){
+        this.contador = this.contador + 1
+      }
     })
   }
 
