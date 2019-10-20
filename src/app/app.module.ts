@@ -23,7 +23,7 @@ import { LocalService } from 'src/app/servicios/local.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserAnimationsModule,

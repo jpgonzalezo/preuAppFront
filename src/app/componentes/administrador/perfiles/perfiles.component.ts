@@ -339,7 +339,7 @@ export class PerfilesComponent implements OnInit {
       cancelButtonColor: '#fb6340',
     }).queue([
       {
-        title: 'Datos Personales 1',
+        title: 'Datos Personales',
         preConfirm: function () {
           return {
             'rut': $('#swal-input0').val(),
@@ -350,13 +350,13 @@ export class PerfilesComponent implements OnInit {
           }
         },
         html:
-          '<label>Rut</label>'+
+          '<label>R.U.N</label>'+
           '<input id="swal-input0" class="swal2-input placeholders="rut" value ="">' +
           '<label>Nombres</label>'+
           '<input id="swal-input1" class="swal2-input placeholders="nombres" value ="">' +
-          '<label>Apellido Paterno</label>'+
+          '<label>Apellido paterno</label>'+
           '<input id="swal-input2" class="swal2-input placeholders="apellido_paterno" value="">'+
-          '<label>Apellido Materno</label>'+
+          '<label>Apellido materno</label>'+
           '<input id="swal-input3" class="swal2-input placeholders="apellido_materno" value="">'+
           '<label>Puntaje de Ingreso</label>'+'<br>'+
           '<input type ="number" id="swal-input9" class="swal2-input placeholders="puntaje ingreso" value ="">'
@@ -400,7 +400,7 @@ export class PerfilesComponent implements OnInit {
         text: 'Seleccione curso del alumno',
         input: 'select',
         inputOptions: cursos,
-        inputPlaceholder: 'Cursos Preuniversitario',
+        inputPlaceholder: 'Cursos preuniversitario',
       },
       {
         title: 'Datos Académicos 3',
@@ -458,7 +458,7 @@ export class PerfilesComponent implements OnInit {
             if(data['Response']=='exito'){
               this.loading = false
               swal.fire({
-                title: 'Foto de Perfil',
+                title: 'Foto de perfil',
                 text: "Desea agregar una foto de perfil?",
                 type: 'warning',
                 showCancelButton: true,
@@ -561,7 +561,7 @@ export class PerfilesComponent implements OnInit {
       cancelButtonColor: '#fb6340',
     }).queue([
       {
-        title: 'Datos Personales 1',
+        title: 'Datos Personales',
         preConfirm: function () {
           return {
             'rut': $('#swal-input0').val(),
@@ -572,13 +572,13 @@ export class PerfilesComponent implements OnInit {
           }
         },
         html:
-          '<label>Rut</label>'+
+          '<label>R.U.N</label>'+
           '<input id="swal-input0" class="swal2-input placeholders="rut" value ="">' +
           '<label>Nombres</label>'+
           '<input id="swal-input1" class="swal2-input placeholders="nombres" value ="">' +
-          '<label>Apellido Paterno</label>'+
+          '<label>Apellido paterno</label>'+
           '<input id="swal-input2" class="swal2-input placeholders="apellido_paterno" value="">'+
-          '<label>Apellido Materno</label>'+
+          '<label>Apellido materno</label>'+
           '<input id="swal-input3" class="swal2-input placeholders="apellido_materno" value="">'
       },
       {
@@ -609,7 +609,7 @@ export class PerfilesComponent implements OnInit {
         text: 'Seleccione asignatura del profesor',
         input: 'select',
         inputOptions: asignaturas,
-        inputPlaceholder: 'Asignaturas Preuniversitario',
+        inputPlaceholder: 'Asignaturas preuniversitario',
       }
     ]).then((result1)=> {
       if(result1.value){
@@ -654,7 +654,7 @@ export class PerfilesComponent implements OnInit {
             if(data['Response']=='exito'){
               this.loading = false
               swal.fire({
-                title: 'Foto de Perfil',
+                title: 'Foto de perfil',
                 text: "Desea agregar una foto de perfil?",
                 type: 'warning',
                 showCancelButton: true,
@@ -751,7 +751,7 @@ export class PerfilesComponent implements OnInit {
       cancelButtonColor: '#fb6340',
     }).queue([
       {
-        title: 'Datos Personales 1',
+        title: 'Datos Personales',
         preConfirm: function () {
           return {
             'rut': $('#swal-input0').val(),
@@ -762,13 +762,13 @@ export class PerfilesComponent implements OnInit {
           }
         },
         html:
-          '<label>Rut</label>'+
+          '<label>R.U.N</label>'+
           '<input id="swal-input0" class="swal2-input placeholders="rut" value ="">' +
           '<label>Nombres</label>'+
           '<input id="swal-input1" class="swal2-input placeholders="nombres" value ="">' +
-          '<label>Apellido Paterno</label>'+
+          '<label>Apellido paterno</label>'+
           '<input id="swal-input2" class="swal2-input placeholders="apellido_paterno" value="">'+
-          '<label>Apellido Materno</label>'+
+          '<label>Apellido materno</label>'+
           '<input id="swal-input3" class="swal2-input placeholders="apellido_materno" value="">'
       },
       {
@@ -835,7 +835,7 @@ export class PerfilesComponent implements OnInit {
             if(data['Response']=='exito'){
               this.loading = false
               swal.fire({
-                title: 'Foto de Perfil',
+                title: 'Foto de perfil',
                 text: "Desea agregar una foto de perfil?",
                 type: 'warning',
                 showCancelButton: true,
@@ -913,7 +913,7 @@ export class PerfilesComponent implements OnInit {
       cancelButtonColor: '#fb6340',
     }).queue([
       {
-        title: 'Datos Personales 1',
+        title: 'Datos Personales',
         preConfirm: function () {
           return {
             'rut': $('#swal-input0').val(),
@@ -924,13 +924,13 @@ export class PerfilesComponent implements OnInit {
           }
         },
         html:
-          '<label>Rut</label>'+
+          '<label>R.U.N</label>'+
           '<input id="swal-input0" class="swal2-input placeholders="rut" value ="">' +
           '<label>Nombres</label>'+
           '<input id="swal-input1" class="swal2-input placeholders="nombres" value ="">' +
-          '<label>Apellido Paterno</label>'+
+          '<label>Apellido paterno</label>'+
           '<input id="swal-input2" class="swal2-input placeholders="apellido_paterno" value="">'+
-          '<label>Apellido Materno</label>'+
+          '<label>Apellido materno</label>'+
           '<input id="swal-input3" class="swal2-input placeholders="apellido_materno" value="">'
       },
       {
@@ -985,7 +985,7 @@ export class PerfilesComponent implements OnInit {
             if(data['Response']=='exito'){
               this.loading = false
               swal.fire({
-                title: 'Foto de Perfil',
+                title: 'Foto de perfil',
                 text: "Desea agregar una foto de perfil?",
                 type: 'warning',
                 showCancelButton: true,

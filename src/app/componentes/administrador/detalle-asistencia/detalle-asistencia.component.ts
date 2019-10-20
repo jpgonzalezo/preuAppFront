@@ -104,8 +104,8 @@ export class DetalleAsistenciaComponent implements OnInit {
 
   generarJustificacion(id_alumno:string){
     Swal.fire({
-      title: 'Nueva Justificación',
-      text: 'Ingrese la causal de la inasistencia del alumno',
+      title: 'Nueva justificación',
+      text: 'Ingrese la causal de la inasistencia del alumno(a)',
       input: 'textarea',
       confirmButtonColor: '#5cb85c',
       cancelButtonColor: '#d9534f',

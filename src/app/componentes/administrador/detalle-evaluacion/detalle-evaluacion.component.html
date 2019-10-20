@@ -218,9 +218,12 @@
                           {{evaluacion.puntaje}}
                         </td>
                         <td *ngIf="prueba.tipo != 'TAREA'">
-                          <button type="button" class="btn btn-info btn-sm"
-                            (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
-                              class="far fa-eye"></i></button>
+                          <div class="row">
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
+                                class="far fa-eye"></i>
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     </tbody>

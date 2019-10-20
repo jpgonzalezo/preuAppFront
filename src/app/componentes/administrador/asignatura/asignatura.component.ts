@@ -87,7 +87,7 @@ export class AsignaturaComponent implements OnInit {
     Swal.fire({
       type:'question',
       input: 'text',
-      title: 'Nuevo Asignatura',
+      title: 'Nueva asignatura',
       text: 'Ingrese el nombre de la nueva asignatura',
       confirmButtonColor: '#5cb85c',
       cancelButtonColor: '#d9534f',

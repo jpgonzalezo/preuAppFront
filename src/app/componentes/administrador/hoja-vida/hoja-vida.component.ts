@@ -329,7 +329,7 @@ export class HojaVidaComponent implements OnInit {
 
   public cambiarFoto() {
     swal.fire({
-      title: 'Foto de Perfil',
+      title: 'Foto de perfil',
       text: "Desea cambiar la foto de perfil?",
       type: 'warning',
       showCancelButton: true,

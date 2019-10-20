@@ -87,7 +87,7 @@ export class CursoComponent implements OnInit {
     Swal.fire({
       type:'question',
       input: 'text',
-      title: 'Nuevo Curso',
+      title: 'Nuevo curso',
       text: 'Ingrese el nombre del nuevo curso',
       confirmButtonColor: '#5cb85c',
       cancelButtonColor: '#d9534f',
