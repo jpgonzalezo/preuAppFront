@@ -104,7 +104,7 @@ export class CalendarioComponent implements OnInit {
             showCancelButton: true,
           },
           {
-            title: 'Cursos Preuniversitario',
+            title: 'Cursos preuniversitario',
             text: 'Seleccione el curso que participará en el evento',
             input: 'select',
             inputOptions: cursos_dict,

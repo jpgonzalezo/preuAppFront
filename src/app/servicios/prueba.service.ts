@@ -127,4 +127,12 @@ export class PruebaService {
 		}
 	  	return this.httpClient.post(`${this.API_URL}/pruebas/${id_prueba}/pregunta/bajar`,{'numero':numero_pregunta},options).pipe(map(res => res))
 	}
+
+	asignarPuntajeBase(id_prueba:string, puntaje:number,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+        const options = {
+            headers: headers
+        }
+        return this.httpClient.put(`${this.API_URL}/pruebas/${id_prueba}/asignar/puntaje/base`,{'puntaje_base':puntaje},options).pipe(map(res => res))
+	}
 }

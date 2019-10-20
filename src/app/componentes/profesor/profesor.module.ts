@@ -10,6 +10,8 @@ import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule} from '@angular/forms';
 import { Ng2Rut } from 'ng2-rut';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+import { AgGridModule } from 'ag-grid-angular';
 // register 'es' locale
 registerLocaleData(localeEs);
 
@@ -22,10 +24,14 @@ import { FooterProfesorComponent } from './footer-profesor/footer-profesor.compo
 import { AsignaturaComponent } from './asignatura/asignatura.component';
 import { DetalleEvaluacionComponent } from './detalle-evaluacion/detalle-evaluacion.component';
 import { CalendarioComponent } from './calendario/calendario.component';
+import { RegistrarEvaluacionComponent } from './registrar-evaluacion/registrar-evaluacion.component';
+import { EditarEvaluacionComponent } from './editar-evaluacion/editar-evaluacion.component';
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
     { path: 'calendario', component: CalendarioComponent},
-    { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent}
+    { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent},
+    { path: 'detalle/evaluacion/:id/registrar/curso/:id_curso', component: RegistrarEvaluacionComponent},
+    { path: 'detalle/evaluacion/:id/editar', component: EditarEvaluacionComponent}
 ];
 
 @NgModule({
@@ -40,6 +46,15 @@ const routes: Routes = [
         ReactiveFormsModule,
         FullCalendarModule,
         Ng2Rut,
+        AgGridModule.withComponents([]),
+        NgxLoadingModule.forRoot({  
+            animationType: ngxLoadingAnimationTypes.circleSwish,
+            backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+            backdropBorderRadius: '4px',
+            primaryColour: '#ffffff', 
+            secondaryColour: '#ffffff', 
+            tertiaryColour: '#ffffff'
+        })
     ],
     declarations: [
         HomeComponent,
@@ -47,7 +62,9 @@ const routes: Routes = [
         FooterProfesorComponent,
         AsignaturaComponent,
         DetalleEvaluacionComponent,
-        CalendarioComponent
+        CalendarioComponent,
+        RegistrarEvaluacionComponent,
+        EditarEvaluacionComponent
     ],
     exports: [
         RouterModule

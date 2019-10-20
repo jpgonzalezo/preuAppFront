@@ -1,3 +1,9 @@
+<div class="my-container">
+  <ngx-loading [show]="contador!=8 || loading" [config]="{ fullScreenBackdrop: true,
+                  backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+                  primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
 <app-header-profesor></app-header-profesor>
 <main>
   <section class="section ">
@@ -95,10 +101,10 @@
                     <thead>
                       <tr>
                         <th scope="col"></th>
-                        <th scope="col">Rut</th>
+                        <th scope="col">R.U.N</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Apellido Paterno</th>
-                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Apellido paterno</th>
+                        <th scope="col">Apellido materno</th>
                         <th scope="col">Email</th>
                         <th scope="col">Teléfono</th>
                       </tr>
@@ -182,6 +188,7 @@
                         <th scope="col">Cantidad de Preguntas</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Tipo</th>
+                        <th scope="col">Puntaje Base</th>
                         <th scope="col">Acción</th>
                       </tr>
                     </thead>
@@ -198,12 +205,13 @@
                           <span *ngIf="evaluacion.tipo == 'TAREA'"
                             class="badge badge-pill badge-success">{{ evaluacion.tipo }}</span>
                         </td>
+                        <td>{{ evaluacion.puntaje_base }}</td>
                         <td>
                           <div class="row">
                             <button type="button" class="btn btn-info btn-sm"
                               (click)="verDetalleEvaluacion(evaluacion.id)"><i class="far fa-eye"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteEvaluacion(evaluacion.id)"><i
-                              class="fas fa-trash-alt"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm"
+                              (click)="deleteEvaluacion(evaluacion.id)"><i class="fas fa-trash-alt"></i></button>
                           </div>
                         </td>
                       </tr>
@@ -222,7 +230,8 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-outline-primary" (click)="nuevaEvaluacion()">Nueva Evaluación</button>
+                  <button type="button" class="btn btn-outline-primary" (click)="nuevaEvaluacion()">Nueva
+                    Evaluación</button>
                   <br>
                 </div>
               </div>
@@ -289,7 +298,7 @@
                     <tbody>
                       <tr *ngFor="let topico of topicos_tabla">
                         <td>{{ topico.nombre }}</td>
-                        <td> 
+                        <td>
                           <button type="button" class="btn btn-danger btn-sm" (click)="deleteTopico(topico.id)"><i
                               class="fas fa-trash-alt"></i>
                           </button>

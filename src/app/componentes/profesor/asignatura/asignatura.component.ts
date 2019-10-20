@@ -22,7 +22,7 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { Color, BaseChartDirective} from 'ng2-charts';
-
+//import * as pluginAnnotations from 'chartjs-plugin-annotation';
 @Component({
   selector: 'app-asignatura',
   templateUrl: './asignatura.component.html',
@@ -85,6 +85,7 @@ export class AsignaturaComponent implements OnInit {
   public barChartPlugins = [pluginDataLabels];
   public barChartData: ChartDataSets[] = [{ data: [], label: '' }];
   token: string
+  contador = 0
   constructor(
     private _asignaturaService: AsignaturaService,
     private _activatedRoute: ActivatedRoute,
@@ -168,12 +169,18 @@ export class AsignaturaComponent implements OnInit {
     this._asignaturaService.getGraficoAsistenciaAsignaturaToken(this.token).subscribe((data:any)=>{
       this.barChartDataAsistencia = data['data']
       this.barChartLabelsAsistencia = data['labels']
+      if(this.contador<8){
+        this.contador = this.contador +1
+      }
     })
   }
   getGraficoRendimientoEvaluacionesAsignatura(){
     this._asignaturaService.getGraficoRendimientoEvaluacionesAsignaturaToken(this.token).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
+      if(this.contador<8){
+        this.contador = this.contador +1
+      }
     })
   }
   getProfesoresAsignatura(){
@@ -183,12 +190,18 @@ export class AsignaturaComponent implements OnInit {
       for(let alumno of this.profesores){
         alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
+      if(this.contador<8){
+        this.contador = this.contador +1
+      }
     })   
   }
 
   getAsignatura(){
     this._asignaturaService.getAsignaturaToken(this.token).subscribe((data:Asignatura)=>{
       this.asignatura = data;
+      if(this.contador<8){
+        this.contador = this.contador +1
+      }
     })
   }
 
@@ -196,6 +209,9 @@ export class AsignaturaComponent implements OnInit {
     this._asistenciaService.getAsistenciasAsignaturaToken(this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
       this.collectionSizeAsistencia = this.asistencias.length
+      if(this.contador<8){
+        this.contador = this.contador +1
+      }
     })
   }
 
@@ -203,6 +219,9 @@ export class AsignaturaComponent implements OnInit {
     this._pruebaService.getPruebasAsignaturaToken(this.token).subscribe((data:Prueba[])=>{
       this.pruebas = data
       this.collectionSizeEvaluacion = this.pruebas.length
+      if(this.contador<8){
+        this.contador = this.contador +1
+      }
     })
   }
 
@@ -218,6 +237,9 @@ export class AsignaturaComponent implements OnInit {
         }
       }
       this.collectionSizeAlerta = this.alertas.length
+      if(this.contador<8){
+        this.contador = this.contador +1
+      }
     })
   }
 
@@ -225,6 +247,9 @@ export class AsignaturaComponent implements OnInit {
     this._topicoService.getTopicosAsignaturaToken(this.token).subscribe((data:Topico[])=>{
       this.topicos = data;
       this.collectionSizeTopico = this.topicos.length
+      if(this.contador<8){
+        this.contador = this.contador +1
+      }
     })
   }
 
@@ -248,8 +273,10 @@ export class AsignaturaComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
+        this.loading = true
         this._topicoService.deleteTopico(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='borrado'){
+            this.loading = false
             swal.fire({
               title:'Borrado!',
               text:'Se ha borrado el tópico exitosamente.',
@@ -259,6 +286,7 @@ export class AsignaturaComponent implements OnInit {
               this.getTopicosAsignatura();
             })
           }
+          this.loading = false
         })
       }
 
@@ -277,8 +305,10 @@ export class AsignaturaComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
+        this.loading = true
         this._pruebaService.deletePrueba(id,this.token).subscribe((data:any)=>{
           if(data['Response']=='borrado'){
+            this.loading = false
             swal.fire({
               title:'Borrado!',
               text:'Se ha borrado la evaluación exitosamente.',
@@ -289,6 +319,7 @@ export class AsignaturaComponent implements OnInit {
             })
           }
           else{
+            this.loading = false
             swal.fire({
               title: 'Error en el registro',
               text: 'Ocurrió un error al borrar la evaluación.',
@@ -326,7 +357,9 @@ export class AsignaturaComponent implements OnInit {
       }
     }).then((result)=>{
       if(result.dismiss==null){
+        this.loading = true
         this._topicoService.postTopico(result.value,this.token).subscribe((data)=>{
+          this.loading = false
           if(data['Response']=="exito"){
             swal.fire({
               title:'Borrado!',
@@ -344,6 +377,7 @@ export class AsignaturaComponent implements OnInit {
 
 
   nuevaEvaluacion(){
+    var id_prueba = ""
     swal.mixin({
       title: 'Nueva Evaluación',
       confirmButtonText: 'Siguiente',
@@ -396,14 +430,77 @@ export class AsignaturaComponent implements OnInit {
         this.loading = true
         this._pruebaService.postPrueba(result.value[0],result.value[1],this.token).subscribe((data)=>{
           if(data['Response']=="exito"){
+            id_prueba = data['id']
             this.loading = false
             swal.fire({
-              title: 'Registro exitoso',
-              text: 'Se ha guardado la evaluación exitosamente!',
-              type: 'success',
+              title: 'Agregar puntaje base?',
+              text: "Si agrega un puntaje base a la evaluación se calculará el puntaje obtenido a partir de la cantidad de preguntas y la cantidad de preguntas correctas obtenidas. En caso contrario, el puntaje por pregunta será equitativo para completar los 850.",
+              type: 'warning',
+              showCancelButton: true,
               confirmButtonColor: '#2dce89',
+              cancelButtonColor: '#fb6340',
+              confirmButtonText: 'Si',
+              cancelButtonText: 'No',
             }).then((result)=>{
-              this.getPruebasAsignatura()
+              if(result.dismiss==null){
+                //asignar punteje base
+                swal.fire({
+                  title: 'Puntaje Base',
+                  text: 'Ingrese la cantidad de puntaje base con la que contará la evaluación',
+                  input: 'number',
+                  showCancelButton: true,
+                  confirmButtonColor: '#2dce89',
+                  cancelButtonColor: '#fb6340',
+                  confirmButtonText: 'Aceptar',
+                  cancelButtonText: 'Cancelar',
+                  onOpen: function (){
+                    swal.disableConfirmButton();
+                    swal.getInput().addEventListener('keyup', function(e) {
+                      if((<HTMLInputElement>event.target).value == "" || parseInt((<HTMLInputElement>event.target).value)<=0) {
+                        swal.disableConfirmButton();
+                      } 
+                      else {
+                        swal.enableConfirmButton();
+                      }
+                      })
+                  }
+                }).then((result)=>{
+                  if(result.dismiss==null){
+                    this._pruebaService.asignarPuntajeBase(id_prueba, result.value, this.token ).subscribe((data)=>{
+                      if(data['Response']=="exito"){
+                        swal.fire({
+                          title: 'Registro exitoso',
+                          text: 'Se ha guardado la evaluación exitosamente!',
+                          type: 'success',
+                          confirmButtonColor: '#2dce89',
+                        }).then((result)=>{
+                          this.getPruebasAsignatura()
+                        })
+                      }
+                    })
+                  }
+                  else{
+                    swal.fire({
+                      title: 'Registro exitoso',
+                      text: 'Se ha guardado la evaluación exitosamente!',
+                      type: 'success',
+                      confirmButtonColor: '#2dce89',
+                    }).then((result)=>{
+                      this.getPruebasAsignatura()
+                    })
+                  }
+                })
+              }
+              else{
+                swal.fire({
+                  title: 'Registro exitoso',
+                  text: 'Se ha guardado la evaluación exitosamente!',
+                  type: 'success',
+                  confirmButtonColor: '#2dce89',
+                }).then((result)=>{
+                  this.getPruebasAsignatura()
+                })
+              }
             })
           }
           else{

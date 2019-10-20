@@ -1,0 +1,24 @@
+<div class="my-container">
+  <ngx-loading [show]="false" [config]="{ fullScreenBackdrop: true,
+                    backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+                    primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
+<app-header-profesor></app-header-profesor>
+<main>
+  <section class="section ">
+    <div class="container">
+      <h3 class="display-3">{{prueba.nombre}}</h3>
+      <hr>
+      <ag-grid-angular #agGrid style="width: auto; height: 300px;" class="ag-theme-balham" [rowData]="rowData"
+        [columnDefs]="columnDefs">
+      </ag-grid-angular>
+      <hr>
+      <div class="text-center">
+        <button class="btn btn-primary" (click)="guardar()">guardar</button>
+        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver </button>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer-profesor></app-footer-profesor>
