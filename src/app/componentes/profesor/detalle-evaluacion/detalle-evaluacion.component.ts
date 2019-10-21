@@ -205,7 +205,7 @@ export class DetalleEvaluacionComponent implements OnInit {
         }
       }).then((result)=>{
         if(result.dismiss == null){
-          this._router.navigateByUrl('/profesor/detalle/evaluacion/'+this.id_evaluacion+'/registrar/curso/'+result.value)
+          this._router.navigateByUrl('/profesor/detalle/evaluacion/'+this.id_evaluacion+'/registrar/curso/'+result.value)       
         }
       })
     })
