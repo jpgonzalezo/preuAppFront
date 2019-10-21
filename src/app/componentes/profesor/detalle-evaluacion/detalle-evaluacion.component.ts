@@ -472,98 +472,92 @@ export class DetalleEvaluacionComponent implements OnInit {
   }
 
   editarEvaluacion(id){
-    if(this.prueba.tipo!="TAREA"){
-      swal.fire({
-        title: 'Edición de Evaluación',
-        text: 'Seleccione el modo de edición que desea utilizar.',
-        input: 'select',
-        inputOptions: {
-          "": "Seleccione un modo de edición",
-          "puntaje": "Editar Puntaje",
-          "alternativa": "Editar Alternativas"
-        },
-        showCancelButton: true,
-        confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#2dce89',
-        cancelButtonColor: '#fb6340',
-        inputValidator: function (value) {
-          return new Promise(function (resolve, reject) {
-            if (value === "") {
-              resolve('Debes seleccionar un modo de edición')
-            } else {
-              resolve()
+    swal.fire({
+      title: 'Edición de Evaluación',
+      text: 'Seleccione el modo de edición que desea utilizar.',
+      input: 'select',
+      inputOptions: {
+        "": "Seleccione un modo de edición",
+        "puntaje": "Editar Puntaje",
+        "alternativa": "Editar Alternativas"
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (value === "") {
+            resolve('Debes seleccionar un modo de edición')
+          } else {
+            resolve()
+          }
+        })
+      }
+    }).then((result)=>{
+      if(result.dismiss==null){
+        if(result.value=="puntaje"){
+          swal.fire({
+            title:'Edición de Puntaje',
+            text: 'Ingrese el nuevo puntaje para la evaluación',
+            type:'question',
+            input:'number',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#2dce89',
+            cancelButtonColor: '#fb6340',
+            onOpen: function (){
+              swal.disableConfirmButton();
+              swal.getInput().addEventListener('keyup', function(e) {
+                if((<HTMLInputElement>event.target).value === '') {
+                  swal.disableConfirmButton();
+                } 
+                else {
+                  swal.enableConfirmButton();
+                }
+                })
+            }
+          }).then((result)=>{
+            if(result.dismiss==null){
+              if(result.value>850 || result.value < 0){
+                swal.fire({
+                  type:'error',
+                  title:'Error en el registro',
+                  text:'El puntaje ingresado no es válido',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#2dce89',
+                }).then((result)=>{
+                  this.editarEvaluacion(id)
+                })
+              }
+              else{
+                this._evaluacionService.cambiarPuntaje(id,result.value,this.token).subscribe((data)=>{
+                  if(data['Response']=="exito"){
+                    swal.fire({
+                      title:'Registro exitoso',
+                      text:'Se ha agregado la pregunta correctamente.',
+                      type:'success',
+                      confirmButtonColor: '#2dce89',
+                    }).then((result)=>{
+                      this.getPrueba()
+                      this.getEvaluacionesRealizadas()
+                      this.getGraficoRendimientoCursos()
+                      this.getGraficoRendimientoPreguntas()
+                      this.getGraficoRendimientoTopicos()
+                    })
+                  }
+                })
+              }
             }
           })
         }
-      }).then((result)=>{
-        if(result.dismiss==null){
-          if(result.value=="puntaje"){
-            swal.fire({
-              title:'Edición de Puntaje',
-              text: 'Ingrese el nuevo puntaje para la evaluación',
-              type:'question',
-              input:'number',
-              showCancelButton: true,
-              confirmButtonText: 'Aceptar',
-              cancelButtonText: 'Cancelar',
-              confirmButtonColor: '#2dce89',
-              cancelButtonColor: '#fb6340',
-              onOpen: function (){
-                swal.disableConfirmButton();
-                swal.getInput().addEventListener('keyup', function(e) {
-                  if((<HTMLInputElement>event.target).value === '') {
-                    swal.disableConfirmButton();
-                  } 
-                  else {
-                    swal.enableConfirmButton();
-                  }
-                  })
-              }
-            }).then((result)=>{
-              if(result.dismiss==null){
-                if(result.value>850 || result.value < 0){
-                  swal.fire({
-                    type:'error',
-                    title:'Error en el registro',
-                    text:'El puntaje ingresado no es válido',
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: '#2dce89',
-                  }).then((result)=>{
-                    this.editarEvaluacion(id)
-                  })
-                }
-                else{
-                  this._evaluacionService.cambiarPuntaje(id,result.value,this.token).subscribe((data)=>{
-                    if(data['Response']=="exito"){
-                      swal.fire({
-                        title:'Registro exitoso',
-                        text:'Se ha agregado la pregunta correctamente.',
-                        type:'success',
-                        confirmButtonColor: '#2dce89',
-                      }).then((result)=>{
-                        this.getPrueba()
-                        this.getEvaluacionesRealizadas()
-                        this.getGraficoRendimientoCursos()
-                        this.getGraficoRendimientoPreguntas()
-                        this.getGraficoRendimientoTopicos()
-                      })
-                    }
-                  })
-                }
-              }
-            })
-          }
-          if(result.value=="alternativa"){
-            //LLevar a modo edicion de alternativa
-            this._router.navigateByUrl('/profesor/detalle/evaluacion/'+id+'/editar')
-          }
+        if(result.value=="alternativa"){
+          this._router.navigateByUrl('/profesor/detalle/evaluacion/'+id+'/editar')
         }
-      })
-    }
-    else{
-      //EDICION PARA EVALUACION TIPO TAREA
-    }
+      }
+    })
   }
   eliminarPregunta(numero:number){
     swal.fire({
