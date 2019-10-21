@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PruebaService } from 'src/app/servicios/prueba.service';
 import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
-import { TopicoService } from 'src/app/servicios/topico.service';
 import { Prueba } from 'src/app/modelos/prueba.model';
 import { Topico } from 'src/app/modelos/topico.model';
 import { Respuesta } from 'src/app/modelos/respuesta.model'
@@ -31,9 +29,8 @@ export class EditarEvaluacionComponent implements OnInit {
   title = 'app';
   token: string;
   id_evaluacion: string
-  id_prueba: string
-  id_curso: string;
   prueba:Prueba;
+  evaluacion:Evaluacion;
   cursoSeleccionado: string
   cursos: Curso[]
   id_curso_seleccionado:string
@@ -45,7 +42,6 @@ export class EditarEvaluacionComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     private _localService: LocalService,
     private _evaluacionService: EvaluacionService,
-    private _alumnoService: AlumnoService,
     private _router:Router
   ) { 
     this.prueba = new Prueba()
@@ -60,17 +56,74 @@ export class EditarEvaluacionComponent implements OnInit {
     }
     this.id_evaluacion = this._activatedRoute.snapshot.paramMap.get('id');
     this.getEvaluacion()
+    
   }
 
 
   getEvaluacion(){
     this._evaluacionService.getEvaluacion(this.id_evaluacion,this.token).subscribe((data:Evaluacion)=>{
-      console.log(data)
+      this.evaluacion = data
+      this.prueba = data.prueba
+      this.getColumDef()
+      this.getRowData()
+    })
+  }
+
+  getColumDef(){
+    this._evaluacionService.getColumnDefs(this.prueba.id,this.token).subscribe((data:any[])=>{
+      this.columnDefs = data
+    })
+  }
+
+  getRowData(){
+    this._evaluacionService.getEvaluacionGridRegistrarEditar(this.evaluacion.id,this.token).subscribe((data:any[])=>{
+      this.rowData = data
     })
   }
 
   volver(){
-    this._router.navigateByUrl('/profesor/detalle/evaluacion/'+this.id_evaluacion)
+    this._router.navigateByUrl('/profesor/detalle/evaluacion/'+this.prueba.id)
+  }
+
+  guardar(){
+    var data = []
+    this.agGrid.api.selectAll()
+    const selectedNodes = this.agGrid.api.getSelectedNodes();
+    var selectedData = selectedNodes.map( node => node.data );
+    selectedData.map( node => {
+      var dict = {}
+      dict['id'] = node.id
+      for(let pregunta of this.prueba.preguntas){
+        dict[pregunta.numero_pregunta] = node[pregunta.numero_pregunta.toString()]
+      }
+      data.push(dict)
+    })
+    this.agGrid.api.deselectAll()
+    swal.fire({
+      title: 'Guardar Evaluaciones',
+      text: "Desea guardar las evaluaciones registradas?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if(result.dismiss==null){
+        this._evaluacionService.registrarEvaluacionEditada(this.id_evaluacion,this.token,data).subscribe((data)=>{
+          if(data['Response']=="exito"){
+            swal.fire({
+              title:'Registro exitoso',
+              text:'Se han guardado las evaluaciones correctamente correctamente.',
+              type:'success',
+              confirmButtonColor: '#2dce89',
+            }).then((result)=>{
+              this.volver()
+            })
+          }
+        })
+      }
+    })
   }
 
 }
