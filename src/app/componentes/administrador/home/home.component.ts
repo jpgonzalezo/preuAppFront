@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin];
   calendarWeekends = true;
   calendarEvents: Evento[];
-  load = false
+  load = true
   
   constructor(private _cursoService: CursoService,
               private _storageService: StorageService,
