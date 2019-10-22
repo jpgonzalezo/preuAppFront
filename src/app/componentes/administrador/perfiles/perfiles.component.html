@@ -1,9 +1,3 @@
-<div class="my-container">
-  <ngx-loading [show]="loadalumno" [config]="{ fullScreenBackdrop: true,
-      backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
-      primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
-  </ngx-loading>
-</div>
 <app-header></app-header>
 <main>
   <section class="section ">
@@ -50,6 +44,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadalumno">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadalumno && alumnos_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alumnos
+                        </td>
+                      </tr>
                       <tr *ngFor="let alumno of alumnos_tabla">
                         <th scope="row">
                           <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
@@ -61,9 +65,9 @@
                         <td>{{ alumno.curso.nombre }}</td>
                         <td>
                           <div class="row">
-                              <button type="button" class="btn btn-info btn-sm" (click)="generarVistaHojaVida(alumno.id)"><i
-                                class="far fa-eye"></i></button>
-                              <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i
                                 class="fas fa-trash-alt"></i></button>
                           </div>
                         </td>
@@ -108,6 +112,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadprofesor">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadprofesor && profesores_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran profesores
+                        </td>
+                      </tr>
                       <tr *ngFor="let profesor of profesores_tabla">
                         <th scope="row">
                           <img [src]='profesor.imagen' class="mr-2" style="width: 50px">
@@ -132,7 +146,6 @@
                     </ngb-pagination>
 
                     <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeProfesor">
-                      <option [ngValue]="5">5 profesores por página</option>
                       <option [ngValue]="10">10 profesores por página</option>
                       <option [ngValue]="20">20 profesores por página</option>
                       <option [ngValue]="30">30 profesores por página</option>
@@ -166,6 +179,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadapoderado">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadapoderado && [] == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran apoderados
+                        </td>
+                      </tr>
                       <tr *ngFor="let apoderado of []">
                         <th scope="row">
                           <img [src]='apoderado.imagen' class="mr-2" style="width: 50px">
@@ -189,7 +212,6 @@
                     </ngb-pagination>
 
                     <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeApoderado">
-                      <option [ngValue]="5">5 apoderado por página</option>
                       <option [ngValue]="10">10 apoderados por página</option>
                       <option [ngValue]="20">20 apoderados por página</option>
                       <option [ngValue]="30">30 apoderados por página</option>
@@ -223,6 +245,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadadministrador">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadadministrador && administradores_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran adminstradores
+                        </td>
+                      </tr>
                       <tr *ngFor="let administrador of administradores_tabla">
                         <th scope="row">
                           <img [src]='administrador.imagen' class="mr-2" style="width: 50px">
