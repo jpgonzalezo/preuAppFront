@@ -1,9 +1,3 @@
-<div class="my-container">
-  <ngx-loading [show]="load" [config]="{ fullScreenBackdrop: true,
-          backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
-          primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
-  </ngx-loading>
-</div>
 <app-header></app-header>
 <main>
   <section class="section section-lg">
@@ -34,9 +28,20 @@
                         <th scope="col">Fecha</th>
                         <th scope="col">Evento</th>
                         <th scope="col">Curso</th>
+                        <th scope="col">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="load">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!load && eventos_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran eventos
+                        </td>
+                      </tr>
                       <tr *ngFor="let evento of eventos_tabla">
                         <td>{{ evento.start }}</td>
                         <td>{{ evento.title }}</td>
@@ -75,9 +80,20 @@
                         <th scope="col">Fecha</th>
                         <th scope="col">Evento</th>
                         <th scope="col">Curso</th>
+                        <th scope="col">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="load">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!load && solicitudes_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran eventos
+                        </td>
+                      </tr>
                       <tr *ngFor="let evento of solicitudes_tabla">
                         <td>{{ evento.start }}</td>
                         <td>{{ evento.title }}</td>
