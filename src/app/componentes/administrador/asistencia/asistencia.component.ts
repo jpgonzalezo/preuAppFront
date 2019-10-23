@@ -59,6 +59,7 @@ export class AsistenciaComponent implements OnInit {
     this.load = true
     this._asistenciaService.getAsistencias(this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
+      console.log(data)
       this.collectionSizeAsistencia = this.asistencias.length
       this.load= false
     })
