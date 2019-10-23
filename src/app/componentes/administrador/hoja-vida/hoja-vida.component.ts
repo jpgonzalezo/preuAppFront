@@ -1,10 +1,6 @@
 import {
   Component,
-  OnInit,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter
+  OnInit
 } from '@angular/core';
 import {
   AlumnoService
@@ -80,9 +76,14 @@ export class HojaVidaComponent implements OnInit {
   id_hoja_vida: string;
   justificaciones: Justificacion[];
   alertas: Alerta[];
-  loading: boolean = false
-
-
+  loading: boolean = true
+  loadGraficoRendimiento: boolean = true
+  loadGraficoAsistencia: boolean = true
+  loadObservacionesAdministrador: boolean = true
+  loadObservacionesProfesor: boolean = true
+  loadObservacionPsicologo: boolean = true
+  loadJustificaciones: boolean = true
+  loadAlertasAlumno: boolean = true
   // Radar
   public radarChartOptions: RadialChartOptions = {
     responsive: true,
@@ -94,9 +95,6 @@ export class HojaVidaComponent implements OnInit {
     label: ''
   }];
   public radarChartType: ChartType = 'radar';
-
-
-
   public barChartOptionsAsignatura: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
@@ -115,7 +113,6 @@ export class HojaVidaComponent implements OnInit {
   public barChartTypeAsignatura: ChartType = 'bar';
   public barChartLegendAsignatura = true;
   public barChartPluginsAsignatura = [pluginDataLabels];
-
   public barChartDataAsignatura: ChartDataSets[] = [{
     data: [],
     label: ''
@@ -139,12 +136,10 @@ export class HojaVidaComponent implements OnInit {
   public barChartTypeAnual: ChartType = 'bar';
   public barChartLegendAnual = true;
   public barChartPluginsAnual = [pluginDataLabels];
-
   public barChartDataAnual: ChartDataSets[] = [{
     data: [],
     label: ''
   }];
-  contador = 0
   token: string
   constructor(private _alumnoService: AlumnoService,
     private _observacionService: ObservacionService,
@@ -191,89 +186,81 @@ export class HojaVidaComponent implements OnInit {
   }
 
   public getAlumnoGraficoRendimiento() {
+    this.loadGraficoRendimiento = true
     this._alumnoService.getAlumnoGraficoRendimiento(this.id_hoja_vida, this.token).subscribe((data: any) => {
       this.radarChartLabels = data['labels']
       this.radarChartData = data['data']
-      if(this.contador < 8){
-        this.contador = this.contador + 1
-      }
+      this.loadGraficoRendimiento  = false
     })
   }
 
   public getAlumnoGraficoAsistencia() {
+    this.loadGraficoAsistencia = true
     this._alumnoService.getAlumnoGraficoAsistencia(this.id_hoja_vida, this.token).subscribe((data: any) => {
       this.barChartLabelsAsignatura = data['grafico_asignatura'].labels
       this.barChartDataAsignatura = data['grafico_asignatura'].data
       this.barChartLabelsAnual = data['grafico_anual'].labels
       this.barChartDataAnual = data['grafico_anual'].data
-      if(this.contador < 8){
-        this.contador = this.contador + 1
-      }
+      this.loadGraficoAsistencia = false
     })
   }
 
   public getHojaVida(id: string) {
+    this.loading = true
     this._alumnoService.getHojaVida(id, this.token).subscribe((data: Array < any > ) => {
       this.hoja_vida = data;
       this.hoja_vida.imagen = Config.API_SERVER_URL + "/alumno_imagen/" + this.hoja_vida.imagen
-      if(this.contador < 8){
-        this.contador = this.contador + 1
-      }
+      this.loading = false
     });
   }
 
   public getObservacionesAdministrador() {
+    this.loadObservacionesAdministrador = true
     this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_ADMINISTRADOR', this.token).subscribe(
       (data: any) => {
         this.observaciones_admin = data
         this.collectionSizeObservacionAdministrador = this.observaciones_admin.length
-        if(this.contador < 8){
-          this.contador = this.contador + 1
-        }
+        this.loadObservacionesAdministrador = false
       })
   }
 
   public getObservacionesProfesor() {
+    this.loadObservacionesProfesor = true
     this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PROFESOR', this.token).subscribe(
       (data: any) => {
         this.observaciones_profe = data
         this.collectionSizeObservacionProfesor = this.observaciones_profe.length
-        if(this.contador < 8){
-          this.contador = this.contador + 1
-        }
+        this.loadObservacionesProfesor = false
       }
     )
   }
 
   public getObservacionesPsicologo() {
+    this.loadObservacionPsicologo = true
     this._observacionService.getObservacionesAlumno(this.id_hoja_vida, 'OBSERVACION_PSICOLOGO', this.token).subscribe(
       (data: any) => {
         this.observaciones_psico = data
         this.collectionSizeObservacionPsicologo = this.observaciones_psico.length
-        if(this.contador < 8){
-          this.contador = this.contador + 1
-        }
+        this.loadObservacionPsicologo = false
       }
     )
   }
 
   public getJustificaciones() {
+    this.loadJustificaciones = true
     this._justificacionService.getJustificacionesAlumno(this.id_hoja_vida, this.token).subscribe((data: Justificacion[]) => {
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
-      if(this.contador < 8){
-        this.contador = this.contador + 1
-      }
+      this.loadJustificaciones = false
     })
   }
 
   public getAlertasAlumno() {
+    this.loadAlertasAlumno = true
     this._alertaService.getAlertasAlumno(this.id_hoja_vida, this.token).subscribe((data: Alerta[]) => {
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
-      if(this.contador < 8){
-        this.contador = this.contador + 1
-      }
+      this.loadAlertasAlumno = false
     })
   }
 

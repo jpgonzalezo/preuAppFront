@@ -1,9 +1,3 @@
-<div class="my-container">
-  <ngx-loading [show]="contador!=8" [config]="{ fullScreenBackdrop: true,
-      backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
-      primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
-  </ngx-loading>
-</div>
 <app-header></app-header>
 <main class="profile-page">
   <section class="section-profile-cover section-shaped my-0">
@@ -17,7 +11,9 @@
             <div class="col-lg-4 order-lg-2">
               <div class="card-profile-image">
                 <a>
-                  <img [src]='hoja_vida.imagen' class="rounded-circle">
+                  <div *ngIf="loading" class="rounded-circle text-muted text-center"><i
+                      class="fa fa-spinner fa-3x fa-spin"></i></div>
+                  <img *ngIf="!loading" [src]='hoja_vida.imagen' class="rounded-circle">
                 </a>
               </div>
             </div>
@@ -30,15 +26,18 @@
             <div class="col-lg-4 order-lg-1">
               <div class="card-profile-stats d-flex justify-content-center">
                 <div>
-                  <span class="heading">{{hoja_vida.ponderacion_asistencia}} %</span>
+                  <span *ngIf="loading" class="heading text-muted"><i class="fa fa-spinner fa-spin"></i></span>
+                  <span *ngIf="!loading" class="heading">{{hoja_vida.ponderacion_asistencia}} %</span>
                   <span class="description">Asistencia</span>
                 </div>
                 <div>
-                  <span class="heading">{{hoja_vida.ponderacion_matematicas}} </span>
+                  <span *ngIf="loading" class="heading text-muted"><i class="fa fa-spinner fa-spin"></i></span>
+                  <span *ngIf="!loading" class="heading">{{hoja_vida.ponderacion_matematicas}} </span>
                   <span class="description">Matemáticas</span>
                 </div>
                 <div>
-                  <span class="heading">{{hoja_vida.ponderacion_lenguaje}} </span>
+                  <span *ngIf="loading" class="heading text-muted"><i class="fa fa-spinner fa-spin"></i></span>
+                  <span *ngIf="!loading" class="heading">{{hoja_vida.ponderacion_lenguaje}} </span>
                   <span class="description">Lenguaje</span>
                 </div>
               </div>
@@ -49,7 +48,7 @@
             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{hoja_vida.curso}}</div>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{hoja_vida.email}} -
               {{hoja_vida.telefono}}</div>
-              {{contador}}
+            {{contador}}
             <div><i class="ni education_hat mr-2"></i>{{hoja_vida.calegio}}</div>
             <div><i class="ni education_hat mr-2"></i>{{hoja_vida.direccion}}</div>
           </div>
@@ -72,18 +71,28 @@
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="rendimiento_observacion" role="tabpanel"
                     aria-labelledby="rendimiento-tab">
+
                     <div class="mb-8 ">
                       <br>
                       <div>
                         <div>
-                          <div style="display: block">
+                          <div *ngIf="!loadGraficoRendimiento" style="display: block">
                             <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions"
                               [labels]="radarChartLabels" [chartType]="radarChartType">
                             </canvas>
                           </div>
+                          <div *ngIf="loadGraficoRendimiento" class="col-lg-12 row">
+                            <div
+                              style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                              class="jumbotron">
+                              <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
+
+
                   </div>
 
                   <div class="tab-pane fade show" id="asistencia_observacion" role="tabpanel"
@@ -92,24 +101,38 @@
                       <br>
                       <div>
                         <h5>Asistencia anual</h5>
-                        <div>
+                        <div *ngIf="!loadGraficoAsistencia">
                           <div style="display: block">
                             <canvas baseChart [datasets]="barChartDataAnual" [labels]="barChartLabelsAnual"
-                              [options]="barChartOptionsAnual" [plugins]="barChartPluginsAnual" [legend]="barChartLegendAnual"
-                              [chartType]="barChartTypeAnual">
+                              [options]="barChartOptionsAnual" [plugins]="barChartPluginsAnual"
+                              [legend]="barChartLegendAnual" [chartType]="barChartTypeAnual">
                             </canvas>
+                          </div>
+                        </div>
+                        <div *ngIf="loadGraficoAsistencia" class="col-lg-12 row">
+                          <div
+                            style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                            class="jumbotron">
+                            <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
                           </div>
                         </div>
                       </div>
                       <br>
                       <div>
                         <h5>Asistencia asignaturas</h5>
-                        <div>
+                        <div *ngIf="!loadGraficoAsistencia">
                           <div style="display: block">
                             <canvas baseChart [datasets]="barChartDataAsignatura" [labels]="barChartLabelsAsignatura"
-                              [options]="barChartOptionsAsignatura" [plugins]="barChartPluginsAsignatura" [legend]="barChartLegendAsignatura"
-                              [chartType]="barChartTypeAsignatura">
+                              [options]="barChartOptionsAsignatura" [plugins]="barChartPluginsAsignatura"
+                              [legend]="barChartLegendAsignatura" [chartType]="barChartTypeAsignatura">
                             </canvas>
+                          </div>
+                        </div>
+                        <div *ngIf="loadGraficoAsistencia" class="col-lg-12 row">
+                          <div
+                            style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                            class="jumbotron">
+                            <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
                           </div>
                         </div>
                       </div>
@@ -158,6 +181,17 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <tr *ngIf="loadObservacionesAdministrador">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr
+                              *ngIf="!loadObservacionesAdministrador && observaciones_administrador_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran observaciones
+                              </td>
+                            </tr>
                             <tr *ngFor="let observacion of observaciones_administrador_tabla">
                               <td>{{observacion.titulo}}</td>
                               <td>{{observacion.contenido}}</td>
@@ -197,6 +231,16 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <tr *ngIf="loadObservacionesProfesor">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadObservacionesProfesor && observaciones_profesor_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran observaciones
+                              </td>
+                            </tr>
                             <tr *ngFor="let observacion of observaciones_profesor_tabla">
                               <td>{{observacion.titulo}}</td>
                               <td>{{observacion.contenido}}</td>
@@ -234,6 +278,16 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <tr *ngIf="loadObservacionPsicologo">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadObservacionPsicologo && observaciones_psicologo_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran observaciones
+                              </td>
+                            </tr>
                             <tr *ngFor="let observacion of observaciones_psicologo_tabla">
                               <td>{{observacion.titulo}}</td>
                               <td>{{observacion.contenido}}</td>
@@ -294,6 +348,16 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <tr *ngIf="loadJustificaciones">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadJustificaciones && justificaciones_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran justificaciones
+                              </td>
+                            </tr>
                             <tr *ngFor="let justificacion of justificaciones_tabla">
                               <td>{{justificacion.asistencia.fecha}}</td>
                               <td>{{justificacion.asistencia.asignatura.nombre}}</td>
@@ -332,6 +396,16 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <tr *ngIf="loadAlertasAlumno">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadAlertasAlumno && alertas_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran alertas
+                              </td>
+                            </tr>
                             <tr *ngFor="let alerta of alertas_tabla">
                               <td>{{alerta.fecha}}</td>
                               <td>
@@ -363,11 +437,6 @@
               </div>
             </div>
           </div>
-
-
-
-
-
         </div>
       </div>
     </div>
