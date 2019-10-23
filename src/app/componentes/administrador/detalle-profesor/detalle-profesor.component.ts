@@ -23,7 +23,8 @@ export class DetalleProfesorComponent implements OnInit {
   asignatura: Asignatura;
   anotaciones: Anotacion[];
   token: string
-  contador=0
+  loadingProfesor=true
+  loadingObservaciones=true
   constructor(
     private _profesorService:ProfesorService, 
     private router: Router,
@@ -52,23 +53,21 @@ export class DetalleProfesorComponent implements OnInit {
   }
 
   getProfesor(){
+    this.loadingProfesor=true
     this._profesorService.getProfesor(this.id_profesor,this.token).subscribe((data:Profesor)=>{
       this.profesor = data
       this.profesor.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+this.profesor.imagen
       this.asignatura = this.profesor.asignatura
-      if(this.contador<2){
-        this.contador = this.contador +1 
-      }
+      this.loadingProfesor=false
     })
   }
 
   getAnotaciones(){
+    this.loadingObservaciones=true
     this._anotacionService.getAnotacionesProfesor(this.id_profesor,this.token).subscribe((data:Anotacion[])=>{
       this.anotaciones = data
       this.collectionSizeAnotacion = this.anotaciones.length
-      if(this.contador<2){
-        this.contador = this.contador +1 
-      }
+      this.loadingObservaciones=false
     })
   }
 
