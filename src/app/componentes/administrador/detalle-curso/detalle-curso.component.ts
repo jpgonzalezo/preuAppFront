@@ -43,14 +43,15 @@ export class DetalleCursoComponent implements OnInit {
   asistencias: Asistencia[]
   asignaturas: Asignatura[]
   activoGrafico: boolean;
-
+  loadCurso:boolean = true
+  loadAlumnosCurso:boolean = true
+  loadAsistenciaCurso:boolean = true
+  loadAlertasCurso: boolean = true
   // PolarArea
   public polarAreaChartLabels: Label[];
   public polarAreaChartData: SingleDataSet = [];
   public polarAreaLegend = true;
   public polarAreaChartType: ChartType = 'polarArea';
-
-
   public barChartOptions: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
@@ -66,11 +67,7 @@ export class DetalleCursoComponent implements OnInit {
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
-
   public barChartData: ChartDataSets[] = [{ data:[], label: '' }];
-
-
-
   public barChartOptionsAsignatura: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
@@ -87,9 +84,7 @@ export class DetalleCursoComponent implements OnInit {
   public barChartLegendAsignatura = true;
   public barChartPluginsAsignatura = [pluginDataLabels];
   public barChartDataAsignatura: ChartDataSets[] = [{ data:[], label: '' }];
-
   token: string
-  contador = 0
   constructor(private _activatedRoute:ActivatedRoute, 
     private _alumnoService:AlumnoService,
     private _cursoService:CursoService,
@@ -131,67 +126,52 @@ export class DetalleCursoComponent implements OnInit {
     this.getAlertasCurso();
   }
 
-
-
-  // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-
-
   getCurso(){
+    this.loadCurso = true
     this._cursoService.getCurso(this.id_curso,this.token).subscribe((data:Curso)=>{
       this.curso = data;
       this.asignaturas = data.asignaturas
       this.collectionSizeAsignatura = data.asignaturas.length
-      if(this.contador<4){
-        this.contador = this.contador + 1
-      }
+      this.loadCurso = false
     })
-
+    this.loadCurso = true
     this._cursoService.getGraficoAsistencia(this.id_curso,this.token).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
     })
-
+    this.loadCurso = true
     this._cursoService.getGraficoAsistenciaAsignatura(this.id_curso,this.token).subscribe((data:any)=>{
       this.barChartLabelsAsignatura = data['labels']
       this.barChartDataAsignatura = data['data']
+      this.loadCurso = false
     })
-
+    this.loadCurso = true
     this._cursoService.getGraficoAsignaturas(this.id_curso,this.token).subscribe((data:any)=>{
       this.polarAreaChartData = data['data']
       this.polarAreaChartLabels = data['labels']
+      this.loadCurso = false
     })
-
     this.activoGrafico = true
   }
 
   getAlumnosCurso(){
+    this.loadAlumnosCurso = true
     this._alumnoService.getAlumnosCurso(this.id_curso,this.token).subscribe((data:Alumno[])=>{
       this.alumnos = data
       this.collectionSizeAlumno = this.alumnos.length;
       for(let alumno of this.alumnos){
         alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
       }
-      if(this.contador<4){
-        this.contador = this.contador + 1
-      }
+      this.loadAlumnosCurso = false
     })   
   }
 
   getAsistenciaCurso(){
+    this.loadAsistenciaCurso = true
     this._asistenciaService.getAsistenciasCurso(this.id_curso,this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data;
       this.collectionSizeAsistencia = this.asistencias.length
-      if(this.contador<4){
-        this.contador = this.contador + 1
-      }
+      this.loadAsistenciaCurso = false
     })
   }
 
@@ -200,12 +180,11 @@ export class DetalleCursoComponent implements OnInit {
   }
 
   getAlertasCurso(){
+    this.loadAlertasCurso = true
     this._alertaService.getAlertasCurso(this.id_curso,this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
-      if(this.contador<4){
-        this.contador = this.contador + 1
-      }
+      this.loadAlertasCurso = false
     })
   }
 
