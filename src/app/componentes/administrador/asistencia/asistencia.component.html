@@ -1,9 +1,3 @@
-<div class="my-container">
-  <ngx-loading [show]="load" [config]="{ fullScreenBackdrop: true,
-                backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
-                primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
-  </ngx-loading>
-</div>
 <app-header></app-header>
 <main>
   <section class="section ">
@@ -41,6 +35,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadAsistencia">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadAsistencia && asistencias_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran asistencias
+                        </td>
+                      </tr>
                       <tr *ngFor="let asistencia of asistencias_tabla">
                         <td>{{ asistencia.fecha }}</td>
                         <td>{{ asistencia.curso }}</td>
@@ -62,9 +66,9 @@
                     </ngb-pagination>
 
                     <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsistencia">
-                      <option [ngValue]="2">2 asistencias por página</option>
-                      <option [ngValue]="4">4 asistencias por página</option>
-                      <option [ngValue]="6">6 asistencias por página</option>
+                      <option [ngValue]="10">10 asistencias por página</option>
+                      <option [ngValue]="20">20 asistencias por página</option>
+                      <option [ngValue]="30">30 asistencias por página</option>
                     </select>
 
                   </div>
@@ -95,6 +99,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadJustificaciones">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadJustificaciones && justificaciones_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran justificaciones
+                        </td>
+                      </tr>
                       <tr *ngFor="let justificacion of justificaciones_tabla">
                         <td>{{ justificacion.fecha }}</td>
                         <td>{{ justificacion.alumno.nombres }} {{ justificacion.alumno.apellido_paterno }}
@@ -121,9 +135,9 @@
                     </ngb-pagination>
 
                     <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeJustificacion">
-                      <option [ngValue]="2">2 justificaciones por página</option>
-                      <option [ngValue]="4">4 justificaciones por página</option>
-                      <option [ngValue]="6">6 justificaciones por página</option>
+                      <option [ngValue]="10">10 justificaciones por página</option>
+                      <option [ngValue]="20">20 justificaciones por página</option>
+                      <option [ngValue]="30">30 justificaciones por página</option>
                     </select>
 
                   </div>

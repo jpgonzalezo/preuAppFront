@@ -25,7 +25,8 @@ export class AsistenciaComponent implements OnInit {
   justificaciones: Justificacion[]
   paginacionTabla: any[]
   token: string
-  load = false
+  loadAsistencia:boolean = true
+  loadJustificaciones:boolean = true
   constructor(private _justificacionService: JustificacionService,
     private _router:Router,
     private _asistenciaService: AsistenciaService,
@@ -34,9 +35,9 @@ export class AsistenciaComponent implements OnInit {
     private _storageService: StorageService) 
   {
     this.pageAsistencia=1;
-    this.pageSizeAsistencia = 4;
+    this.pageSizeAsistencia = 10;
     this.pageJustificacion=1;
-    this.pageSizeJustificacion = 4;
+    this.pageSizeJustificacion = 10;
     this.cursos = []
     this.asistencias = []
     this.justificaciones = []
@@ -56,19 +57,20 @@ export class AsistenciaComponent implements OnInit {
   }
 
   getAsistencias(){
-    this.load = true
+    this.loadAsistencia = true
     this._asistenciaService.getAsistencias(this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
-      console.log(data)
       this.collectionSizeAsistencia = this.asistencias.length
-      this.load= false
+      this.loadAsistencia= false
     })
   }
 
   getJustificaciones(){
+    this.loadJustificaciones = true
     this._justificacionService.getJustificaciones(this.token).subscribe((data:Justificacion[])=>{
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
+      this.loadJustificaciones = false
     })
   }
 
