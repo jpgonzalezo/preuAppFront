@@ -17,7 +17,8 @@ export class AlertasComponent implements OnInit {
   pageAlerta: number;
   pageSizeAlerta: number;
   collectionSizeAlerta: number;
-  contador= 0
+  loadAlertas: boolean = true;
+  loadGraficoAlertas: boolean = true
   constructor(private _localService: LocalService,
     private _alertaService: AlertaService,
     private _storageService: StorageService,
@@ -40,6 +41,7 @@ export class AlertasComponent implements OnInit {
   }
 
   getAlertas(){
+    this.loadAlertas = true;
     this._alertaService.getAlertas(this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       for(let alerta of this.alertas){
@@ -50,10 +52,8 @@ export class AlertasComponent implements OnInit {
           alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.imagen
         }
       }
+      this.loadAlertas = false;
       this.collectionSizeAlerta = this.alertas.length
-      if(this.contador <2 ){
-        this.contador = this.contador +1
-      }
     })
   }
 
@@ -72,12 +72,11 @@ export class AlertasComponent implements OnInit {
   public radarChartType: ChartType = 'radar';
 
   getGraficoAlertasCursos(){
+    this.loadGraficoAlertas = true;
     this._alertaService.getGraficoAlertasCursos(this.token).subscribe((data:any)=>{
       this.radarChartLabels = data['labels']
       this.radarChartData = data['data']
-      if(this.contador <2 ){
-        this.contador = this.contador +1
-      }
+      this.loadGraficoAlertas = false;
     })
   }
 
