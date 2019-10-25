@@ -1,5 +1,5 @@
 <div class="my-container">
-  <ngx-loading [show]="contador!=2 || loading" [config]="{ fullScreenBackdrop: true,
+  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true,
                 backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
                 primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
   </ngx-loading>
@@ -13,7 +13,7 @@
       <div class="card card-profile shadow mt--300">
         <div class="px-3">
 
-          <div class="mt-5 py-5 border-top text-center">
+          <div class="mt-5 py-5  text-center">
             <h4 class="display-3 pull-rigth"> Resumen asistencia </h4>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Curso: {{curso.nombre}}</div>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Asignatura: {{asignatura.nombre}}</div>
@@ -54,6 +54,16 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <tr *ngIf="loadingAsistencia">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadingAsistencia && alumnos_presentes_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran alumnos presentes
+                              </td>
+                            </tr>
                             <tr *ngFor="let alumno of alumnos_presentes_tabla">
                               <th scope="row">
                                 <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
@@ -87,7 +97,7 @@
                     <div class="mb-8 ">
                       <br>
                       <div class="table-responsive-lg">
-                        <table class="table table-striped">
+                        <table class="table table-striped table-responsive">
                           <thead>
                             <tr>
                               <th scope="col"></th>
@@ -101,6 +111,16 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <tr *ngIf="loadingAsistencia">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadingAsistencia && alumnos_ausentes_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran alumnos ausentes
+                              </td>
+                            </tr>
                             <tr *ngFor="let alumno of alumnos_ausentes_tabla">
                               <th scope="row">
                                 <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
@@ -152,6 +172,16 @@
                             </tr>
                           </thead>
                           <tbody>
+                            <tr *ngIf="loadingJustificaciones">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadingJustificaciones && justificaciones_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran justificaciones
+                              </td>
+                            </tr>
                             <tr *ngFor="let justificacion of justificaciones_tabla">
                               <td>{{justificacion.alumno.nombres}} {{justificacion.alumno.apellido_paterno}}
                                 {{justificacion.alumno.apellido_materno}}</td>

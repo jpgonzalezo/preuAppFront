@@ -32,8 +32,9 @@ export class DetalleAsistenciaComponent implements OnInit {
   alumnosPresentes: Alumno[]
   alumnosAusentes: Alumno[]
   token: string
-  contador = 0
-  loading = false
+  loadingAsistencia:boolean = true;
+  loadingJustificaciones:boolean = true;
+  loading:boolean = false;
   constructor(private _router:Router,
     private _asistenciaService: AsistenciaService, 
     private _activatedRoute: ActivatedRoute,
@@ -68,6 +69,7 @@ export class DetalleAsistenciaComponent implements OnInit {
   }
 
   getAsistencia(){
+    this.loadingAsistencia = true;
     this._asistenciaService.getAsistencia(this.id_asistencia,this.token).subscribe((data:Asistencia)=>{
       this.asistencia = data;
       for(let alumno of this.asistencia.alumnos_presentes){
@@ -82,19 +84,16 @@ export class DetalleAsistenciaComponent implements OnInit {
       this.alumnosPresentes = this.asistencia.alumnos_presentes
       this.alumnosAusentes = this.asistencia.alumnos_ausentes
       this.asignatura = this.asistencia.asignatura;
-      if(this.contador<2){
-        this.contador=this.contador+1
-      }
+      this.loadingAsistencia = false;
     })
   }
 
   getJustificaciones(){
+    this.loadingJustificaciones = true;
     this._asistenciaService.getJustificacionesAsistencia(this.id_asistencia,this.token).subscribe((data:Justificacion[])=>{
       this.justificaciones = data
       this.collectionSizeJustificacion = this.justificaciones.length
-      if(this.contador<2){
-        this.contador=this.contador+1
-      }
+      this.loadingJustificaciones = false;
     })
   }
 
