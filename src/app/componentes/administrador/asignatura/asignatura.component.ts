@@ -15,7 +15,7 @@ export class AsignaturaComponent implements OnInit {
   pageSizeAsignatura: number;
   collectionSizeAsignatura: number;
   token: string
-  load=false
+  load=true
   constructor(private _asignaturaService: AsignaturaService,
     private _localService: LocalService,
     private _storageService: StorageService,
