@@ -36,6 +36,7 @@ export class NuevaAsistenciaComponent implements OnInit {
   id_curso_seleccionado:string
   id_asignatura_seleccionada:string
   token: string
+  loadAlumnos: boolean = false;
   constructor(private _asistenciaService: AsistenciaService,
     private _router:Router,
     private _alumnoService: AlumnoService,
@@ -87,18 +88,22 @@ export class NuevaAsistenciaComponent implements OnInit {
 
   cambiarCurso(nombre:string,id_curso:string){
     this.cursoSeleccionado = nombre
+    this.alumnos_presentes = [];
+    this.alumnos_ausentes = [];
     if(nombre != "Seleccione un curso"){
       this.seleccionCurso = false
       this.asignaturaSeleccionada = "Seleccione una asignatura"
       this.id_asignatura_seleccionada=""
       this.id_curso_seleccionado = id_curso
       this.getAsignaturas(this.id_curso_seleccionado)
+      this.loadAlumnos = true
       this._alumnoService.getAlumnosCurso(this.id_curso_seleccionado,this.token).subscribe((data:Alumno[])=>{
         this.alumnos_curso = data
         this.collectionSizeAlumnosCurso = this.alumnos_curso.length
         for(let alumno of this.alumnos_curso){
           alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
         }
+        this.loadAlumnos = false
       })
     }
     else{

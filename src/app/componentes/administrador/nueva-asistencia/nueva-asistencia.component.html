@@ -74,23 +74,35 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let alumno of alumnos_curso_tabla">
-                        <th scope="row">
-                          <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
-                        </th>
-                        <td>{{ alumno.rut }}</td>
-                        <td>{{ alumno.nombres }}</td>
-                        <td>{{ alumno.apellido_paterno}}</td>
-                        <td>{{ alumno.apellido_materno}}</td>
-                        <td>
-                          <div class="row">
-                            <button type="button" class="btn btn-success btn-sm" (click)="alumnoPresente(alumno.id)">
-                              <i class="fas fa-user-check"></i>
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm" (click)="alumnoAusente(alumno.id)">
-                              <i class="fas fa-user-times"></i>
-                            </button>
-                          </div>
+                      <tr *ngIf="loadAlumnos; else alumnosCurso">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <ng-template #alumnosCurso>
+                        <tr *ngFor="let alumno of alumnos_curso_tabla">
+                          <th scope="row">
+                            <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                          </th>
+                          <td>{{ alumno.rut }}</td>
+                          <td>{{ alumno.nombres }}</td>
+                          <td>{{ alumno.apellido_paterno}}</td>
+                          <td>{{ alumno.apellido_materno}}</td>
+                          <td>
+                            <div class="row">
+                              <button type="button" class="btn btn-success btn-sm" (click)="alumnoPresente(alumno.id)">
+                                <i class="fas fa-user-check"></i>
+                              </button>
+                              <button type="button" class="btn btn-danger btn-sm" (click)="alumnoAusente(alumno.id)">
+                                <i class="fas fa-user-times"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <tr *ngIf="!loadAlumnos && alumnos_curso_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alumnos
                         </td>
                       </tr>
                     </tbody>
@@ -126,6 +138,11 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="!loadAlumnos && alumnos_presente_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alumnos presentes
+                        </td>
+                      </tr>
                       <tr *ngFor="let alumno of alumnos_presente_tabla">
                         <th scope="row">
                           <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
@@ -176,6 +193,11 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="!loadAlumnos && alumnos_ausente_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alumnos ausentes
+                        </td>
+                      </tr>
                       <tr *ngFor="let alumno of alumnos_ausente_tabla">
                         <th scope="row">
                           <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
@@ -210,17 +232,12 @@
               </div>
             </div>
           </div>
-
-
-
           <div class="text-center">
             <button [disabled]="id_asignatura_seleccionada==''" type="button" class="btn btn-outline-info"
               (click)="guardarAsistencia()">Guardar Asistencia</button>
             <button type="button" class="btn btn-outline-warning" (click)="volver()">Volver</button>
             <br>
           </div>
-
-
         </div>
         <hr>
       </div>
