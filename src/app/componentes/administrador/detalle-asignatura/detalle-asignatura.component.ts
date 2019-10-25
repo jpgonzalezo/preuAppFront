@@ -47,8 +47,6 @@ export class DetalleAsignaturaComponent implements OnInit {
   pageTopico: number;
   pageSizeTopico: number;
   collectionSizeTopico: number;
-  contador = 0
-
   public barChartOptions: ChartOptions = {
     responsive: true,
     scales: { xAxes: [{}], yAxes: [{}] },
@@ -63,10 +61,7 @@ export class DetalleAsignaturaComponent implements OnInit {
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
-
   public barChartData: ChartDataSets[] = [{ data: [], label: '' }];
-
-
   public barChartOptionsAsistencia: ChartOptions = {
     responsive: true,
     scales: { xAxes: [{}], yAxes: [{}] },
@@ -81,9 +76,16 @@ export class DetalleAsignaturaComponent implements OnInit {
   public barChartTypeAsistencia: ChartType = 'bar';
   public barChartLegendAsistencia = true;
   public barChartPluginsAsistencia = [pluginDataLabels];
-
   public barChartDataAsistencia: ChartDataSets[] = [{ data: [], label: '' }];
   token: string
+  loadProfesoresAsignatura:boolean = true
+  loadAsignatura:boolean = true
+  loadAsistenciasAsignatura:boolean = true
+  loadPruebasAsignatura:boolean = true
+  loadAlertasAsignatura:boolean = true
+  loadTopicosAsignatura:boolean = true
+  loadGraficoRendimientoEvaluacionesAsignatura:boolean = true
+  loadGraficoAsistenciaAsignatura:boolean = true
   constructor(private _asignaturaService: AsignaturaService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
@@ -163,82 +165,74 @@ export class DetalleAsignaturaComponent implements OnInit {
   }
 
   getGraficoAsistenciaAsignatura(){
+    this.loadGraficoAsistenciaAsignatura = true
     this._asignaturaService.getGraficoAsistenciaAsignatura(this.id_asignatura,this.token).subscribe((data:any)=>{
       this.barChartDataAsistencia = data['data']
       this.barChartLabelsAsistencia = data['labels']
-      if(this.contador<8){
-        this.contador = this.contador +1 
-      }
+      this.loadGraficoAsistenciaAsignatura = false
     })
   }
   getGraficoRendimientoEvaluacionesAsignatura(){
+    this.loadGraficoRendimientoEvaluacionesAsignatura = true
     this._asignaturaService.getGraficoRendimientoEvaluacionesAsignatura(this.id_asignatura,this.token).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
-      if(this.contador<8){
-        this.contador = this.contador +1 
-      }
+      this.loadGraficoRendimientoEvaluacionesAsignatura = false
     })
   }
   getProfesoresAsignatura(){
+    this.loadProfesoresAsignatura = true
     this._profesorService.getProfesoresAsignatura(this.id_asignatura,this.token).subscribe((data:Profesor[])=>{
       this.profesores = data
       this.collectionSizeProfesor = this.profesores.length;
       for(let alumno of this.profesores){
         alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
-      if(this.contador<8){
-        this.contador = this.contador +1 
-      }
+      this.loadProfesoresAsignatura = false
     })   
   }
 
   getAsignatura(){
+    this.loadAsignatura = true
     this._asignaturaService.getAsignatura(this.id_asignatura,this.token).subscribe((data:Asignatura)=>{
       this.asignatura = data;
-      if(this.contador<8){
-        this.contador = this.contador +1 
-      }
+      this.loadAsignatura = false
     })
   }
 
   getAsistenciasAsignatura(){
+    this.loadAsistenciasAsignatura = true
     this._asistenciaService.getAsistenciasAsignatura(this.id_asignatura,this.token).subscribe((data:Asistencia[])=>{
       this.asistencias = data
       this.collectionSizeAsistencia = this.asistencias.length
-      if(this.contador<8){
-        this.contador = this.contador +1 
-      }
+      this.loadAsistenciasAsignatura = false
     })
   }
 
   getPruebasAsignatura(){
+    this.loadPruebasAsignatura = true
     this._pruebaService.getPruebasAsignaturas(this.id_asignatura,this.token).subscribe((data:Prueba[])=>{
       this.pruebas = data
       this.collectionSizeEvaluacion = this.pruebas.length
-      if(this.contador<8){
-        this.contador = this.contador +1 
-      }
+      this.loadPruebasAsignatura = false
     })
   }
 
   getAlertasAsignatura(){
+    this.loadAlertasAsignatura = true
     this._alertaService.getAlertasAsignatura(this.id_asignatura,this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       this.collectionSizeAlerta = this.alertas.length
-      if(this.contador<8){
-        this.contador = this.contador +1 
-      }
+      this.loadAlertasAsignatura = false
     })
   }
 
   getTopicosAsignatura(){
+    this.loadTopicosAsignatura = true
     this._topicoService.getTopicosAsignatura(this.id_asignatura,this.token).subscribe((data:Topico[])=>{
       this.topicos = data;
       this.collectionSizeTopico = this.topicos.length
-      if(this.contador<8){
-        this.contador = this.contador +1 
-      }
+      this.loadTopicosAsignatura = false
     })
   }
 
