@@ -28,12 +28,9 @@ export class StorageService {
     var session: Session = this.getCurrentSession();
     return (session && session.user) ? session.user : null;
   };
-  isAuthenticated(): boolean {
-    return (this.getCurrentToken() != null) ? true : false;
-  };
 
   isAuthenticatedAdmin(): boolean{
-    if (this.getCurrentToken() != '') {
+    if (this.getCurrentUser()['tipo'] == 'ADMINISTRADOR') {
       return true
     }
     else{
@@ -41,7 +38,7 @@ export class StorageService {
     }
   }
   isAuthenticatedProfesor(): boolean{
-    if (this.getCurrentToken() != '') {
+    if (this.getCurrentUser()['tipo'] == 'PROFESOR') {
       return true
     }
     else{
@@ -49,7 +46,7 @@ export class StorageService {
     }
   }
   isAuthenticatedAlumno(): boolean{
-    if (this.getCurrentToken() != '') {
+    if (this.getCurrentUser()['tipo'] == 'ALUMNO') {
       return true
     }
     else{
