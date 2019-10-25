@@ -1,5 +1,5 @@
 <div class="my-container">
-  <ngx-loading [show]="contador!=8 || loading" [config]="{ fullScreenBackdrop: true,
+  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true,
                   backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
                   primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
   </ngx-loading>
@@ -32,10 +32,17 @@
                 <div>
                   <h5>Promedio tipo de evaluación cursos</h5>
                   <div>
-                    <div style="display: block">
+                    <div *ngIf="!loadGraficoRendimientoEvaluacionesAsignatura" style="display: block">
                       <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
                         [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
                       </canvas>
+                    </div>
+                    <div *ngIf="loadGraficoRendimientoEvaluacionesAsignatura" class="col-lg-12 row">
+                      <div
+                        style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                        class="jumbotron">
+                        <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -49,16 +56,21 @@
                 <div>
                   <h5>Asistencia Cursos</h5>
                   <div>
-                    <div style="display: block">
+                    <div *ngIf="!loadGraficoAsistenciaAsignatura" style="display: block">
                       <canvas baseChart [datasets]="barChartDataAsistencia" [labels]="barChartLabelsAsistencia"
                         [options]="barChartOptionsAsistencia" [plugins]="barChartPluginsAsistencia"
                         [legend]="barChartLegendAsistencia" [chartType]="barChartTypeAsistencia">
                       </canvas>
                     </div>
+                    <div *ngIf="loadGraficoAsistenciaAsignatura" class="col-lg-12 row">
+                      <div
+                        style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                        class="jumbotron">
+                        <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>
@@ -110,6 +122,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadProfesoresAsignatura">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadProfesoresAsignatura && profesores_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran profesores
+                        </td>
+                      </tr>
                       <tr *ngFor="let profesor of profesores_tabla">
                         <th scope="row">
                           <img [src]='profesor.imagen' class="mr-2" style="width: 50px">
@@ -152,11 +174,21 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadAsistenciasAsignatura">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadAsistenciasAsignatura && asistencias_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran asistencias
+                        </td>
+                      </tr>
                       <tr *ngFor="let asistencia of asistencias_tabla">
                         <td>{{ asistencia.fecha }}</td>
-                        <td>{{ asistencia.curso.nombre }}</td>
-                        <td>{{ asistencia.alumnos_presentes.length }}</td>
-                        <td>{{ asistencia.alumnos_ausentes.length }}</td>
+                        <td>{{ asistencia.curso }}</td>
+                        <td>{{ asistencia.alumnos_presentes }}</td>
+                        <td>{{ asistencia.alumnos_ausentes }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -193,6 +225,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadPruebasAsignatura">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadPruebasAsignatura && evaluaciones_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran evaluaciones
+                        </td>
+                      </tr>
                       <tr *ngFor="let evaluacion of evaluaciones_tabla">
                         <td>{{ evaluacion.nombre }}</td>
                         <td>{{ evaluacion.cantidad_preguntas }}</td>
@@ -252,6 +294,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadAlertasAsignatura">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadAlertasAsignatura && alertas_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alertas
+                        </td>
+                      </tr>
                       <tr *ngFor="let alerta of alertas_tabla">
                         <th scope="row">
                           <img [src]='alerta.alumno.imagen' class="mr-2" style="width: 50px">
@@ -296,6 +348,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadTopicosAsignatura">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadTopicosAsignatura && topicos_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alertas
+                        </td>
+                      </tr>
                       <tr *ngFor="let topico of topicos_tabla">
                         <td>{{ topico.nombre }}</td>
                         <td>

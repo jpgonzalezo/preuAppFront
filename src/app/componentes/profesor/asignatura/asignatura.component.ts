@@ -16,13 +16,11 @@ import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
 import { Config } from 'src/app/config';
 import swal from'sweetalert2';
 import { ChartType } from 'chart.js';
-import { MultiDataSet, Label } from 'ng2-charts';
+import { Label } from 'ng2-charts';
 import { ChartOptions, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-import { Color, BaseChartDirective} from 'ng2-charts';
-//import * as pluginAnnotations from 'chartjs-plugin-annotation';
 @Component({
   selector: 'app-asignatura',
   templateUrl: './asignatura.component.html',
@@ -85,7 +83,14 @@ export class AsignaturaComponent implements OnInit {
   public barChartPlugins = [pluginDataLabels];
   public barChartData: ChartDataSets[] = [{ data: [], label: '' }];
   token: string
-  contador = 0
+  loadProfesoresAsignatura:boolean = true;
+  loadAsignatura:boolean = true;
+  loadAsistenciasAsignatura:boolean = true;
+  loadPruebasAsignatura:boolean = true;
+  loadAlertasAsignatura:boolean = true;
+  loadTopicosAsignatura:boolean = true;
+  loadGraficoRendimientoEvaluacionesAsignatura:boolean = true;
+  loadGraficoAsistenciaAsignatura:boolean = true;
   constructor(
     private _asignaturaService: AsignaturaService,
     private _activatedRoute: ActivatedRoute,
@@ -96,8 +101,7 @@ export class AsignaturaComponent implements OnInit {
     private _alertaService: AlertaService,
     private _topicoService: TopicoService,
     private _localService: LocalService,
-    private _storageService: StorageService,
-    private _evaluacionService: EvaluacionService
+    private _storageService: StorageService
   ) { 
     this.asignatura = new Asignatura();
     this.profesores = [];
@@ -166,66 +170,61 @@ export class AsignaturaComponent implements OnInit {
   }
 
   getGraficoAsistenciaAsignatura(){
+    this.loadGraficoAsistenciaAsignatura=true;
     this._asignaturaService.getGraficoAsistenciaAsignaturaToken(this.token).subscribe((data:any)=>{
-      this.barChartDataAsistencia = data['data']
-      this.barChartLabelsAsistencia = data['labels']
-      if(this.contador<8){
-        this.contador = this.contador +1
-      }
+      this.barChartDataAsistencia = data['data'];
+      this.barChartLabelsAsistencia = data['labels'];
+      this.loadGraficoAsistenciaAsignatura=false;
     })
   }
   getGraficoRendimientoEvaluacionesAsignatura(){
+    this.loadGraficoRendimientoEvaluacionesAsignatura=true;
     this._asignaturaService.getGraficoRendimientoEvaluacionesAsignaturaToken(this.token).subscribe((data:any)=>{
       this.barChartLabels = data['labels']
       this.barChartData = data['data']
-      if(this.contador<8){
-        this.contador = this.contador +1
-      }
+      this.loadGraficoRendimientoEvaluacionesAsignatura=false;
     })
   }
   getProfesoresAsignatura(){
+    this.loadProfesoresAsignatura=true;
     this._profesorService.getProfesoresAsignaturaToken(this.token).subscribe((data:Profesor[])=>{
       this.profesores = data
       this.collectionSizeProfesor = this.profesores.length;
       for(let alumno of this.profesores){
         alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
-      if(this.contador<8){
-        this.contador = this.contador +1
-      }
+      this.loadProfesoresAsignatura=false;
     })   
   }
 
   getAsignatura(){
+    this.loadAsignatura=true;
     this._asignaturaService.getAsignaturaToken(this.token).subscribe((data:Asignatura)=>{
       this.asignatura = data;
-      if(this.contador<8){
-        this.contador = this.contador +1
-      }
+      this.loadAsignatura=false;
     })
   }
 
   getAsistenciasAsignatura(){
+    this.loadAsistenciasAsignatura=true;
     this._asistenciaService.getAsistenciasAsignaturaToken(this.token).subscribe((data:Asistencia[])=>{
-      this.asistencias = data
-      this.collectionSizeAsistencia = this.asistencias.length
-      if(this.contador<8){
-        this.contador = this.contador +1
-      }
+      this.asistencias = data;
+      this.collectionSizeAsistencia = this.asistencias.length;
+      this.loadAsistenciasAsignatura=false;
     })
   }
 
   getPruebasAsignatura(){
+    this.loadPruebasAsignatura=true;
     this._pruebaService.getPruebasAsignaturaToken(this.token).subscribe((data:Prueba[])=>{
-      this.pruebas = data
-      this.collectionSizeEvaluacion = this.pruebas.length
-      if(this.contador<8){
-        this.contador = this.contador +1
-      }
+      this.pruebas = data;
+      this.collectionSizeEvaluacion = this.pruebas.length;
+      this.loadPruebasAsignatura=false;
     })
   }
 
   getAlertasAsignatura(){
+    this.loadAlertasAsignatura=true;
     this._alertaService.getAlertasAsignaturaToken(this.token).subscribe((data:Alerta[])=>{
       this.alertas = data
       for(let alerta of this.alertas){
@@ -236,20 +235,17 @@ export class AsignaturaComponent implements OnInit {
           alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.imagen
         }
       }
-      this.collectionSizeAlerta = this.alertas.length
-      if(this.contador<8){
-        this.contador = this.contador +1
-      }
+      this.collectionSizeAlerta = this.alertas.length;
+      this.loadAlertasAsignatura=false;
     })
   }
 
   getTopicosAsignatura(){
+    this.loadTopicosAsignatura=true;
     this._topicoService.getTopicosAsignaturaToken(this.token).subscribe((data:Topico[])=>{
       this.topicos = data;
-      this.collectionSizeTopico = this.topicos.length
-      if(this.contador<8){
-        this.contador = this.contador +1
-      }
+      this.collectionSizeTopico = this.topicos.length;
+      this.loadTopicosAsignatura=false;
     })
   }
 
@@ -362,7 +358,7 @@ export class AsignaturaComponent implements OnInit {
           this.loading = false
           if(data['Response']=="exito"){
             swal.fire({
-              title:'Borrado!',
+              title:'Registro exitoso!',
               text:'Se ha guardado el registro exitosamente.',
               type:'success',
               confirmButtonColor: '#2dce89',
