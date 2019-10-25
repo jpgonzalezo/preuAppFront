@@ -1,14 +1,8 @@
-<div class="my-container">
-  <ngx-loading [show]="contador!=5" [config]="{ fullScreenBackdrop: true,
-                  backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
-                  primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
-  </ngx-loading>
-</div>
 <app-header></app-header>
 <main>
   <section class="section ">
     <div class="container">
-      <h2 class="display-3">{{prueba.nombre}} ({{prueba.tipo}})</h2>
+      <h2 class="display-3">{{prueba.nombre}}</h2>
       <hr>
       <div class="row row-grid align-items-center">
 
@@ -37,11 +31,18 @@
                   <h5>Rendimiento por pregunta de evaluación</h5>
                   <div>
                     <div>
-                      <div style="display: block">
+                      <div *ngIf="!loadGraficoRendimientoPreguntas" style="display: block">
                         <canvas baseChart [datasets]="barChartDataPreguntas" [labels]="barChartLabelsPreguntas"
                           [options]="barChartOptionsPreguntas" [plugins]="barChartPluginsPreguntas"
                           [legend]="barChartLegendPreguntas" [chartType]="barChartTypePreguntas">
                         </canvas>
+                      </div>
+                      <div *ngIf="loadGraficoRendimientoPreguntas" class="col-lg-12 row">
+                        <div
+                          style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                          class="jumbotron">
+                          <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -60,11 +61,18 @@
                   <h5>Rendimiento por tópicos</h5>
                   <div>
                     <div>
-                      <div style="display: block">
+                      <div *ngIf="!loadGraficoRendimientoTopicos" style="display: block">
                         <canvas baseChart [datasets]="barChartDataTopicos" [labels]="barChartLabelsTopicos"
                           [options]="barChartOptionsTopicos" [plugins]="barChartPluginsTopicos"
                           [legend]="barChartLegendTopicos" [chartType]="barChartTypeTopicos">
                         </canvas>
+                      </div>
+                    </div>
+                    <div *ngIf="loadGraficoRendimientoTopicos" class="col-lg-12 row">
+                      <div
+                        style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                        class="jumbotron">
+                        <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
                       </div>
                     </div>
                   </div>
@@ -80,10 +88,17 @@
                   <h5>Asistencia Cursos</h5>
                   <div>
                     <div>
-                      <div style="display: block">
+                      <div *ngIf="!loadGraficoRendimientoCursos" style="display: block">
                         <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
                           [chartType]="doughnutChartType">
                         </canvas>
+                      </div>
+                      <div *ngIf="loadGraficoRendimientoCursos" class="col-lg-12 row">
+                        <div
+                          style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                          class="jumbotron">
+                          <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -106,7 +121,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" id="topicos-tab" data-toggle="tab" href="#topicos_existente" role="tab"
-                aria-controls="topicos" aria-selected="false">Topicos</a>
+                aria-controls="topicos" aria-selected="false">Tópicos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="evaluaciones-tab" data-toggle="tab" href="#evaluaciones_existente" role="tab"
@@ -126,10 +141,20 @@
                       <tr>
                         <th scope="col">Pregunta</th>
                         <th scope="col" *ngIf="prueba.tipo != 'TAREA'">Alternativa Correcta</th>
-                        <th scope="col">Topico</th>
+                        <th scope="col">Tópico</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadPrueba">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadPrueba && preguntas_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran preguntas
+                        </td>
+                      </tr>
                       <tr *ngFor="let pregunta of preguntas_tabla">
                         <td>{{ pregunta.numero_pregunta }}</td>
                         <td *ngIf="prueba.tipo != 'TAREA'">{{ pregunta.alternativa }}</td>
@@ -163,6 +188,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadPrueba">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadPrueba && preguntas_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran tópicos
+                        </td>
+                      </tr>
                       <tr *ngFor="let topico of topicos_tabla">
                         <td>{{ topico.nombre }}</td>
                       </tr>
@@ -201,6 +236,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="loadEvaluacionesRealizadas">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadEvaluacionesRealizadas && evaluaciones_realizadas_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran evaluaciones realizadas
+                        </td>
+                      </tr>
                       <tr *ngFor="let evaluacion of evaluaciones_realizadas_tabla">
                         <td>{{ evaluacion.alumno.nombres }} {{ evaluacion.alumno.apellido_paterno }}
                           {{ evaluacion.alumno.apellido_materno }}</td>

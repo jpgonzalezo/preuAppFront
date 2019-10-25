@@ -35,7 +35,6 @@ export class DetalleEvaluacionComponent implements OnInit {
   pageEvaluacionesRealizadas: number;
   pageSizeEvaluacionesRealizadas: number;
   collectionSizeEvaluacionesRealizadas: number;
-  contador=0
   public barChartOptionsPreguntas: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
@@ -51,10 +50,7 @@ export class DetalleEvaluacionComponent implements OnInit {
   public barChartTypePreguntas: ChartType = 'bar';
   public barChartLegendPreguntas = true;
   public barChartPluginsPreguntas = [pluginDataLabels];
-
   public barChartDataPreguntas: ChartDataSets[] = [{ data: [], label: '' }];
-
-
   public barChartOptionsTopicos: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
@@ -71,11 +67,15 @@ export class DetalleEvaluacionComponent implements OnInit {
   public barChartLegendTopicos = true;
   public barChartPluginsTopicos = [pluginDataLabels];
   public barChartDataTopicos: ChartDataSets[] = [{ data: [], label: '' }];
-
   public doughnutChartLabels: Label[] = [];
   public doughnutChartData: MultiDataSet = [[]];
   public doughnutChartType: ChartType = 'doughnut';
   token: string
+  loadPrueba:boolean =true;
+  loadEvaluacionesRealizadas:boolean =true;
+  loadGraficoRendimientoPreguntas:boolean =true;
+  loadGraficoRendimientoTopicos:boolean =true;
+  loadGraficoRendimientoCursos:boolean =true;
   constructor(
     private _pruebaService: PruebaService, 
     private _activatedRoute: ActivatedRoute,
@@ -113,32 +113,29 @@ export class DetalleEvaluacionComponent implements OnInit {
   }
 
   getGraficoRendimientoPreguntas(){
+    this.loadGraficoRendimientoPreguntas = true;
     this._pruebaService.getGraficoRendimientoPreguntas(this.id_evaluacion,this.token).subscribe((data:any)=>{
       this.barChartLabelsPreguntas= data['labels']
       this.barChartDataPreguntas= data['data']
-      if(this.contador<5){
-        this.contador = this.contador + 1
-      }
+      this.loadGraficoRendimientoPreguntas = false;
     })
   }
 
   getGraficoRendimientoTopicos(){
+    this.loadGraficoRendimientoTopicos = true;
     this._pruebaService.getGraficoRendimientoTopicos(this.id_evaluacion,this.token).subscribe((data:any)=>{
       this.barChartLabelsTopicos= data['labels']
       this.barChartDataTopicos= data['data']
-      if(this.contador<5){
-        this.contador = this.contador + 1
-      }
+      this.loadGraficoRendimientoTopicos = false;
     })
   }
 
   getGraficoRendimientoCursos(){
+    this.loadGraficoRendimientoCursos = true;
     this._pruebaService.getGraficoRendimientoCursos(this.id_evaluacion,this.token).subscribe((data:any)=>{
       this.doughnutChartLabels= data['labels']
       this.doughnutChartData= data['data']
-      if(this.contador<5){
-        this.contador = this.contador + 1
-      }
+      this.loadGraficoRendimientoCursos = false;
     })
   }
   volver(){
@@ -146,25 +143,23 @@ export class DetalleEvaluacionComponent implements OnInit {
   }
 
   getPrueba(){
+    this.loadPrueba=true;
     this._pruebaService.getPrueba(this.id_evaluacion,this.token).subscribe((data:Prueba)=>{
       this.prueba = data
       this.topicos = data.topicos
       this.preguntas = data.preguntas
       this.collectionSizeTopico = this.topicos.length
       this.collectionSizePreguntas = this.prueba.preguntas.length
-      if(this.contador<5){
-        this.contador = this.contador + 1
-      }
+      this.loadPrueba=false;
     })
   }
 
   getEvaluacionesRealizadas(){
+    this.loadEvaluacionesRealizadas=true;
     this._evaluacionService.getEvaluacionesPrueba(this.id_evaluacion,this.token).subscribe((data:Evaluacion[])=>{
       this.evaluaciones = data
       this.collectionSizeEvaluacionesRealizadas = this.evaluaciones.length
-      if(this.contador<5){
-        this.contador = this.contador + 1
-      }
+      this.loadEvaluacionesRealizadas=false;
     })
   }
 
