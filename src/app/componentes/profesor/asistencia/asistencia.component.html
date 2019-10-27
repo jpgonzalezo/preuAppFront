@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header-profesor></app-header-profesor>
 <main>
   <section class="section ">
     <div class="container">
@@ -95,7 +95,6 @@
                         <th scope="col">Asignatura</th>
                         <th scope="col">Asistencia</th>
                         <th scope="col">Causa</th>
-                        <th scope="col">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -117,14 +116,6 @@
                         <td>{{ justificacion.asistencia.asignatura }}</td>
                         <td>{{ justificacion.asistencia.fecha }}</td>
                         <td>{{ justificacion.causa }}</td>
-                        <td>
-                          <button type="button" class="btn btn-danger btn-sm"
-                            (click)="deleteJustificacion(justificacion.id)">
-                            <i class="fas fa-trash-alt">
-
-                            </i>
-                          </button>
-                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -144,11 +135,10 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   </section>
 </main>
-<app-footer></app-footer>
+<app-footer-profesor></app-footer-profesor>

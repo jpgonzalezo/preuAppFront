@@ -31,12 +31,14 @@ import { CursosComponent } from './cursos/cursos.component';
 import { DetalleCursoComponent } from './detalle-curso/detalle-curso.component';
 import { DetalleAlumnoComponent } from './detalle-alumno/detalle-alumno.component';
 import { AlertasComponent } from './alertas/alertas.component';
+import { AsistenciaComponent } from './asistencia/asistencia.component';
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
     { path: 'calendario', component: CalendarioComponent},
     { path: 'eventos', component: ListadoSolicitudEventosComponent },
     { path: 'cursos', component: CursosComponent },
     { path: 'alertas', component: AlertasComponent },
+    { path: 'asistencia', component: AsistenciaComponent },
     { path: 'detalle/alumno/:id', component: DetalleAlumnoComponent },
     { path: 'cursos/detalle/:id', component: DetalleCursoComponent},
     { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent},
@@ -79,7 +81,8 @@ const routes: Routes = [
         CursosComponent,
         DetalleCursoComponent,
         DetalleAlumnoComponent,
-        AlertasComponent
+        AlertasComponent,
+        AsistenciaComponent
     ],
     exports: [
         RouterModule
