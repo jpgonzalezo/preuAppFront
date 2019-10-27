@@ -1,0 +1,334 @@
+<app-header-profesor></app-header-profesor>
+<main>
+  <section class="section ">
+    <div class="container">
+      <h2 class="display-3">{{curso.nombre}}</h2>
+      <hr>
+      <div class="row row-grid align-items-center">
+
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="rendimiento-tab" data-toggle="tab" href="#rendimiento_observacion"
+                role="tab" aria-controls="rendimiento" aria-selected="false">Rendimiento</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia_observacion" role="tab"
+                aria-controls="asistencia" aria-selected="true">Asistencia</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="rendimiento_observacion" role="tabpanel"
+              aria-labelledby="rendimiento-tab">
+              <div class="mb-8 ">
+                <br>
+                <div>
+                  <h5>Promedio puntaje asignaturas</h5>
+                  <div>
+                    <div *ngIf="!loadCurso" style="display: block">
+                      <canvas baseChart [data]="polarAreaChartData" [labels]="polarAreaChartLabels"
+                        [legend]="polarAreaLegend" [chartType]="polarAreaChartType">
+                      </canvas>
+                    </div>
+                    <div *ngIf="loadCurso" class="col-lg-12 row">
+                      <div
+                        style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                        class="jumbotron">
+                        <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="asistencia_observacion" role="tabpanel"
+              aria-labelledby="asistencia-tab">
+              <div class="mb-8 ">
+                <br>
+                <div>
+                  <h5>Asistencia anual</h5>
+                  <div>
+                    <div>
+                      <div *ngIf="!loadCurso" style="display: block">
+                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                          [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
+                          [chartType]="barChartType">
+                        </canvas>
+                      </div>
+                      <div *ngIf="loadCurso" class="col-lg-12 row">
+                        <div
+                          style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                          class="jumbotron">
+                          <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div>
+                  <h5>Asistencia asignaturas</h5>
+                  <div>
+                    <div *ngIf="!loadCurso" style="display: block">
+                      <canvas baseChart [datasets]="barChartDataAsignatura" [labels]="barChartLabelsAsignatura"
+                        [options]="barChartOptionsAsignatura" [plugins]="barChartPluginsAsignatura"
+                        [legend]="barChartLegendAsignatura" [chartType]="barChartTypeAsignatura">
+                      </canvas>
+                    </div>
+                    <div *ngIf="loadCurso" class="col-lg-12 row">
+                      <div
+                        style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+                        class="jumbotron">
+                        <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <hr>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="alumnos-tab" data-toggle="tab" href="#alumnos_existente" role="tab"
+                aria-controls="alumnos" aria-selected="false">Alumnos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia_existente" role="tab"
+                aria-controls="asistencia" aria-selected="false">Asistencia</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="alertas-tab" data-toggle="tab" href="#alertas_existente" role="tab"
+                aria-controls="alertas" aria-selected="false">Alertas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="asignaturas-tab" data-toggle="tab" href="#asignaturas_existente" role="tab"
+                aria-controls="asignaturas" aria-selected="false">Asignaturas</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <!--COLEGIOS EXISTENTE TAB-->
+            <div class="tab-pane fade show active" id="alumnos_existente" role="tabpanel" aria-labelledby="alumnos-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">R.U.N</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido paterno</th>
+                        <th scope="col">Apellido materno</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadAlumnosCurso">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadAlumnosCurso && alumnos_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alumnos
+                        </td>
+                      </tr>
+                      <tr *ngFor="let alumno of alumnos_tabla">
+                        <th scope="row">
+                          <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ alumno.rut }}</td>
+                        <td>{{ alumno.nombres }}</td>
+                        <td>{{ alumno.apellido_paterno }}</td>
+                        <td>{{ alumno.apellido_materno }}</td>
+                        <td>{{ alumno.email }}</td>
+                        <td>{{ alumno.telefono }}</td>
+                        <td>
+                          <div class="row text-center">
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlumno" [(page)]="pageAlumno"
+                      [pageSize]="pageSizeAlumno">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumno">
+                      <option [ngValue]="10">10 alumnos por página</option>
+                      <option [ngValue]="20">20 alumnos por página</option>
+                      <option [ngValue]="30">30 alumnos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="asistencia_existente" role="tabpanel" aria-labelledby="asistencia-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Asignatura</th>
+                        <th scope="col">Alumnos Presentes</th>
+                        <th scope="col">Alumnos Ausentes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadAsistenciaCurso">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadAsistenciaCurso && asistencias_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran asistencia
+                        </td>
+                      </tr>
+                      <tr *ngFor="let asistencia of asistencias_tabla">
+                        <td>{{ asistencia.fecha }}</td>
+                        <td>{{ asistencia.asignatura }}</td>
+                        <td>{{ asistencia.alumnos_presentes }}</td>
+                        <td>{{ asistencia.alumnos_ausentes }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAsistencia" [(page)]="pageAsistencia"
+                      [pageSize]="pageSizeAsistencia">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsistencia">
+                      <option [ngValue]="10">10 asistencias por página</option>
+                      <option [ngValue]="20">20 asistencias por página</option>
+                      <option [ngValue]="30">30 asistencias por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="alertas_existente" role="tabpanel" aria-labelledby="alertas-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Contenido</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadAlertasCurso">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadAlertasCurso && alertas_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alertas
+                        </td>
+                      </tr>
+                      <tr *ngFor="let alerta of alertas_tabla">
+                        <td>{{ alerta.fecha }}</td>
+                        <td>{{ alerta.alumno.nombres }} {{ alerta.alumno.apellido_paterno }}
+                          {{ alerta.alumno.apellido_materno }}</td>
+                        <td>
+                          <span *ngIf="alerta.tipo == 'RENDIMIENTO'"
+                            class="badge badge-pill badge-danger">{{ alerta.tipo }}</span>
+                          <span *ngIf="alerta.tipo == 'ASISTENCIA'"
+                            class="badge badge-pill badge-warning">{{ alerta.tipo }}</span>
+                        </td>
+                        <td>{{ alerta.data }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlerta" [(page)]="pageAlerta"
+                      [pageSize]="pageSizeAlerta">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlerta">
+                      <option [ngValue]="10">10 alertas por página</option>
+                      <option [ngValue]="20">20 alertas por página</option>
+                      <option [ngValue]="30">30 alertas por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="asignaturas_existente" role="tabpanel"
+              aria-labelledby="asignaturas-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadCurso">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadCurso && asignaturas_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran asignaturas
+                        </td>
+                      </tr>
+                      <tr *ngFor="let asignatura of asignaturas_tabla">
+                        <td>{{ asignatura.nombre }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAsignatura" [(page)]="pageAsignatura"
+                      [pageSize]="pageSizeAsignatura">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsignatura">
+                      <option [ngValue]="5">5 asignaturas por página</option>
+                      <option [ngValue]="10">10 asignaturas por página</option>
+                      <option [ngValue]="15">15 asignaturas por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
+        </button>
+        <br>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer-profesor></app-footer-profesor>
