@@ -1,0 +1,213 @@
+<div class="my-container">
+    <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true,
+                  backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+                  primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+    </ngx-loading>
+  </div>
+  <app-header-profesor></app-header-profesor>
+  <main class="profile-page">
+    <section class="section-profile-cover section-shaped my-0">
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="card card-profile shadow mt--300">
+          <div class="px-3">
+  
+            <div class="mt-5 py-5  text-center">
+              <h4 class="display-3 pull-rigth"> Resumen asistencia </h4>
+              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Curso: {{curso.nombre}}</div>
+              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Asignatura: {{asignatura.nombre}}</div>
+              <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Fecha: {{asistencia.fecha}}</div>
+              <div class="row justify-content-center">
+                <div class="col-xl-12">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="presente-tab" data-toggle="tab" href="#presente" role="tab"
+                        aria-controls="presente" aria-selected="false">Presentes</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="ausente-tab" data-toggle="tab" href="#ausente" role="tab"
+                        aria-controls="ausente" aria-selected="true">Ausentes</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="justificacion-tab" data-toggle="tab" href="#justificacion" role="tab"
+                        aria-controls="justificacion" aria-selected="true">Justificaciones</a>
+                    </li>
+                  </ul>
+  
+                  <div class="tab-content" id="myTabContent">
+  
+                    <div class="tab-pane fade show active" id="presente" role="tabpanel" aria-labelledby="presente-tab">
+                      <div class="mb-8 ">
+                        <br>
+                        <div class="table-responsive-lg">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col"></th>
+                                <th scope="col">R.U.N</th>
+                                <th scope="col">Nombres</th>
+                                <th scope="col">Apellido paterno</th>
+                                <th scope="col">Apellido materno</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Telefono</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngIf="loadingAsistencia">
+                                <td colspan="10" class="shine text-center">
+                                  <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                                </td>
+                              </tr>
+                              <tr *ngIf="!loadingAsistencia && alumnos_presentes_tabla.length == 0">
+                                <td colspan="10" class="text-center">
+                                  No se registran alumnos presentes
+                                </td>
+                              </tr>
+                              <tr *ngFor="let alumno of alumnos_presentes_tabla">
+                                <th scope="row">
+                                  <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                                </th>
+                                <td>{{ alumno.rut }}</td>
+                                <td>{{ alumno.nombres }}</td>
+                                <td>{{ alumno.apellido_paterno}}</td>
+                                <td>{{ alumno.apellido_materno}}</td>
+                                <td>{{ alumno.email }}</td>
+                                <td>{{ alumno.telefono }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination [collectionSize]="collectionSizePresentes" [(page)]="pagePresentes"
+                              [pageSize]="pageSizePresentes">
+                            </ngb-pagination>
+  
+                            <select class="custom-select" style="width: auto" [(ngModel)]="pageSizePresentes">
+                              <option [ngValue]="5">5 alumnos por página</option>
+                              <option [ngValue]="10">10 alumnos por página</option>
+                              <option [ngValue]="20">20 alumnos por página</option>
+                              <option [ngValue]="30">30 alumnos por página</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="tab-pane fade show" id="ausente" role="tabpanel" aria-labelledby="ausente-tab">
+                      <div class="mb-8 ">
+                        <br>
+                        <div class="table-responsive-lg">
+                          <table class="table table-striped table-responsive">
+                            <thead>
+                              <tr>
+                                <th scope="col"></th>
+                                <th scope="col">R.U.N</th>
+                                <th scope="col">Nombres</th>
+                                <th scope="col">Apellido paterno</th>
+                                <th scope="col">Apellido materno</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Telefono</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngIf="loadingAsistencia">
+                                <td colspan="10" class="shine text-center">
+                                  <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                                </td>
+                              </tr>
+                              <tr *ngIf="!loadingAsistencia && alumnos_ausentes_tabla.length == 0">
+                                <td colspan="10" class="text-center">
+                                  No se registran alumnos ausentes
+                                </td>
+                              </tr>
+                              <tr *ngFor="let alumno of alumnos_ausentes_tabla">
+                                <th scope="row">
+                                  <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                                </th>
+                                <td>{{ alumno.rut }}</td>
+                                <td>{{ alumno.nombres }}</td>
+                                <td>{{ alumno.apellido_paterno}}</td>
+                                <td>{{ alumno.apellido_materno}}</td>
+                                <td>{{ alumno.email }}</td>
+                                <td>{{ alumno.telefono }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination [collectionSize]="collectionSizeAusentes" [(page)]="pageAusentes"
+                              [pageSize]="pageSizeAusentes">
+                            </ngb-pagination>
+  
+                            <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAusentes">
+                              <option [ngValue]="5">5 alumnos por página</option>
+                              <option [ngValue]="10">10 alumnos por página</option>
+                              <option [ngValue]="20">20 alumnos por página</option>
+                              <option [ngValue]="30">30 alumnos por página</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="tab-pane fade show" id="justificacion" role="tabpanel"
+                      aria-labelledby="justificacion-tab">
+                      <div class="mb-8 ">
+                        <br>
+                        <div class="table-responsive-lg">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Alumno</th>
+                                <th scope="col">Curso</th>
+                                <th scope="col">Asignatura</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Causa</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngIf="loadingJustificaciones">
+                                <td colspan="10" class="shine text-center">
+                                  <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                                </td>
+                              </tr>
+                              <tr *ngIf="!loadingJustificaciones && justificaciones_tabla.length == 0">
+                                <td colspan="10" class="text-center">
+                                  No se registran justificaciones
+                                </td>
+                              </tr>
+                              <tr *ngFor="let justificacion of justificaciones_tabla">
+                                <td>{{justificacion.alumno.nombres}} {{justificacion.alumno.apellido_paterno}}
+                                  {{justificacion.alumno.apellido_materno}}</td>
+                                <td>{{justificacion.asistencia.curso.nombre}}</td>
+                                <td>{{justificacion.asistencia.asignatura.nombre}}</td>
+                                <td>{{justificacion.fecha}}</td>
+                                <td>{{justificacion.causa}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination [collectionSize]="collectionSizeJustificacion" [(page)]="pageJustificacion"
+                              [pageSize]="pageSizeJustificacion">
+                            </ngb-pagination>
+                            <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeJustificacion">
+                              <option [ngValue]="2">2 justificaciones por página</option>
+                              <option [ngValue]="4">4 justificaciones por página</option>
+                              <option [ngValue]="6">6 justificaciones por página</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="text-center">
+      <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver </button>
+    </div>
+  </main>
+  <app-footer-profesor></app-footer-profesor>
