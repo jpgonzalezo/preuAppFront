@@ -27,10 +27,12 @@ import { CalendarioComponent } from './calendario/calendario.component';
 import { RegistrarEvaluacionComponent } from './registrar-evaluacion/registrar-evaluacion.component';
 import { EditarEvaluacionComponent } from './editar-evaluacion/editar-evaluacion.component';
 import { ListadoSolicitudEventosComponent } from './listado-solicitud-eventos/listado-solicitud-eventos.component';
+import { CursosComponent } from './cursos/cursos.component';
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
     { path: 'calendario', component: CalendarioComponent},
     { path: 'eventos', component: ListadoSolicitudEventosComponent },
+    { path: 'cursos', component: CursosComponent },
     { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent},
     { path: 'detalle/evaluacion/:id/registrar/curso/:id_curso', component: RegistrarEvaluacionComponent},
     { path: 'detalle/evaluacion/:id/editar', component: EditarEvaluacionComponent}
@@ -67,7 +69,8 @@ const routes: Routes = [
         CalendarioComponent,
         RegistrarEvaluacionComponent,
         EditarEvaluacionComponent,
-        ListadoSolicitudEventosComponent
+        ListadoSolicitudEventosComponent,
+        CursosComponent
     ],
     exports: [
         RouterModule

@@ -1,0 +1,70 @@
+<app-header-profesor></app-header-profesor>
+<main>
+  <section class="section ">
+    <div class="container">
+      <h2 class="display-3">Cursos preuniversitario</h2>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="cursos-tab" data-toggle="tab" href="#cursos_existente" role="tab"
+                aria-controls="colegio" aria-selected="false">Cursos</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <!--COLEGIOS EXISTENTE TAB-->
+            <div class="tab-pane fade show active" id="cursos_existente" role="tabpanel" aria-labelledby="cursos-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="load">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!load && cursos_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran cursos
+                        </td>
+                      </tr>
+                      <tr *ngFor="let curso of cursos_tabla">
+                        <td>{{ curso.nombre }}</td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="generarVistaDetalleCurso(curso.id)"><i class="far fa-eye"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeCurso" [(page)]="pageCurso"
+                      [pageSize]="pageSizeCurso">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeCurso">
+                      <option [ngValue]="2">2 cursos por página</option>
+                      <option [ngValue]="4">4 cursos por página</option>
+                      <option [ngValue]="6">6 cursos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer-profesor></app-footer-profesor>
