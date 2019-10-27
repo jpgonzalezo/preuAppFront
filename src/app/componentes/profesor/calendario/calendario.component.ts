@@ -56,13 +56,14 @@ export class CalendarioComponent implements OnInit {
   }
   nuevoEvento(arg) {
     var cursos_dict = {}
+    cursos_dict["TODOS_CURSOS"] = "Todos los cursos del preuniversitario";
     for(let curso of this.cursos){
       cursos_dict[curso.id] = curso.nombre
     }
     swal.fire({
       type: 'question',
-      title: 'Nuevo Evento',
-      text: 'Desea agregar un nuevo evento a la fecha '+arg.dateStr+' ?',
+      title: 'Nueva solicitud de evento',
+      text: 'Desea agregar una nueva solicitud a la fecha '+arg.dateStr+' ?',
       showCancelButton: true,
       confirmButtonColor: '#2dce89',
       cancelButtonColor: '#fb6340',

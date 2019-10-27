@@ -45,6 +45,6 @@ export class EventoService {
         const options = {
             headers: headers
         }
-        return this.httpClient.put(`${this.API_URL}/eventos/${id}`,options).pipe(map(res => res))
+        return this.httpClient.put(`${this.API_URL}/eventos/${id}`,[],options).pipe(map(res => res))
     }
 }

@@ -45,7 +45,9 @@
                       <tr *ngFor="let evento of eventos_tabla">
                         <td>{{ evento.start }}</td>
                         <td>{{ evento.title }}</td>
-                        <td>{{ evento.curso.nombre }}</td>
+                        <td>
+                          <b *ngFor="let curso of evento.cursos">{{ curso }}<br></b>
+                        </td>
                         <td>
                           <div class="row">
                             <button type="button" class="btn btn-danger btn-sm" (click)="deleteEvento(evento.id)"><i
@@ -97,9 +99,14 @@
                       <tr *ngFor="let evento of solicitudes_tabla">
                         <td>{{ evento.start }}</td>
                         <td>{{ evento.title }}</td>
-                        <td>{{ evento.curso.nombre }}</td>
+                        <td>
+                          <b *ngFor="let curso of evento.cursos">{{ curso }}<br></b>
+                        </td>
                         <td>
                           <div class="row">
+                            <button type="button" class="btn btn-success btn-sm" (click)="aceptarEvento(evento.id)">
+                                <i class="fas fa-calendar-check"></i>
+                            </button>
                             <button type="button" class="btn btn-danger btn-sm" (click)="deleteEvento(evento.id)"><i
                                 class="fas fa-trash-alt"></i></button>
                           </div>

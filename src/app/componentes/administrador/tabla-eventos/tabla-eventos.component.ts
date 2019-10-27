@@ -28,7 +28,7 @@ export class TablaEventosComponent implements OnInit {
     this.solicitudes = []
     this.pageEvento = 1
     this.pageSizeEvento = 10
-    this.pageEvento = 1
+    this.pageSolicitud = 1
     this.pageSizeSolicitud =10
   }
 
