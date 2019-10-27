@@ -1,59 +1,27 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  AlumnoService
-} from '../../../servicios/alumno.service';
-import {
-  JustificacionService
-} from 'src/app/servicios/justificacion.service';
-import {
-  ObservacionService
-} from '../../../servicios/observacion.service';
-import {
-  AlertaService
-} from 'src/app/servicios/alerta.service';
-import {
-  Router
-} from '@angular/router';
-import {
-  ActivatedRoute
-} from '@angular/router';
-import {
-  StorageService
-} from 'src/app/servicios/storage.service';
-import {
-  Justificacion
-} from 'src/app/modelos/justificacion.model';
-import {
-  Alerta
-} from 'src/app/modelos/alerta.model';
+import { Component,OnInit } from '@angular/core';
+import { AlumnoService } from '../../../servicios/alumno.service';
+import { JustificacionService } from 'src/app/servicios/justificacion.service';
+import { ObservacionService } from '../../../servicios/observacion.service';
+import { AlertaService } from 'src/app/servicios/alerta.service';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { StorageService } from 'src/app/servicios/storage.service';
+import { Justificacion } from 'src/app/modelos/justificacion.model';
+import { Alerta } from 'src/app/modelos/alerta.model';
 import swal from 'sweetalert2';
-import {
-  Config
-} from 'src/app/config';
-import {
-  ChartDataSets,
-  ChartType,
-  RadialChartOptions
-} from 'chart.js';
-import {
-  Label,
-  MultiDataSet
-} from 'ng2-charts';
-import {
-  ChartOptions
-} from 'chart.js';
+import { Config } from 'src/app/config';
+import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
+import { Label, MultiDataSet } from 'ng2-charts';
+import { ChartOptions } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import {
-  LocalService
-} from 'src/app/servicios/local.service';
+import { LocalService } from 'src/app/servicios/local.service';
+
 @Component({
-  selector: 'app-hoja-vida',
-  templateUrl: './hoja-vida.component.html'
+  selector: 'app-detalle-alumno',
+  templateUrl: './detalle-alumno.component.html',
+  styleUrls: ['./detalle-alumno.component.css']
 })
-export class HojaVidaComponent implements OnInit {
+export class DetalleAlumnoComponent implements OnInit {
   pageAdministrador: number;
   pageProfesor: number;
   pagePsicologo: number;
@@ -141,7 +109,8 @@ export class HojaVidaComponent implements OnInit {
     label: ''
   }];
   token: string
-  constructor(private _alumnoService: AlumnoService,
+  constructor(
+    private _alumnoService: AlumnoService,
     private _observacionService: ObservacionService,
     private router: Router,
     private _activatedRoute: ActivatedRoute,
@@ -149,7 +118,7 @@ export class HojaVidaComponent implements OnInit {
     private _localService: LocalService,
     private _justificacionService: JustificacionService,
     private _alertaService: AlertaService
-  ) {
+  ) { 
     this.hoja_vida = []
     this.observaciones_admin = []
     this.observaciones_profe = []
@@ -310,54 +279,8 @@ export class HojaVidaComponent implements OnInit {
       .slice((this.pageProfesor - 1) * this.pageSizeObservacionProfesor, (this.pageProfesor - 1) * this.pageSizeObservacionProfesor + this.pageSizeObservacionProfesor);
   }
 
-  public cancelar() {
-    this.router.navigateByUrl('/admin/perfiles');
-  }
-
-  public cambiarFoto() {
-    swal.fire({
-      title: 'Foto de perfil',
-      text: "Desea cambiar la foto de perfil?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#2dce89',
-      cancelButtonColor: '#fb6340',
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No'
-    }).then((result2) => {
-      if (result2.dismiss == null) {
-        swal.fire({
-          title: 'Foto de perfil',
-          text: 'Seleccione una foto de perfil',
-          input: 'file',
-          inputAttributes: {
-            'accept': 'image/*'
-          },
-          confirmButtonColor: '#2dce89',
-        }).then((result3) => {
-          if (result3.dismiss == null) {
-            this.loading = true
-            var file = result3.value
-            var formData = new FormData()
-            formData.append('imagen', file)
-            this._alumnoService.uploadImage(formData, this.id_hoja_vida, this.token).subscribe((data: any) => {
-              if (data['Response'] == "exito") {
-                this.loading = false
-                swal.fire({
-                  title: 'Registro exitoso',
-                  text: 'Se ha guardado al alumno exitosamente!',
-                  type: 'success',
-                  confirmButtonColor: '#2dce89',
-                }).then((result) => {
-                  this.cancelar()
-                })
-              }
-              this.loading = false
-            })
-          }
-        })
-      }
-    })
+  public cancelar(id:string) {
+    this.router.navigateByUrl('/profesor/cursos/detalle/'+id);
   }
 
   public modalNuevaObservacion() {
@@ -368,17 +291,8 @@ export class HojaVidaComponent implements OnInit {
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
       showCancelButton: true,
-      progressSteps: ['1', '2', '3']
-    }).queue([{
-        title: 'Tipo de observación',
-        input: 'select',
-        inputOptions: {
-          'OBSERVACION_ADMINISTRADOR': 'Administrador',
-          'OBSERVACION_PSICOLOGO': 'Psicologo',
-          'OBSERVACION_PSICOPEDAGOGO': 'Psicopedagogo'
-        },
-        inputPlaceholder: 'Seleccione un tipo',
-      },
+      progressSteps: ['1', '2']
+    }).queue([
       {
         title: 'Título Observación',
         input: 'text',
@@ -391,7 +305,7 @@ export class HojaVidaComponent implements OnInit {
       }
     ]).then((result) => {
       if (result.value) {
-        if (result.value[0] == "" || result.value[1] == "" || result.value[2] == "") {
+        if (result.value[0] == "" || result.value[1] == "") {
           swal.fire({
             title: 'Error',
             type: 'error',
@@ -402,11 +316,12 @@ export class HojaVidaComponent implements OnInit {
             }
           })
         } else {
+          this._storageService.getCurrentUser().nombres
           this._observacionService.postObservacion({
             'alumno': this.id_hoja_vida,
-            'tipo': result.value[0],
-            'titulo': result.value[1],
-            'contenido': result.value[2]
+            'tipo': "OBSERVACION_PROFESOR",
+            'titulo': result.value[0],
+            'contenido': result.value[1]
           }, this.token).subscribe((data: any) => {
             if (data['Response'] == 'exito') {
               swal.fire({
@@ -428,4 +343,5 @@ export class HojaVidaComponent implements OnInit {
       }
     })
   }
+
 }

@@ -14,7 +14,6 @@ import { Asistencia } from 'src/app/modelos/asistencia.model';
 import Swal from 'sweetalert2';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-
 import { SingleDataSet, Label } from 'ng2-charts';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
