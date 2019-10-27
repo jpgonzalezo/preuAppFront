@@ -23,7 +23,15 @@ export class AlumnoService {
   		headers: headers
   	}
     return this.httpClient.get(`${this.API_URL}/alumnos`,options).pipe(map(res => res))
-	}
+  }
+  
+  getAlumnoToken(token:string):any{
+  	const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/alumno/token`,options).pipe(map(res => res))
+  }
 
 	postAlumno(data:any,token:string):any{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'auth-token':token});

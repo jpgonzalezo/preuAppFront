@@ -18,13 +18,8 @@ registerLocaleData(localeEs);
 import { HomeComponent } from './home/home.component';
 import { HeaderAlumnoComponent } from './header-alumno/header-alumno.component';
 import { FooterAlumnoComponent } from './footer-alumno/footer-alumno.component';
-import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 const routes: Routes = [
-    { path: '', component: HomeComponent },
-    //ng g c nombreComponente
-    //ng g m nombreModulo
-    //agregar path aqui
-    { path: 'perfil', component: MiPerfilComponent}
+    { path: '', component: HomeComponent }
 ];
 
 @NgModule({
@@ -42,8 +37,7 @@ const routes: Routes = [
     declarations: [
         HomeComponent,
         HeaderAlumnoComponent,
-        FooterAlumnoComponent,
-        MiPerfilComponent
+        FooterAlumnoComponent
     ],
     exports: [
         RouterModule
