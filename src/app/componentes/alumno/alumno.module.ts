@@ -9,6 +9,10 @@ import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule} from '@angular/forms';
 import { CompartidoModule } from 'src/app/componentes/compartido.module';
+import { Ng2Rut } from 'ng2-rut';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+import { AgGridModule } from 'ag-grid-angular';
 // register 'es' locale
 registerLocaleData(localeEs);
 
@@ -18,8 +22,10 @@ registerLocaleData(localeEs);
 import { HomeComponent } from './home/home.component';
 import { HeaderAlumnoComponent } from './header-alumno/header-alumno.component';
 import { FooterAlumnoComponent } from './footer-alumno/footer-alumno.component';
+import { CalendarioComponent } from './calendario/calendario.component';
 const routes: Routes = [
-    { path: '', component: HomeComponent }
+    { path: '', component: HomeComponent },
+    { path: 'calendario', component: CalendarioComponent }
 ];
 
 @NgModule({
@@ -32,12 +38,25 @@ const routes: Routes = [
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        CompartidoModule
+        CompartidoModule,
+        ReactiveFormsModule,
+        FullCalendarModule,
+        Ng2Rut,
+        AgGridModule.withComponents([]),
+        NgxLoadingModule.forRoot({  
+            animationType: ngxLoadingAnimationTypes.circleSwish,
+            backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+            backdropBorderRadius: '4px',
+            primaryColour: '#ffffff', 
+            secondaryColour: '#ffffff', 
+            tertiaryColour: '#ffffff'
+        })
     ],
     declarations: [
         HomeComponent,
         HeaderAlumnoComponent,
-        FooterAlumnoComponent
+        FooterAlumnoComponent,
+        CalendarioComponent
     ],
     exports: [
         RouterModule
