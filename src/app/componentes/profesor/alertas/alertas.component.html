@@ -1,0 +1,75 @@
+<app-header-profesor></app-header-profesor>
+<main>
+  <section class="section">
+    <div class="container">
+      <h3 class="display-3">Alertas Preuniversitario</h3>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="alerta-tab" data-toggle="tab" href="#alerta_existente" role="tab"
+                aria-controls="alerta" aria-selected="false">Alertas</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="alerta_existente" role="tabpanel" aria-labelledby="alerta-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Asignatura</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Alerta</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadAlertas">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadAlertas && alertas_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alertas
+                        </td>
+                      </tr>
+                      <tr *ngFor="let alerta of alertas_tabla">
+                        <th scope="row">
+                          <img [src]='alerta.alumno.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ alerta.alumno.nombres }} {{ alerta.alumno.apellido_paterno }}
+                          {{ alerta.alumno.apellido_materno }}</td>
+                        <td>{{alerta.alumno.curso.nombre}}</td>
+                        <td>{{alerta.asignatura.nombre}}</td>
+                        <td>{{alerta.fecha}}</td>
+                        <td>{{alerta.tipo}}</td>
+                        <td>{{alerta.data}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlerta" [(page)]="pageAlerta"
+                      [pageSize]="pageSizeAlerta">
+                    </ngb-pagination>
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlerta">
+                      <option [ngValue]="10">10 alertas por página</option>
+                      <option [ngValue]="20">20 alertas por página</option>
+                      <option [ngValue]="30">30 alertas por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer-profesor></app-footer-profesor>
