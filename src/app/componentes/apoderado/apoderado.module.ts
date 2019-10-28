@@ -16,11 +16,12 @@ import { AgGridModule } from 'ag-grid-angular';
 import { InicioComponent } from './inicio/inicio.component';
 import { HeaderApoderadoComponent } from './header-apoderado/header-apoderado.component';
 import { FooterApoderadoComponent } from './footer-apoderado/footer-apoderado.component';
+import { CalendarioComponent } from './calendario/calendario.component';
 registerLocaleData(localeEs);
 
 const routes: Routes = [
     { path: '', component: InicioComponent },
-    //{ path: 'calendario', component: CalendarioComponent },
+    { path: 'calendario', component: CalendarioComponent },
 ];
 
 @NgModule({
@@ -50,7 +51,8 @@ const routes: Routes = [
     declarations: [
     InicioComponent,
     HeaderApoderadoComponent,
-    FooterApoderadoComponent],
+    FooterApoderadoComponent,
+    CalendarioComponent],
     exports: [
         RouterModule
     ],

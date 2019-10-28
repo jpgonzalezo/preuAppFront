@@ -1,0 +1,26 @@
+<app-header-apoderado></app-header-apoderado>
+<main>
+  <section class="section section-lg">
+    <div class="container">
+      <div *ngIf="!load" class='app' height="200px">
+        <div class='app-calendar'>
+          <full-calendar #calendar defaultView="dayGridMonth" [header]="{
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+              }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarEvents"
+            [locale]="esLocale" themeSystem="bootstrap" [eventLimit]="true">
+          </full-calendar>
+        </div>
+      </div>
+      <div *ngIf="load" class="col-lg-12 row">
+        <div
+          style="width: 100%;min-height:200px; border: 1px solid #ffffff;background-color: rgb(255, 255, 255);text-align: center"
+          class="jumbotron">
+          <h2 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h2>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer-apoderado></app-footer-apoderado>
