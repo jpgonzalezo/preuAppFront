@@ -90,6 +90,10 @@ export class InicioComponent implements OnInit {
       this.loading = false
       this.router.navigate(['/alumno']); 
     }
+    if(tipo == 'APODERADO'){
+      this.loading = false
+      this.router.navigate(['/apoderado']); 
+    }
   }
   cambiarPersona(tipo:string){
     this.persona = tipo;

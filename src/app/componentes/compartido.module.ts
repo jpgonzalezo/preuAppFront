@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthorizatedGuard, AuthorizatedGuardProfesor, AuthorizatedGuardAlumno } from 'src/app/componentes/authorizated.guard';
+import { AuthorizatedGuard, AuthorizatedGuardProfesor, AuthorizatedGuardAlumno, AuthorizatedGuardApoderado } from 'src/app/componentes/authorizated.guard';
 //SERVICIOS
 import { LoginService } from 'src/app/servicios/login.service';
 import { StorageService } from 'src/app/servicios/storage.service';
@@ -32,6 +32,7 @@ import { AdministradorService } from 'src/app/servicios/administrador.service';
         AuthorizatedGuard,
         AuthorizatedGuardProfesor,
         AuthorizatedGuardAlumno,
+        AuthorizatedGuardApoderado,
         ProfesorService,
         AsignaturaService,
         AsistenciaService,

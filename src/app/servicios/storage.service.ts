@@ -53,6 +53,15 @@ export class StorageService {
       return false
     }
   }
+
+  isAuthenticatedApoderado(): boolean{
+    if (this.getCurrentUser()['tipo'] == 'APODERADO') {
+      return true
+    }
+    else{
+      return false
+    }
+  }
   getCurrentToken(): string {
     var session = this.getCurrentSession();
     return (session && session.token) ? session.token : null;

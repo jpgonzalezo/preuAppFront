@@ -42,3 +42,17 @@ export class AuthorizatedGuardAlumno implements CanActivate {
   }
 
 }
+
+@Injectable()
+export class AuthorizatedGuardApoderado implements CanActivate {
+  constructor(private router: Router,
+              private storageService: StorageService) { }
+  canActivate() {
+    if (this.storageService.isAuthenticatedApoderado()) {
+      return true;
+    }
+    this.router.navigate(['/inicio']);
+    return false;
+  }
+
+}
