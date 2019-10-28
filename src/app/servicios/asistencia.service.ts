@@ -54,6 +54,14 @@ export class AsistenciaService {
 	  	return this.httpClient.get(`${this.API_URL}/asistencias/asignatura`,options).pipe(map(res => res))
 	}
 
+	getAsistenciaAlumnoAsignatura(token:string,id_asignatura:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.get(`${this.API_URL}/asistencias/alumno/asignatura/${id_asignatura}`,options).pipe(map(res => res))
+	}
+
 	deleteAsistencia(id:string,token:string){
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
   	const options = {

@@ -28,7 +28,8 @@ import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignat
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'calendario', component: CalendarioComponent },
-    { path: 'asignaturas', component: AsignaturasComponent }
+    { path: 'asignaturas', component: AsignaturasComponent },
+    { path: 'asignaturas/:id/detalle', component: DetalleAsignaturaComponent }
 ];
 
 @NgModule({

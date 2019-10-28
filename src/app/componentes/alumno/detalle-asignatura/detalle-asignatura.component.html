@@ -1,0 +1,300 @@
+<app-header-alumno></app-header-alumno>
+<main>
+  <section class="section ">
+    <div class="container">
+      <h2 class="display-3">{{asignatura.nombre}}</h2>
+      <hr>
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <h5>Evaluaciones realizadas</h5><br>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="taller-tab" data-toggle="tab" href="#taller_existente" role="tab"
+                aria-controls="taller" aria-selected="false">Talleres</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="ensayo-tab" data-toggle="tab" href="#ensayo_existente" role="tab"
+                aria-controls="ensayo" aria-selected="false">Ensayos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="tarea-tab" data-toggle="tab" href="#tarea_existente" role="tab"
+                aria-controls="tarea" aria-selected="false">Tareas</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="taller_existente" role="tabpanel" aria-labelledby="taller-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Evaluacion</th>
+                        <th scope="col">Correctas</th>
+                        <th scope="col">Incorrectas</th>
+                        <th scope="col">Omitidas</th>
+                        <th scope="col">Puntaje</th>
+                        <th scope="col">Respuestas</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadTaller">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadTaller && talleres_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran talleres
+                        </td>
+                      </tr>
+                      <tr *ngFor="let evaluacion of talleres_tabla">
+                        <td>{{ evaluacion.prueba.nombre }}</td>
+                        <td>
+                          <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
+                        </td>
+                        <td>
+                          <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
+                        </td>
+                        <td>
+                          <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
+                        </td>
+                        <td>
+                          {{evaluacion.puntaje}}
+                        </td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
+                                class="far fa-eye"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeTaller" [(page)]="pageTaller"
+                      [pageSize]="pageSizeTaller">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeTaller">
+                      <option [ngValue]="5">5 talleres por página</option>
+                      <option [ngValue]="10">10 talleres por página</option>
+                      <option [ngValue]="15">15 talleres por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="ensayo_existente" role="tabpanel" aria-labelledby="ensayo-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Evaluacion</th>
+                        <th scope="col">Correctas</th>
+                        <th scope="col">Incorrectas</th>
+                        <th scope="col">Omitidas</th>
+                        <th scope="col">Puntaje</th>
+                        <th scope="col">Respuestas</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadEnsayo">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadEnsayo && ensayos_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran ensayos
+                        </td>
+                      </tr>
+                      <tr *ngFor="let evaluacion of ensayos_tabla">
+                        <td>{{ evaluacion.prueba.nombre }}</td>
+                        <td>
+                          <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
+                        </td>
+                        <td>
+                          <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
+                        </td>
+                        <td>
+                          <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
+                        </td>
+                        <td>
+                          {{evaluacion.puntaje}}
+                        </td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
+                                class="far fa-eye"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeEnsayo" [(page)]="pageEnsayo"
+                      [pageSize]="pageSizeEnsayo">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeEnsayo">
+                      <option [ngValue]="5">5 ensayos por página</option>
+                      <option [ngValue]="10">10 ensayos por página</option>
+                      <option [ngValue]="15">15 ensayos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="tab-pane fade show" id="tarea_existente" role="tabpanel" aria-labelledby="tarea-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Evaluacion</th>
+                        <th scope="col">Correctas</th>
+                        <th scope="col">Incorrectas</th>
+                        <th scope="col">Omitidas</th>
+                        <th scope="col">Puntaje</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadTarea">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadTarea && tareas_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran tareas
+                        </td>
+                      </tr>
+                      <tr *ngFor="let evaluacion of tareas_tabla">
+                        <td>{{ evaluacion.prueba.nombre }}</td>
+                        <td>
+                          <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
+                        </td>
+                        <td>
+                          <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
+                        </td>
+                        <td>
+                          <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
+                        </td>
+                        <td>
+                          {{evaluacion.puntaje}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeTarea" [(page)]="pageTarea"
+                      [pageSize]="pageSizeTarea">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeTarea">
+                      <option [ngValue]="5">5 tareas por página</option>
+                      <option [ngValue]="10">10 tareas por página</option>
+                      <option [ngValue]="15">15 tareas por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <h5>Asistencia a clases</h5><br>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="asistencia-tab" data-toggle="tab" href="#asistencia_existente" role="tab"
+                aria-controls="asistencia" aria-selected="false">Asistencia</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="asistencia_existente" role="tabpanel"
+              aria-labelledby="asistencia-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Presente</th>
+                        <th scope="col">Justificación</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadAsistencia">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadAsistencia && asistencias_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran asistencias
+                        </td>
+                      </tr>
+                      <tr *ngFor="let asistencia of asistencias_tabla">
+                        <td>{{ asistencia.fecha }}</td>
+                        <td>
+                          <div *ngIf="!asistencia.presente">
+                            <div class="icon icon-shape bg-gradient-danger rounded-circle text-white mb-1">
+                              <i class="far fa-times-circle text-white" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                          <div *ngIf="asistencia.presente">
+                            <div class="icon icon-shape bg-gradient-success rounded-circle text-white mb-1">
+                              <i class="far fa-check-circle text-white" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                        </td>
+                        <td>{{ asistencia.justificacion }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAsistencia" [(page)]="pageAsistencia"
+                      [pageSize]="pageSizeAsistencia">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsistencia">
+                      <option [ngValue]="10">10 asistencias por página</option>
+                      <option [ngValue]="20">20 asistencias por página</option>
+                      <option [ngValue]="30">30 asistencias por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
+        </button>
+        <br>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer-alumno></app-footer-alumno>
