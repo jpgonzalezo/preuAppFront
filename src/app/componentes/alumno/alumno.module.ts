@@ -23,9 +23,12 @@ import { HomeComponent } from './home/home.component';
 import { HeaderAlumnoComponent } from './header-alumno/header-alumno.component';
 import { FooterAlumnoComponent } from './footer-alumno/footer-alumno.component';
 import { CalendarioComponent } from './calendario/calendario.component';
+import { AsignaturasComponent } from './asignaturas/asignaturas.component';
+import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'calendario', component: CalendarioComponent }
+    { path: 'calendario', component: CalendarioComponent },
+    { path: 'asignaturas', component: AsignaturasComponent }
 ];
 
 @NgModule({
@@ -56,7 +59,9 @@ const routes: Routes = [
         HomeComponent,
         HeaderAlumnoComponent,
         FooterAlumnoComponent,
-        CalendarioComponent
+        CalendarioComponent,
+        AsignaturasComponent,
+        DetalleAsignaturaComponent
     ],
     exports: [
         RouterModule
