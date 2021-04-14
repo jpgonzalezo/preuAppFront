@@ -26,7 +26,8 @@ import { CalendarioComponent } from './calendario/calendario.component';
 import { AsignaturasComponent } from './asignaturas/asignaturas.component';
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', redirectTo: 'calendario', pathMatch: 'full' },
+    { path: 'perfil', component: HomeComponent },
     { path: 'calendario', component: CalendarioComponent },
     { path: 'asignaturas', component: AsignaturasComponent },
     { path: 'asignaturas/:id/detalle', component: DetalleAsignaturaComponent }
