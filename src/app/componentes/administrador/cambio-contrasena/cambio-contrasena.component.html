@@ -1,0 +1,102 @@
+<app-header></app-header>
+<main>
+  <section class="section section-md ">
+      <div class="container pt-lg-sm">
+          <div class="row justify-content-center">
+              <div class="col-lg-5">
+              <div class="card bg-secondary shadow border-0">
+
+                  <div class="card-body px-lg-5 py-lg-5">
+                  <form role="form" [formGroup]="formGroupCambiarContrasena">
+                    <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-key"></i></span>
+                          </div>
+                          <input name="actual_password" formControlName="actual_password" type="password" class="form-control" placeholder="Contraseña actual" [type]="hide_actual ? 'text' : 'password'">
+                          <mat-icon color="color_teal" matSuffix (click)="hide_actual = !hide_actual" style="color: #11cdef; padding-top: 10px;">
+                            {{hide_actual ? 'visibility' : 'visibility_off'}}
+                          </mat-icon>
+                      </div>
+                      <mat-error *ngIf="this.formGroupCambiarContrasena.get('actual_password').invalid">
+                        {{getErrorMessagePassword()}}
+                      </mat-error>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                          </div>
+                          <input name="new_password" formControlName="new_password" type="password" class="form-control" placeholder="Nueva contraseña" [type]="hide_new ? 'text' : 'password'">
+                          <mat-icon color="color_teal" matSuffix (click)="hide_new = !hide_new" style="color: #11cdef; padding-top: 10px;">
+                            {{hide_new ? 'visibility' : 'visibility_off'}}
+                          </mat-icon>
+                      </div>
+                      <mat-error *ngIf="this.formGroupCambiarContrasena.get('new_password').hasError('required')">
+                        {{getErrorMessageNewPassword('new_password','required')}}
+                        <br>
+                      </mat-error>
+                      <mat-error *ngIf="this.formGroupCambiarContrasena.get('new_password').hasError('minlength')">
+                        {{getErrorMessageNewPassword('new_password','minlength')}}
+                        <br>
+                      </mat-error>
+                      <mat-error *ngIf="this.formGroupCambiarContrasena.get('new_password').hasError('maxlength')">
+                        {{getErrorMessageNewPassword('new_password','maxlength')}}
+                        <br>
+                      </mat-error>
+                      
+                      <mat-error *ngIf="this.formGroupCambiarContrasena.get('new_password').hasError('notNumber')">
+                        {{getErrorMessageNewPassword('new_password','notNumber')}}
+                        <br>
+                      </mat-error>
+                      
+                      <mat-error *ngIf="this.formGroupCambiarContrasena.get('new_password').hasError('notUpper')">
+                        {{getErrorMessageNewPassword('new_password','notUpper')}}
+                        <br>
+                      </mat-error>
+                      
+                      <mat-error *ngIf="this.formGroupCambiarContrasena.get('new_password').hasError('notLower')">
+                        {{getErrorMessageNewPassword('new_password','notLower')}}
+                      </mat-error>
+
+
+
+                     
+
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-clipboard-check"></i></span>
+                          </div>
+                          <input name="repeat_password" formControlName="repeat_password" type="password" class="form-control" placeholder="Repetir nueva contraseña" [type]="hide_confirmation ? 'text' : 'password'">
+                          <mat-icon color="color_teal" matSuffix (click)="hide_confirmation = !hide_confirmation" style="color: #11cdef; padding-top: 10px;">
+                            {{hide_confirmation ? 'visibility' : 'visibility_off'}}
+                          </mat-icon>
+                      </div>
+                      <mat-error *ngIf="f.repeat_password.errors && f.repeat_password.errors.mustMatch">
+                        Las contraseñas no coinciden
+                      </mat-error>
+                      <mat-error *ngIf="this.formGroupCambiarContrasena.get('repeat_password').invalid">
+                        {{getErrorMessageRepeatPassword()}}
+                      </mat-error>
+                    </div>
+                    <div class="text-center">
+                      <button type="button" class="btn btn-primary my-4" (click)="cambiarContrasena()" [disabled]="formGroupCambiarContrasena.invalid">Cambiar contraseña</button>
+                    </div>
+                  </form>
+                  </div>
+              </div>
+              </div>
+          </div>
+      </div>
+      <!-- SVG separator -->
+      <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+      </div>
+  </section>
+
+</main>
+<app-footer></app-footer>

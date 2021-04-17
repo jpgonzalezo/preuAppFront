@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import localeEs from '@angular/common/locales/es';
-import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts-x';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/componentes/material.module';
 registerLocaleData(localeEs);
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
@@ -29,6 +30,7 @@ const routes: Routes = [
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
+        MaterialModule,
         NgxLoadingModule.forRoot({  
             animationType: ngxLoadingAnimationTypes.circleSwish,
             backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
