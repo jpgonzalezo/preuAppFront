@@ -13,6 +13,7 @@ import { Ng2Rut } from 'ng2-rut';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AgGridModule } from 'ag-grid-angular';
+import { MaterialModule } from 'src/app/componentes/material.module';
 // register 'es' locale
 registerLocaleData(localeEs);
 
@@ -25,12 +26,14 @@ import { FooterAlumnoComponent } from './footer-alumno/footer-alumno.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { AsignaturasComponent } from './asignaturas/asignaturas.component';
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
+import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 const routes: Routes = [
     { path: '', redirectTo: 'calendario', pathMatch: 'full' },
     { path: 'perfil', component: HomeComponent },
     { path: 'calendario', component: CalendarioComponent },
     { path: 'asignaturas', component: AsignaturasComponent },
-    { path: 'asignaturas/:id/detalle', component: DetalleAsignaturaComponent }
+    { path: 'asignaturas/:id/detalle', component: DetalleAsignaturaComponent },
+    { path: 'change_password', component: CambioContrasenaComponent }
 ];
 
 @NgModule({
@@ -47,6 +50,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         FullCalendarModule,
         Ng2Rut,
+        MaterialModule,
         AgGridModule.withComponents([]),
         NgxLoadingModule.forRoot({  
             animationType: ngxLoadingAnimationTypes.circleSwish,
@@ -63,7 +67,8 @@ const routes: Routes = [
         FooterAlumnoComponent,
         CalendarioComponent,
         AsignaturasComponent,
-        DetalleAsignaturaComponent
+        DetalleAsignaturaComponent,
+        CambioContrasenaComponent
     ],
     exports: [
         RouterModule

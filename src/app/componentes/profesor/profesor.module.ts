@@ -12,6 +12,7 @@ import { Ng2Rut } from 'ng2-rut';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AgGridModule } from 'ag-grid-angular';
+import { MaterialModule } from 'src/app/componentes/material.module';
 // register 'es' locale
 registerLocaleData(localeEs);
 
@@ -34,6 +35,7 @@ import { AlertasComponent } from './alertas/alertas.component';
 import { AsistenciaComponent } from './asistencia/asistencia.component';
 import { NuevaAsistenciaComponent } from './nueva-asistencia/nueva-asistencia.component';
 import { DetalleAsistenciaComponent } from './detalle-asistencia/detalle-asistencia.component';
+import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
     { path: 'calendario', component: CalendarioComponent},
@@ -47,7 +49,9 @@ const routes: Routes = [
     { path: 'cursos/detalle/:id', component: DetalleCursoComponent},
     { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent},
     { path: 'detalle/evaluacion/:id/registrar/curso/:id_curso', component: RegistrarEvaluacionComponent},
-    { path: 'detalle/evaluacion/:id/editar', component: EditarEvaluacionComponent}
+    { path: 'detalle/evaluacion/:id/editar', component: EditarEvaluacionComponent},
+    { path: 'change_password', component: CambioContrasenaComponent }
+
 ];
 
 @NgModule({
@@ -62,6 +66,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         FullCalendarModule,
         Ng2Rut,
+        MaterialModule,
         AgGridModule.withComponents([]),
         NgxLoadingModule.forRoot({  
             animationType: ngxLoadingAnimationTypes.circleSwish,
@@ -88,7 +93,8 @@ const routes: Routes = [
         AlertasComponent,
         AsistenciaComponent,
         NuevaAsistenciaComponent,
-        DetalleAsistenciaComponent
+        DetalleAsistenciaComponent,
+        CambioContrasenaComponent
     ],
     exports: [
         RouterModule

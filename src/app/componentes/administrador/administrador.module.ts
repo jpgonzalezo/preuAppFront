@@ -11,18 +11,11 @@ import { ReactiveFormsModule} from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { Ng2Rut } from 'ng2-rut';
 import { CompartidoModule } from 'src/app/componentes/compartido.module';
+import { MaterialModule } from 'src/app/componentes/material.module';
 // register 'es' locale
 registerLocaleData(localeEs);
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
-//SERVICIOS
-import { AdministradorCompartidoService } from './administrador.compartido.service';
-import { EstadisticaService } from 'src/app/servicios/estadistica.service';
-import { CursoService } from 'src/app/servicios/curso.service';
-import { AlumnoService } from 'src/app/servicios/alumno.service';
-import { ObservacionService } from 'src/app/servicios/observacion.service';
-import { ColegioService } from 'src/app/servicios/colegio.service';
-import { ApoderadoService } from 'src/app/servicios/apoderado.service';
-import { AdministradorService } from 'src/app/servicios/administrador.service';
+
 //COMPONENTES
 import { HomeComponent } from './home/home.component';
 import { PerfilesComponent } from './perfiles/perfiles.component';
@@ -44,7 +37,7 @@ import { DetalleProfesorComponent } from './detalle-profesor/detalle-profesor.co
 import { DetalleEvaluacionComponent } from './detalle-evaluacion/detalle-evaluacion.component';
 import { TablaEventosComponent } from './tabla-eventos/tabla-eventos.component';
 import { AlertasComponent } from './alertas/alertas.component';
-
+import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 
 
 
@@ -54,6 +47,7 @@ import { AlertasComponent } from './alertas/alertas.component';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbdSortableHeader } from 'src/app/servicios/sorteable.directive';
+
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -71,7 +65,8 @@ const routes: Routes = [
     { path: 'asignaturas/detalle_asignatura/:id', component: DetalleAsignaturaComponent},
     { path: 'cursos', component: CursoComponent},
     { path: 'alertas', component: AlertasComponent},
-    { path: 'cursos/detalle_curso/:id', component: DetalleCursoComponent}
+    { path: 'cursos/detalle_curso/:id', component: DetalleCursoComponent},
+    { path: 'change_password', component: CambioContrasenaComponent}
 ];
 
 @NgModule({
@@ -88,6 +83,7 @@ const routes: Routes = [
         FullCalendarModule,
         Ng2Rut,
         CompartidoModule,
+        MaterialModule,
         NgxLoadingModule.forRoot({  
             animationType: ngxLoadingAnimationTypes.circleSwish,
             backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
@@ -119,7 +115,8 @@ const routes: Routes = [
         DetalleEvaluacionComponent,
         TablaEventosComponent,
         AlertasComponent,
-        NgbdSortableHeader
+        NgbdSortableHeader,
+        CambioContrasenaComponent
     ],
     exports: [
         RouterModule
