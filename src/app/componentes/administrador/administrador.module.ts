@@ -47,11 +47,13 @@ import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbdSortableHeader } from 'src/app/servicios/sorteable.directive';
+import { NuevoAlumnoComponent } from './nuevo-alumno/nuevo-alumno.component';
 
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent},
+    { path: 'perfiles/nuevoAlumno', component: NuevoAlumnoComponent},
     { path: 'eventos', component: TablaEventosComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
     { path: 'perfiles/detalle_profesor/:id', component: DetalleProfesorComponent},
@@ -116,7 +118,8 @@ const routes: Routes = [
         TablaEventosComponent,
         AlertasComponent,
         NgbdSortableHeader,
-        CambioContrasenaComponent
+        CambioContrasenaComponent,
+        NuevoAlumnoComponent
     ],
     exports: [
         RouterModule

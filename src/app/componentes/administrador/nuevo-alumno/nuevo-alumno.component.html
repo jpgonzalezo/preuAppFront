@@ -1,0 +1,185 @@
+<app-header></app-header>
+  <main>
+    <section class="section ">
+      <div class="container">
+
+
+
+        <div fxLayout="row wrap">
+          <div fxFlex.gt-sm="100" fxFlex="100">
+              <mat-card>
+                  <div class="my-container">
+                      <ngx-loading [show]="loading"
+                          [config]="{ 
+                        animationType: 'circle',
+                        backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                        primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+                      </ngx-loading>
+                  </div>
+                  <mat-card-content>
+                      <div class="my-container">
+                          <ngx-loading [show]="loading"
+                              [config]="{ 
+                            animationType: 'circle',
+                            backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                            primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+                          </ngx-loading>
+                      </div>
+                      <mat-card-title>Nuevo alumno</mat-card-title>
+                      <mat-card-subtitle>Complete los campos para crear un nuevo alumno.</mat-card-subtitle>
+
+                      <form class="basic-form" [formGroup]="createForm">
+                        <!-- ============================================================== -->
+                        <!-- column -->
+                        <!-- ============================================================== -->
+                        <div class="row">
+                          <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Nombres</mat-label>
+                              <input matInput formControlName="nombres" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('nombres').invalid">{{getErrorMessageNombres()}}
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Apellido Paterno</mat-label>
+                              <input matInput formControlName="apellido_paterno" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('apellido_paterno').invalid">{{getErrorMessageApellidoPaterno()}}
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Apellido Materno</mat-label>
+                              <input matInput formControlName="apellido_materno" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('apellido_materno').invalid">{{getErrorMessageApellidoMaterno()}}
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Rut</mat-label>
+                              <input matInput formControlName="rut" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('rut').invalid">{{getErrorMessageRut()}}
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field>
+                              <mat-label>Sexo</mat-label>
+                              <mat-select name="sexo" formControlName="sexo"
+                              class="form-control">
+                              <mat-option *ngFor="let sexo of sexos" [value]="sexo.value">
+                                {{sexo.viewValue}}
+                              </mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="this.createForm.get('sexo').invalid">{{getErrorMessageSexo()}}
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field >
+                              <mat-label>Puntaje ingreso</mat-label>
+                              <input matInput formControlName="puntaje_ingreso" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('puntaje_ingreso').invalid">{{getErrorMessagePuntajeIngreso()}}
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Email</mat-label>
+                              <input matInput>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-6">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Teléfono</mat-label>
+                              <input matInput>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Calle</mat-label>
+                              <input matInput>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-3">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Número</mat-label>
+                              <input matInput>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-3">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Piso/Casa/Oficina</mat-label>
+                              <input matInput>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-3">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Comuna</mat-label>
+                              <input matInput>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Curso</mat-label>
+                              <mat-select>
+                                <mat-option value="one">First option</mat-option>
+                                <mat-option value="two">Second option</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-6">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Colegio</mat-label>
+                              <mat-select>
+                                <mat-option value="one">First option</mat-option>
+                                <mat-option value="two">Second option</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="row text-center">
+                          <div class="col-md-12">
+                            <button type="button" class="btn btn-primary my-4" (click)="cambiarContrasena()" >Crear alumno</button>
+                          </div>
+                        </div>
+                      </form>
+
+
+                  </mat-card-content>
+              </mat-card>
+          </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </section>
+  </main>
+<app-footer></app-footer>

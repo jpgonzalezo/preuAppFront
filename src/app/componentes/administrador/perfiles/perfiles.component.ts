@@ -1136,4 +1136,9 @@ export class PerfilesComponent implements OnInit {
       }
     })
   }
+
+  generarNuevoAlumno(){
+    this.router.navigateByUrl('/admin/perfiles/nuevoAlumno');
+  }
+  
 }
