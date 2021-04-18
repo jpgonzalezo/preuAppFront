@@ -25,12 +25,15 @@ import { FooterAlumnoComponent } from './footer-alumno/footer-alumno.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { AsignaturasComponent } from './asignaturas/asignaturas.component';
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
+import { HojaRespuestaComponent } from './hoja-respuesta/hoja-respuesta.component';
+
 const routes: Routes = [
     { path: '', redirectTo: 'calendario', pathMatch: 'full' },
     { path: 'perfil', component: HomeComponent },
     { path: 'calendario', component: CalendarioComponent },
     { path: 'asignaturas', component: AsignaturasComponent },
-    { path: 'asignaturas/:id/detalle', component: DetalleAsignaturaComponent }
+    { path: 'asignaturas/:id/detalle', component: DetalleAsignaturaComponent },
+    { path: 'asignaturas/:id/detalle/evaluacion/:id_evaluacion/hojaRespuesta', component: HojaRespuestaComponent }
 ];
 
 @NgModule({
@@ -63,7 +66,8 @@ const routes: Routes = [
         FooterAlumnoComponent,
         CalendarioComponent,
         AsignaturasComponent,
-        DetalleAsignaturaComponent
+        DetalleAsignaturaComponent,
+        HojaRespuestaComponent
     ],
     exports: [
         RouterModule

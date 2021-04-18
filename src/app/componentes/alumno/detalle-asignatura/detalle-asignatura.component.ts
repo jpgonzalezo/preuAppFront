@@ -182,4 +182,8 @@ export class DetalleAsignaturaComponent implements OnInit {
     });
   }
 
+  irHojaRespuesta(){
+    this._router.navigateByUrl('/alumno/asignaturas/123/detalle/evaluacion/456/hojaRespuesta');
+  }
+
 }
