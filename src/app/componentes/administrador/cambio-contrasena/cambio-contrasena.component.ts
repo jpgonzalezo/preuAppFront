@@ -78,7 +78,56 @@ export class CambioContrasenaComponent implements OnInit {
   get f() { return this.formGroupCambiarContrasena.controls; }
 
   cambiarContrasena(){
-    console.log("cambiar contraseña");
+    const formValue = this.formGroupCambiarContrasena.value
+    this.loading=true;
+    this._loginService.cambiarContrasena(formValue).subscribe((data)=>{
+      this.loading=false;
+      console.log(data)
+      if(data['message']=="great"){
+        swal.fire({
+          type:"success",
+          title:"Registro exitoso",
+          text:"Se ha actualizado su contraseña correctamente",
+          confirmButtonText: 'Aceptar',
+        }).then((result)=>{
+          this.loading = false;
+          this.router.navigate(['/admin']);
+        });
+      }
+      if(data['message']=="incorrect_password"){
+        swal.fire({
+          type:"error",
+          title:"Registro erroneo",
+          text:"Verifique su contraseña actual",
+          confirmButtonText: 'Aceptar',
+        }).then((result)=>{
+          this.loading = false;
+        });
+      }
+      if(data['message']=="error"){
+        swal.fire({
+          type:"error",
+          title:"Registro erroneo",
+          text:"Intentelo más tarde",
+          confirmButtonText: 'Aceptar',
+        }).then((result)=>{
+          this.loading = false;
+          this.router.navigate(['/admin']);
+        });
+      }
+    },
+    (error)=>{
+      this.loading=false;
+      swal.fire({
+        type:"error",
+        title:"Registro erroneo",
+        text:error.error.message,
+        confirmButtonText: 'Aceptar',
+      }).then((result)=>{
+        this.router.navigate(['/admin'])
+      });
+      console.log(error)
+    });
   }
 
   getErrorMessageRepeatPassword(){
@@ -88,7 +137,6 @@ export class CambioContrasenaComponent implements OnInit {
   }
 
   getErrorMessageNewPassword(controlGroup:string,error:string){
-    console.log(this.formGroupCambiarContrasena.get(controlGroup).errors);
     let list_error = {
       required: 'Campo obligatorio.',
       notNumber: 'Debe tener al menos un número.',
