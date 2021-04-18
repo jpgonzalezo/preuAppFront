@@ -184,12 +184,12 @@
                           <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
                         </td>
                       </tr>
-                      <tr *ngIf="!loadapoderado && [] == 0">
+                      <tr *ngIf="!loadapoderado && apoderados.length == 0">
                         <td colspan="10" class="text-center">
                           No se registran apoderados
                         </td>
                       </tr>
-                      <tr *ngFor="let apoderado of []">
+                      <tr *ngFor="let apoderado of apoderados">
                         <th scope="row">
                           <img [src]='apoderado.imagen' class="mr-2" style="width: 50px">
                         </th>
