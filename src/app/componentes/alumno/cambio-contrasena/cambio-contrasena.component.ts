@@ -90,7 +90,7 @@ export class CambioContrasenaComponent implements OnInit {
           confirmButtonText: 'Aceptar',
         }).then((result)=>{
           this.loading = false;
-          this.router.navigate(['/profesor']);
+          this.router.navigate(['/alumno']);
         });
       }
       if(data['message']=="incorrect_password"){
@@ -111,7 +111,7 @@ export class CambioContrasenaComponent implements OnInit {
           confirmButtonText: 'Aceptar',
         }).then((result)=>{
           this.loading = false;
-          this.router.navigate(['/profesor']);
+          this.router.navigate(['/alumno']);
         });
       }
     },
@@ -123,7 +123,7 @@ export class CambioContrasenaComponent implements OnInit {
         text:error.error.message,
         confirmButtonText: 'Aceptar',
       }).then((result)=>{
-        this.router.navigate(['/profesor'])
+        this.router.navigate(['/alumno'])
       });
     });
   }

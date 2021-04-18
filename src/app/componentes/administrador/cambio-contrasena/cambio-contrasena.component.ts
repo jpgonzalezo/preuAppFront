@@ -82,7 +82,6 @@ export class CambioContrasenaComponent implements OnInit {
     this.loading=true;
     this._loginService.cambiarContrasena(formValue).subscribe((data)=>{
       this.loading=false;
-      console.log(data)
       if(data['message']=="great"){
         swal.fire({
           type:"success",
@@ -126,7 +125,6 @@ export class CambioContrasenaComponent implements OnInit {
       }).then((result)=>{
         this.router.navigate(['/admin'])
       });
-      console.log(error)
     });
   }
 
