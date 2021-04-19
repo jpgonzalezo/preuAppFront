@@ -15,13 +15,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let number of respuestas_tabla; let i=index">
+                  <tr *ngFor="let row of respuestas_tabla; let i=index">
                     <td>
-                      {{number.numero_pregunta}}
+                      {{row.numero_pregunta}}
                     </td>
                     <td *ngFor="let number of [].constructor(5); let j=index">
-                      <input type="radio" [(ngModel)]=respuestas[i].alternativa [value]= headers[j+1].value 
-                      (change)=onRadioButtonClick()>
+                      <input type="radio" 
+                             id="{{row.id + j}}" 
+                             name="option{{row.id}}" 
+                             [value]= "headers[j+ 1].value"
+                             (change)= "onRadioButtonClick(i,headers[j+1].value)"
+                      >
                     </td>
                   </tr>
                 </tbody>

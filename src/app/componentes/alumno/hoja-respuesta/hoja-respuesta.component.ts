@@ -20,6 +20,7 @@ export interface Header {
 
 
 export class HojaRespuestaComponent implements OnInit {
+  radioValue: string='';
   preguntas: [];
   respuestas: Respuesta[];
   pageRespuesta: number;
@@ -51,13 +52,14 @@ export class HojaRespuestaComponent implements OnInit {
     ]
   }
 
-  onRadioButtonClick(){
-    console.log(this.respuestas)
+  onRadioButtonClick(index, value){
+    this.respuestas[index].alternativa = value
+    //console.log(this.respuestas)
   }
 
   creaJsonRespuesta() {
     var preguntas = Array.from(Array(70).keys())
-    console.log(preguntas)
+    //console.log(preguntas)
     var array = []
     var i = 0
     preguntas.forEach(function () {
@@ -69,11 +71,11 @@ export class HojaRespuestaComponent implements OnInit {
       i = i + 1
     });
     this.respuestas = array
-    console.log(this.respuestas)
+    console.log(this.respuestas[1])
   }
   get respuestas_tabla(): any[] {
     return this.respuestas
-      .map((pregunta, i) => ({ id: i, ...pregunta }))
+      .map((respuesta, i) => ({ id: i, ...respuesta }))
       .slice((this.pageRespuesta - 1) * this.pageSizeRespuesta, (this.pageRespuesta - 1) * this.pageSizeRespuesta + this.pageSizeRespuesta);
   }
 
