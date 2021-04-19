@@ -1109,7 +1109,7 @@ export class PerfilesComponent implements OnInit {
               this.loading = false
               swal.fire({
                 title: 'Registro exitoso',
-                text: 'Se ha guardado al profesor exitosamente!',
+                text: 'Se ha asignado al alumno exitosamente.',
                 type: 'success',
                 confirmButtonColor: '#2dce89',
               }).then((result)=>{

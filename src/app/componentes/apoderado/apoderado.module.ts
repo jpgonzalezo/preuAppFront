@@ -13,15 +13,20 @@ import { Ng2Rut } from 'ng2-rut';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AgGridModule } from 'ag-grid-angular';
+import { MaterialModule } from 'src/app/componentes/material.module';
+
+//COMPONENTES
 import { InicioComponent } from './inicio/inicio.component';
 import { HeaderApoderadoComponent } from './header-apoderado/header-apoderado.component';
 import { FooterApoderadoComponent } from './footer-apoderado/footer-apoderado.component';
 import { CalendarioComponent } from './calendario/calendario.component';
+import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 registerLocaleData(localeEs);
 
 const routes: Routes = [
     { path: '', component: InicioComponent },
     { path: 'calendario', component: CalendarioComponent },
+    { path: 'change_password', component: CambioContrasenaComponent}
 ];
 
 @NgModule({
@@ -38,6 +43,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         FullCalendarModule,
         Ng2Rut,
+        MaterialModule,
         AgGridModule.withComponents([]),
         NgxLoadingModule.forRoot({  
             animationType: ngxLoadingAnimationTypes.circleSwish,
@@ -52,7 +58,9 @@ const routes: Routes = [
     InicioComponent,
     HeaderApoderadoComponent,
     FooterApoderadoComponent,
-    CalendarioComponent],
+    CalendarioComponent,
+    CambioContrasenaComponent
+    ],
     exports: [
         RouterModule
     ],
