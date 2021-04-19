@@ -93,70 +93,86 @@
 
                         <div class="row">
                           <div class="col-md-6">
-                            <mat-form-field appearance="fill">
+                            <mat-form-field>
                               <mat-label>Email</mat-label>
-                              <input matInput>
+                              <input matInput formControlName="email" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('email').invalid">{{getErrorMessageEmail()}}
+                              </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6">
-                            <mat-form-field appearance="fill">
+                            <mat-form-field>
                               <mat-label>Teléfono</mat-label>
-                              <input matInput>
+                              <input matInput formControlName="telefono" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('telefono').invalid">{{getErrorMessageTelefono()}}
+                              </mat-error>
                             </mat-form-field>
                           </div>
                         </div>
 
                         <div class="row">
                           <div class="col-md-3">
-                            <mat-form-field appearance="fill">
+                            <mat-form-field >
                               <mat-label>Calle</mat-label>
-                              <input matInput>
+                              <input matInput formControlName="calle" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('calle').invalid">{{getErrorMessageCalle()}}
+                              </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-3">
-                            <mat-form-field appearance="fill">
+                            <mat-form-field>
                               <mat-label>Número</mat-label>
-                              <input matInput>
+                              <input matInput formControlName="numero" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('numero').invalid">{{getErrorMessageNumero()}}
+                              </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-3">
-                            <mat-form-field appearance="fill">
-                              <mat-label>Piso/Casa/Oficina</mat-label>
-                              <input matInput>
+                            <mat-form-field>
+                              <mat-label>Piso/Casa/Oficina (Opcional)</mat-label>
+                              <input matInput formControlName="cas_dep_of" class="form-control">
                             </mat-form-field>
                           </div>
                           <div class="col-md-3">
-                            <mat-form-field appearance="fill">
+                            <mat-form-field>
                               <mat-label>Comuna</mat-label>
-                              <input matInput>
+                              <input matInput formControlName="comuna" class="form-control">
+                              <mat-error *ngIf="this.createForm.get('comuna').invalid">{{getErrorMessageComuna()}}
+                              </mat-error>
                             </mat-form-field>
                           </div>
                         </div>
 
                         <div class="row">
                           <div class="col-md-6">
-                            <mat-form-field appearance="fill">
+                            <mat-form-field >
                               <mat-label>Curso</mat-label>
-                              <mat-select>
-                                <mat-option value="one">First option</mat-option>
-                                <mat-option value="two">Second option</mat-option>
+                              <mat-select formControlName="curso" class="form-control">
+                                <mat-option *ngFor="let curso of cursos" [value]="curso.value">
+                                  {{curso.viewValue}}
+                                </mat-option>
                               </mat-select>
+                              <mat-error *ngIf="this.createForm.get('curso').invalid">{{getErrorMessageCurso()}}
+                              </mat-error>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6">
-                            <mat-form-field appearance="fill">
+                            <mat-form-field >
                               <mat-label>Colegio</mat-label>
-                              <mat-select>
-                                <mat-option value="one">First option</mat-option>
-                                <mat-option value="two">Second option</mat-option>
+                              <mat-select formControlName="colegio" class="form-control">
+                                <mat-option *ngFor="let colegio of colegios" [value]="colegio.value">
+                                  {{colegio.viewValue}}
+                                </mat-option>
                               </mat-select>
+                              <mat-error *ngIf="this.createForm.get('colegio').invalid">{{getErrorMessageColegio()}}
+                              </mat-error>
                             </mat-form-field>
                           </div>
                         </div>
 
                         <div class="row text-center">
                           <div class="col-md-12">
-                            <button type="button" class="btn btn-primary my-4" (click)="cambiarContrasena()" >Crear alumno</button>
+                            <button type="button" class="btn btn-primary my-4" (click)="guardarAlumno()" [disabled]="createForm.invalid">Crear alumno</button>
                           </div>
                         </div>
                       </form>

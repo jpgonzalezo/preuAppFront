@@ -3,7 +3,7 @@
   <section class="section ">
     <div class="container">
       <mat-card-content>
-        <mat-card-title>Perfiles de usuarios</mat-card-title><br>
+        <mat-card-title>Perfiles de usuarios</mat-card-title>
       </mat-card-content>
       <div class="row row-grid align-items-center">
         <div class="col-xl-12">
@@ -31,6 +31,21 @@
             <div class="tab-pane fade show active" id="estudiante_existente" role="tabpanel"
               aria-labelledby="estudiante-tab">
               <div class="mb-8 ">
+                <br>
+                <div class="row">
+                  <div class="col-md-6">
+                    <button type="button" class="btn btn-danger" (click)="generarNuevoAlumno()">Nuevo
+                      Alumno</button>
+                      <button type="button" class="btn btn-primary" (click)="generarNuevoAlumno()">Importar excel</button>
+                  </div>
+                  <div class="col-md-3"></div>
+                  <div class="text-right col-md-3">
+  
+                    <button type="button" class="btn btn-success" (click)="generarNuevoAlumno()">Plantilla alumnos <i class="fas fa-file-excel"></i></button>
+                    <br>
+                  </div>
+                </div>
+
                 <br>
                 <div class="table-responsive-lg">
                   <table class="table table-striped">
@@ -88,8 +103,7 @@
                     </select>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-outline-primary" (click)="generarNuevoAlumno()">Nuevo
-                      Alumno</button>
+
                     <br>
                   </div>
                 </div>
