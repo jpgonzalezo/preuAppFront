@@ -86,4 +86,12 @@ export class EvaluacionService {
 		}
 	  	return this.httpClient.put(`${this.API_URL}/evaluaciones/${id_evaluacion}/puntaje`,{'puntaje':puntaje},options).pipe(map(res => res))
     }
+    responderAutoevaluacion(data:any,token:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.post(`${this.API_URL}/autoevaluacion`,{'data':data},options).pipe(map(res => res))
+
+    }
 }

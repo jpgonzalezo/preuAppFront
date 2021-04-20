@@ -35,7 +35,7 @@ const routes: Routes = [
     { path: 'calendario', component: CalendarioComponent },
     { path: 'asignaturas', component: AsignaturasComponent },
     { path: 'asignaturas/:id/detalle', component: DetalleAsignaturaComponent },
-    { path: 'asignaturas/:id/detalle/evaluacion/:id_evaluacion/hojaRespuesta', component: HojaRespuestaComponent },
+    { path: 'asignaturas/:id/detalle/evaluacion/:id_prueba/hojaRespuesta', component: HojaRespuestaComponent },
     { path: 'change_password', component: CambioContrasenaComponent }
 ];
 
