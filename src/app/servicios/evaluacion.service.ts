@@ -94,4 +94,12 @@ export class EvaluacionService {
 	  	return this.httpClient.post(`${this.API_URL}/autoevaluacion`,{'data':data},options).pipe(map(res => res))
 
     }
+
+    getEvaluacionesPendientes(token:string,id_asignatura:string){
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+        const options = {
+            headers: headers
+        }
+        return this.httpClient.get(`${this.API_URL}/pruebasNoRespondidas?asignatura_id=${id_asignatura}`,options).pipe(map(res => res))
+    }
 }

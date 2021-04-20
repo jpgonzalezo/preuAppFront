@@ -5,12 +5,13 @@ import { Asistencia } from 'src/app/modelos/asistencia.model';
 import { Respuesta } from 'src/app/modelos/respuesta.model';
 import { Alumno } from 'src/app/modelos/alumno.model';
 import { AsignaturaService } from 'src/app/servicios/asignatura.service';
-import { AsistenciaService  } from 'src/app/servicios/asistencia.service';
+import { AsistenciaService } from 'src/app/servicios/asistencia.service';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { Evaluacion } from 'src/app/modelos/evaluacion.model';
+import { Prueba } from 'src/app/modelos/prueba.model';
 import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
-import swal from'sweetalert2';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle-asignatura',
@@ -18,11 +19,12 @@ import swal from'sweetalert2';
   styleUrls: ['./detalle-asignatura.component.css']
 })
 export class DetalleAsignaturaComponent implements OnInit {
-  asignatura:Asignatura;
+  asignatura: Asignatura;
   asistencias: Asistencia[];
   talleres: Evaluacion[];
   ensayos: Evaluacion[];
   tareas: Evaluacion[];
+  pendientes: Prueba[];
   id_asignatura: string;
   pageTaller: number;
   pageSizeTaller: number;
@@ -33,14 +35,18 @@ export class DetalleAsignaturaComponent implements OnInit {
   pageTarea: number;
   pageSizeTarea: number;
   collectionSizeTarea: number;
+  pagePendientes: number;
+  pageSizePendientes: number;
+  collectionSizePendientes: number;
   pageAsistencia: number;
   pageSizeAsistencia: number;
   collectionSizeAsistencia: number;
   token: string;
-  loadTaller:boolean = true;
-  loadEnsayo:boolean = true;
-  loadTarea:boolean = true;
-  loadAsistencia:boolean = true;
+  loadTaller: boolean = true;
+  loadEnsayo: boolean = true;
+  loadTarea: boolean = true;
+  loadPendientes: boolean = true;
+  loadAsistencia: boolean = true;
   constructor(
     private _asignaturaService: AsignaturaService,
     private _activatedRoute: ActivatedRoute,
@@ -54,9 +60,12 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.talleres = [];
     this.ensayos = [];
     this.tareas = [];
+    this.pendientes = []
     this.asistencias = [];
     this.pageTaller = 1;
     this.pageSizeTaller = 5;
+    this.pagePendientes = 1;
+    this.pageSizePendientes = 5;
     this.pageEnsayo = 1;
     this.pageSizeEnsayo = 5;
     this.pageTarea = 1;
@@ -66,47 +75,47 @@ export class DetalleAsignaturaComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this._storageService.getCurrentToken()==null){
+    if (this._storageService.getCurrentToken() == null) {
       this.token = this._localService.getToken();
     }
-    else{
+    else {
       this.token = this._storageService.getCurrentToken();
     }
     this.id_asignatura = this._activatedRoute.snapshot.paramMap.get('id');
     this.getAsignatura();
     this.getEvaluacionesAlumno();
     this.getAsistenciaAlumnoAsignatura();
+    this.getPendientes();
   }
 
-  getAsignatura(){
-    this._asignaturaService.getAsignatura(this.id_asignatura,this.token).subscribe((data:Asignatura)=>{
+  getAsignatura() {
+    this._asignaturaService.getAsignatura(this.id_asignatura, this.token).subscribe((data: Asignatura) => {
       this.asignatura = data;
     })
   }
 
-  getAsistenciaAlumnoAsignatura(){
+  getAsistenciaAlumnoAsignatura() {
     this.loadAsistencia = true;
-    this._asistenciaService.getAsistenciaAlumnoAsignatura(this.token,this.id_asignatura).subscribe((data:any)=>{
+    this._asistenciaService.getAsistenciaAlumnoAsignatura(this.token, this.id_asignatura).subscribe((data: any) => {
       this.asistencias = data;
       this.collectionSizeAsistencia = data.length;
       this.loadAsistencia = false;
-      console.log(data)
     })
   }
 
-  getEvaluacionesAlumno(){
+  getEvaluacionesAlumno() {
     this.loadEnsayo = true;
     this.loadTaller = true;
     this.loadTarea = true;
-    this._evaluacionService.getEvaluacionesAlumno(this.token,this.id_asignatura).subscribe((data:any)=>{
-      for(let evaluacion of data){
-        if(evaluacion.prueba.tipo=="TALLER"){
+    this._evaluacionService.getEvaluacionesAlumno(this.token, this.id_asignatura).subscribe((data: any) => {
+      for (let evaluacion of data) {
+        if (evaluacion.prueba.tipo == "TALLER") {
           this.talleres.push(evaluacion)
         }
-        if(evaluacion.prueba.tipo=="ENSAYO"){
+        if (evaluacion.prueba.tipo == "ENSAYO") {
           this.ensayos.push(evaluacion)
         }
-        if(evaluacion.prueba.tipo=="TAREA"){
+        if (evaluacion.prueba.tipo == "TAREA") {
           this.tareas.push(evaluacion)
         }
       }
@@ -119,62 +128,77 @@ export class DetalleAsignaturaComponent implements OnInit {
     })
   }
 
-  get asistencias_tabla(): Asistencia[]{
+  getPendientes() {
+    this.loadPendientes = true;
+    this._evaluacionService.getEvaluacionesPendientes(this.token, this.id_asignatura).subscribe((data: Prueba[]) => {
+      this.pendientes = data; 
+      this.loadPendientes = false;
+      this.collectionSizePendientes = this.pendientes.length;
+    })
+  }
+
+  get pendientes_tabla(): Prueba[] {
+    return this.pendientes
+      .map((pendiente, i) => ({ id: i + 1, ...pendiente }))
+      .slice((this.pagePendientes - 1) * this.pageSizePendientes, (this.pagePendientes - 1) * this.pageSizePendientes + this.pageSizePendientes);
+  }
+
+  get asistencias_tabla(): Asistencia[] {
     return this.asistencias
-    .map((asistencia, i) => ({id: i + 1, ...asistencia}))
-    .slice((this.pageAsistencia - 1) * this.pageSizeAsistencia, (this.pageAsistencia - 1) * this.pageSizeAsistencia + this.pageSizeAsistencia);
+      .map((asistencia, i) => ({ id: i + 1, ...asistencia }))
+      .slice((this.pageAsistencia - 1) * this.pageSizeAsistencia, (this.pageAsistencia - 1) * this.pageSizeAsistencia + this.pageSizeAsistencia);
   }
 
-  get talleres_tabla(): Evaluacion[]{
+  get talleres_tabla(): Evaluacion[] {
     return this.talleres
-    .map((taller, i) => ({id: i + 1, ...taller}))
-    .slice((this.pageTaller - 1) * this.pageSizeTaller, (this.pageTaller - 1) * this.pageSizeTaller + this.pageSizeTaller);
+      .map((taller, i) => ({ id: i + 1, ...taller }))
+      .slice((this.pageTaller - 1) * this.pageSizeTaller, (this.pageTaller - 1) * this.pageSizeTaller + this.pageSizeTaller);
   }
 
-  get ensayos_tabla(): Evaluacion[]{
+  get ensayos_tabla(): Evaluacion[] {
     return this.ensayos
-    .map((ensayo, i) => ({id: i + 1, ...ensayo}))
-    .slice((this.pageEnsayo - 1) * this.pageSizeEnsayo, (this.pageEnsayo - 1) * this.pageSizeEnsayo + this.pageSizeEnsayo);
+      .map((ensayo, i) => ({ id: i + 1, ...ensayo }))
+      .slice((this.pageEnsayo - 1) * this.pageSizeEnsayo, (this.pageEnsayo - 1) * this.pageSizeEnsayo + this.pageSizeEnsayo);
   }
 
-  get tareas_tabla(): Evaluacion[]{
+  get tareas_tabla(): Evaluacion[] {
     return this.tareas
-    .map((tarea, i) => ({id: i + 1, ...tarea}))
-    .slice((this.pageTarea - 1) * this.pageSizeTarea, (this.pageTarea - 1) * this.pageSizeTarea + this.pageSizeTarea);
+      .map((tarea, i) => ({ id: i + 1, ...tarea }))
+      .slice((this.pageTarea - 1) * this.pageSizeTarea, (this.pageTarea - 1) * this.pageSizeTarea + this.pageSizeTarea);
   }
 
-  volver(){
+  volver() {
     this._router.navigateByUrl('/alumno/asignaturas');
   }
 
-  verAlternativas(respuestas: Respuesta[], alumno:Alumno): void{
+  verAlternativas(respuestas: Respuesta[], alumno: Alumno): void {
     let html = '';
     html += '<table class="table table-striped">';
-     html += '<thead>';
-       html += '<tr>';
-         html += '<th scope="col">Pregunta</th>';
-         html += '<th scope="col">Alternativa Seleccionada</th>';
-         html += '<th scope="col">Correcta</th>';
-       html += '</tr>';
-     html += '</thead>';
-     html += '<tbody>';
-       for(var i = 0; i < respuestas.length; i++) {
-          html += '<tr>';
-              html += '<th scope="row">'+respuestas[i].numero_pregunta+'</th>';
-              html += '<td>'+respuestas[i].alternativa+'</td>';
-            if(respuestas[i].correcta) {
-              html += '<td><i class="fas fa-check-circle text-success"></i></td>';
-            }
-            else {
-              html += '<td><i class="fas fa-times text-danger"></i></td>';
-            }
-          html += '</tr>';
-       }
-     html += '</tbody>';
+    html += '<thead>';
+    html += '<tr>';
+    html += '<th scope="col">Pregunta</th>';
+    html += '<th scope="col">Alternativa Seleccionada</th>';
+    html += '<th scope="col">Correcta</th>';
+    html += '</tr>';
+    html += '</thead>';
+    html += '<tbody>';
+    for (var i = 0; i < respuestas.length; i++) {
+      html += '<tr>';
+      html += '<th scope="row">' + respuestas[i].numero_pregunta + '</th>';
+      html += '<td>' + respuestas[i].alternativa + '</td>';
+      if (respuestas[i].correcta) {
+        html += '<td><i class="fas fa-check-circle text-success"></i></td>';
+      }
+      else {
+        html += '<td><i class="fas fa-times text-danger"></i></td>';
+      }
+      html += '</tr>';
+    }
+    html += '</tbody>';
     html += '</table>';
 
     swal.fire({
-      title: 'Respuestas '+alumno.nombres+" "+alumno.apellido_paterno+" "+alumno.apellido_materno,
+      title: 'Respuestas ' + alumno.nombres + " " + alumno.apellido_paterno + " " + alumno.apellido_materno,
       type: 'info',
       html: html,
       confirmButtonColor: '#2dce89',
@@ -182,8 +206,8 @@ export class DetalleAsignaturaComponent implements OnInit {
     });
   }
 
-  irHojaRespuesta(){
-    this._router.navigateByUrl('/alumno/asignaturas/'+this.id_asignatura+'/detalle/evaluacion/456/hojaRespuesta');
+  irHojaRespuesta(prueba_id) {
+    this._router.navigateByUrl('/alumno/asignaturas/' + this.id_asignatura + '/detalle/evaluacion/'+ prueba_id+'/hojaRespuesta');
   }
 
 }

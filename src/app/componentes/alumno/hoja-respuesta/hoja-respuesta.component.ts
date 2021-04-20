@@ -163,4 +163,8 @@ export class HojaRespuestaComponent implements OnInit {
       () => { this.loading = false });
   }
 
+  volver() {
+    this._router.navigateByUrl('/alumno/asignaturas/' + this.id_asignatura + '/detalle');
+  }
+
 }
