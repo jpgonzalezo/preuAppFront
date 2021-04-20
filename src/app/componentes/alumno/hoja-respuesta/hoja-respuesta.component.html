@@ -2,51 +2,61 @@
 <main>
   <section class="section ">
     <div class="container">
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="cursos_existente" role="tabpanel" aria-labelledby="cursos-tab">
-          <div class="mb-8 ">
-            <br>
-            <div class="table-responsive-lg">
+      <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="100" fxFlex="100">
+          <mat-card>
+            <mat-card-content>
+              <mat-card-title>Hoja respuesta</mat-card-title>
+              <mat-card-subtitle>Seleccione una de las alternativas correspondientes a cada pregunta de la evaluación.
+              </mat-card-subtitle>
+              <br>
+              <div class="table-responsive-lg">
 
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th *ngFor = "let column of headers">{{column.text}}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let row of respuestas_tabla; let i=index">
-                    <td>
-                      {{row.numero_pregunta}}
-                    </td>
-                    <td *ngFor="let number of [].constructor(5); let j=index">
-                      <input type="radio" 
-                             id="{{row.id + j}}" 
-                             name="option{{row.id}}" 
-                             [value]= "headers[j+ 1].value"
-                             (change)= "onRadioButtonClick(i,headers[j+1].value)"
-                      >
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="d-flex justify-content-between p-2">
-                <ngb-pagination [collectionSize]="collectionSizeRespuesta" [(page)]="pageRespuesta"
-                  [pageSize]="pageSizeRespuesta">
-                </ngb-pagination>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let column of headers">{{column.text}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of respuestas_tabla; let i=index">
+                      <td>
+                        {{row.numero_pregunta}}
+                      </td>
+                      <td *ngFor="let number of [].constructor(5); let j=index">
+                        <input type="radio" id="input_{{row.id}}{{j}}" name="option_{{row.id}}{{j}}"
+                          [value]="headers[j+ 1].value" (click)="test(i,j)" [checked]="row.opciones[j]">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
-                <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeRespuesta">
-                  <option [ngValue]="2">2 asignaturas por página</option>
-                  <option [ngValue]="4">4 asignaturas por página</option>
-                  <option [ngValue]="6">6 asignaturas por página</option>
-                </select>
               </div>
-            </div>
-          </div>
+            </mat-card-content>
+
+          </mat-card>
+
         </div>
+
+
+
+      </div>
+
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="collectionSizeRespuesta" [(page)]="pageRespuesta"
+          [pageSize]="pageSizeRespuesta">
+        </ngb-pagination>
+
+        <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeRespuesta">
+          <option [ngValue]="10">10 preguntas por página</option>
+          <option [ngValue]="20">20 preguntas por página</option>
+          <option [ngValue]="30">30 preguntas por página</option>
+        </select>
       </div>
 
     </div>
+
+
   </section>
 </main>
 <app-footer-alumno></app-footer-alumno>

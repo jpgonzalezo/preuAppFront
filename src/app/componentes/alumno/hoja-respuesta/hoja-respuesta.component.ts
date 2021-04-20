@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { FormGroup, FormControl, FormArray } from "@angular/forms";
+import {NgForm} from '@angular/forms';
 
 export interface Respuesta {
   numero_pregunta: number,
-  alternativa: string
+  alternativa: string,
+  opciones: boolean[]
 }
 
 export interface Header {
@@ -27,12 +30,23 @@ export class HojaRespuestaComponent implements OnInit {
   pageSizeRespuesta: number;
   collectionSizeRespuesta: number;
   headers: Header[]
-
+  respuestasForm: FormGroup;
+  selectedHobbies: [string];
+  opciones = []
+  resp_opcion = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E'
+  ]
 
 
   ngOnInit() {
-    this.creaJsonRespuesta()
+    this.creaJsonRespuesta();
   }
+
+
 
   constructor() {
     this.respuestas = []
@@ -41,7 +55,7 @@ export class HojaRespuestaComponent implements OnInit {
     this.collectionSizeRespuesta = 70
     this.headers = [
       {
-        text: "Nro Pregunta",
+        text: "Pregunta",
         value: "name"
       },
       { text: "A", value: "A" },
@@ -50,6 +64,42 @@ export class HojaRespuestaComponent implements OnInit {
       { text: "D", value: "D" },
       { text: "E", value: "E" }
     ]
+  }
+
+  test(i:number,j:number){
+    if(this.respuestas[i].opciones[j]){
+      this.respuestas[i].opciones[j] = !this.respuestas[i].opciones[j];
+      this.respuestas[i].alternativa = '';
+    }
+    else{
+      this.respuestas[i].opciones = [false,false,false,false,false];
+      this.respuestas[i].opciones[j] = true;
+      this.respuestas[i].alternativa = this.resp_opcion[j];
+
+    }
+    
+    console.log(this.respuestas[i])
+  }
+
+  createFormInputs() {
+    this.respuestasForm = new FormGroup({
+      respuestas: this.createRespuesta(this.respuestas)
+    });
+
+    console.log(this.respuestasForm.value)
+
+  }
+
+  createRespuesta(respuestas) {
+    const arr = respuestas.map(respuesta => {
+      return new FormControl(respuesta.alternativa || "");
+    });
+    return new FormArray(arr);
+  }
+
+  onSubmit(f: NgForm) {
+    console.log(f.value);  // { first: '', last: '' }
+    console.log(f.valid);  // false
   }
 
   onRadioButtonClick(index, value){
@@ -65,7 +115,8 @@ export class HojaRespuestaComponent implements OnInit {
     preguntas.forEach(function () {
       var json = {
         numero_pregunta: i + 1,
-        alternativa: ""
+        alternativa: "",
+        opciones:[false,false,false,false,false]
       }
       array.push(json)
       i = i + 1
