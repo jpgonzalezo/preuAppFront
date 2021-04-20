@@ -25,7 +25,7 @@
                       </td>
                       <td *ngFor="let number of [].constructor(5); let j=index">
                         <input type="radio" id="input_{{row.id}}{{j}}" name="option_{{row.id}}{{j}}"
-                          [value]="headers[j+ 1].value" (click)="test(i,j)" [checked]="row.opciones[j]">
+                          [value]="headers[j+ 1].value" (click)="cambiarPregunta(row.numero_pregunta,j)" [checked]="row.opciones[j]">
                       </td>
                     </tr>
                   </tbody>

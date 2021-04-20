@@ -66,19 +66,20 @@ export class HojaRespuestaComponent implements OnInit {
     ]
   }
 
-  test(i:number,j:number){
-    if(this.respuestas[i].opciones[j]){
-      this.respuestas[i].opciones[j] = !this.respuestas[i].opciones[j];
-      this.respuestas[i].alternativa = '';
-    }
-    else{
-      this.respuestas[i].opciones = [false,false,false,false,false];
-      this.respuestas[i].opciones[j] = true;
-      this.respuestas[i].alternativa = this.resp_opcion[j];
-
-    }
-    
-    console.log(this.respuestas[i])
+  cambiarPregunta(numero_pregunta:number,j:number){
+    this.respuestas.forEach(respuesta => {
+      if(respuesta.numero_pregunta == numero_pregunta){
+        if(respuesta.opciones[j]){
+          respuesta.opciones[j] = !respuesta.opciones[j];
+          respuesta.alternativa = '';
+        }
+        else{
+          respuesta.opciones = [false,false,false,false,false];
+          respuesta.opciones[j] = true;
+          respuesta.alternativa = this.resp_opcion[j];
+        }
+      }
+    });
   }
 
   createFormInputs() {
