@@ -187,6 +187,9 @@ export class NuevoAlumnoComponent implements OnInit {
   guardarAlumno(){
     this.loading = true
     const data = this.createForm.value;
+    data['rut']= data['rut'].replace('.','');
+    data['rut']= data['rut'].replace('.','');
+    data['rut']= data['rut'].replace('-','');
     console.log(data);
     this._alumnoService.postAlumno(data,this.token).subscribe(
       (data:any)=>{
