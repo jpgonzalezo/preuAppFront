@@ -49,12 +49,10 @@ export class PruebaService {
 	}
 
 	putVisible(id:string,token:string){
-		console.log(token)
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
 		const options = {
 			headers: headers
 		}
-		console.log(headers)
 	  	return this.httpClient.put(`${this.API_URL}/pruebas/${id}`,{},options).pipe(map(res => res))
 	}
 
