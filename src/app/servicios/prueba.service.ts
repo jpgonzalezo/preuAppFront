@@ -48,6 +48,14 @@ export class PruebaService {
 	  	return this.httpClient.get(`${this.API_URL}/pruebas/${id}`,options).pipe(map(res => res))
 	}
 
+	putVisble(id:string,token:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+		const options = {
+			headers: headers
+		}
+	  	return this.httpClient.put(`${this.API_URL}/pruebas/${id}`,options).pipe(map(res => res))
+	}
+
 	getJustificacion(id:string,token:string){
   	const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
   	const options = {

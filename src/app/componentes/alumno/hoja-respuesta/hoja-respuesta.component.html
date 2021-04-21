@@ -15,15 +15,15 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th *ngFor="let column of headers">{{column.text}}</th>
+                      <th style="text-align: center;" *ngFor="let column of headers">{{column.text}}</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let row of respuestas_tabla; let i=index">
-                      <td>
+                      <td class = "custom-number">
                         {{row.numero_pregunta}}
                       </td>
-                      <td *ngFor="let number of [].constructor(5); let j=index">
+                      <td style="text-align: center;" *ngFor="let number of [].constructor(5); let j=index">
                         <input type="radio" id="input_{{row.id}}{{j}}" name="option_{{row.id}}{{j}}"
                           [value]="headers[j+ 1].value" (click)="cambiarPregunta(row.numero_pregunta,j)"
                           [checked]="row.opciones[j]">
