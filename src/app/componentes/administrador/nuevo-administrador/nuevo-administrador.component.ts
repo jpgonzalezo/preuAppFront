@@ -64,7 +64,7 @@ export class NuevoAdministradorComponent implements OnInit {
 
   getErrorMessageNombres(){
     return this.createForm.get('nombres').hasError('required')
-    ? 'Debe ingresar los nombres del alumno.'
+    ? 'Debe ingresar los nombres del administrador.'
       : '';
   }
 
@@ -231,6 +231,10 @@ export class NuevoAdministradorComponent implements OnInit {
     },
     (error)=>{this.loading = false})
 
+  }
+
+  volver(){
+    this.router.navigateByUrl('/admin/perfiles');
   }
 
 

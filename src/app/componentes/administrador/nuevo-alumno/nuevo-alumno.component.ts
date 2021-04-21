@@ -282,4 +282,8 @@ export class NuevoAlumnoComponent implements OnInit {
     (error)=>{this.loading = false})
   }
 
+  volver(){
+    this.router.navigateByUrl('/admin/perfiles');
+  }
+
 }
