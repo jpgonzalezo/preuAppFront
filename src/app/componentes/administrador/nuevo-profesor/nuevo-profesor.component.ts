@@ -80,7 +80,7 @@ export class NuevoProfesorComponent implements OnInit {
 
   getErrorMessageNombres(){
     return this.createForm.get('nombres').hasError('required')
-    ? 'Debe ingresar los nombres del alumno.'
+    ? 'Debe ingresar los nombres del profesor.'
       : '';
   }
 
@@ -251,6 +251,10 @@ export class NuevoProfesorComponent implements OnInit {
     (error)=>{this.loading = false})
 
 
+  }
+
+  volver(){
+    this.router.navigateByUrl('/admin/perfiles');
   }
 
 }

@@ -51,6 +51,7 @@ import { NuevoAlumnoComponent } from './nuevo-alumno/nuevo-alumno.component';
 import { NuevoProfesorComponent } from './nuevo-profesor/nuevo-profesor.component';
 import { NuevoApoderadoComponent } from './nuevo-apoderado/nuevo-apoderado.component';
 import { NuevoAdministradorComponent } from './nuevo-administrador/nuevo-administrador.component';
+import { NuevoColegioComponent } from './nuevo-colegio/nuevo-colegio.component';
 
 
 const routes: Routes = [
@@ -65,6 +66,7 @@ const routes: Routes = [
     { path: 'perfiles/detalle_profesor/:id', component: DetalleProfesorComponent},
     { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
     { path: 'colegios', component: ColegioComponent},
+    { path: 'colegios/nuevoColegio', component: NuevoColegioComponent},
     { path: 'asistencia', component: AsistenciaComponent},
     { path: 'asistencia/nueva_asistencia', component: NuevaAsistenciaComponent},
     { path: 'asistencia/detalle_asistencia/:id', component: DetalleAsistenciaComponent},
@@ -128,7 +130,8 @@ const routes: Routes = [
         NuevoAlumnoComponent,
         NuevoProfesorComponent,
         NuevoApoderadoComponent,
-        NuevoAdministradorComponent
+        NuevoAdministradorComponent,
+        NuevoColegioComponent
     ],
     exports: [
         RouterModule

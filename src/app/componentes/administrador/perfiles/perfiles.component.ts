@@ -1,12 +1,8 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 //SERVICIOS
 import { AlumnoService } from 'src/app/servicios/alumno.service';
-import { CursoService } from 'src/app/servicios/curso.service';
-import { ColegioService } from 'src/app/servicios/colegio.service';
 import { ProfesorService } from 'src/app/servicios/profesor.service';
-import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { ApoderadoService } from 'src/app/servicios/apoderado.service';
 import { AdministradorService } from 'src/app/servicios/administrador.service';
 import { AlumnoTablaService } from 'src/app/servicios/tablas/tabla.perfiles.alumnos.service';

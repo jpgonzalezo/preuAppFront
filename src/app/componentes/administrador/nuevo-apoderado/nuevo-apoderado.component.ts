@@ -263,6 +263,10 @@ export class NuevoApoderadoComponent implements OnInit {
 
   }
 
+  volver(){
+    this.router.navigateByUrl('/admin/perfiles');
+  }
+
 
 
 }
