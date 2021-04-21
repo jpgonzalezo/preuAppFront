@@ -1,0 +1,89 @@
+<app-header></app-header>
+<main>
+  <section class="section ">
+    <div class="container">
+      <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="100" fxFlex="100">
+          <mat-card>
+            <div class="my-container">
+              <ngx-loading [show]="loading"
+                [config]="{ 
+                        animationType: 'circle',
+                        backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                        primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+              </ngx-loading>
+            </div>
+            <mat-card-content>
+              <div class="my-container">
+                <ngx-loading [show]="loading"
+                  [config]="{ 
+                            animationType: 'circle',
+                            backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                            primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+                </ngx-loading>
+              </div>
+              <mat-card-title>Nuevo colegio</mat-card-title>
+              <mat-card-subtitle>Complete los campos para crear un nuevo colegio.</mat-card-subtitle>
+
+              <form class="basic-form" [formGroup]="createForm">
+                <!-- ============================================================== -->
+                <!-- column -->
+                <!-- ============================================================== -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field>
+                      <mat-label>Nombres</mat-label>
+                      <input matInput formControlName="nombre" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('nombre').invalid">{{getErrorMessageNombre()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Calle</mat-label>
+                      <input matInput formControlName="calle" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('calle').invalid">{{getErrorMessageCalle()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Número</mat-label>
+                      <input matInput formControlName="numero" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('numero').invalid">{{getErrorMessageNumero()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Comuna</mat-label>
+                      <input matInput formControlName="comuna" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('comuna').invalid">{{getErrorMessageComuna()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row text-center">
+                  <div class="col-md-12">
+                    <button type="button" class="btn btn-danger my-4" (click)="volver()"
+                    >Volver</button>
+                    <button type="button" class="btn btn-primary my-4" (click)="guardarColegio()"
+                      [disabled]="createForm.invalid">Crear colegio</button>
+                  </div>
+                </div>
+              </form>
+
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer></app-footer>
+
