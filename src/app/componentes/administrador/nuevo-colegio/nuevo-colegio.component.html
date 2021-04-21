@@ -22,37 +22,19 @@
                             primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
                 </ngx-loading>
               </div>
-              <mat-card-title>Nuevo administrador</mat-card-title>
-              <mat-card-subtitle>Complete los campos para crear un nuevo administrador.</mat-card-subtitle>
+              <mat-card-title>Nuevo colegio</mat-card-title>
+              <mat-card-subtitle>Complete los campos para crear un nuevo colegio.</mat-card-subtitle>
 
               <form class="basic-form" [formGroup]="createForm">
                 <!-- ============================================================== -->
                 <!-- column -->
                 <!-- ============================================================== -->
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-12">
                     <mat-form-field>
                       <mat-label>Nombres</mat-label>
-                      <input matInput formControlName="nombres" class="form-control">
-                      <mat-error *ngIf="this.createForm.get('nombres').invalid">{{getErrorMessageNombres()}}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4">
-                    <mat-form-field>
-                      <mat-label>Apellido Paterno</mat-label>
-                      <input matInput formControlName="apellido_paterno" class="form-control">
-                      <mat-error *ngIf="this.createForm.get('apellido_paterno').invalid">
-                        {{getErrorMessageApellidoPaterno()}}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4">
-                    <mat-form-field>
-                      <mat-label>Apellido Materno</mat-label>
-                      <input matInput formControlName="apellido_materno" class="form-control">
-                      <mat-error *ngIf="this.createForm.get('apellido_materno').invalid">
-                        {{getErrorMessageApellidoMaterno()}}
+                      <input matInput formControlName="nombre" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('nombre').invalid">{{getErrorMessageNombre()}}
                       </mat-error>
                     </mat-form-field>
                   </div>
@@ -60,34 +42,6 @@
 
                 <div class="row">
                   <div class="col-md-4">
-                    <mat-form-field>
-                      <mat-label>Rut</mat-label>
-                      <input matInput formControlName="rut" class="form-control">
-                      <mat-error *ngIf="this.createForm.get('rut').invalid">{{getErrorMessageRut()}}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4">
-                    <mat-form-field>
-                      <mat-label>Email</mat-label>
-                      <input matInput formControlName="email" class="form-control">
-                      <mat-error *ngIf="this.createForm.get('email').invalid">{{getErrorMessageEmail()}}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4">
-                    <mat-form-field>
-                      <mat-label>Teléfono</mat-label>
-                      <input matInput formControlName="telefono" class="form-control">
-                      <mat-error *ngIf="this.createForm.get('telefono').invalid">{{getErrorMessageTelefono()}}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  
-                </div>
-
-                <div class="row">
-                  <div class="col-md-3">
                     <mat-form-field>
                       <mat-label>Calle</mat-label>
                       <input matInput formControlName="calle" class="form-control">
@@ -95,7 +49,7 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <mat-form-field>
                       <mat-label>Número</mat-label>
                       <input matInput formControlName="numero" class="form-control">
@@ -103,13 +57,7 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="col-md-3">
-                    <mat-form-field>
-                      <mat-label>Piso/Casa/Oficina (Opcional)</mat-label>
-                      <input matInput formControlName="cas_dep_of" class="form-control">
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <mat-form-field>
                       <mat-label>Comuna</mat-label>
                       <input matInput formControlName="comuna" class="form-control">
@@ -123,8 +71,8 @@
                   <div class="col-md-12">
                     <button type="button" class="btn btn-danger my-4" (click)="volver()"
                     >Volver</button>
-                    <button type="button" class="btn btn-primary my-4" (click)="guardarAdministrador()"
-                      [disabled]="createForm.invalid">Crear administrador</button>
+                    <button type="button" class="btn btn-primary my-4" (click)="guardarColegio()"
+                      [disabled]="createForm.invalid">Crear colegio</button>
                   </div>
                 </div>
               </form>
@@ -138,3 +86,4 @@
   </section>
 </main>
 <app-footer></app-footer>
+
