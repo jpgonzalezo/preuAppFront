@@ -264,6 +264,10 @@ export class HojaVidaComponent implements OnInit {
     })
   }
 
+  public nuevaObservacion(){
+    this.router.navigateByUrl('/admin/perfiles/hoja_vida/'+this.id_hoja_vida+'/nuevaObservacion');
+  }
+
 
   get observaciones_administrador_tabla(): any[] {
     return this.observaciones_admin
@@ -356,75 +360,6 @@ export class HojaVidaComponent implements OnInit {
             })
           }
         })
-      }
-    })
-  }
-
-  public modalNuevaObservacion() {
-    swal.mixin({
-      input: 'text',
-      confirmButtonColor: '#5cb85c',
-      cancelButtonColor: '#d9534f',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar',
-      showCancelButton: true,
-      progressSteps: ['1', '2', '3']
-    }).queue([{
-        title: 'Tipo de observación',
-        input: 'select',
-        inputOptions: {
-          'OBSERVACION_ADMINISTRADOR': 'Administrador',
-          'OBSERVACION_PSICOLOGO': 'Psicologo',
-          'OBSERVACION_PSICOPEDAGOGO': 'Psicopedagogo'
-        },
-        inputPlaceholder: 'Seleccione un tipo',
-      },
-      {
-        title: 'Título Observación',
-        input: 'text',
-        inputPlaceholder: 'Ingrese un título...',
-      },
-      {
-        title: 'Observación',
-        input: 'textarea',
-        inputPlaceholder: 'Ingrese su observación aquí...',
-      }
-    ]).then((result) => {
-      if (result.value) {
-        if (result.value[0] == "" || result.value[1] == "" || result.value[2] == "") {
-          swal.fire({
-            title: 'Error',
-            type: 'error',
-            text: 'Debe completar todos los campos para realizar una observación'
-          }).then((result) => {
-            if (result) {
-              this.modalNuevaObservacion();
-            }
-          })
-        } else {
-          this._observacionService.postObservacion({
-            'alumno': this.id_hoja_vida,
-            'tipo': result.value[0],
-            'titulo': result.value[1],
-            'contenido': result.value[2]
-          }, this.token).subscribe((data: any) => {
-            if (data['Response'] == 'exito') {
-              swal.fire({
-                title: 'Registro exitoso',
-                text: 'Se ha registrado una nueva observación exitosamente!',
-                type: 'success',
-                confirmButtonColor: '#5cb85c',
-                confirmButtonText: 'Aceptar'
-              }).then((result) => {
-                if (result) {
-                  this.getObservacionesAdministrador();
-                  this.getObservacionesProfesor();
-                  this.getObservacionesPsicologo();
-                }
-              })
-            }
-          })
-        }
       }
     })
   }
