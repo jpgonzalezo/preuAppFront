@@ -1,0 +1,68 @@
+<app-header-alumno></app-header-alumno>
+<main>
+  <section class="section ">
+    <div class="container">
+      <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="100" fxFlex="100">
+          <mat-card>
+            <mat-card-content>
+              <mat-card-title>Hoja de respuesta</mat-card-title>
+              <mat-card-subtitle>Seleccione una de las alternativas correspondientes a cada pregunta de la evaluación.
+              </mat-card-subtitle>
+              <br>
+              <div class="table-responsive-lg">
+
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th style="text-align: center;" *ngFor="let column of headers">{{column.text}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of respuestas_tabla; let i=index">
+                      <td class = "custom-number">
+                        {{row.numero_pregunta}}
+                      </td>
+                      <td style="text-align: center;" *ngFor="let number of [].constructor(5); let j=index">
+                        <input type="radio" id="input_{{row.id}}{{j}}" name="option_{{row.id}}{{j}}"
+                          [value]="headers[j+ 1].value" (click)="cambiarPregunta(row.numero_pregunta,j)"
+                          [checked]="row.opciones[j]">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-card-content>
+            <div class="my-container">
+              <ngx-loading [show]="loading"
+                  [config]="{ 
+                animationType: 'circle',
+                backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+              </ngx-loading>
+          </div>
+          </mat-card>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="collectionSizeRespuesta" [(page)]="pageRespuesta"
+          [pageSize]="pageSizeRespuesta">
+        </ngb-pagination>
+        <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeRespuesta">
+          <option [ngValue]="10">10 preguntas por página</option>
+          <option [ngValue]="20">20 preguntas por página</option>
+          <option [ngValue]="30">30 preguntas por página</option>
+        </select>
+      </div>
+      <div class="text-center">
+        <button type="button" class="btn-danger btn" (click)="volver()">Volver</button>
+        <button type="button" class="btn-primary btn" (click)="enviarRespuestas()">Responder Prueba</button>
+        <br>
+      </div>
+
+    </div>
+
+
+  </section>
+</main>
+<app-footer-alumno></app-footer-alumno>

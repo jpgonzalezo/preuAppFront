@@ -27,12 +27,15 @@ import { CalendarioComponent } from './calendario/calendario.component';
 import { AsignaturasComponent } from './asignaturas/asignaturas.component';
 import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignatura.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
+import { HojaRespuestaComponent } from './hoja-respuesta/hoja-respuesta.component';
+
 const routes: Routes = [
     { path: '', redirectTo: 'calendario', pathMatch: 'full' },
     { path: 'perfil', component: HomeComponent },
     { path: 'calendario', component: CalendarioComponent },
     { path: 'asignaturas', component: AsignaturasComponent },
     { path: 'asignaturas/:id/detalle', component: DetalleAsignaturaComponent },
+    { path: 'asignaturas/:id/detalle/evaluacion/:id_prueba/hojaRespuesta', component: HojaRespuestaComponent },
     { path: 'change_password', component: CambioContrasenaComponent }
 ];
 
@@ -68,6 +71,7 @@ const routes: Routes = [
         CalendarioComponent,
         AsignaturasComponent,
         DetalleAsignaturaComponent,
+        HojaRespuestaComponent,
         CambioContrasenaComponent
     ],
     exports: [

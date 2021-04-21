@@ -249,6 +249,13 @@ export class AsignaturaComponent implements OnInit {
     })
   }
 
+  updateVisible(id:string){
+    console.log(this.token)
+    this._pruebaService.putVisible(id,this.token).subscribe((data:any)=>{
+      this.getPruebasAsignatura()
+    })
+  }
+
   verDetalleEvaluacion(id_evaluacion:string){
     this._router.navigateByUrl('/profesor/detalle/evaluacion/'+id_evaluacion)
   }
