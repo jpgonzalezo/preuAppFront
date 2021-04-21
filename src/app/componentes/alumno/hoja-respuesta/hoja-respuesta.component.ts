@@ -129,8 +129,7 @@ export class HojaRespuestaComponent implements OnInit {
       dict[element.numero_pregunta] = element.alternativa;
     })
     let body = {
-      //prueba_id: this.id_prueba,
-      prueba_id: "6078e1aa30d0053938d69a12",
+      prueba_id: this.id_prueba,
       respuestas: dict
     }
     this._evaluacionService.responderAutoevaluacion(body, this.token).subscribe(
