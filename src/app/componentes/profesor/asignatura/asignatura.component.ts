@@ -250,7 +250,7 @@ export class AsignaturaComponent implements OnInit {
   }
 
   updateVisible(id:string){
-    this._pruebaService.putVisble(id,this.token).subscribe((data:any)=>{
+    this._pruebaService.putVisible(id,this.token).subscribe((data:any)=>{
       this.getPruebasAsignatura()
     })
   }
