@@ -6,6 +6,81 @@
       <hr>
       <div class="row row-grid align-items-center">
         <div class="col-xl-12">
+          <h5>Evaluaciones Pendientes</h5><br>
+          <ul class="nav nav-tabs" id="myTab2" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="pendientes-tab" data-toggle="tab" href="#evaluaciones_pendientes" role="tab"
+                aria-controls="pendientes" aria-selected="false">Evaluaciones</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent2">
+            <div class="tab-pane fade show active" id="evaluaciones_pendientes" role="tabpanel" aria-labelledby="taller-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Evaluacion</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Cantidad Preguntas</th>
+                        <th scope="col">Responder</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadPendientes">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadPendientes && pendientes_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran pruebas pendientes
+                        </td>
+                      </tr>
+                      <tr *ngFor="let evaluacion of pendientes_tabla">
+                        <td>{{ evaluacion.nombre }}</td>
+                        <td>
+                          <span *ngIf="evaluacion.tipo == 'ENSAYO'"
+                            class="badge badge-pill badge-danger">{{ evaluacion.tipo }}</span>
+                          <span *ngIf="evaluacion.tipo == 'TALLER'"
+                            class="badge badge-pill badge-primary">{{ evaluacion.tipo }}</span>
+                          <span *ngIf="evaluacion.tipo == 'TAREA'"
+                            class="badge badge-pill badge-success">{{ evaluacion.tipo }}</span>
+                        </td>
+                        <td>
+                          {{evaluacion.cantidad_preguntas}}
+                        </td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-info btn-sm"
+                            (click)="irHojaRespuesta(evaluacion.id)"><i
+                                class="far fa-eye"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizePendientes" [(page)]="pagePendientes"
+                      [pageSize]="pageSizePendientes">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizePendientes">
+                      <option [ngValue]="5">5 pruebas por página</option>
+                      <option [ngValue]="10">10 pruebas por página</option>
+                      <option [ngValue]="15">15 pruebas por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          
+          </div>
+
           <h5>Evaluaciones realizadas</h5><br>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">

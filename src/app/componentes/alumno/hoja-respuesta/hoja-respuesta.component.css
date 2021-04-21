@@ -1,0 +1,15 @@
+@import '../../../../assets/css/material.css';
+table {
+    width: 100%;
+}
+.container {
+    height: auto;
+    overflow: auto;
+}
+input[type='radio'] { 
+    transform: scale(2); 
+}
+.custom-number{
+    font-size: 18px!important;
+    text-align: center!important;
+}
