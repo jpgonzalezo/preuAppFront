@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
+import { PruebaService } from 'src/app/servicios/prueba.service';
 import Swal from 'sweetalert2';
+import { Prueba } from 'src/app/modelos/prueba.model';
 
 
 export interface Respuesta {
@@ -29,6 +31,7 @@ export class HojaRespuestaComponent implements OnInit {
   token: string;
   id_asignatura: string;
   id_prueba: string;
+  prueba: Prueba;
   preguntas: [];
   respuestas: Respuesta[];
   pageRespuesta: number;
@@ -49,12 +52,12 @@ export class HojaRespuestaComponent implements OnInit {
     private _router: Router,
     private _storageService: StorageService,
     private _localService: LocalService,
-    private _evaluacionService: EvaluacionService) {
+    private _evaluacionService: EvaluacionService,
+    private _pruebaService: PruebaService) {
     this.respuestas = []
     this.pageRespuesta = 1
     this.pageSizeRespuesta = 10
     //TODO: cambiar a prueba.length
-    this.collectionSizeRespuesta = 79
     this.headers = [
       {
         text: "Pregunta",
@@ -77,7 +80,7 @@ export class HojaRespuestaComponent implements OnInit {
     }
     this.id_asignatura = this._activatedRoute.snapshot.paramMap.get('id');
     this.id_prueba = this._activatedRoute.snapshot.paramMap.get('id_prueba');
-    this.creaJsonRespuesta();
+    this.getPrueba()
   }
 
   cambiarPregunta(numero_pregunta: number, j: number) {
@@ -165,6 +168,17 @@ export class HojaRespuestaComponent implements OnInit {
 
   volver() {
     this._router.navigateByUrl('/alumno/asignaturas/' + this.id_asignatura + '/detalle');
+  }
+
+  getPrueba() {
+    this.loading = true;
+    this._pruebaService.getPrueba(this.id_prueba, this.token).subscribe((data: Prueba) => {
+      this.prueba = data
+      this.collectionSizeRespuesta = this.prueba.cantidad_preguntas
+    }, () => { }, () => {
+      this.creaJsonRespuesta();
+      this.loading = false;
+    })
   }
 
 }
