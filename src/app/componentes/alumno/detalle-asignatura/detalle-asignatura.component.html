@@ -42,7 +42,12 @@
                       <tr *ngFor="let evaluacion of pendientes_tabla">
                         <td>{{ evaluacion.nombre }}</td>
                         <td>
-                          {{evaluacion.tipo}}
+                          <span *ngIf="evaluacion.tipo == 'ENSAYO'"
+                            class="badge badge-pill badge-danger">{{ evaluacion.tipo }}</span>
+                          <span *ngIf="evaluacion.tipo == 'TALLER'"
+                            class="badge badge-pill badge-primary">{{ evaluacion.tipo }}</span>
+                          <span *ngIf="evaluacion.tipo == 'TAREA'"
+                            class="badge badge-pill badge-success">{{ evaluacion.tipo }}</span>
                         </td>
                         <td>
                           {{evaluacion.cantidad_preguntas}}
