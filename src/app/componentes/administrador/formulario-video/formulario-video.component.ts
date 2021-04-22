@@ -6,10 +6,8 @@ import { VideoService } from 'src/app/servicios/video.service';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { Curso } from 'src/app/modelos/curso.model';
+import { ValidatorLink } from 'src/app/validators/link.validators';
 import Swal from 'sweetalert2';
-
-
-
 
 @Component({
   selector: 'app-formulario-video',
@@ -20,10 +18,10 @@ export class FormularioVideoComponent implements OnInit {
   createForm: FormGroup;
   loading = false;
   token: string;
-  cursos= [];
+  cursos = [];
   cursoSelect = {};
   asignaturaSelect = {};
-  asignaturas= [];
+  asignaturas = [];
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -37,52 +35,57 @@ export class FormularioVideoComponent implements OnInit {
 
 
   ngOnInit() {
-    if(this._storageService.getCurrentToken()==null){
-      this.token = this._localService.getToken() 
+    if (this._storageService.getCurrentToken() == null) {
+      this.token = this._localService.getToken()
     }
-    else{
+    else {
       this.token = this._storageService.getCurrentToken()
     }
     this.createForm = this.formBuilder.group({
-      nombre: ['',[Validators.required]],
-      uri: ['',[Validators.required]],
-      curso_id: ['',[Validators.required]],
-      asignatura_id: ['',[Validators.required]],
+      nombre: ['', [Validators.required]],
+      uri: ['', [Validators.required, ValidatorLink.strong]],
+      curso_id: ['', [Validators.required]],
+      asignatura_id: ['', [Validators.required]],
     });
     this.getCursos();
   }
 
-  getErrorMessage(campo, mensaje){
+  getErrorMessage(campo, mensaje) {
     return this.createForm.get(campo).hasError('required')
       ? mensaje
-        : '';
+      : '';
   }
 
-  getCursos(){
-    
+  getErrorMessageYoutube(campo, mensaje) {
+    return this.createForm.get(campo).hasError('notYoutube')
+      ? mensaje
+      : '';
+  }
+
+  getCursos() {
     this.loading = true;
-    this._cursoService.getCursos(this.token).subscribe((cursos: Array<Curso>)=>{
+    this._cursoService.getCursos(this.token).subscribe((cursos: Array<Curso>) => {
       cursos.forEach(element => {
         console.log(element)
-        this.cursos.push({ value:element.id, viewValue:element.nombre, asignaturas: element.asignaturas })
-        
+        this.cursos.push({ value: element.id, viewValue: element.nombre, asignaturas: element.asignaturas })
+
       });
       this.loading = false;
     },
-    (error)=>{
-      this.loading = false;
-    });
+      (error) => {
+        this.loading = false;
+      });
   }
 
   volver() {
     this._router.navigateByUrl('/admin/videos');
   }
 
-  addVideo(){
+  addVideo() {
     this.loading = true;
     const data = this.createForm.value;
-    this._videoService.addVideo(data,this.token).subscribe((data: any)=>{
-      
+    this._videoService.addVideo(data, this.token).subscribe((data: any) => {
+
       this.loading = false;
       Swal.fire({
         type: 'success',
@@ -92,27 +95,27 @@ export class FormularioVideoComponent implements OnInit {
         confirmButtonColor: '#5cb85c',
       }).then((result2) => {
         if (result2 || result2.dismiss) {
-          this._router.navigateByUrl('/admin/videos' )
+          this._router.navigateByUrl('/admin/videos')
         }
       })
     },
-    (error)=>{
-      Swal.fire({
-        type: 'error',
+      (error) => {
+        Swal.fire({
+          type: 'error',
           title: 'Error en el servidor',
           text: 'Ocurrió un error en el servidor, intente más tarde',
           confirmButtonColor: '#5cb85c',
           confirmButtonText: 'Aceptar',
-      }).then((result2) => {
-        if (result2 || result2.dismiss) {
-          this.loading = false;
+        }).then((result2) => {
+          if (result2 || result2.dismiss) {
+            this.loading = false;
 
-        }
-      })
-    });
+          }
+        })
+      });
   }
 
-  getAsignaturas(){
+  getAsignaturas() {
     let id = this.createForm.get('curso_id').value
     this.asignaturas = []
     console.log(id)
@@ -120,8 +123,8 @@ export class FormularioVideoComponent implements OnInit {
     console.log(this.cursos.find(curso => curso.value = id))
 
     asignaturasCurso.forEach(element => {
-      this.asignaturas.push({ value:element.id, viewValue:element.nombre})
-      
+      this.asignaturas.push({ value: element.id, viewValue: element.nombre })
+
     });
     console.log(this.asignaturas)
   }

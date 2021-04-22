@@ -15,11 +15,11 @@ export interface Video {
 }
 
 @Component({
-  selector: 'app-video-admin',
-  templateUrl: './video-admin.component.html',
-  styleUrls: ['./video-admin.component.css']
+  selector: 'app-video-profesor',
+  templateUrl: './video-profesor.component.html',
+  styleUrls: ['./video-profesor.component.css']
 })
-export class VideoAdminComponent implements OnInit {
+export class VideoProfesorComponent implements OnInit {
   pageVideos: number;
   pageSizeVideos: number;
   collectionSizeVideos: number;
@@ -51,42 +51,10 @@ export class VideoAdminComponent implements OnInit {
 
   getVideos() {
     this.loadVideos = true;
-    this._videoService.getAllVideos(this.token).subscribe((data: Video[]) => {
+    this._videoService.getVideosByAsignatura(this.token, ).subscribe((data: Video[]) => {
       this.videos = data; 
       this.loadVideos = false;
       this.collectionSizeVideos = this.videos.length;
-    })
-  }
-
-  deleteVideo(id:string){
-    Swal.fire({
-      title: '¿Desea eliminar este video?',
-      text: "Estos cambios son irreversibles!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#5cb85c',
-      cancelButtonColor: '#d9534f',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if(result.dismiss){}
-      if (result.value) {
-        this._videoService.deleteVideo(id,this.token).subscribe((data:any)=>{
-          if(data['Response']=="Video eliminado"){
-            Swal.fire({
-              type: 'success',
-              title: 'Eliminación exitosa',
-              text: 'Se ha eliminado el video correctamente',
-              confirmButtonText: 'Aceptar',
-              confirmButtonColor: '#5cb85c',
-            }).then((result2)=>{
-              if(result2 || result2.dismiss){
-                this.getVideos()
-              }
-            })
-          }
-        })
-      }
     })
   }
 

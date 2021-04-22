@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header-profesor></app-header-profesor>
 <main>
   <section class="section ">
     <div class="container">
@@ -7,15 +7,7 @@
           <mat-card-content class="mat-card-content">
             <div class="row">
               <div class="col-md-6">
-                <mat-card-title class="mat-card-title">Videos preuniversitario</mat-card-title><br>
-              </div>
-              <div class="col-md-6">
-                <div class="text-right">
-                  <button type="button" class="btn-primary btn"
-                    (click)="navegarEnComponentes('/admin/videos/formulario')">Agregar
-                    Video</button>
-                  <br>
-                </div>
+                <mat-card-title class="mat-card-title">Videos Asignatura</mat-card-title><br>
               </div>
             </div>
             <br>
@@ -28,8 +20,6 @@
                   <th scope="col">Video</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Curso</th>
-                  <th scope="col">Asignatura</th>
-                  <th scope="col">Acción</th>
                 </tr>
               </thead>
               <tbody>
@@ -50,12 +40,7 @@
                       allowfullscreen></iframe></td>
                   <td class="align-vertical">{{ video.nombre }}</td>
                   <td class="align-vertical">{{ video.curso.nombre }}</td>
-                  <td class="align-vertical">{{ video.asignatura.nombre }}</td>
-                  <td class="align-vertical">
-                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteVideo(video.id)"><i
-                        class="fas fa-trash-alt"></i>
-                    </button>
-                  </td>
+                
                 </tr>
               </tbody>
             </table>
@@ -74,4 +59,4 @@
     </div>
   </section>
 </main>
-<app-footer></app-footer>
+<app-footer-profesor></app-footer-profesor>
