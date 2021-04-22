@@ -36,6 +36,7 @@ import { AsistenciaComponent } from './asistencia/asistencia.component';
 import { NuevaAsistenciaComponent } from './nueva-asistencia/nueva-asistencia.component';
 import { DetalleAsistenciaComponent } from './detalle-asistencia/detalle-asistencia.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
+import { NuevaObservacionAlumnoComponent } from './nueva-observacion-alumno/nueva-observacion-alumno.component';
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
     { path: 'calendario', component: CalendarioComponent},
@@ -46,6 +47,7 @@ const routes: Routes = [
     { path: 'asistencia/nueva', component: NuevaAsistenciaComponent },
     { path: 'asistencia/detalle/:id', component: DetalleAsistenciaComponent },
     { path: 'detalle/alumno/:id', component: DetalleAlumnoComponent },
+    { path: 'detalle/alumno/:id/nuevaObservacion', component: NuevaObservacionAlumnoComponent},
     { path: 'cursos/detalle/:id', component: DetalleCursoComponent},
     { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent},
     { path: 'detalle/evaluacion/:id/registrar/curso/:id_curso', component: RegistrarEvaluacionComponent},
@@ -94,7 +96,8 @@ const routes: Routes = [
         AsistenciaComponent,
         NuevaAsistenciaComponent,
         DetalleAsistenciaComponent,
-        CambioContrasenaComponent
+        CambioContrasenaComponent,
+        NuevaObservacionAlumnoComponent
     ],
     exports: [
         RouterModule

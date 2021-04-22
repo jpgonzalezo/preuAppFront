@@ -12,6 +12,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { Ng2Rut } from 'ng2-rut';
 import { CompartidoModule } from 'src/app/componentes/compartido.module';
 import { MaterialModule } from 'src/app/componentes/material.module';
+import { BrowserModule } from '@angular/platform-browser';
 // register 'es' locale
 registerLocaleData(localeEs);
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
@@ -37,21 +38,14 @@ import { DetalleProfesorComponent } from './detalle-profesor/detalle-profesor.co
 import { DetalleEvaluacionComponent } from './detalle-evaluacion/detalle-evaluacion.component';
 import { TablaEventosComponent } from './tabla-eventos/tabla-eventos.component';
 import { AlertasComponent } from './alertas/alertas.component';
-import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
-
-
-
-
-
-
-
-import { BrowserModule } from '@angular/platform-browser';
 import { NgbdSortableHeader } from 'src/app/servicios/sorteable.directive';
 import { NuevoAlumnoComponent } from './nuevo-alumno/nuevo-alumno.component';
 import { NuevoProfesorComponent } from './nuevo-profesor/nuevo-profesor.component';
 import { NuevoApoderadoComponent } from './nuevo-apoderado/nuevo-apoderado.component';
 import { NuevoAdministradorComponent } from './nuevo-administrador/nuevo-administrador.component';
 import { NuevoColegioComponent } from './nuevo-colegio/nuevo-colegio.component';
+import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
+import { NuevaObservacionAlumnoComponent } from './nueva-observacion-alumno/nueva-observacion-alumno.component';
 
 
 const routes: Routes = [
@@ -63,6 +57,7 @@ const routes: Routes = [
     { path: 'perfiles/nuevoAdministrador', component: NuevoAdministradorComponent},
     { path: 'eventos', component: TablaEventosComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
+    { path: 'perfiles/hoja_vida/:id/nuevaObservacion', component: NuevaObservacionAlumnoComponent},
     { path: 'perfiles/detalle_profesor/:id', component: DetalleProfesorComponent},
     { path: 'perfiles/nuevo_perfil/:tipo_perfil', component: NuevoPerfilComponent},
     { path: 'colegios', component: ColegioComponent},
@@ -131,7 +126,8 @@ const routes: Routes = [
         NuevoProfesorComponent,
         NuevoApoderadoComponent,
         NuevoAdministradorComponent,
-        NuevoColegioComponent
+        NuevoColegioComponent,
+        NuevaObservacionAlumnoComponent
     ],
     exports: [
         RouterModule
