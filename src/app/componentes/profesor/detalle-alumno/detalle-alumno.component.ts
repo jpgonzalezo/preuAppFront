@@ -344,4 +344,9 @@ export class DetalleAlumnoComponent implements OnInit {
     })
   }
 
+
+  public nuevaObservacion(){
+    this.router.navigateByUrl('/profesor/detalle/alumno/'+this.id_hoja_vida+'/nuevaObservacion');
+  }
+
 }

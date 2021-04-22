@@ -3,13 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RutValidator } from 'ng2-rut';
 import { Alumno } from 'src/app/modelos/alumno.model';
-import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { ApoderadoService } from 'src/app/servicios/apoderado.service';
-import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { LocalService } from 'src/app/servicios/local.service';
-import { ProfesorService } from 'src/app/servicios/profesor.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-import { AlumnoTablaService } from 'src/app/servicios/tablas/tabla.perfiles.alumnos.service';
 import { ValidatorNumber } from 'src/app/validators/number.validators';
 import swal from'sweetalert2';
 
@@ -30,10 +26,7 @@ export class NuevoApoderadoComponent implements OnInit {
     private rutValidator: RutValidator,
     private _localService: LocalService,
     private _storageService: StorageService,
-    private _asignaturaService: AsignaturaService,
-    private _profesorService: ProfesorService,
     private _apoderadoService: ApoderadoService,
-    public _alumnoTablaService: AlumnoTablaService,
   ) { }
 
   ngOnInit() {

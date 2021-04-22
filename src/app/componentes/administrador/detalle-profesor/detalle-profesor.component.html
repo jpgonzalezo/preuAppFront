@@ -19,7 +19,6 @@
             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
               <div class="card-profile-actions py-4 mt-lg-0">
                 <a class="mr-4"></a>
-                <a class="btn btn-sm btn-default float-right" [routerLink]="">Editar</a>
               </div>
             </div>
             <div class="col-lg-4 order-lg-1">
@@ -41,14 +40,14 @@
           </div>
           <div class="text-center mt-5">
             <br>
-            <h3>{{profesor.nombres}} {{profesor.apellido_paterno}} {{profesor.apellido_materno}}</h3>
+            <mat-card-title>{{profesor.nombres}} {{profesor.apellido_paterno}} {{profesor.apellido_materno}}</mat-card-title>
             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{asignatura.nombre}}</div>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{profesor.email}} -
               {{profesor.telefono}}</div>
           </div>
 
           <div class="mt-5 py-5 border-top text-center">
-            <h4 class="display-3 pull-rigth">Observaciones</h4>
+            <mat-card-title>Observaciones profesor</mat-card-title>
             <div class="row justify-content-center">
               <div class="col-xl-12">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -70,7 +69,6 @@
                             <tr>
                               <th scope="col">Fecha</th>
                               <th scope="col">Alumno</th>
-                              <th scope="col">R.U.N</th>
                               <th scope="col">Titulo</th>
                               <th scope="col">Contenido</th>
                             </tr>
@@ -89,9 +87,9 @@
                             </tr>
                             <tr *ngFor="let anotacion of anotaciones_tabla">
                               <td>{{anotacion.fecha}}</td>
-                              <td>{{anotacion.alumno.nombres}} {{anotacion.alumno.apellido_paterno}}
-                                {{anotacion.alumno.apellido_materno}}</td>
-                              <td>{{anotacion.alumno.rut}}</td>
+                              <td *ngIf="anotacion.anonimo == 'ANONIMO' ">Anónimo</td>
+                              <td *ngIf="anotacion.anonimo == 'NO_ANONIMO' ">{{anotacion.alumno.nombres}} {{anotacion.alumno.apellido_paterno}}
+                                  {{anotacion.alumno.apellido_materno}}</td>
                               <td>{{anotacion.titulo}}</td>
                               <td>{{anotacion.contenido}}</td>
                             </tr>
@@ -120,7 +118,7 @@
     </div>
   </section>
   <div class="text-center">
-    <button type="button" class="btn btn-outline-danger" (click)="cancelar()"> Volver </button>
+    <button type="button" class="btn btn-danger" (click)="cancelar()"> Volver </button>
   </div>
 </main>
 <app-footer></app-footer>

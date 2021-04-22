@@ -1,0 +1,74 @@
+<app-header-profesor></app-header-profesor>
+<main>
+  <section class="section ">
+    <div class="container">
+      <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="100" fxFlex="100">
+          <mat-card>
+            <div class="my-container">
+              <ngx-loading [show]="loading"
+                [config]="{ 
+                        animationType: 'circle',
+                        backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                        primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+              </ngx-loading>
+            </div>
+            <mat-card-content>
+              <div class="my-container">
+                <ngx-loading [show]="loading"
+                  [config]="{ 
+                            animationType: 'circle',
+                            backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                            primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+                </ngx-loading>
+              </div>
+              <mat-card-title>Nuevo observación</mat-card-title>
+              <mat-card-subtitle>Complete los campos para crear una observación sobre el alumno.</mat-card-subtitle>
+
+              <form class="basic-form" [formGroup]="createForm">
+                <!-- ============================================================== -->
+                <!-- column -->
+                <!-- ============================================================== -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field>
+                      <mat-label>Título</mat-label>
+                      <input matInput formControlName="titulo" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('titulo').invalid">{{getErrorMessageTitulo()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-12">
+                    <mat-form-field>
+                      <mat-label>Observación</mat-label>
+                      <textarea matInput formControlName="contenido" class="form-control" style="height: 200px;"></textarea>
+                      <mat-error *ngIf="this.createForm.get('contenido').invalid">{{getErrorMessageContenido()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+
+                <div class="row text-center">
+                  <div class="col-md-12">
+                    <button type="button" class="btn btn-danger my-4" (click)="volver()"
+                    >volver</button>
+                    <button type="button" class="btn btn-primary my-4" (click)="guardarObservacion()"
+                      [disabled]="createForm.invalid">Crear observacion</button>
+                  </div>
+                </div>
+              </form>
+
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer-profesor></app-footer-profesor>

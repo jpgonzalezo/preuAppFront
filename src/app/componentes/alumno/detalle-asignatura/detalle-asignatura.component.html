@@ -2,20 +2,265 @@
 <main>
   <section class="section ">
     <div class="container">
-      <h2 class="display-3">{{asignatura.nombre}}</h2>
+      <mat-card-content>
+        <mat-card-title>{{asignatura.nombre}}</mat-card-title>
+      </mat-card-content>
       <hr>
+
+
+
       <div class="row row-grid align-items-center">
         <div class="col-xl-12">
-          <h5>Evaluaciones Pendientes</h5><br>
-          <ul class="nav nav-tabs" id="myTab2" role="tablist">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="pendientes-tab" data-toggle="tab" href="#evaluaciones_pendientes" role="tab"
-                aria-controls="pendientes" aria-selected="false">Evaluaciones</a>
+              <a class="nav-link active" id="evaluaciones-realizadas-tab" data-toggle="tab"
+                href="#evaluaciones-realizadas_existente" role="tab" aria-controls="evaluaciones-realizadas"
+                aria-selected="false">Evaluaciones Realizadas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="evaluaciones-pendientes-tab" data-toggle="tab"
+                href="#evaluaciones-pendientes_existente" role="tab" aria-controls="evaluaciones-pendientes"
+                aria-selected="true">Evaluaciones Pendientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="video-clases-tab" data-toggle="tab" href="#video-clases_existente" role="tab"
+                aria-controls="videos-clases" aria-selected="true">Video Clases</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="asistencia-tab" data-toggle="tab" href="#asistencia_existente" role="tab"
+                aria-controls="asistencia" aria-selected="true">Asistencia</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="recursos-tab" data-toggle="tab" href="#recursos_existente" role="tab"
+                aria-controls="recursos" aria-selected="true">Recursos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profesores-tab" data-toggle="tab" href="#profesores_existente" role="tab"
+                aria-controls="profesores" aria-selected="true">Profesores</a>
             </li>
           </ul>
 
-          <div class="tab-content" id="myTabContent2">
-            <div class="tab-pane fade show active" id="evaluaciones_pendientes" role="tabpanel" aria-labelledby="taller-tab">
+          <div class="tab-content" id="myTabContent">
+
+
+            <!--EVALUACIONES REALIZADAS TAB-->
+            <div class="tab-pane fade show active" id="evaluaciones-realizadas_existente" role="tabpanel"
+              aria-labelledby="evaluaciones-realizadas-tab">
+              <div class="mb-8">
+                <br>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="taller-tab" data-toggle="tab" href="#taller_existente" role="tab"
+                      aria-controls="taller" aria-selected="false">Talleres</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="ensayo-tab" data-toggle="tab" href="#ensayo_existente" role="tab"
+                      aria-controls="ensayo" aria-selected="false">Ensayos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="tarea-tab" data-toggle="tab" href="#tarea_existente" role="tab"
+                      aria-controls="tarea" aria-selected="false">Tareas</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="taller_existente" role="tabpanel"
+                    aria-labelledby="taller-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Evaluacion</th>
+                              <th scope="col">Correctas</th>
+                              <th scope="col">Incorrectas</th>
+                              <th scope="col">Omitidas</th>
+                              <th scope="col">Puntaje</th>
+                              <th scope="col">Respuestas</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngIf="loadTaller">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadTaller && talleres_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran talleres
+                              </td>
+                            </tr>
+                            <tr *ngFor="let evaluacion of talleres_tabla">
+                              <td>{{ evaluacion.prueba.nombre }}</td>
+                              <td>
+                                <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
+                              </td>
+                              <td>
+                                <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
+                              </td>
+                              <td>
+                                <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
+                              </td>
+                              <td>
+                                {{evaluacion.puntaje}}
+                              </td>
+                              <td>
+                                <div class="row">
+                                  <button type="button" class="btn btn-info btn-sm"
+                                    (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
+                                      class="far fa-eye"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                          <ngb-pagination [collectionSize]="collectionSizeTaller" [(page)]="pageTaller"
+                            [pageSize]="pageSizeTaller">
+                          </ngb-pagination>
+
+                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeTaller">
+                            <option [ngValue]="10">10 talleres por página</option>
+                            <option [ngValue]="20">20 talleres por página</option>
+                            <option [ngValue]="30">30 talleres por página</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade show" id="ensayo_existente" role="tabpanel" aria-labelledby="ensayo-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Evaluacion</th>
+                              <th scope="col">Correctas</th>
+                              <th scope="col">Incorrectas</th>
+                              <th scope="col">Omitidas</th>
+                              <th scope="col">Puntaje</th>
+                              <th scope="col">Respuestas</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngIf="loadEnsayo">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadEnsayo && ensayos_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran ensayos
+                              </td>
+                            </tr>
+                            <tr *ngFor="let evaluacion of ensayos_tabla">
+                              <td>{{ evaluacion.prueba.nombre }}</td>
+                              <td>
+                                <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
+                              </td>
+                              <td>
+                                <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
+                              </td>
+                              <td>
+                                <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
+                              </td>
+                              <td>
+                                {{evaluacion.puntaje}}
+                              </td>
+                              <td>
+                                <div class="row">
+                                  <button type="button" class="btn btn-info btn-sm"
+                                    (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
+                                      class="far fa-eye"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                          <ngb-pagination [collectionSize]="collectionSizeEnsayo" [(page)]="pageEnsayo"
+                            [pageSize]="pageSizeEnsayo">
+                          </ngb-pagination>
+
+                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeEnsayo">
+                            <option [ngValue]="10">10 ensayos por página</option>
+                            <option [ngValue]="20">20 ensayos por página</option>
+                            <option [ngValue]="30">30 ensayos por página</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="tab-pane fade show" id="tarea_existente" role="tabpanel" aria-labelledby="tarea-tab">
+                    <div class="mb-8 ">
+                      <br>
+                      <div class="table-responsive-lg">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Evaluacion</th>
+                              <th scope="col">Correctas</th>
+                              <th scope="col">Incorrectas</th>
+                              <th scope="col">Omitidas</th>
+                              <th scope="col">Puntaje</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngIf="loadTarea">
+                              <td colspan="10" class="shine text-center">
+                                <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                              </td>
+                            </tr>
+                            <tr *ngIf="!loadTarea && tareas_tabla.length == 0">
+                              <td colspan="10" class="text-center">
+                                No se registran tareas
+                              </td>
+                            </tr>
+                            <tr *ngFor="let evaluacion of tareas_tabla">
+                              <td>{{ evaluacion.prueba.nombre }}</td>
+                              <td>
+                                <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
+                              </td>
+                              <td>
+                                <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
+                              </td>
+                              <td>
+                                <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
+                              </td>
+                              <td>
+                                {{evaluacion.puntaje}}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                          <ngb-pagination [collectionSize]="collectionSizeTarea" [(page)]="pageTarea"
+                            [pageSize]="pageSizeTarea">
+                          </ngb-pagination>
+
+                          <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeTarea">
+                            <option [ngValue]="10">10 tareas por página</option>
+                            <option [ngValue]="20">20 tareas por página</option>
+                            <option [ngValue]="30">30 tareas por página</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--EVALUACIONES PENDIENTES TAB-->
+            <div class="tab-pane fade show" id="evaluaciones-pendientes_existente" role="tabpanel"
+              aria-labelledby="evaluaciones-pendientes-tab">
               <div class="mb-8 ">
                 <br>
                 <div class="table-responsive-lg">
@@ -55,8 +300,7 @@
                         <td>
                           <div class="row">
                             <button type="button" class="btn btn-info btn-sm"
-                            (click)="irHojaRespuesta(evaluacion.id)"><i
-                                class="far fa-eye"></i>
+                              (click)="irHojaRespuesta(evaluacion.id)"><i class="far fa-eye"></i>
                             </button>
                           </div>
                         </td>
@@ -69,243 +313,26 @@
                     </ngb-pagination>
 
                     <select class="custom-select" style="width: auto" [(ngModel)]="pageSizePendientes">
-                      <option [ngValue]="5">5 pruebas por página</option>
-                      <option [ngValue]="10">10 pruebas por página</option>
-                      <option [ngValue]="15">15 pruebas por página</option>
+                      <option [ngValue]="10">10 evaluaciones por página</option>
+                      <option [ngValue]="20">20 evaluaciones por página</option>
+                      <option [ngValue]="30">30 evaluaciones por página</option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
 
-          
-          </div>
-
-          <h5>Evaluaciones realizadas</h5><br>
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="taller-tab" data-toggle="tab" href="#taller_existente" role="tab"
-                aria-controls="taller" aria-selected="false">Talleres</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="ensayo-tab" data-toggle="tab" href="#ensayo_existente" role="tab"
-                aria-controls="ensayo" aria-selected="false">Ensayos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="tarea-tab" data-toggle="tab" href="#tarea_existente" role="tab"
-                aria-controls="tarea" aria-selected="false">Tareas</a>
-            </li>
-          </ul>
-
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="taller_existente" role="tabpanel" aria-labelledby="taller-tab">
-              <div class="mb-8 ">
-                <br>
-                <div class="table-responsive-lg">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">Evaluacion</th>
-                        <th scope="col">Correctas</th>
-                        <th scope="col">Incorrectas</th>
-                        <th scope="col">Omitidas</th>
-                        <th scope="col">Puntaje</th>
-                        <th scope="col">Respuestas</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngIf="loadTaller">
-                        <td colspan="10" class="shine text-center">
-                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
-                        </td>
-                      </tr>
-                      <tr *ngIf="!loadTaller && talleres_tabla.length == 0">
-                        <td colspan="10" class="text-center">
-                          No se registran talleres
-                        </td>
-                      </tr>
-                      <tr *ngFor="let evaluacion of talleres_tabla">
-                        <td>{{ evaluacion.prueba.nombre }}</td>
-                        <td>
-                          <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
-                        </td>
-                        <td>
-                          <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
-                        </td>
-                        <td>
-                          <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
-                        </td>
-                        <td>
-                          {{evaluacion.puntaje}}
-                        </td>
-                        <td>
-                          <div class="row">
-                            <button type="button" class="btn btn-info btn-sm"
-                              (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
-                                class="far fa-eye"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="d-flex justify-content-between p-2">
-                    <ngb-pagination [collectionSize]="collectionSizeTaller" [(page)]="pageTaller"
-                      [pageSize]="pageSizeTaller">
-                    </ngb-pagination>
-
-                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeTaller">
-                      <option [ngValue]="5">5 talleres por página</option>
-                      <option [ngValue]="10">10 talleres por página</option>
-                      <option [ngValue]="15">15 talleres por página</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-pane fade show" id="ensayo_existente" role="tabpanel" aria-labelledby="ensayo-tab">
-              <div class="mb-8 ">
-                <br>
-                <div class="table-responsive-lg">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">Evaluacion</th>
-                        <th scope="col">Correctas</th>
-                        <th scope="col">Incorrectas</th>
-                        <th scope="col">Omitidas</th>
-                        <th scope="col">Puntaje</th>
-                        <th scope="col">Respuestas</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngIf="loadEnsayo">
-                        <td colspan="10" class="shine text-center">
-                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
-                        </td>
-                      </tr>
-                      <tr *ngIf="!loadEnsayo && ensayos_tabla.length == 0">
-                        <td colspan="10" class="text-center">
-                          No se registran ensayos
-                        </td>
-                      </tr>
-                      <tr *ngFor="let evaluacion of ensayos_tabla">
-                        <td>{{ evaluacion.prueba.nombre }}</td>
-                        <td>
-                          <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
-                        </td>
-                        <td>
-                          <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
-                        </td>
-                        <td>
-                          <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
-                        </td>
-                        <td>
-                          {{evaluacion.puntaje}}
-                        </td>
-                        <td>
-                          <div class="row">
-                            <button type="button" class="btn btn-info btn-sm"
-                              (click)="verAlternativas(evaluacion.respuestas, evaluacion.alumno)"><i
-                                class="far fa-eye"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="d-flex justify-content-between p-2">
-                    <ngb-pagination [collectionSize]="collectionSizeEnsayo" [(page)]="pageEnsayo"
-                      [pageSize]="pageSizeEnsayo">
-                    </ngb-pagination>
-
-                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeEnsayo">
-                      <option [ngValue]="5">5 ensayos por página</option>
-                      <option [ngValue]="10">10 ensayos por página</option>
-                      <option [ngValue]="15">15 ensayos por página</option>
-                    </select>
-                  </div>
-                </div>
+            <!--VIDEOS CLASES TAB-->
+            <div class="tab-pane fade show" id="video-clases_existente" role="tabpanel"
+              aria-labelledby="video-clases-tab">
+              <div class="mb-8">
+                Aqui van los videos de las clases
               </div>
             </div>
 
 
-            <div class="tab-pane fade show" id="tarea_existente" role="tabpanel" aria-labelledby="tarea-tab">
-              <div class="mb-8 ">
-                <br>
-                <div class="table-responsive-lg">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">Evaluacion</th>
-                        <th scope="col">Correctas</th>
-                        <th scope="col">Incorrectas</th>
-                        <th scope="col">Omitidas</th>
-                        <th scope="col">Puntaje</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngIf="loadTarea">
-                        <td colspan="10" class="shine text-center">
-                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
-                        </td>
-                      </tr>
-                      <tr *ngIf="!loadTarea && tareas_tabla.length == 0">
-                        <td colspan="10" class="text-center">
-                          No se registran tareas
-                        </td>
-                      </tr>
-                      <tr *ngFor="let evaluacion of tareas_tabla">
-                        <td>{{ evaluacion.prueba.nombre }}</td>
-                        <td>
-                          <span class="badge badge-pill badge-success">{{ evaluacion.cantidad_buenas }}</span>
-                        </td>
-                        <td>
-                          <span class="badge badge-pill badge-danger">{{ evaluacion.cantidad_malas }}</span>
-                        </td>
-                        <td>
-                          <span class="badge badge-pill badge-warning">{{ evaluacion.cantidad_omitidas }}</span>
-                        </td>
-                        <td>
-                          {{evaluacion.puntaje}}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="d-flex justify-content-between p-2">
-                    <ngb-pagination [collectionSize]="collectionSizeTarea" [(page)]="pageTarea"
-                      [pageSize]="pageSizeTarea">
-                    </ngb-pagination>
-
-                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeTarea">
-                      <option [ngValue]="5">5 tareas por página</option>
-                      <option [ngValue]="10">10 tareas por página</option>
-                      <option [ngValue]="15">15 tareas por página</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <div class="row row-grid align-items-center">
-        <div class="col-xl-12">
-          <h5>Asistencia a clases</h5><br>
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="asistencia-tab" data-toggle="tab" href="#asistencia_existente" role="tab"
-                aria-controls="asistencia" aria-selected="false">Asistencia</a>
-            </li>
-          </ul>
-
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="asistencia_existente" role="tabpanel"
-              aria-labelledby="asistencia-tab">
+            <!--ASISTENCIA TAB-->
+            <div class="tab-pane fade show" id="asistencia_existente" role="tabpanel" aria-labelledby="asistencia-tab">
               <div class="mb-8 ">
                 <br>
                 <div class="table-responsive-lg">
@@ -360,12 +387,78 @@
                 </div>
               </div>
             </div>
+
+            <!--RECURSOS TAB-->
+            <div class="tab-pane fade show" id="recursos_existente" role="tabpanel" aria-labelledby="recursos-tab">
+              <div class="mb-8">
+                Aqui van los recursos
+              </div>
+            </div>
+
+            <!--RECURSOS TAB-->
+            <div class="tab-pane fade show" id="profesores_existente" role="tabpanel" aria-labelledby="profesores-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido paterno</th>
+                        <th scope="col">Apellido materno</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadProfesores">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadProfesores && profesores_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran profesores
+                        </td>
+                      </tr>
+                      <tr *ngFor="let profesor of profesores_tabla">
+                        <td>{{ profesor.nombres }}</td>
+                        <td>{{ profesor.apellido_paterno }}</td>
+                        <td>{{ profesor.apellido_materno }}</td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-info btn-sm"
+                              (click)="observacionProfesor(profesor.id)"><i class="fas fa-comments"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeProfesores" [(page)]="pageProfesores"
+                      [pageSize]="pageSizeProfesores">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeProfesores">
+                      <option [ngValue]="5">5 profesores por página</option>
+                      <option [ngValue]="10">10 profesores por página</option>
+                      <option [ngValue]="15">15 profesores por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
           </div>
         </div>
       </div>
 
+
+      <br>
       <div class="text-center">
-        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
+        <button type="button" class="btn btn-danger" (click)="volver()"> Volver
         </button>
         <br>
       </div>
