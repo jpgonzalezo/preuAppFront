@@ -218,6 +218,7 @@ export class AsignaturaComponent implements OnInit {
     this.loadPruebasAsignatura=true;
     this._pruebaService.getPruebasAsignaturaToken(this.token).subscribe((data:Prueba[])=>{
       this.pruebas = data;
+      console.log(data)
       this.collectionSizeEvaluacion = this.pruebas.length;
       this.loadPruebasAsignatura=false;
     })
@@ -249,11 +250,90 @@ export class AsignaturaComponent implements OnInit {
     })
   }
 
-  updateVisible(id:string){
-    console.log(this.token)
-    this._pruebaService.putVisible(id,this.token).subscribe((data:any)=>{
-      this.getPruebasAsignatura()
-    })
+  updateVisible(id:string,visible:boolean){
+    if(!visible){
+      swal.fire({
+        title: 'Desea activar esta evaluación?',
+        text: "Una vez activada, esta podrá ser respondida por los alumnos.",
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2dce89',
+        cancelButtonColor: '#fb6340',
+        confirmButtonText: 'Activar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.value) {
+          this.loading = true
+          this._pruebaService.putVisible(id,this.token).subscribe((data:any)=>{
+            if(data){
+              this.loading = false
+              swal.fire({
+                title:'Activado!',
+                text:'Se ha activado la evaluación correctamente.',
+                type:'success',
+                confirmButtonColor: '#2dce89',
+              }).then((result)=>{
+                this.getPruebasAsignatura();
+              })
+            }
+            this.loading = false
+          },
+          (error)=>{
+            this.loading = false;
+            swal.fire({
+              type:'error',
+              title:'Error en el servidor',
+              text:'Ocurrió un error en el servidor, intente más tarde',
+              confirmButtonColor: '#5cb85c',
+              confirmButtonText: 'Aceptar',
+            })
+          })
+        }
+  
+      })
+    }
+    else{
+      swal.fire({
+        title: 'Desea desactivar esta evaluación?',
+        text: "La evaluacion dejará de estar disponible para los alumnos.",
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#2dce89',
+        cancelButtonColor: '#fb6340',
+        confirmButtonText: 'Desactivar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.value) {
+          this.loading = true
+          this._pruebaService.putVisible(id,this.token).subscribe((data:any)=>{
+            if(data){
+              this.loading = false
+              swal.fire({
+                title:'Desactivado!',
+                text:'Se ha desactivado la evaluación exitosamente.',
+                type:'success',
+                confirmButtonColor: '#2dce89',
+              }).then((result)=>{
+                this.getPruebasAsignatura();
+              })
+            }
+            this.loading = false
+          },
+          (error)=>{
+            this.loading = false;
+            swal.fire({
+              type:'error',
+              title:'Error en el servidor',
+              text:'Ocurrió un error en el servidor, intente más tarde',
+              confirmButtonColor: '#5cb85c',
+              confirmButtonText: 'Aceptar',
+            })
+          })
+        }
+  
+      })
+    }
+
   }
 
   verDetalleEvaluacion(id_evaluacion:string){

@@ -19,7 +19,6 @@ registerLocaleData(localeEs);
 //SERVICIOS
 
 //COMPONENTES
-import { HomeComponent } from './home/home.component';
 import { HeaderProfesorComponent } from './header-profesor/header-profesor.component';
 import { FooterProfesorComponent } from './footer-profesor/footer-profesor.component';
 import { AsignaturaComponent } from './asignatura/asignatura.component';
@@ -80,7 +79,6 @@ const routes: Routes = [
         })
     ],
     declarations: [
-        HomeComponent,
         HeaderProfesorComponent,
         FooterProfesorComponent,
         AsignaturaComponent,
