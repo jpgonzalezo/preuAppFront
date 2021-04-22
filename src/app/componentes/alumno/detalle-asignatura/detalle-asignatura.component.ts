@@ -12,6 +12,9 @@ import { Evaluacion } from 'src/app/modelos/evaluacion.model';
 import { Prueba } from 'src/app/modelos/prueba.model';
 import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
 import swal from 'sweetalert2';
+import { ProfesorService } from 'src/app/servicios/profesor.service';
+import { Profesor } from 'src/app/modelos/profesor';
+import { Config } from 'src/app/config';
 
 @Component({
   selector: 'app-detalle-asignatura',
@@ -21,6 +24,7 @@ import swal from 'sweetalert2';
 export class DetalleAsignaturaComponent implements OnInit {
   asignatura: Asignatura;
   asistencias: Asistencia[];
+  profesores: Profesor[];
   talleres: Evaluacion[];
   ensayos: Evaluacion[];
   tareas: Evaluacion[];
@@ -40,13 +44,17 @@ export class DetalleAsignaturaComponent implements OnInit {
   collectionSizePendientes: number;
   pageAsistencia: number;
   pageSizeAsistencia: number;
+  pageProfesores: number;
+  pageSizeProfesores: number;
   collectionSizeAsistencia: number;
+  collectionSizeProfesores: number;
   token: string;
   loadTaller: boolean = true;
   loadEnsayo: boolean = true;
   loadTarea: boolean = true;
   loadPendientes: boolean = true;
   loadAsistencia: boolean = true;
+  loadProfesores: boolean = false;
   constructor(
     private _asignaturaService: AsignaturaService,
     private _activatedRoute: ActivatedRoute,
@@ -54,7 +62,8 @@ export class DetalleAsignaturaComponent implements OnInit {
     private _evaluacionService: EvaluacionService,
     private _asistenciaService: AsistenciaService,
     private _localService: LocalService,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private _profesorService: ProfesorService
   ) {
     this.asignatura = new Asignatura();
     this.talleres = [];
@@ -62,16 +71,19 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.tareas = [];
     this.pendientes = []
     this.asistencias = [];
+    this.profesores = [];
     this.pageTaller = 1;
-    this.pageSizeTaller = 5;
+    this.pageSizeTaller = 10;
     this.pagePendientes = 1;
-    this.pageSizePendientes = 5;
+    this.pageSizePendientes = 10;
     this.pageEnsayo = 1;
-    this.pageSizeEnsayo = 5;
+    this.pageSizeEnsayo = 10;
     this.pageTarea = 1;
-    this.pageSizeTarea = 5;
+    this.pageSizeTarea = 10;
     this.pageAsistencia = 1;
     this.pageSizeAsistencia = 10;
+    this.pageProfesores = 1;
+    this.pageSizeProfesores = 5;
   }
 
   ngOnInit() {
@@ -86,6 +98,28 @@ export class DetalleAsignaturaComponent implements OnInit {
     this.getEvaluacionesAlumno();
     this.getAsistenciaAlumnoAsignatura();
     this.getPendientes();
+    this.getProfesores();
+  }
+
+
+  observacionProfesor(id_profesor:string){
+    this._router.navigateByUrl('/alumno/asignaturas/' + this.id_asignatura + '/detalle/profesor/'+ id_profesor +'/nuevaObservacion');
+  }
+
+  getProfesores(){
+    this.loadProfesores = true;
+    this._profesorService.getProfesoresAsignatura(this.id_asignatura,this.token).subscribe((data:Profesor[])=>{
+      this.profesores = data
+      this.collectionSizeProfesores = this.profesores.length;
+      for(let alumno of this.profesores){
+        alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
+      }
+      this.loadProfesores = false;
+      console.log(this.profesores);
+    },
+    (error)=>{
+      this.loadProfesores = false;
+    })
   }
 
   getAsignatura() {
@@ -147,6 +181,12 @@ export class DetalleAsignaturaComponent implements OnInit {
     return this.asistencias
       .map((asistencia, i) => ({ id: i + 1, ...asistencia }))
       .slice((this.pageAsistencia - 1) * this.pageSizeAsistencia, (this.pageAsistencia - 1) * this.pageSizeAsistencia + this.pageSizeAsistencia);
+  }
+
+  get profesores_tabla(): Profesor[] {
+    return this.profesores
+      .map((profesor, i) => ({ id: i + 1, ...profesor }))
+      .slice((this.pageProfesores - 1) * this.pageSizeProfesores, (this.pageProfesores - 1) * this.pageSizeProfesores + this.pageSizeProfesores);
   }
 
   get talleres_tabla(): Evaluacion[] {
