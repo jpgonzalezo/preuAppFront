@@ -1,3 +1,68 @@
-<p>
-  video-admin works!
-</p>
+<app-header></app-header>
+<main>
+  <section class="section ">
+    <div class="container">
+      <div class="text-right">
+        <button type="button" class="btn-primary btn" (click) = "navegarEnComponentes('/admin/videos/formulario')" >Agregar Video</button>
+        <br>
+      </div>
+      <div class="tab-pane fade show" id="video-clases_existente" role="tabpanel" aria-labelledby="video-clases-tab">
+        <div class="mb-8 ">
+          <br>
+          <div class="table-responsive-lg">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Presente</th>
+                  <th scope="col">Justificación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="loadAsistencia">
+                  <td colspan="10" class="shine text-center">
+                    <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                  </td>
+                </tr>
+                <tr *ngIf="!loadAsistencia && asistencias_tabla.length == 0">
+                  <td colspan="10" class="text-center">
+                    No se registran asistencias
+                  </td>
+                </tr>
+                <tr *ngFor="let asistencia of asistencias_tabla">
+                  <td>{{ asistencia.fecha }}</td>
+                  <td>
+                    <div *ngIf="!asistencia.presente">
+                      <div class="icon icon-shape bg-gradient-danger rounded-circle text-white mb-1">
+                        <i class="far fa-times-circle text-white" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    <div *ngIf="asistencia.presente">
+                      <div class="icon icon-shape bg-gradient-success rounded-circle text-white mb-1">
+                        <i class="far fa-check-circle text-white" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ asistencia.justificacion }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+              <ngb-pagination [collectionSize]="collectionSizeAsistencia" [(page)]="pageAsistencia"
+                [pageSize]="pageSizeAsistencia">
+              </ngb-pagination>
+
+              <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAsistencia">
+                <option [ngValue]="10">10 asistencias por página</option>
+                <option [ngValue]="20">20 asistencias por página</option>
+                <option [ngValue]="30">30 asistencias por página</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+<app-footer></app-footer>

@@ -47,6 +47,7 @@ import { NuevoColegioComponent } from './nuevo-colegio/nuevo-colegio.component';
 import { VideoAdminComponent } from './video-admin/video-admin.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 import { NuevaObservacionAlumnoComponent } from './nueva-observacion-alumno/nueva-observacion-alumno.component';
+import { FormularioVideoComponent } from './formulario-video/formulario-video.component';
 
 
 const routes: Routes = [
@@ -73,7 +74,9 @@ const routes: Routes = [
     { path: 'alertas', component: AlertasComponent},
     { path: 'cursos/detalle_curso/:id', component: DetalleCursoComponent},
     { path: 'change_password', component: CambioContrasenaComponent},
-    { path: 'videos', component: VideoAdminComponent}
+    { path: 'videos', component: VideoAdminComponent},
+    { path: 'videos/formulario', component: FormularioVideoComponent}
+
 ];
 
 @NgModule({
@@ -130,7 +133,8 @@ const routes: Routes = [
         NuevoAdministradorComponent,
         NuevoColegioComponent,
         VideoAdminComponent,
-        NuevaObservacionAlumnoComponent
+        NuevaObservacionAlumnoComponent,
+        FormularioVideoComponent
     ],
     exports: [
         RouterModule
