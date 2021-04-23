@@ -24,7 +24,12 @@ import { ColegioService } from 'src/app/servicios/colegio.service';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { ApoderadoService } from 'src/app/servicios/apoderado.service';
 import { AdministradorService } from 'src/app/servicios/administrador.service';
+import { VideoService } from 'src/app/servicios/video.service';
+
 @NgModule({
+    declarations: [
+
+    ],
     imports: [HttpClientModule],
     providers:[
         LoginService, 
@@ -52,7 +57,9 @@ import { AdministradorService } from 'src/app/servicios/administrador.service';
         ColegioService,
         CursoService,
         ApoderadoService,
-        AdministradorService
-    ],
+        AdministradorService,
+        VideoService
+    ]
+
 })
 export class CompartidoModule { }

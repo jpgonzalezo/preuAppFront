@@ -36,6 +36,9 @@ import { NuevaAsistenciaComponent } from './nueva-asistencia/nueva-asistencia.co
 import { DetalleAsistenciaComponent } from './detalle-asistencia/detalle-asistencia.component';
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 import { NuevaObservacionAlumnoComponent } from './nueva-observacion-alumno/nueva-observacion-alumno.component';
+import { VideoProfesorComponent } from './video-profesor/video-profesor.component';
+import { CompartidoModule } from 'src/app/componentes/compartido.module';
+
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
     { path: 'calendario', component: CalendarioComponent},
@@ -51,12 +54,15 @@ const routes: Routes = [
     { path: 'detalle/evaluacion/:id', component: DetalleEvaluacionComponent},
     { path: 'detalle/evaluacion/:id/registrar/curso/:id_curso', component: RegistrarEvaluacionComponent},
     { path: 'detalle/evaluacion/:id/editar', component: EditarEvaluacionComponent},
-    { path: 'change_password', component: CambioContrasenaComponent }
+    { path: 'change_password', component: CambioContrasenaComponent },
+    { path: 'videos', component: VideoProfesorComponent }
+
 
 ];
 
 @NgModule({
     imports: [
+        CompartidoModule,
         ChartsModule,
         NgbModule.forRoot(),
         NgbPaginationModule,
@@ -95,7 +101,8 @@ const routes: Routes = [
         NuevaAsistenciaComponent,
         DetalleAsistenciaComponent,
         CambioContrasenaComponent,
-        NuevaObservacionAlumnoComponent
+        NuevaObservacionAlumnoComponent,
+        VideoProfesorComponent
     ],
     exports: [
         RouterModule
