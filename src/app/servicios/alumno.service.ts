@@ -33,12 +33,28 @@ export class AlumnoService {
     return this.httpClient.get(`${this.API_URL}/alumno/token`,options).pipe(map(res => res))
   }
 
+  getAlumnoId(id_alumno:string,token:string){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token':token });
+  	const options = {
+  		headers: headers
+  	}
+    return this.httpClient.get(`${this.API_URL}/alumno/${id_alumno}`,options).pipe(map(res => res))
+  }
+
 	postAlumno(data:any,token:string):any{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'auth-token':token});
     const options = {
       headers: headers
     }
     return this.httpClient.post(`${this.API_URL}/alumnos`, JSON.stringify(data), options).pipe(map(res => res))
+  }
+
+  putAlumno(id_alumno:string,data:any,token:string):any{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'auth-token':token});
+    const options = {
+      headers: headers
+    }
+    return this.httpClient.put(`${this.API_URL}/alumno/${id_alumno}`, JSON.stringify(data), options).pipe(map(res => res))
   }
   
   deleteAlumno(id:any,token:string){
