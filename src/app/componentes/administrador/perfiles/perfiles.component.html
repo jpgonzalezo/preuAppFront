@@ -54,7 +54,7 @@
                       <tr>
                         <th scope="col"></th>
                         <th scope="col">R.U.N</th>
-                        <th scope="col">Nombres</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Apellido paterno</th>
                         <th scope="col">Apellido materno</th>
                         <th scope="col">Curso</th>
@@ -85,6 +85,7 @@
                           <div class="row">
                             <button type="button" class="btn btn-info btn-sm"
                               (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
+                              <button type="button" class="btn btn-secondary btn-sm" (click)="editarAlumno(alumno.id)"><i class="fas fa-user-edit"></i></button>
                             <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i
                                 class="fas fa-trash-alt"></i></button>
                           </div>
@@ -160,6 +161,7 @@
                         <td>
                           <button type="button" class="btn btn-info btn-sm" (click)="verDetalleProfesor(profesor.id)"><i
                               class="far fa-eye"></i></button>
+                          <button type="button" class="btn btn-secondary btn-sm" (click)="editarProfesor(profesor.id)"><i class="fas fa-user-edit"></i></button>
                           <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfesor(profesor.id)"><i
                               class="fas fa-trash-alt"></i></button>
                         </td>
@@ -207,9 +209,7 @@
                       <tr>
                         <th scope="col"></th>
                         <th scope="col">R.U.N</th>
-                        <th scope="col">Nombres</th>
-                        <th scope="col">Apellido paterno</th>
-                        <th scope="col">Apellido materno</th>
+                        <th scope="col">Nombre</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Alumno</th>
                         <th scope="col">Acción</th>
@@ -231,12 +231,11 @@
                           <img [src]='apoderado.imagen' class="mr-2" style="width: 50px">
                         </th>
                         <td>{{ apoderado.rut | rut}}</td>
-                        <td>{{ apoderado.nombres}}</td>
-                        <td>{{ apoderado.apellido_paterno}}</td>
-                        <td>{{ apoderado.apellido_materno}}</td>
+                        <td>{{ apoderado.nombres}} {{ apoderado.apellido_paterno}} {{ apoderado.apellido_materno}}</td>
                         <td>{{ apoderado.telefono }}</td>
                         <td>{{ apoderado.alumno.nombres }} {{ apoderado.alumno.apellido_paterno}}</td>
                         <td>
+                          <button type="button" class="btn btn-secondary btn-sm" (click)="editarApoderado(apoderado.id)"><i class="fas fa-user-edit"></i></button>
                           <button type="button" class="btn btn-danger btn-sm" (click)="deleteApoderado(apoderado.id)"><i
                               class="fas fa-trash-alt"></i></button>
                         </td>
@@ -282,6 +281,7 @@
                         <th scope="col">Apellido paterno</th>
                         <th scope="col">Apellido materno</th>
                         <th scope="col">email</th>
+                        <th scope="col">Acción</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -304,6 +304,9 @@
                         <td>{{ administrador.apellido_paterno}}</td>
                         <td>{{ administrador.apellido_materno}}</td>
                         <td>{{ administrador.email }}</td>
+                        <td>
+                          <button type="button" class="btn btn-secondary btn-sm" (click)="editarAdministrador(administrador.id)"><i class="fas fa-user-edit"></i></button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

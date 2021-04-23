@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RutValidator } from 'ng2-rut';
+import { Alumno } from 'src/app/modelos/alumno.model';
 import { Colegio } from 'src/app/modelos/colegio.model';
 import { Curso } from 'src/app/modelos/curso.model';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
@@ -11,26 +12,29 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { ValidatorNumber } from 'src/app/validators/number.validators';
 import swal from'sweetalert2';
+
 @Component({
-  selector: 'app-nuevo-alumno',
-  templateUrl: './nuevo-alumno.component.html',
-  styleUrls: ['./nuevo-alumno.component.css']
+  selector: 'app-editar-alumno',
+  templateUrl: './editar-alumno.component.html',
+  styleUrls: ['./editar-alumno.component.css']
 })
-export class NuevoAlumnoComponent implements OnInit {
+export class EditarAlumnoComponent implements OnInit {
   createForm: FormGroup;
   loading = false;
   token: string;
+  id_alumno:string;
+  alumno: Alumno;
   sexos = [
     { value: 'MASCULINO', viewValue: 'Masculino' },
     { value: 'FEMENINO', viewValue: 'Femenino' },
     { value: 'NO DEFINIDO', viewValue: 'Otro' }
   ];
-
   cursos = [];
   colegios = [];
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private _activatedRoute: ActivatedRoute,
     private rutValidator: RutValidator,
     private _cursoService: CursoService,
     private _localService: LocalService,
@@ -40,12 +44,14 @@ export class NuevoAlumnoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.id_alumno = this._activatedRoute.snapshot.paramMap.get('id');
     if(this._storageService.getCurrentToken()==null){
       this.token = this._localService.getToken() 
     }
     else{
       this.token = this._storageService.getCurrentToken()
     }
+    this.getAlumno();
     this.getCursos();
     this.getColegios();
     this.createForm = this.formBuilder.group({
@@ -64,6 +70,31 @@ export class NuevoAlumnoComponent implements OnInit {
       curso: ['',[Validators.required]],
       colegio: ['',[Validators.required]],
     });
+  }
+
+  getAlumno(){
+    this.loading = true
+    this._alumnoService.getAlumnoId(this.id_alumno,this.token).subscribe((data:Alumno)=>{
+      this.loading = false
+      this.alumno = data;
+      this.createForm.get('nombres').setValue(this.alumno.nombres);
+      this.createForm.get('apellido_paterno').setValue(this.alumno.apellido_paterno);
+      this.createForm.get('apellido_materno').setValue(this.alumno.apellido_materno);
+      this.createForm.get('rut').setValue(this.alumno.rut);
+      this.createForm.get('puntaje_ingreso').setValue(this.alumno.puntaje_ingreso);
+      this.createForm.get('sexo').setValue(this.alumno.sexo);
+      this.createForm.get('telefono').setValue(this.alumno.telefono);
+      this.createForm.get('email').setValue(this.alumno.email);
+      this.createForm.get('calle').setValue(this.alumno.direccion.calle);
+      this.createForm.get('numero').setValue(this.alumno.direccion.numero);
+      this.createForm.get('comuna').setValue(this.alumno.direccion.comuna);
+      this.createForm.get('cas_dep_of').setValue(this.alumno.direccion.cas_dep_of);
+      this.createForm.get('curso').setValue(this.alumno.curso.id);
+      this.createForm.get('colegio').setValue(this.alumno.colegio.id);
+    },
+    (error)=>{
+      this.loading = false
+    })
   }
 
   getCursos(){
@@ -190,99 +221,36 @@ export class NuevoAlumnoComponent implements OnInit {
     data['rut']= data['rut'].replace('.','');
     data['rut']= data['rut'].replace('.','');
     data['rut']= data['rut'].replace('-','');
-    this._alumnoService.postAlumno(data,this.token).subscribe(
+    this._alumnoService.putAlumno(this.id_alumno,data,this.token).subscribe(
       (data:any)=>{
-        if(data['Response']=='exito'){
+        if(data['Response']=="exito"){
           this.loading = false
           swal.fire({
-            title: 'Foto de perfil',
-            text: "Desea agregar una foto de perfil?",
-            type: 'warning',
-            showCancelButton: true,
+            title: 'Registro exitoso',
+            text: 'Se ha editado al alumno exitosamente!',
+            type: 'success',
             confirmButtonColor: '#2dce89',
-            cancelButtonColor: '#fb6340',
-            confirmButtonText: 'Si',
-            cancelButtonText: 'No'
-          }).then((result2) => {
-            if (result2.value) {
-              swal.fire({
-                title: 'Foto de perfil',
-                text: 'Seleccione una foto de perfil',
-                input: 'file',
-                inputAttributes: {
-                  'accept': 'image/*'
-                },
-                confirmButtonColor: '#2dce89',
-              }).then((result3)=>{
-                if(result3.value){
-                  this.loading = true
-                  var file = result3.value
-                  var formData = new FormData()
-                  formData.append('imagen',file)
-                  this._alumnoService.uploadImage(formData, data['id'],this.token).subscribe((data:any)=>{
-                    if(data['Response']=="exito"){
-                      this.loading = false
-                      swal.fire({
-                        title: 'Registro exitoso',
-                        text: 'Se ha guardado al alumno exitosamente!',
-                        type: 'success',
-                        confirmButtonColor: '#2dce89',
-                      }).then((result)=>{
-                        this.loading = false;
-                        this.router.navigateByUrl('/admin/perfiles');
-                      })
-                    }
-                    this.loading = false
-                  })
-                }
-                else{
-                  this.loading = true
-                  this._alumnoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
-                    if(data['Response']=="exito"){
-                      this.loading = false
-                      swal.fire({
-                        title: 'Registro exitoso',
-                        text: 'Se ha guardado al alumno exitosamente!',
-                        type: 'success',
-                        confirmButtonColor: '#2dce89',
-                      }).then((result)=>{
-                        this.loading = false;
-                        this.router.navigateByUrl('/admin/perfiles');
-                      })
-                    }
-                  },
-                  (error=>{}))
-                  this.loading = false
-                }
-              })
-            }
-            else{
-              this.loading = true
-              this._alumnoService.uploadImageDefault(data['id'],this.token).subscribe((data:any)=>{
-                if(data['Response']=="exito"){
-                  this.loading = false
-                  swal.fire({
-                    title: 'Registro exitoso',
-                    text: 'Se ha guardado al alumno exitosamente!',
-                    type: 'success',
-                    confirmButtonColor: '#2dce89',
-                  }).then((result)=>{
-                    this.loading = false;
-                    this.router.navigateByUrl('/admin/perfiles');
-                  })
-                }
-              },
-              (error=>{}))
-              this.loading = false
-            }
+          }).then((result)=>{
+            this.loading = false;
+            this.router.navigateByUrl('/admin/perfiles');
           })
         }
     },
-    (error)=>{this.loading = false})
+    (error)=>{
+      this.loading = false;
+      swal.fire({
+        type:'error',
+        title:'Error en el servidor',
+        text:'Ocurrió un error en el servidor, intente más tarde',
+        confirmButtonColor: '#5cb85c',
+        confirmButtonText: 'Aceptar',
+      });
+    })
   }
 
   volver(){
     this.router.navigateByUrl('/admin/perfiles');
   }
+
 
 }
