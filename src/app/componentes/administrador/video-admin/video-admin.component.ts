@@ -5,13 +5,15 @@ import { Curso } from 'src/app/modelos/curso.model';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { VideoService } from 'src/app/servicios/video.service';
+import { DomSanitizer } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 
 export interface Video {
   nombre: string,
   uri: string,
   curso: Curso,
-  asignatura: Asignatura
+  asignatura: Asignatura,
+  fecha: string
 }
 
 @Component({
@@ -32,6 +34,7 @@ export class VideoAdminComponent implements OnInit {
     private _videoService: VideoService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.videos = []
     this.pageVideos = 1;
@@ -54,6 +57,7 @@ export class VideoAdminComponent implements OnInit {
     this._videoService.getAllVideos(this.token).subscribe((data: Video[]) => {
       this.videos = data; 
       this.loadVideos = false;
+      console.log(data);
       this.collectionSizeVideos = this.videos.length;
     })
   }
@@ -98,6 +102,10 @@ export class VideoAdminComponent implements OnInit {
 
   navegarEnComponentes(path) {
     this._router.navigateByUrl(path);
+  }
+
+  transform(url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }

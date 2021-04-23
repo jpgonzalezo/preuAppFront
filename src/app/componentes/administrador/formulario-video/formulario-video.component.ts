@@ -66,7 +66,6 @@ export class FormularioVideoComponent implements OnInit {
     this.loading = true;
     this._cursoService.getCursos(this.token).subscribe((cursos: Array<Curso>) => {
       cursos.forEach(element => {
-        console.log(element)
         this.cursos.push({ value: element.id, viewValue: element.nombre, asignaturas: element.asignaturas })
 
       });
@@ -118,15 +117,12 @@ export class FormularioVideoComponent implements OnInit {
   getAsignaturas() {
     let id = this.createForm.get('curso_id').value
     this.asignaturas = []
-    console.log(id)
     let asignaturasCurso = this.cursos.find(curso => curso.value == id).asignaturas
-    console.log(this.cursos.find(curso => curso.value = id))
 
     asignaturasCurso.forEach(element => {
       this.asignaturas.push({ value: element.id, viewValue: element.nombre })
 
     });
-    console.log(this.asignaturas)
   }
 
 

@@ -2,72 +2,96 @@
 <main>
   <section class="section ">
     <div class="container">
-      <div class="tab-pane fade show" id="video-clases_existente" role="tabpanel" aria-labelledby="video-clases-tab">
-        <div class="mb-8 ">
-          <mat-card-content class="mat-card-content">
-            <div class="row">
-              <div class="col-md-6">
-                <mat-card-title class="mat-card-title">Videos preuniversitario</mat-card-title><br>
-              </div>
-              <div class="col-md-6">
-                <div class="text-right">
-                  <button type="button" class="btn-primary btn"
-                    (click)="navegarEnComponentes('/admin/videos/formulario')">Agregar
-                    Video</button>
-                  <br>
-                </div>
-              </div>
-            </div>
-            <br>
-          </mat-card-content>
 
-          <div class="table-responsive-md">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Video</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Curso</th>
-                  <th scope="col">Asignatura</th>
-                  <th scope="col">Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngIf="loadVideos">
-                  <td colspan="10" class="shine text-center">
-                    <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
-                  </td>
-                </tr>
-                <tr *ngIf="!loadVideos && videos_tabla.length == 0">
-                  <td colspan="10" class="text-center">
-                    No se registran videos
-                  </td>
-                </tr>
-                <tr *ngFor="let video of videos_tabla">
-                  <td><iframe width="220" height="122" [src]="video.uri | safe" title="YouTube video player"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen></iframe></td>
-                  <td class="align-vertical">{{ video.nombre }}</td>
-                  <td class="align-vertical">{{ video.curso.nombre }}</td>
-                  <td class="align-vertical">{{ video.asignatura.nombre }}</td>
-                  <td class="align-vertical">
-                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteVideo(video.id)"><i
-                        class="fas fa-trash-alt"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="d-flex justify-content-between p-2">
-              <ngb-pagination [collectionSize]="collectionSizeVideos" [(page)]="pageVideos" [pageSize]="pageSizeVideos">
-              </ngb-pagination>
 
-              <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeVideos">
-                <option [ngValue]="5">5 videos por página</option>
-              </select>
+
+      <mat-card-content class="mat-card-content">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-card-title class="mat-card-title">Videos preuniversitario</mat-card-title>
+          </div>
+          <div class="col-md-6">
+            <div class="text-right">
+              <button type="button" class="btn-primary btn"
+                (click)="navegarEnComponentes('/admin/videos/formulario')">Agregar
+                Video <i class="fab fa-youtube"></i></button>
             </div>
           </div>
+        </div>
+        <br>
+      </mat-card-content>
+
+
+      
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="video-clases-tab" data-toggle="tab" href="#video-clases_existente" role="tab"
+            aria-controls="video-clases" aria-selected="false">Videos</a>
+        </li>
+      </ul>
+
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="video-clases_existente" role="tabpanel" aria-labelledby="video-clases-tab">
+          <div class="mb-8 ">
+
+
+            <br>
+
+            <div class="table-responsive-md">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Video</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Asignatura</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="loadVideos">
+                    <td colspan="10" class="shine text-center">
+                      <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!loadVideos && videos_tabla.length == 0">
+                    <td colspan="10" class="text-center">
+                      No se registran videos
+                    </td>
+                  </tr>
+                  <tr *ngFor="let video of videos_tabla">
+                    <td><iframe width="220" height="122" [src]="transform(video.uri)" title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe></td>
+                    <td class="align-vertical">{{ video.nombre }}</td>
+                    <td class="align-vertical">{{ video.curso.nombre }}</td>
+                    <td class="align-vertical">{{ video.asignatura.nombre }}</td>
+                    <td class="align-vertical">{{ video.fecha }}</td>
+                    <td class="align-vertical">
+                      <button type="button" class="btn btn-danger btn-sm" (click)="deleteVideo(video.id)"><i
+                          class="fas fa-trash-alt"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="collectionSizeVideos" [(page)]="pageVideos" [pageSize]="pageSizeVideos">
+                </ngb-pagination>
+
+                <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeVideos">
+                  <option [ngValue]="5">5 videos por página</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
         </div>
       </div>
 

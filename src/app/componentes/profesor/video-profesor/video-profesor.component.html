@@ -34,7 +34,7 @@
                   </td>
                 </tr>
                 <tr *ngFor="let video of videos_tabla">
-                  <td><iframe width="220" height="122" [src]="video.uri | safe" title="YouTube video player"
+                  <td><iframe width="220" height="122" [src]="video.uri" title="YouTube video player"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen></iframe></td>

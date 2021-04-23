@@ -27,6 +27,9 @@ import { AdministradorService } from 'src/app/servicios/administrador.service';
 import { VideoService } from 'src/app/servicios/video.service';
 
 @NgModule({
+    declarations: [
+
+    ],
     imports: [HttpClientModule],
     providers:[
         LoginService, 
@@ -56,6 +59,7 @@ import { VideoService } from 'src/app/servicios/video.service';
         ApoderadoService,
         AdministradorService,
         VideoService
-    ],
+    ]
+
 })
 export class CompartidoModule { }

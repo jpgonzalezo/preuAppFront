@@ -15,6 +15,7 @@ import { ReactiveFormsModule} from '@angular/forms';
 import { CompartidoModule } from 'src/app/componentes/compartido.module';
 import { InicioModule } from 'src/app/componentes/inicio/inicio.module';
 import { AdministradorModule } from 'src/app/componentes/administrador/administrador.module';
+import { AuthorizatedGuard, AuthorizatedGuardProfesor, AuthorizatedGuardAlumno, AuthorizatedGuardApoderado } from 'src/app/componentes/authorizated.guard';
 // register 'es' locale
 registerLocaleData(localeEs);
 import { StorageService } from './servicios/storage.service';
@@ -35,13 +36,15 @@ import { LocalService } from 'src/app/servicios/local.service';
     RoutesModule,
     ReactiveFormsModule,
     ChartsModule,
-    NgbModule.forRoot(),
-    CompartidoModule,
-    AdministradorModule
+    NgbModule.forRoot()
   ],
   providers: [
     StorageService,
-    LocalService
+    LocalService,
+    AuthorizatedGuard,
+    AuthorizatedGuardProfesor,
+    AuthorizatedGuardAlumno,
+    AuthorizatedGuardApoderado
   ],
   entryComponents: [ ],
   bootstrap: [ AppComponent],

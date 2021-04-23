@@ -50,6 +50,8 @@ import { NuevaObservacionAlumnoComponent } from './nueva-observacion-alumno/nuev
 import { FormularioVideoComponent } from './formulario-video/formulario-video.component';
 
 
+
+
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'perfiles', component: PerfilesComponent},
