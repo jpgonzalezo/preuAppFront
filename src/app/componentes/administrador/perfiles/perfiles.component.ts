@@ -316,5 +316,13 @@ export class PerfilesComponent implements OnInit {
   editarProfesor(id_profesor:string){
     this.router.navigateByUrl('/admin/perfiles/editarProfesor/'+id_profesor);
   }
+
+  editarApoderado(id_apoderado:string){
+    this.router.navigateByUrl('/admin/perfiles/editarApoderado/'+id_apoderado);
+  }
+
+  editarAdministrador(id_administrador:string){
+    this.router.navigateByUrl('/admin/perfiles/editarAdministrador/'+id_administrador);
+  }
   
 }

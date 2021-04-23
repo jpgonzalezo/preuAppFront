@@ -48,6 +48,8 @@ import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena
 import { NuevaObservacionAlumnoComponent } from './nueva-observacion-alumno/nueva-observacion-alumno.component';
 import { EditarAlumnoComponent } from './editar-alumno/editar-alumno.component';
 import { EditarProfesorComponent } from './editar-profesor/editar-profesor.component';
+import { EditarApoderadoComponent } from './editar-apoderado/editar-apoderado.component';
+import { EditarAdministradorComponent } from './editar-administrador/editar-administrador.component';
 
 
 const routes: Routes = [
@@ -59,6 +61,8 @@ const routes: Routes = [
     { path: 'perfiles/nuevoAdministrador', component: NuevoAdministradorComponent},
     { path: 'perfiles/editarAlumno/:id', component: EditarAlumnoComponent},
     { path: 'perfiles/editarProfesor/:id', component: EditarProfesorComponent},
+    { path: 'perfiles/editarApoderado/:id', component: EditarApoderadoComponent},
+    { path: 'perfiles/editarAdministrador/:id', component: EditarAdministradorComponent},
     { path: 'eventos', component: TablaEventosComponent},
     { path: 'perfiles/hoja_vida/:id', component: HojaVidaComponent},
     { path: 'perfiles/hoja_vida/:id/nuevaObservacion', component: NuevaObservacionAlumnoComponent},
@@ -133,7 +137,9 @@ const routes: Routes = [
         NuevoColegioComponent,
         NuevaObservacionAlumnoComponent,
         EditarAlumnoComponent,
-        EditarProfesorComponent
+        EditarProfesorComponent,
+        EditarApoderadoComponent,
+        EditarAdministradorComponent
     ],
     exports: [
         RouterModule
