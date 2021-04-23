@@ -2,125 +2,96 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RutValidator } from 'ng2-rut';
-import { Alumno } from 'src/app/modelos/alumno.model';
-import { Colegio } from 'src/app/modelos/colegio.model';
-import { Curso } from 'src/app/modelos/curso.model';
-import { AlumnoService } from 'src/app/servicios/alumno.service';
-import { ColegioService } from 'src/app/servicios/colegio.service';
-import { CursoService } from 'src/app/servicios/curso.service';
+import { Asignatura } from 'src/app/modelos/asignatura.model';
+import { Profesor } from 'src/app/modelos/profesor';
+import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { LocalService } from 'src/app/servicios/local.service';
+import { ProfesorService } from 'src/app/servicios/profesor.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { ValidatorNumber } from 'src/app/validators/number.validators';
 import swal from'sweetalert2';
 
 @Component({
-  selector: 'app-editar-alumno',
-  templateUrl: './editar-alumno.component.html',
-  styleUrls: ['./editar-alumno.component.css']
+  selector: 'app-editar-profesor',
+  templateUrl: './editar-profesor.component.html',
+  styleUrls: ['./editar-profesor.component.css']
 })
-export class EditarAlumnoComponent implements OnInit {
+export class EditarProfesorComponent implements OnInit {
   createForm: FormGroup;
   loading = false;
   token: string;
-  id_alumno:string;
-  alumno: Alumno;
-  sexos = [
-    { value: 'MASCULINO', viewValue: 'Masculino' },
-    { value: 'FEMENINO', viewValue: 'Femenino' },
-    { value: 'NO DEFINIDO', viewValue: 'Otro' }
-  ];
-  cursos = [];
-  colegios = [];
+  id_profesor: string;
+  asignaturas = [];
+  profesor:Profesor;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private _activatedRoute: ActivatedRoute,
     private rutValidator: RutValidator,
-    private _cursoService: CursoService,
     private _localService: LocalService,
     private _storageService: StorageService,
-    private _colegioService: ColegioService,
-    private _alumnoService: AlumnoService,
+    private _asignaturaService: AsignaturaService,
+    private _profesorService: ProfesorService,
+    private _activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.id_alumno = this._activatedRoute.snapshot.paramMap.get('id');
+    this.id_profesor = this._activatedRoute.snapshot.paramMap.get('id');
     if(this._storageService.getCurrentToken()==null){
       this.token = this._localService.getToken() 
     }
     else{
       this.token = this._storageService.getCurrentToken()
     }
-    this.getAlumno();
-    this.getCursos();
-    this.getColegios();
+    this.getProfesor();
+    this.getAsignaturas();
     this.createForm = this.formBuilder.group({
       nombres: ['',[Validators.required]],
       apellido_paterno: ['',[Validators.required]],
       apellido_materno: ['',[Validators.required]],
       rut: ['',[Validators.required, this.rutValidator]],
-      puntaje_ingreso: ['',[ Validators.required,ValidatorNumber.strong]],
-      sexo: ['',[Validators.required]],
       telefono: ['',[Validators.required,ValidatorNumber.strong,Validators.maxLength(9)]],
       email:['',[Validators.required, Validators.email]],
       calle: ['',[Validators.required]],
       numero: ['',[Validators.required]],
       comuna: ['',[Validators.required]],
       cas_dep_of: ['',[]],
-      curso: ['',[Validators.required]],
-      colegio: ['',[Validators.required]],
+      asignatura: ['',[Validators.required]],
     });
   }
 
-  getAlumno(){
-    this.loading = true
-    this._alumnoService.getAlumnoId(this.id_alumno,this.token).subscribe((data:Alumno)=>{
-      this.loading = false
-      this.alumno = data;
-      this.createForm.get('nombres').setValue(this.alumno.nombres);
-      this.createForm.get('apellido_paterno').setValue(this.alumno.apellido_paterno);
-      this.createForm.get('apellido_materno').setValue(this.alumno.apellido_materno);
-      this.createForm.get('rut').setValue(this.alumno.rut);
-      this.createForm.get('puntaje_ingreso').setValue(this.alumno.puntaje_ingreso);
-      this.createForm.get('sexo').setValue(this.alumno.sexo);
-      this.createForm.get('telefono').setValue(this.alumno.telefono);
-      this.createForm.get('email').setValue(this.alumno.email);
-      this.createForm.get('calle').setValue(this.alumno.direccion.calle);
-      this.createForm.get('numero').setValue(this.alumno.direccion.numero);
-      this.createForm.get('comuna').setValue(this.alumno.direccion.comuna);
-      this.createForm.get('cas_dep_of').setValue(this.alumno.direccion.cas_dep_of);
-      this.createForm.get('curso').setValue(this.alumno.curso.id);
-      this.createForm.get('colegio').setValue(this.alumno.colegio.id);
-    },
-    (error)=>{
-      this.loading = false
-    })
-  }
-
-  getCursos(){
+  getProfesor(){
     this.loading = true;
-    this._cursoService.getCursos(this.token).subscribe((cursos: Array<Curso>)=>{
-      cursos.forEach(element => {
-        this.cursos.push({ value:element.id, viewValue:element.nombre })
-      });
+    this._profesorService.getProfesor(this.id_profesor,this.token).subscribe((data:Profesor)=>{
       this.loading = false;
+      this.profesor = data;
+      this.createForm.get('nombres').setValue(this.profesor.nombres);
+      this.createForm.get('apellido_paterno').setValue(this.profesor.apellido_paterno);
+      this.createForm.get('apellido_materno').setValue(this.profesor.apellido_materno);
+      this.createForm.get('rut').setValue(this.profesor.rut);
+      this.createForm.get('telefono').setValue(this.profesor.telefono);
+      this.createForm.get('email').setValue(this.profesor.email);
+      this.createForm.get('calle').setValue(this.profesor.direccion.calle);
+      this.createForm.get('numero').setValue(this.profesor.direccion.numero);
+      this.createForm.get('comuna').setValue(this.profesor.direccion.comuna);
+      this.createForm.get('cas_dep_of').setValue(this.profesor.direccion.cas_dep_of);
+      this.createForm.get('asignatura').setValue(this.profesor.asignatura.id);
     },
     (error)=>{
       this.loading = false;
     });
   }
-
-  getColegios(){
+  public getAsignaturas(){
     this.loading = true
-    this._colegioService.getColegios(this.token).subscribe((colegios: Array<Colegio>)=>{
-      colegios.forEach(element => {
-        this.colegios.push({ value: element.id, viewValue: element.nombre })
+    this._asignaturaService.getAsignaturas(this.token).subscribe((asignaturas: Asignatura[])=>{
+
+      asignaturas.forEach(element => {
+        this.asignaturas.push({ value: element.id, viewValue:element.nombre })
       });
       this.loading = false;
-    },
-    (error)=>{
-      this.loading = false;
-    })
+    },(error)=>{
+      this.loading  =false;
+    });
   }
 
   get f() { return this.createForm.controls; }
@@ -136,7 +107,7 @@ export class EditarAlumnoComponent implements OnInit {
 
   getErrorMessageNombres(){
     return this.createForm.get('nombres').hasError('required')
-    ? 'Debe ingresar los nombres del alumno.'
+    ? 'Debe ingresar los nombres del profesor.'
       : '';
   }
 
@@ -202,32 +173,25 @@ export class EditarAlumnoComponent implements OnInit {
         : '';
   }
 
-  getErrorMessageCurso(){
-    return this.createForm.get('curso').hasError('required')
-      ? 'Debe seleccionar un curso.'
+  getErrorMessageAsignatura(){
+    return this.createForm.get('asignatura').hasError('required')
+      ? 'Debe seleccionar una asignatura.'
         : '';
   }
 
-  getErrorMessageColegio(){
-    return this.createForm.get('curso').hasError('required')
-      ? 'Debe seleccionar un colegio.'
-        : '';
-  }
-
-
-  guardarAlumno(){
+  guardarProfesor(){
     this.loading = true
     const data = this.createForm.value;
     data['rut']= data['rut'].replace('.','');
     data['rut']= data['rut'].replace('.','');
     data['rut']= data['rut'].replace('-','');
-    this._alumnoService.putAlumno(this.id_alumno,data,this.token).subscribe(
+    this._profesorService.putProfesor(this.id_profesor,data,this.token).subscribe(
       (data:any)=>{
         if(data['Response']=="exito"){
           this.loading = false
           swal.fire({
             title: 'Registro exitoso',
-            text: 'Se ha editado al alumno exitosamente!',
+            text: 'Se ha editado al profesor exitosamente!',
             type: 'success',
             confirmButtonColor: '#2dce89',
           }).then((result)=>{
@@ -246,6 +210,8 @@ export class EditarAlumnoComponent implements OnInit {
         confirmButtonText: 'Aceptar',
       });
     })
+
+
   }
 
   volver(){

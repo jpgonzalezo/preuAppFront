@@ -22,8 +22,8 @@
                             primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
                 </ngx-loading>
               </div>
-              <mat-card-title>Editar alumno</mat-card-title>
-              <mat-card-subtitle>Complete los campos para editar al alumno.</mat-card-subtitle>
+              <mat-card-title>Editar profesor</mat-card-title>
+              <mat-card-subtitle>Complete los campos para editar al profesor.</mat-card-subtitle>
 
               <form class="basic-form" [formGroup]="createForm">
                 <!-- ============================================================== -->
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <mat-form-field>
                       <mat-label>Rut</mat-label>
                       <input matInput formControlName="rut" class="form-control">
@@ -67,24 +67,15 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <mat-form-field>
-                      <mat-label>Sexo</mat-label>
-                      <mat-select name="sexo" formControlName="sexo" class="form-control">
-                        <mat-option *ngFor="let sexo of sexos" [value]="sexo.value">
-                          {{sexo.viewValue}}
+                      <mat-label>Asignatura</mat-label>
+                      <mat-select formControlName="asignatura" class="form-control">
+                        <mat-option *ngFor="let asignatura of asignaturas" [value]="asignatura.value">
+                          {{asignatura.viewValue}}
                         </mat-option>
                       </mat-select>
-                      <mat-error *ngIf="this.createForm.get('sexo').invalid">{{getErrorMessageSexo()}}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4">
-                    <mat-form-field>
-                      <mat-label>Puntaje ingreso</mat-label>
-                      <input matInput formControlName="puntaje_ingreso" class="form-control">
-                      <mat-error *ngIf="this.createForm.get('puntaje_ingreso').invalid">
-                        {{getErrorMessagePuntajeIngreso()}}
+                      <mat-error *ngIf="this.createForm.get('asignatura').invalid">{{getErrorMessageAsignatura()}}
                       </mat-error>
                     </mat-form-field>
                   </div>
@@ -142,38 +133,12 @@
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-6">
-                    <mat-form-field>
-                      <mat-label>Curso</mat-label>
-                      <mat-select formControlName="curso" class="form-control">
-                        <mat-option *ngFor="let curso of cursos" [value]="curso.value">
-                          {{curso.viewValue}}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="this.createForm.get('curso').invalid">{{getErrorMessageCurso()}}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-6">
-                    <mat-form-field>
-                      <mat-label>Colegio</mat-label>
-                      <mat-select formControlName="colegio" class="form-control">
-                        <mat-option *ngFor="let colegio of colegios" [value]="colegio.value">
-                          {{colegio.viewValue}}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="this.createForm.get('colegio').invalid">{{getErrorMessageColegio()}}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-
                 <div class="row text-center">
                   <div class="col-md-12">
-                    <button type="button" class="btn btn-danger my-4" (click)="volver()">Volver</button>
-                    <button type="button" class="btn btn-primary my-4" (click)="guardarAlumno()"
-                      [disabled]="createForm.invalid">Editar alumno</button>
+                    <button type="button" class="btn btn-danger my-4" (click)="volver()"
+                      >Volver</button>
+                    <button type="button" class="btn btn-primary my-4" (click)="guardarProfesor()"
+                      [disabled]="createForm.invalid">Editar profesor</button>
                   </div>
                 </div>
               </form>

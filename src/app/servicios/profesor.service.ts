@@ -56,6 +56,14 @@ export class ProfesorService {
 		return this.httpClient.post(`${this.API_URL}/profesores`, JSON.stringify(data), options).pipe(map(res => res)) 
 	}
 
+	putProfesor(id:string,data:any,token:string):any{
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'auth-token':token});
+		const options = {
+		  headers: headers
+		}
+		return this.httpClient.put(`${this.API_URL}/profesores/${id}`, JSON.stringify(data), options).pipe(map(res => res))
+	}
+
 	uploadImage(data:FormData, id:string,token:string){
 		const headers = new HttpHeaders({ 'Content-type':'application/json','auth-token':token});
 		const options = {
