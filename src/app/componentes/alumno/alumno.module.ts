@@ -29,6 +29,7 @@ import { DetalleAsignaturaComponent } from './detalle-asignatura/detalle-asignat
 import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena.component';
 import { HojaRespuestaComponent } from './hoja-respuesta/hoja-respuesta.component';
 import { NuevaObservacionProfesorComponent } from './nueva-observacion-profesor/nueva-observacion-profesor.component';
+import { VideoAlumnoComponent } from './video-alumno/video-alumno.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'calendario', pathMatch: 'full' },
@@ -75,7 +76,8 @@ const routes: Routes = [
         DetalleAsignaturaComponent,
         HojaRespuestaComponent,
         CambioContrasenaComponent,
-        NuevaObservacionProfesorComponent
+        NuevaObservacionProfesorComponent,
+        VideoAlumnoComponent
     ],
     exports: [
         RouterModule

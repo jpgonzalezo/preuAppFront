@@ -8,12 +8,12 @@ export class VideoService {
 	API_URL = Config.API_SERVER_URL;
 	constructor(private httpClient: HttpClient) { }
 
-	getVideosByAsignaturaAndCurso(token: string, asignatura_id: string, curso_id: string) {
+	getVideosByAsignaturaAndCurso(token: string, asignatura_id: string) {
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
 		const options = {
 			headers: headers
 		}
-		return this.httpClient.get(`${this.API_URL}/video?asignatura_id` + asignatura_id + '&curso_id' + curso_id, options).pipe(map(res => res))
+		return this.httpClient.get(`${this.API_URL}/video?asignatura_id=` + asignatura_id, options).pipe(map(res => res))
 	}
 
 	getVideosByAsignatura(token: string) {
