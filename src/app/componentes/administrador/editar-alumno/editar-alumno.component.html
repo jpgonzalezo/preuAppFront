@@ -1,0 +1,189 @@
+<app-header></app-header>
+<main>
+  <section class="section ">
+    <div class="container">
+      <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="100" fxFlex="100">
+          <mat-card>
+            <div class="my-container">
+              <ngx-loading [show]="loading"
+                [config]="{ 
+                        animationType: 'circle',
+                        backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                        primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+              </ngx-loading>
+            </div>
+            <mat-card-content>
+              <div class="my-container">
+                <ngx-loading [show]="loading"
+                  [config]="{ 
+                            animationType: 'circle',
+                            backdropBackgroundColour: 'rgba(0, 0, 0, 0.1)',
+                            primaryColour: 'rgba(0, 115, 170, 0.69)', secondaryColour: 'rgba(0, 115, 170, 0.69)', tertiaryColour: 'rgba(0, 115, 170, 0.69)' }">
+                </ngx-loading>
+              </div>
+              <mat-card-title>Editar alumno</mat-card-title>
+              <mat-card-subtitle>Complete los campos para editar al alumno.</mat-card-subtitle>
+
+              <form class="basic-form" [formGroup]="createForm">
+                <!-- ============================================================== -->
+                <!-- column -->
+                <!-- ============================================================== -->
+                <div class="row">
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Nombres</mat-label>
+                      <input matInput formControlName="nombres" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('nombres').invalid">{{getErrorMessageNombres()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Apellido Paterno</mat-label>
+                      <input matInput formControlName="apellido_paterno" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('apellido_paterno').invalid">
+                        {{getErrorMessageApellidoPaterno()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Apellido Materno</mat-label>
+                      <input matInput formControlName="apellido_materno" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('apellido_materno').invalid">
+                        {{getErrorMessageApellidoMaterno()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Rut</mat-label>
+                      <input matInput formControlName="rut" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('rut').invalid">{{getErrorMessageRut()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Sexo</mat-label>
+                      <mat-select name="sexo" formControlName="sexo" class="form-control">
+                        <mat-option *ngFor="let sexo of sexos" [value]="sexo.value">
+                          {{sexo.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="this.createForm.get('sexo').invalid">{{getErrorMessageSexo()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-4">
+                    <mat-form-field>
+                      <mat-label>Puntaje ingreso</mat-label>
+                      <input matInput formControlName="puntaje_ingreso" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('puntaje_ingreso').invalid">
+                        {{getErrorMessagePuntajeIngreso()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field>
+                      <mat-label>Email</mat-label>
+                      <input matInput formControlName="email" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('email').invalid">{{getErrorMessageEmail()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field>
+                      <mat-label>Teléfono</mat-label>
+                      <input matInput formControlName="telefono" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('telefono').invalid">{{getErrorMessageTelefono()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <mat-form-field>
+                      <mat-label>Calle</mat-label>
+                      <input matInput formControlName="calle" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('calle').invalid">{{getErrorMessageCalle()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    <mat-form-field>
+                      <mat-label>Número</mat-label>
+                      <input matInput formControlName="numero" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('numero').invalid">{{getErrorMessageNumero()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    <mat-form-field>
+                      <mat-label>Piso/Casa/Oficina (Opcional)</mat-label>
+                      <input matInput formControlName="cas_dep_of" class="form-control">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    <mat-form-field>
+                      <mat-label>Comuna</mat-label>
+                      <input matInput formControlName="comuna" class="form-control">
+                      <mat-error *ngIf="this.createForm.get('comuna').invalid">{{getErrorMessageComuna()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field>
+                      <mat-label>Curso</mat-label>
+                      <mat-select formControlName="curso" class="form-control">
+                        <mat-option *ngFor="let curso of cursos" [value]="curso.value">
+                          {{curso.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="this.createForm.get('curso').invalid">{{getErrorMessageCurso()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field>
+                      <mat-label>Colegio</mat-label>
+                      <mat-select formControlName="colegio" class="form-control">
+                        <mat-option *ngFor="let colegio of colegios" [value]="colegio.value">
+                          {{colegio.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="this.createForm.get('colegio').invalid">{{getErrorMessageColegio()}}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="row text-center">
+                  <div class="col-md-12">
+                    <button type="button" class="btn btn-danger my-4" (click)="volver()">Volver</button>
+                    <button type="button" class="btn btn-primary my-4" (click)="guardarAlumno()"
+                      [disabled]="createForm.invalid">Editar alumno</button>
+                  </div>
+                </div>
+              </form>
+
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer></app-footer>

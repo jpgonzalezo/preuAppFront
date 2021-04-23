@@ -1,3 +1,4 @@
+import { Direccion } from 'src/app/modelos/direccion.model'
 export class Administrador{
     id: string
     nombres: string
@@ -7,4 +8,5 @@ export class Administrador{
     telefono: string
     rut: string
     imagen: string
+    direccion: Direccion
 }
