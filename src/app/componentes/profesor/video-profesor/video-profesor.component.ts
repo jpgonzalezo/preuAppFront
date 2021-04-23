@@ -5,6 +5,7 @@ import { Curso } from 'src/app/modelos/curso.model';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { VideoService } from 'src/app/servicios/video.service';
+import { DomSanitizer } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 
 export interface Video {
@@ -30,6 +31,7 @@ export class VideoProfesorComponent implements OnInit {
     private _localService: LocalService,
     private _storageService: StorageService,
     private _videoService: VideoService,
+    private sanitizer: DomSanitizer,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
   ) {
@@ -68,4 +70,7 @@ export class VideoProfesorComponent implements OnInit {
     this._router.navigateByUrl(path);
   }
 
+  transform(url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
 }
