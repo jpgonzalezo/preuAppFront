@@ -68,7 +68,6 @@ export class DetalleProfesorComponent implements OnInit {
       this.anotaciones = data
       this.collectionSizeAnotacion = this.anotaciones.length
       this.loadingObservaciones=false
-      console.log(this.anotaciones);
     })
   }
 

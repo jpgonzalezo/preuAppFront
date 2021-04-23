@@ -218,7 +218,6 @@ export class AsignaturaComponent implements OnInit {
     this.loadPruebasAsignatura=true;
     this._pruebaService.getPruebasAsignaturaToken(this.token).subscribe((data:Prueba[])=>{
       this.pruebas = data;
-      console.log(data)
       this.collectionSizeEvaluacion = this.pruebas.length;
       this.loadPruebasAsignatura=false;
     })

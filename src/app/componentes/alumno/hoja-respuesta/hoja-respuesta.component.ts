@@ -101,7 +101,6 @@ export class HojaRespuestaComponent implements OnInit {
 
   creaJsonRespuesta() {
     let preguntas = Array.from(Array(this.collectionSizeRespuesta).keys())
-    //console.log(preguntas)
     let array = []
     let i = 0
     preguntas.forEach(function () {
@@ -134,7 +133,6 @@ export class HojaRespuestaComponent implements OnInit {
     }
     this._evaluacionService.responderAutoevaluacion(body, this.token).subscribe(
       (data) => {
-        console.log(data)
         if (data["Response"] == "exito") {
           Swal.fire({
             type: 'success',

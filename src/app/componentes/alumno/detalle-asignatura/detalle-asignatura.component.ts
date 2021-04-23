@@ -115,7 +115,6 @@ export class DetalleAsignaturaComponent implements OnInit {
         alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
       this.loadProfesores = false;
-      console.log(this.profesores);
     },
     (error)=>{
       this.loadProfesores = false;

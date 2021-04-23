@@ -156,7 +156,6 @@ export class CalendarioComponent implements OnInit {
   }
 
   deleteEvento(id:string){
-    console.log(id)
     swal.fire({
       title: 'Desea eliminar este evento?',
       text: "Estos cambios son irreversibles!",
