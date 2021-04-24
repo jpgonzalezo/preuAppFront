@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -9,11 +10,18 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "importHelpers": true,
     "target": "es5",
+    "resolveJsonModule": true, 
+    "esModuleInterop": true,
     "typeRoots": [
       "node_modules/@types"
     ],
+    "paths":{
+      "@components/*": ["src/app/componentes/*"],
+      "@services/*":["src/app/servicios/*"],
+      "@modelos/*":["src/app/modelos/*"],
+      "@environment/*":["src/environments/*"]
+    },
     "lib": [
       "es2018",
       "dom"

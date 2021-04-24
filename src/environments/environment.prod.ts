@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  sessionTime: 14400000,
+  API_SERVER_URL: 'http://localhost:5000'
 };
