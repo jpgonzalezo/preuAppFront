@@ -18,7 +18,7 @@ import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { Apoderado } from 'src/app/modelos/apoderado.model';
 import { Administrador } from 'src/app/modelos/administrador.model';
 import swal from'sweetalert2';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-perfiles',
@@ -222,10 +222,10 @@ export class PerfilesComponent implements OnInit {
       this.alumnos = data
       for(let alumno of this.alumnos){
         if(alumno.imagen==''){
-          alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/default"
+          alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/default"
         }
         else{
-          alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+          alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
         }
       }
       this.collectionSizeAlumno = this.alumnos.length
@@ -239,10 +239,10 @@ export class PerfilesComponent implements OnInit {
       this.profesores = data
       for(let profesor of this.profesores){
         if(profesor.imagen==''){
-          profesor.imagen = Config.API_SERVER_URL+"/profesor_imagen/default"
+          profesor.imagen = environment.API_SERVER_URL+"/profesor_imagen/default"
         }
         else{
-          profesor.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+profesor.imagen
+          profesor.imagen = environment.API_SERVER_URL+"/profesor_imagen/"+profesor.imagen
         }
       }
       this.collectionSizeProfesor = this.profesores.length
@@ -256,10 +256,10 @@ export class PerfilesComponent implements OnInit {
       this.administradores = data
       for(let administrador of this.administradores){
         if(administrador.imagen==''){
-          administrador.imagen = Config.API_SERVER_URL+"/administrador_imagen/default"
+          administrador.imagen = environment.API_SERVER_URL+"/administrador_imagen/default"
         }
         else{
-          administrador.imagen = Config.API_SERVER_URL+"/administrador_imagen/"+administrador.imagen
+          administrador.imagen = environment.API_SERVER_URL+"/administrador_imagen/"+administrador.imagen
         }
       }
       this.collectionSizeAdministrador = this.administradores.length
@@ -273,10 +273,10 @@ export class PerfilesComponent implements OnInit {
       this.apoderados = data
       for(let apoderado of this.apoderados){
         if(apoderado.imagen==''){
-          apoderado.imagen = Config.API_SERVER_URL+"/apoderado_imagen/default"
+          apoderado.imagen = environment.API_SERVER_URL+"/apoderado_imagen/default"
         }
         else{
-          apoderado.imagen = Config.API_SERVER_URL+"/apoderado_imagen/"+apoderado.imagen
+          apoderado.imagen = environment.API_SERVER_URL+"/apoderado_imagen/"+apoderado.imagen
         }
       }
       this.collectionSizeApoderado = this.apoderados.length

@@ -5,7 +5,7 @@ import { AlertaService } from 'src/app/servicios/alerta.service';
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import {SortDirection} from '../sorteable.directive';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 interface SearchResult {
@@ -27,7 +27,7 @@ function compare(v1, v2) {
 
 function sort(alertas: Alerta[], column: string, direction: string): Array<Alerta> {
   for(let alerta of alertas){
-    alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+    alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
   }
   if (direction === '') {
     return alertas;
@@ -41,7 +41,7 @@ function sort(alertas: Alerta[], column: string, direction: string): Array<Alert
 
 function sortAsignatura(alertas: Alerta[], column: string, direction: string): Alerta[]{
   for(let alerta of alertas){
-    alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+    alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
   }
   if(direction === ''){
     return alertas;
@@ -56,7 +56,7 @@ function sortAsignatura(alertas: Alerta[], column: string, direction: string): A
 
 function sortAlumno(alertas: Alerta[], column: string, direction: string): Alerta[]{
   for(let alerta of alertas){
-    alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+    alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
   }
   if(direction === ''){
     return alertas;
@@ -71,7 +71,7 @@ function sortAlumno(alertas: Alerta[], column: string, direction: string): Alert
 
 function sortCurso(alertas: Alerta[], column: string, direction: string): Alerta[]{
   for(let alerta of alertas){
-    alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+    alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
   }
   if(direction === ''){
     return alertas;
@@ -125,7 +125,7 @@ export class AlertaTablaService {
     this._alertaService.getAlertas(this.token).subscribe((data: Alerta[])=>{
         this.alertas = data
         for(let alerta of this.alertas){
-          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
+          alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.id
         }
         this._search$.pipe(
             tap(()=>this.getAlertas()),

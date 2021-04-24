@@ -5,7 +5,7 @@ import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import { SortDirection } from '../sorteable.directive';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 interface SearchResult {
@@ -27,7 +27,7 @@ function compare(v1, v2) {
 
 function sort(alumnos: Alumno[], column: string, direction: string): Alumno[] {
   for(let alumno of alumnos){
-    alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.id
+    alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.id
   }
   if (direction === '') {
     return alumnos;
@@ -41,7 +41,7 @@ function sort(alumnos: Alumno[], column: string, direction: string): Alumno[] {
 
 function sortCurso(alumnos: Alumno[], column: string, direction: string): Alumno[]{
   for(let alumno of alumnos){
-    alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.id
+    alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.id
   }
   if(direction === ''){
     return alumnos;
@@ -56,7 +56,7 @@ function sortCurso(alumnos: Alumno[], column: string, direction: string): Alumno
 
 function sortRut(alumnos: Alumno[], column: string, direction: string): Alumno[]{
   for(let alumno of alumnos){
-    alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.id
+    alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.id
   }
   if(direction === ''){
     return alumnos;
@@ -71,7 +71,7 @@ function sortRut(alumnos: Alumno[], column: string, direction: string): Alumno[]
 
 function sortNombre(alumnos: Alumno[], column: string, direction: string): Alumno[]{
   for(let alumno of alumnos){
-    alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.id
+    alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.id
   }
   if(direction === ''){
     return alumnos;
@@ -86,7 +86,7 @@ function sortNombre(alumnos: Alumno[], column: string, direction: string): Alumn
 
 function sortApellidoPaterno(alumnos: Alumno[], column: string, direction: string): Alumno[]{
   for(let alumno of alumnos){
-    alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.id
+    alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.id
   }
   if(direction === ''){
     return alumnos;
@@ -101,7 +101,7 @@ function sortApellidoPaterno(alumnos: Alumno[], column: string, direction: strin
 
 function sortApellidoMaterno(alumnos: Alumno[], column: string, direction: string): Alumno[]{
   for(let alumno of alumnos){
-    alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.id
+    alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.id
   }
   if(direction === ''){
     return alumnos;

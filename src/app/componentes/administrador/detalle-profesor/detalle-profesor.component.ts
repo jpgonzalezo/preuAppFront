@@ -8,7 +8,7 @@ import { Profesor } from 'src/app/modelos/profesor';
 import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { Anotacion } from 'src/app/modelos/anotacion.model';
 import swal from'sweetalert2';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { LocalService } from 'src/app/servicios/local.service';
 @Component({
   selector: 'app-detalle-profesor',
@@ -56,7 +56,7 @@ export class DetalleProfesorComponent implements OnInit {
     this.loadingProfesor=true
     this._profesorService.getProfesor(this.id_profesor,this.token).subscribe((data:Profesor)=>{
       this.profesor = data
-      this.profesor.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+this.profesor.imagen
+      this.profesor.imagen = environment.API_SERVER_URL+"/profesor_imagen/"+this.profesor.imagen
       this.asignatura = this.profesor.asignatura
       this.loadingProfesor=false
     })

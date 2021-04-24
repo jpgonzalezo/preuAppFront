@@ -5,7 +5,6 @@ import {Observable} from "rxjs";
 import { Session } from "../modelos/session.model";
 import { StorageService } from "src/app/servicios/storage.service";
 import { map } from 'rxjs/operators';
-import { Config } from '../config';
 import { LocalService } from "./local.service";
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from "@angular/router";
@@ -22,7 +21,7 @@ export class LoginService {
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) {}
-    private basePath = Config.API_SERVER_URL;
+    private basePath = environment.API_SERVER_URL;
 
         /**
      * The User Object

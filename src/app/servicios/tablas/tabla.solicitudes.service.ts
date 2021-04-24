@@ -5,7 +5,7 @@ import { EventoService } from 'src/app/servicios/evento.service';
 import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import { SortDirection } from '../sorteable.directive';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 interface SearchResult {

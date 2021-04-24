@@ -60,7 +60,7 @@ export class InicioComponent implements OnInit {
           })
         }
         else{
-          this.correctLogin({token:data['token'],user: {tipo: data['tipo'] }}, data['tipo'])
+          this.correctLogin(data['tipo'])
         }
       },
       (error) =>{
@@ -75,9 +75,9 @@ export class InicioComponent implements OnInit {
     }
   }
 
-  private correctLogin(data: Session, tipo:string){
-    this._storageService.setCurrentSession(data);
-    this.localService.setToken(this._storageService.getCurrentToken())
+  private correctLogin(tipo:string){
+    //this._storageService.setCurrentSession(data);
+    //this.localService.setToken(this._storageService.getCurrentToken())
     if(tipo == 'ADMINISTRADOR'){
       this.loading = false
       this.router.navigate(['/admin']);

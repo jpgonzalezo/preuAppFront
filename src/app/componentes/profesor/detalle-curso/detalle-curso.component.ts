@@ -9,7 +9,7 @@ import { Alumno } from 'src/app/modelos/alumno.model';
 import { Alerta } from 'src/app/modelos/alerta.model';
 import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { Curso } from 'src/app/modelos/curso.model';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { Asistencia } from 'src/app/modelos/asistencia.model';
 import Swal from 'sweetalert2';
 import { LocalService } from 'src/app/servicios/local.service';
@@ -162,7 +162,7 @@ export class DetalleCursoComponent implements OnInit {
       this.alumnos = data
       this.collectionSizeAlumno = this.alumnos.length;
       for(let alumno of this.alumnos){
-        alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+        alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
       }
       this.loadAlumnosCurso = false
     })   

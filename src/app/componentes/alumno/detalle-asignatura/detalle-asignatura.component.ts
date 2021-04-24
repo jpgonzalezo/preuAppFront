@@ -14,7 +14,7 @@ import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
 import swal from 'sweetalert2';
 import { ProfesorService } from 'src/app/servicios/profesor.service';
 import { Profesor } from 'src/app/modelos/profesor';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-detalle-asignatura',
@@ -112,7 +112,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       this.profesores = data
       this.collectionSizeProfesores = this.profesores.length;
       for(let alumno of this.profesores){
-        alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
+        alumno.imagen = environment.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
       this.loadProfesores = false;
     },

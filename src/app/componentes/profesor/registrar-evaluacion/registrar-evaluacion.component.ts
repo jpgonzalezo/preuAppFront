@@ -19,7 +19,7 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { CursoService } from 'src/app/servicios/curso.service';
 import { Curso } from 'src/app/modelos/curso.model';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-registrar-evaluacion',

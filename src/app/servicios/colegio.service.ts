@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Config } from '../config';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ColegioService {
-  API_URL = Config.API_SERVER_URL;
+  API_URL = environment.API_SERVER_URL;
   constructor(private httpClient: HttpClient) { }
 
   getColegios(token:string):any{

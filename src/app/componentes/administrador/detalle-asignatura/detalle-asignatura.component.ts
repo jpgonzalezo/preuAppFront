@@ -12,7 +12,7 @@ import { AsistenciaService  } from 'src/app/servicios/asistencia.service';
 import { PruebaService } from 'src/app/servicios/prueba.service';
 import { AlertaService} from 'src/app/servicios/alerta.service';
 import { TopicoService } from 'src/app/servicios/topico.service';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import swal from'sweetalert2';
 import { ChartType } from 'chart.js';
 import { MultiDataSet, Label } from 'ng2-charts';
@@ -186,7 +186,7 @@ export class DetalleAsignaturaComponent implements OnInit {
       this.profesores = data
       this.collectionSizeProfesor = this.profesores.length;
       for(let alumno of this.profesores){
-        alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
+        alumno.imagen = environment.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
       this.loadProfesoresAsignatura = false
     })   

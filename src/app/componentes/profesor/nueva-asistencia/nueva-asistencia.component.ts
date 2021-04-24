@@ -7,7 +7,7 @@ import { AsignaturaService } from 'src/app/servicios/asignatura.service';
 import { Alumno } from 'src/app/modelos/alumno.model';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { AsistenciaService } from 'src/app/servicios/asistencia.service';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
@@ -103,7 +103,7 @@ export class NuevaAsistenciaComponent implements OnInit {
         this.alumnos_curso = data
         this.collectionSizeAlumnosCurso = this.alumnos_curso.length
         for(let alumno of this.alumnos_curso){
-          alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+          alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
         }
         this.loadAlumnos = false
       })

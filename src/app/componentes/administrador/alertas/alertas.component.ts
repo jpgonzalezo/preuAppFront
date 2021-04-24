@@ -6,7 +6,7 @@ import { Label } from 'ng2-charts';
 import { Observable } from 'rxjs';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-alertas',
   templateUrl: './alertas.component.html'
@@ -46,10 +46,10 @@ export class AlertasComponent implements OnInit {
       this.alertas = data
       for(let alerta of this.alertas){
         if(alerta.alumno.imagen==''){
-          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/default"
+          alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/default"
         }
         else{
-          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.imagen
+          alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.imagen
         }
       }
       this.loadAlertas = false;

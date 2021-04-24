@@ -31,8 +31,8 @@ import {
 } from 'src/app/modelos/alerta.model';
 import swal from 'sweetalert2';
 import {
-  Config
-} from 'src/app/config';
+  environment
+} from 'src/environments/environment';
 import {
   ChartDataSets,
   ChartType,
@@ -209,7 +209,7 @@ export class HojaVidaComponent implements OnInit {
     this.loading = true
     this._alumnoService.getHojaVida(id, this.token).subscribe((data: Array < any > ) => {
       this.hoja_vida = data;
-      this.hoja_vida.imagen = Config.API_SERVER_URL + "/alumno_imagen/" + this.hoja_vida.imagen
+      this.hoja_vida.imagen = environment.API_SERVER_URL + "/alumno_imagen/" + this.hoja_vida.imagen
       this.loading = false
     });
   }

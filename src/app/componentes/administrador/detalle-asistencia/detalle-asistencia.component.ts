@@ -6,7 +6,7 @@ import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { Curso } from 'src/app/modelos/curso.model';
 import { Alumno } from 'src/app/modelos/alumno.model';
 import { Justificacion } from 'src/app/modelos/justificacion.model';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
@@ -73,10 +73,10 @@ export class DetalleAsistenciaComponent implements OnInit {
     this._asistenciaService.getAsistencia(this.id_asistencia,this.token).subscribe((data:Asistencia)=>{
       this.asistencia = data;
       for(let alumno of this.asistencia.alumnos_presentes){
-        alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+        alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
       }
       for(let alumno of this.asistencia.alumnos_ausentes){
-        alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+        alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
       }
       this.collectionSizePresentes = this.asistencia.alumnos_presentes.length;
       this.collectionSizeAusentes = this.asistencia.alumnos_ausentes.length;

@@ -13,7 +13,7 @@ import { PruebaService } from 'src/app/servicios/prueba.service';
 import { AlertaService} from 'src/app/servicios/alerta.service';
 import { TopicoService } from 'src/app/servicios/topico.service';
 import { EvaluacionService } from 'src/app/servicios/evaluacion.service';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import swal from'sweetalert2';
 import { ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
@@ -191,7 +191,7 @@ export class AsignaturaComponent implements OnInit {
       this.profesores = data
       this.collectionSizeProfesor = this.profesores.length;
       for(let alumno of this.profesores){
-        alumno.imagen = Config.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
+        alumno.imagen = environment.API_SERVER_URL+"/profesor_imagen/"+alumno.imagen
       }
       this.loadProfesoresAsignatura=false;
     })   
@@ -229,10 +229,10 @@ export class AsignaturaComponent implements OnInit {
       this.alertas = data
       for(let alerta of this.alertas){
         if(alerta.alumno.imagen==''){
-          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/default"
+          alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/default"
         }
         else{
-          alerta.alumno.imagen = Config.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.imagen
+          alerta.alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alerta.alumno.imagen
         }
       }
       this.collectionSizeAlerta = this.alertas.length;

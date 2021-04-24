@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/servicios/storage.service';
 import { Justificacion } from 'src/app/modelos/justificacion.model';
 import { Alerta } from 'src/app/modelos/alerta.model';
 import swal from 'sweetalert2';
-import { Config } from 'src/app/config';
+import { environment } from 'src/environments/environment';
 import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
 import { Label, MultiDataSet } from 'ng2-charts';
 import { ChartOptions } from 'chart.js';
@@ -178,7 +178,7 @@ export class DetalleAlumnoComponent implements OnInit {
     this.loading = true
     this._alumnoService.getHojaVida(id, this.token).subscribe((data: Array < any > ) => {
       this.hoja_vida = data;
-      this.hoja_vida.imagen = Config.API_SERVER_URL + "/alumno_imagen/" + this.hoja_vida.imagen
+      this.hoja_vida.imagen = environment.API_SERVER_URL + "/alumno_imagen/" + this.hoja_vida.imagen
       this.loading = false
     });
   }
