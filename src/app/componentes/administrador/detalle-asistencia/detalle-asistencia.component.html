@@ -165,8 +165,6 @@
                           <thead>
                             <tr>
                               <th scope="col">Alumno</th>
-                              <th scope="col">Curso</th>
-                              <th scope="col">Asignatura</th>
                               <th scope="col">Fecha</th>
                               <th scope="col">Causa</th>
                             </tr>
@@ -185,8 +183,6 @@
                             <tr *ngFor="let justificacion of justificaciones_tabla">
                               <td>{{justificacion.alumno.nombres}} {{justificacion.alumno.apellido_paterno}}
                                 {{justificacion.alumno.apellido_materno}}</td>
-                              <td>{{justificacion.asistencia.curso.nombre}}</td>
-                              <td>{{justificacion.asistencia.asignatura.nombre}}</td>
                               <td>{{justificacion.fecha}}</td>
                               <td>{{justificacion.causa}}</td>
                             </tr>

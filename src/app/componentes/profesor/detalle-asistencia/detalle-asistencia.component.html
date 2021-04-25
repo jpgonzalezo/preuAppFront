@@ -14,7 +14,7 @@
           <div class="px-3">
   
             <div class="mt-5 py-5  text-center">
-              <h4 class="display-3 pull-rigth"> Resumen asistencia </h4>
+              <mat-card-title> Resumen asistencia </mat-card-title>
               <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Curso: {{curso.nombre}}</div>
               <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Asignatura: {{asignatura.nombre}}</div>
               <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Fecha: {{asistencia.fecha}}</div>
@@ -158,8 +158,6 @@
                             <thead>
                               <tr>
                                 <th scope="col">Alumno</th>
-                                <th scope="col">Curso</th>
-                                <th scope="col">Asignatura</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Causa</th>
                               </tr>
@@ -178,8 +176,6 @@
                               <tr *ngFor="let justificacion of justificaciones_tabla">
                                 <td>{{justificacion.alumno.nombres}} {{justificacion.alumno.apellido_paterno}}
                                   {{justificacion.alumno.apellido_materno}}</td>
-                                <td>{{justificacion.asistencia.curso.nombre}}</td>
-                                <td>{{justificacion.asistencia.asignatura.nombre}}</td>
                                 <td>{{justificacion.fecha}}</td>
                                 <td>{{justificacion.causa}}</td>
                               </tr>
