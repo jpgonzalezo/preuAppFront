@@ -1,10 +1,11 @@
 <app-header></app-header>
 <main>
-  <section class="section section-lg">
+  <section class="section">
     <div class="container">
-      <mat-card-content>
+      <mat-card-content class="mat-card-content">
         <mat-card-title>Eventos preuniversitario</mat-card-title><br>
       </mat-card-content>
+      <br>
       <div class="row row-grid align-items-center">
         <div class="col-xl-12">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -47,7 +48,7 @@
                         <td>{{ evento.start }}</td>
                         <td>{{ evento.title }}</td>
                         <td>
-                          <b *ngFor="let curso of evento.cursos">{{ curso }}<br></b>
+                          <div *ngFor="let curso of evento.cursos">{{ curso }}<br></div>
                         </td>
                         <td>
                           <div class="row">
@@ -94,7 +95,7 @@
                       </tr>
                       <tr *ngIf="!load && solicitudes_tabla.length == 0">
                         <td colspan="10" class="text-center">
-                          No se registran eventos
+                          No se registran solicitudes a eventos
                         </td>
                       </tr>
                       <tr *ngFor="let evento of solicitudes_tabla">

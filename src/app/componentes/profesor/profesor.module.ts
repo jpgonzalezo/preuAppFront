@@ -9,6 +9,7 @@ import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { ReactiveFormsModule} from '@angular/forms';
 import { Ng2Rut } from 'ng2-rut';
+import { RutPipe } from 'ng2-rut';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { AgGridModule } from 'ag-grid-angular';
@@ -107,6 +108,6 @@ const routes: Routes = [
     exports: [
         RouterModule
     ],
-    providers:[]
+    providers:[RutPipe]
 })
 export class ProfesorModule { }

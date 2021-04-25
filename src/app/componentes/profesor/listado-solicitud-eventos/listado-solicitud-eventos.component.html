@@ -3,7 +3,11 @@
   <section class="section">
     <div class="container">
 
-      <h3 class="display-3">Eventos preuniversitario</h3>
+      <mat-card-content class="mat-card-content">
+        <mat-card-title>Eventos preuniversitario</mat-card-title><br>
+        <mat-card-subtitle>Los eventos generados no aparecerán en el calendario hasta contar con la aprobación de un administrador.</mat-card-subtitle>
+      </mat-card-content>
+      <div><br></div>
       <div class="row row-grid align-items-center">
         <div class="col-xl-12">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -45,7 +49,7 @@
                         <td>{{ evento.start }}</td>
                         <td>{{ evento.title }}</td>
                         <td>
-                          <b *ngFor="let curso of evento.cursos">{{ curso }}<br></b>
+                          <div *ngFor="let curso of evento.cursos">{{ curso }}<br></div>
                         </td>
                       </tr>
                     </tbody>
@@ -92,7 +96,7 @@
                         <td>{{ evento.start }}</td>
                         <td>{{ evento.title }}</td>
                         <td>
-                          <b *ngFor="let curso of evento.cursos">{{ curso }}<br></b>
+                          <div *ngFor="let curso of evento.cursos">{{ curso }}<br></div>
                         </td>
                       </tr>
                     </tbody>

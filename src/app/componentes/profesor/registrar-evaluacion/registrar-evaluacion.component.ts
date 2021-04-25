@@ -20,6 +20,7 @@ import { CursoService } from 'src/app/servicios/curso.service';
 import { Curso } from 'src/app/modelos/curso.model';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { environment } from 'src/environments/environment';
+import { RutPipe } from 'ng2-rut';
 
 @Component({
   selector: 'app-registrar-evaluacion',
@@ -47,7 +48,8 @@ export class RegistrarEvaluacionComponent implements OnInit {
     private _pruebaService: PruebaService,
     private _cursoService: CursoService,
     private _alumnoService: AlumnoService,
-    private _router:Router
+    private _router:Router,
+    private rutPipe: RutPipe
   ) { 
     this.prueba = new Prueba()
     this.cursoSeleccionado = "Seleccione un curso"
@@ -72,6 +74,7 @@ export class RegistrarEvaluacionComponent implements OnInit {
   }
   getColumDef(){
     this._evaluacionService.getColumnDefs(this.id_evaluacion,this.token).subscribe((data:any[])=>{
+      console.log(data)
       this.columnDefs = data
     })
   }
@@ -79,6 +82,9 @@ export class RegistrarEvaluacionComponent implements OnInit {
   getRowData(){
     this._evaluacionService.getEvaluacionGridRegistrar(this.id_evaluacion,this.id_curso,this.token).subscribe((data:any[])=>{
       this.rowData = data
+      this.rowData.forEach(element => {
+        element['rut'] = this.rutPipe.transform(element['rut']);
+      });
     })
   }
 

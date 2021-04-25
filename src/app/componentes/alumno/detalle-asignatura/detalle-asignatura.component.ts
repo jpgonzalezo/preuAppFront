@@ -237,7 +237,8 @@ export class DetalleAsignaturaComponent implements OnInit {
     html += '</table>';
 
     swal.fire({
-      title: 'Respuestas ' + alumno.nombres + " " + alumno.apellido_paterno + " " + alumno.apellido_materno,
+      title: 'Respuestas evaluación',
+      text: 'Deslice hacia abajo para ver todas las respuestas.',
       type: 'info',
       html: html,
       confirmButtonColor: '#2dce89',

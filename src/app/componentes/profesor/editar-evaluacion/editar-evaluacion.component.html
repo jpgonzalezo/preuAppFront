@@ -8,15 +8,21 @@
 <main>
   <section class="section ">
     <div class="container">
-      <h3 class="display-3">Edición de evaluacion</h3>
-      <hr>
+      <mat-card-content class="mat-card-content"> 
+        <mat-card-title>Edicion evaluación</mat-card-title><br>
+        <mat-card-subtitle>Complete la hoja de resultados de la evaluacioón. En caso de ser Taller/Ensayo complete con la alternativa seleccionada o indique si la respuesta es correcta/incorrecta si es del tipo Tarea.</mat-card-subtitle>
+        <br>
+      </mat-card-content>
+      <div><br></div>
+      <br>
       <ag-grid-angular #agGrid style="width: auto; height: 100px;" class="ag-theme-balham" [rowData]="rowData"
         [columnDefs]="columnDefs">
       </ag-grid-angular>
-      <hr>
+      <br>
       <div class="text-center">
+        <button type="button" class="btn btn-danger" (click)="volver()"> Volver </button>
         <button class="btn btn-primary" (click)="guardar()">guardar</button>
-        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver </button>
+
       </div>
     </div>
   </section>

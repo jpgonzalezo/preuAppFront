@@ -14,7 +14,7 @@
         <div class="px-3">
 
           <div class="mt-5 py-5  text-center">
-            <h4 class="display-3 pull-rigth"> Resumen asistencia </h4>
+            <mat-card-title> Resumen asistencia </mat-card-title>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Curso: {{curso.nombre}}</div>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Asignatura: {{asignatura.nombre}}</div>
             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Fecha: {{asistencia.fecha}}</div>
@@ -45,7 +45,7 @@
                           <thead>
                             <tr>
                               <th scope="col"></th>
-                              <th scope="col">R.U.N</th>
+                              <th scope="col">RUT</th>
                               <th scope="col">Nombres</th>
                               <th scope="col">Apellido paterno</th>
                               <th scope="col">Apellido materno</th>
@@ -68,7 +68,7 @@
                               <th scope="row">
                                 <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
                               </th>
-                              <td>{{ alumno.rut }}</td>
+                              <td>{{ alumno.rut | rut }}</td>
                               <td>{{ alumno.nombres }}</td>
                               <td>{{ alumno.apellido_paterno}}</td>
                               <td>{{ alumno.apellido_materno}}</td>
@@ -101,7 +101,7 @@
                           <thead>
                             <tr>
                               <th scope="col"></th>
-                              <th scope="col">R.U.N</th>
+                              <th scope="col">RUT</th>
                               <th scope="col">Nombres</th>
                               <th scope="col">Apellido paterno</th>
                               <th scope="col">Apellido materno</th>
@@ -125,7 +125,7 @@
                               <th scope="row">
                                 <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
                               </th>
-                              <td>{{ alumno.rut }}</td>
+                              <td>{{ alumno.rut | rut }}</td>
                               <td>{{ alumno.nombres }}</td>
                               <td>{{ alumno.apellido_paterno}}</td>
                               <td>{{ alumno.apellido_materno}}</td>
@@ -214,7 +214,7 @@
     </div>
   </section>
   <div class="text-center">
-    <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver </button>
+    <button type="button" class="btn btn-danger" (click)="volver()"> Volver </button>
   </div>
 </main>
 <app-footer></app-footer>

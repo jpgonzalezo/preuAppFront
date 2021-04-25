@@ -2,8 +2,12 @@
 <main>
   <section class="section ">
     <div class="container">
-      <h2 class="display-3">Nueva asistencia</h2>
-      <hr>
+      <mat-card-content class="mat-card-content"container>
+        <mat-card-title>Nueva asistencia</mat-card-title><br>
+        <mat-card-subtitle>Seleccione el curso, la asignatura y luego indique si los alumnos se encuentran presentes o ausentes según corresponda.</mat-card-subtitle>
+        <br>
+      </mat-card-content>
+      <br>
       <div class="row row-grid align-items-center">
         <div class="col-md-12 text-center">
           <form>
@@ -12,7 +16,7 @@
                 <div class="form-group">
                   <h6><b>Curso</b></h6>
                   <div ngbDropdown class="d-inline-block">
-                    <button class="btn btn-outline-primary" id="dropdownBasic1"
+                    <button class="btn btn-primary" id="dropdownBasic1"
                       ngbDropdownToggle>{{cursoSeleccionado}}</button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                       <button ngbDropdownItem (click)="cambiarCurso('Seleccione un curso','sin_id')">Seleccione un
@@ -27,7 +31,7 @@
                 <div class="form-group">
                   <h6><b>Asignatura</b></h6>
                   <div ngbDropdown class="d-inline-block">
-                    <button [disabled]="seleccionCurso" class="btn btn-outline-primary" id="dropdownBasic1"
+                    <button [disabled]="seleccionCurso" class="btn btn-primary" id="dropdownBasic1"
                       ngbDropdownToggle>{{asignaturaSeleccionada}}</button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                       <button ngbDropdownItem *ngFor="let asignatura of asignaturas"
@@ -66,7 +70,7 @@
                     <thead>
                       <tr>
                         <th scope="col"></th>
-                        <th scope="col">R.U.N</th>
+                        <th scope="col">RUT</th>
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellido paterno</th>
                         <th scope="col">Apellido materno</th>
@@ -84,7 +88,7 @@
                           <th scope="row">
                             <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
                           </th>
-                          <td>{{ alumno.rut }}</td>
+                          <td>{{ alumno.rut | rut }}</td>
                           <td>{{ alumno.nombres }}</td>
                           <td>{{ alumno.apellido_paterno}}</td>
                           <td>{{ alumno.apellido_materno}}</td>
@@ -130,7 +134,7 @@
                     <thead>
                       <tr>
                         <th scope="col"></th>
-                        <th scope="col">R.U.N</th>
+                        <th scope="col">RUT</th>
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellido paterno</th>
                         <th scope="col">Apellido materno</th>
@@ -147,7 +151,7 @@
                         <th scope="row">
                           <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
                         </th>
-                        <td>{{ alumno.rut }}</td>
+                        <td>{{ alumno.rut | rut }}</td>
                         <td>{{ alumno.nombres }}</td>
                         <td>{{ alumno.apellido_paterno}}</td>
                         <td>{{ alumno.apellido_materno}}</td>
@@ -185,7 +189,7 @@
                     <thead>
                       <tr>
                         <th scope="col"></th>
-                        <th scope="col">R.U.N</th>
+                        <th scope="col">RUT</th>
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellido paterno</th>
                         <th scope="col">Apellido materno</th>
@@ -202,7 +206,7 @@
                         <th scope="row">
                           <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
                         </th>
-                        <td>{{ alumno.rut }}</td>
+                        <td>{{ alumno.rut | rut }}</td>
                         <td>{{ alumno.nombres }}</td>
                         <td>{{ alumno.apellido_paterno}}</td>
                         <td>{{ alumno.apellido_materno}}</td>
@@ -233,9 +237,9 @@
             </div>
           </div>
           <div class="text-center">
-            <button [disabled]="id_asignatura_seleccionada==''" type="button" class="btn btn-outline-info"
+            <button type="button" class="btn btn-danger" (click)="volver()">Volver</button>
+            <button [disabled]="id_asignatura_seleccionada==''" type="button" class="btn btn-info"
               (click)="guardarAsistencia()">Guardar Asistencia</button>
-            <button type="button" class="btn btn-outline-warning" (click)="volver()">Volver</button>
             <br>
           </div>
         </div>

@@ -2,8 +2,8 @@
 <main>
   <section class="section ">
     <div class="container">
-      <h2 class="display-3">{{curso.nombre}}</h2>
-      <hr>
+      <mat-card-title>{{curso.nombre}}</mat-card-title>
+      <br>
       <div class="row row-grid align-items-center">
 
         <div class="col-xl-12">
@@ -124,7 +124,7 @@
                     <thead>
                       <tr>
                         <th scope="col"></th>
-                        <th scope="col">R.U.N</th>
+                        <th scope="col">RUT</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido paterno</th>
                         <th scope="col">Apellido materno</th>
@@ -147,7 +147,7 @@
                         <th scope="row">
                           <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
                         </th>
-                        <td>{{ alumno.rut }}</td>
+                        <td>{{ alumno.rut | rut }}</td>
                         <td>{{ alumno.nombres }}</td>
                         <td>{{ alumno.apellido_paterno }}</td>
                         <td>{{ alumno.apellido_materno }}</td>
@@ -317,7 +317,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-outline-info" (click)="agregarAsignatura()"> Agregar asignatura
+                  <button type="button" class="btn btn-info" (click)="agregarAsignatura()"> Agregar asignatura
                   </button>
                   <br><br><br>
                 </div>
@@ -331,7 +331,7 @@
       </div>
 
       <div class="text-center">
-        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
+        <button type="button" class="btn btn-danger" (click)="volver()"> Volver
         </button>
         <br>
       </div>

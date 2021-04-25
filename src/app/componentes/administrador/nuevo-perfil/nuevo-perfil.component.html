@@ -47,7 +47,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="rut"> R.U.N </label>
+                      <label for="rut"> RUT </label>
                       <input name="rut" formControlName="rut" type="text" class="form-control" placeholder="11.111.111-1">
                     </div>
                   </div>
@@ -63,7 +63,7 @@
                     <div class="form-group">
                       <label for="sexo"> Sexo </label><br>
                       <div ngbDropdown class="d-inline-block">
-                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{sexo_dropdown}}</button>
+                        <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>{{sexo_dropdown}}</button>
                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                           <button ngbDropdownItem (click)="cambiarSexo('MASCULINO')">Masculino</button>
                           <button ngbDropdownItem (click)="cambiarSexo('FEMENINO')">Femenino</button>
@@ -133,7 +133,7 @@
                       <div class="form-group">
                         <label for="nombre_usuario"> Colegio</label> <br>
                         <div ngbDropdown class="d-inline-block"> 
-                          <button class="btn btn-outline-primary" id="dropdownColegioEstudiante" ngbDropdownToggle>{{colegio_dropdown}}</button>
+                          <button class="btn btn-primary" id="dropdownColegioEstudiante" ngbDropdownToggle>{{colegio_dropdown}}</button>
                           <div ngbDropdownMenu aria-labelledby="dropdownColegioEstudiante">
                             <button ngbDropdownItem (click)="cambiarColegio('Seleccione colegio','')">Ningún colegio</button>
                             <div class="dropdown-divider"></div>
@@ -146,7 +146,7 @@
                       <div class="form-group">
                         <label for="curso"> Curso </label><br>
                         <div ngbDropdown class="d-inline-block"> 
-                          <button class="btn btn-outline-primary" id="dropdownCursoEstudiante" ngbDropdownToggle>{{curso_dropdown}}</button>
+                          <button class="btn btn-primary" id="dropdownCursoEstudiante" ngbDropdownToggle>{{curso_dropdown}}</button>
                           <div ngbDropdownMenu aria-labelledby="dropdownCursoEstudiante">
                             <button ngbDropdownItem (click)="cambiarCurso('Seleccione curso','')">Ningún curso</button>
                             <div class="dropdown-divider"></div>
@@ -170,8 +170,8 @@
               </div>
               <div class="text-center">
                 <hr>
-                <button type="button" class="btn btn-outline-danger" (click)="cancelar()">Cancelar</button>
-                <button [disabled]="formGroupDatosAcademicosEstudiante.invalid" type="button" class="btn btn-outline-primary" (click)="guardarPerfilEstudiante()">Guardar</button>
+                <button type="button" class="btn btn-danger" (click)="cancelar()">Cancelar</button>
+                <button [disabled]="formGroupDatosAcademicosEstudiante.invalid" type="button" class="btn btn-primary" (click)="guardarPerfilEstudiante()">Guardar</button>
               </div>
           </div>
       </div>

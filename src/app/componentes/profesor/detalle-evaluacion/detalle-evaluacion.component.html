@@ -8,8 +8,11 @@
 <main>
   <section class="section ">
     <div class="container">
-      <h2 class="display-3">{{prueba.nombre}}</h2>
-      <hr>
+      <mat-card-content class="mat-card-content"> 
+        <mat-card-title>{{prueba.nombre}}</mat-card-title>
+        <br>
+      </mat-card-content>
+      <br>
       <div class="row row-grid align-items-center">
 
         <div class="col-xl-12">
@@ -201,7 +204,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <button [disabled]="banderaAgregarPregunta" type="button" class="btn btn-outline-primary"
+                  <button [disabled]="banderaAgregarPregunta" type="button" class="btn btn-primary"
                     (click)="agregarPregunta()">Nueva Pregunta</button>
                 </div>
               </div>
@@ -252,7 +255,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-outline-primary" (click)="asignarTopico()">Agregar
+                  <button type="button" class="btn btn-primary" (click)="asignarTopico()">Agregar
                     Tópico</button>
                 </div>
 
@@ -335,7 +338,7 @@
                 </div>
 
                 <div class="text-center">
-                  <button type="button" class="btn btn-outline-primary" (click)="registrarEvaluaciones()">Registrar
+                  <button type="button" class="btn btn-primary" (click)="registrarEvaluaciones()">Registrar
                     Evaluaciones</button>
                 </div>
               </div>
@@ -346,7 +349,7 @@
       </div>
       <hr>
       <div class="text-center">
-        <button type="button" class="btn btn-outline-danger" (click)="volver()"> Volver
+        <button type="button" class="btn btn-danger" (click)="volver()"> Volver
         </button>
         <br>
       </div>

@@ -14,7 +14,7 @@
           <full-calendar #calendar defaultView="dayGridMonth" [header]="{
               left: 'prev,next today',
               center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+              right: 'dayGridMonth,listWeek'
             }" [plugins]="calendarPlugins" [weekends]="calendarWeekends" [events]="calendarEvents" [locale]="esLocale"
             themeSystem="bootstrap" (dateClick)="nuevoEvento($event)" [eventLimit]="true"></full-calendar>
         </div>

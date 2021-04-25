@@ -18,6 +18,7 @@ import { CursoService } from 'src/app/servicios/curso.service';
 import { Curso } from 'src/app/modelos/curso.model';
 import { AlumnoService } from 'src/app/servicios/alumno.service';
 import { environment } from 'src/environments/environment';
+import { RutPipe } from 'ng2-rut';
 
 @Component({
   selector: 'app-editar-evaluacion',
@@ -42,7 +43,8 @@ export class EditarEvaluacionComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     private _localService: LocalService,
     private _evaluacionService: EvaluacionService,
-    private _router:Router
+    private _router:Router,
+    private rutPipe: RutPipe
   ) { 
     this.prueba = new Prueba()
   }
@@ -78,6 +80,9 @@ export class EditarEvaluacionComponent implements OnInit {
   getRowData(){
     this._evaluacionService.getEvaluacionGridRegistrarEditar(this.evaluacion.id,this.token).subscribe((data:any[])=>{
       this.rowData = data
+      this.rowData.forEach(element => {
+        element['rut'] = this.rutPipe.transform(element['rut']);
+      });
     })
   }
 

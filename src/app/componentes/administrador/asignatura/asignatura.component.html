@@ -2,7 +2,22 @@
 <main>
   <section class="section ">
     <div class="container">
-      <h2 class="display-3">Asignaturas preuniversitario</h2>
+      <mat-card-content class="mat-card-content">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-card-title>Asignaturas preuniversitario</mat-card-title>
+          </div>
+          <div class="col-md-6">
+            <div class="text-right">
+              <button type="button" class="btn btn-info" (click)="generarNuevaAsignatura()"> Nueva
+                Asignatura
+              </button>
+            </div>
+          </div>
+        </div>
+        <br>
+      </mat-card-content>
+
       <div class="row row-grid align-items-center">
         <div class="col-xl-12">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -58,12 +73,6 @@
                       <option [ngValue]="4">4 asignaturas por página</option>
                       <option [ngValue]="6">6 asignaturas por página</option>
                     </select>
-                  </div>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-outline-info" (click)="generarNuevaAsignatura()"> Nueva
-                      Asignatura
-                    </button>
-                    <br>
                   </div>
                 </div>
               </div>
