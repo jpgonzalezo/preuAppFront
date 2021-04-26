@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CursoService } from 'src/app/servicios/curso.service';
-import { VideoService } from 'src/app/servicios/video.service';
+import { AsignaturaService } from 'src/app/servicios/asignatura.service';
+import { ArchivoService } from 'src/app/servicios/archivo.service';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-import { Curso } from 'src/app/modelos/curso.model';
 import { FileValidator } from 'src/app/validators/file.validators';
 import Swal from 'sweetalert2';
+import { Asignatura } from '@modelos/asignatura.model';
 
 @Component({
   selector: 'app-formulario-archivo',
@@ -18,12 +18,10 @@ export class FormularioArchivoComponent implements OnInit {
   createForm: FormGroup;
   loading = false;
   token: string;
-  cursos = [];
-  cursoSelect = {};
   asignaturaSelect = {};
   asignaturas = [];
   selectedFiles: File = null;
-  allowedExtensions = ['docx', 'xlsx','pdf'];
+  allowedExtensions = ['docx', 'xlsx', 'pdf'];
 
 
 
@@ -31,8 +29,8 @@ export class FormularioArchivoComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private formBuilder: FormBuilder,
-    private _cursoService: CursoService,
-    private _videoService: VideoService,
+    private _asignaturaService: AsignaturaService,
+    private _archivoService: ArchivoService,
     private _localService: LocalService,
     private _storageService: StorageService,
   ) { }
@@ -46,10 +44,10 @@ export class FormularioArchivoComponent implements OnInit {
       this.token = this._storageService.getCurrentToken()
     }
     this.createForm = this.formBuilder.group({
-      file: ['', [Validators.required,FileValidator.fileExtensions(this.allowedExtensions)]],
+      file: ['', [FileValidator.fileExtensions(this.allowedExtensions)]],
       asignatura_id: ['', [Validators.required]],
     });
-    this.getCursos();
+    this.getAsignaturas();
   }
 
   getErrorMessage(campo, mensaje) {
@@ -60,7 +58,7 @@ export class FormularioArchivoComponent implements OnInit {
 
   selectFile(event) {
     this.selectedFiles = event.target.files[0];
-}
+  }
 
   getErrorMessageYoutube(campo, mensaje) {
     return this.createForm.get(campo).hasError('notYoutube')
@@ -68,12 +66,11 @@ export class FormularioArchivoComponent implements OnInit {
       : '';
   }
 
-
-  getCursos() {
+  getAsignaturas() {
     this.loading = true;
-    this._cursoService.getCursos(this.token).subscribe((cursos: Array<Curso>) => {
+    this._asignaturaService.getAsignaturas(this.token).subscribe((cursos: Array<Asignatura>) => {
       cursos.forEach(element => {
-        this.cursos.push({ value: element.id, viewValue: element.nombre, asignaturas: element.asignaturas })
+        this.asignaturas.push({ value: element.id, viewValue: element.nombre})
 
       });
       this.loading = false;
@@ -87,21 +84,23 @@ export class FormularioArchivoComponent implements OnInit {
     this._router.navigateByUrl('/admin/videos');
   }
 
-  addVideo() {
+   addVideo() {
     this.loading = true;
-    const data = this.createForm.value;
-    this._videoService.addVideo(data, this.token).subscribe((data: any) => {
+    const file = this.selectedFiles;
+    console.log(this.selectedFiles)
+    var id_asignatura = this.createForm.value.asignatura_id
+    this._archivoService.addArchivoByAsignatura(this.token, id_asignatura,file).subscribe((data: any) => {
 
       this.loading = false;
       Swal.fire({
         type: 'success',
         title: 'Registro exitoso',
-        text: 'Su video fue añadido correctamente.',
+        text: 'Su Archivo fue añadido correctamente.',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#5cb85c',
       }).then((result2) => {
         if (result2 || result2.dismiss) {
-          this._router.navigateByUrl('/admin/videos')
+          this._router.navigateByUrl('/admin/archivos')
         }
       })
     },
@@ -119,22 +118,7 @@ export class FormularioArchivoComponent implements OnInit {
           }
         })
       });
-  }
-
-  getAsignaturas() {
-    let id = this.createForm.get('curso_id').value
-    this.asignaturas = []
-    let asignaturasCurso = this.cursos.find(curso => curso.value == id).asignaturas
-
-    asignaturasCurso.forEach(element => {
-      this.asignaturas.push({ value: element.id, viewValue: element.nombre })
-
-    });
-  }
-
-
-
-
+  } 
 
 
 }

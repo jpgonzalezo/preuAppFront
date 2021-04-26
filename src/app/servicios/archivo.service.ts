@@ -16,12 +16,12 @@ export class ArchivoService {
 		return this.httpClient.get(`${this.API_URL}/archivoAsignatura/${id_asignatura}`, options).pipe(map(res => res))
 	}
 
-	addArchivoByAsignatura(token: string, id_asignatura: string, data: any) {
+	addArchivoByAsignatura(token: string, id_asignatura: string, file: any) {
 		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
 		const options = {
 			headers: headers
 		}
-		return this.httpClient.post(`${this.API_URL}/archivoAsignatura/${id_asignatura}` , data, options).pipe(map(res => res))
+		return this.httpClient.post(`${this.API_URL}/archivoAsignatura/${id_asignatura}` , file, options).pipe(map(res => res))
 	}
 
 	getAllArchivo(token: string) {

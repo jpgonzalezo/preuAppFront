@@ -25,6 +25,7 @@ import { CursoService } from 'src/app/servicios/curso.service';
 import { ApoderadoService } from 'src/app/servicios/apoderado.service';
 import { AdministradorService } from 'src/app/servicios/administrador.service';
 import { VideoService } from 'src/app/servicios/video.service';
+import { ArchivoService } from 'src/app/servicios/archivo.service';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import { VideoService } from 'src/app/servicios/video.service';
         CursoService,
         ApoderadoService,
         AdministradorService,
-        VideoService
+        VideoService,
+        ArchivoService
     ]
 
 })
