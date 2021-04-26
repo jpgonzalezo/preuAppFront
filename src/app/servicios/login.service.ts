@@ -36,7 +36,7 @@ export class LoginService {
             if(body && body.token){
                 this.storageService.setCurrentSession({token:body.token,user: {tipo: body.tipo }});
                 this.localService.setToken(this.storageService.getCurrentToken())
-                this.refreshSession(true);
+                //this.refreshSession(true);
             }
             return body;
         }));
