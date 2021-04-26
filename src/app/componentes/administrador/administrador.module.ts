@@ -52,6 +52,8 @@ import { EditarAlumnoComponent } from './editar-alumno/editar-alumno.component';
 import { EditarProfesorComponent } from './editar-profesor/editar-profesor.component';
 import { EditarApoderadoComponent } from './editar-apoderado/editar-apoderado.component';
 import { EditarAdministradorComponent } from './editar-administrador/editar-administrador.component';
+import { ManejadorArchivosComponent } from './manejador-archivos/manejador-archivos.component';
+import { FormularioArchivoComponent } from './formulario-archivo/formulario-archivo.component';
 
 
 
@@ -85,7 +87,10 @@ const routes: Routes = [
     { path: 'cursos/detalle_curso/:id', component: DetalleCursoComponent},
     { path: 'change_password', component: CambioContrasenaComponent},
     { path: 'videos', component: VideoAdminComponent},
-    { path: 'videos/formulario', component: FormularioVideoComponent}
+    { path: 'videos/formulario', component: FormularioVideoComponent},
+    { path: 'archivos', component: ManejadorArchivosComponent},
+    { path: 'archivos/formulario', component: FormularioArchivoComponent}
+
 
 ];
 
@@ -148,7 +153,9 @@ const routes: Routes = [
         EditarAlumnoComponent,
         EditarProfesorComponent,
         EditarApoderadoComponent,
-        EditarAdministradorComponent
+        EditarAdministradorComponent,
+        ManejadorArchivosComponent,
+        FormularioArchivoComponent
     ],
     exports: [
         RouterModule
