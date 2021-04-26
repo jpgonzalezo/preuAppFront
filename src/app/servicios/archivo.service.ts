@@ -13,7 +13,7 @@ export class ArchivoService {
 		const options = {
 			headers: headers
 		}
-		return this.httpClient.get(`${this.API_URL}/archivoAsignatura/` + id_asignatura, options).pipe(map(res => res))
+		return this.httpClient.get(`${this.API_URL}/archivoAsignatura/${id_asignatura}`, options).pipe(map(res => res))
 	}
 
 	addArchivoByAsignatura(token: string, id_asignatura: string, data: any) {
