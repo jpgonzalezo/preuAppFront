@@ -16,6 +16,14 @@ export class ArchivoService {
 		return this.httpClient.get(`${this.API_URL}/archivoAsignatura`, options).pipe(map(res => res))
 	}
 
+	getArchivoByAsignaturaAlumno(token: string, id: string) {
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.get(`${this.API_URL}/archivoAsignatura/${id}`, options).pipe(map(res => res))
+	}
+
 	getArchivoById(token: string, id_archivo: string) {
 		const headers = new HttpHeaders({  'auth-token': token });
 

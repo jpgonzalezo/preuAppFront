@@ -30,6 +30,7 @@ import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena
 import { HojaRespuestaComponent } from './hoja-respuesta/hoja-respuesta.component';
 import { NuevaObservacionProfesorComponent } from './nueva-observacion-profesor/nueva-observacion-profesor.component';
 import { VideoAlumnoComponent } from './video-alumno/video-alumno.component';
+import { ArchivosAlumnoComponent } from './archivos-alumno/archivos-alumno.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'calendario', pathMatch: 'full' },
@@ -77,7 +78,8 @@ const routes: Routes = [
         HojaRespuestaComponent,
         CambioContrasenaComponent,
         NuevaObservacionProfesorComponent,
-        VideoAlumnoComponent
+        VideoAlumnoComponent,
+        ArchivosAlumnoComponent
     ],
     exports: [
         RouterModule

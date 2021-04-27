@@ -1,4 +1,9 @@
+
 @import '../../../../assets/css/material.css';
 .align-vertical{
     vertical-align: middle;
+}
+
+.align-center{
+    text-align: center;
 }
