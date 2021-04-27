@@ -105,7 +105,6 @@ export class ManejadorArchivosComponent implements OnInit {
 
   downloadArchivo(archivo: Archivo) {
     this._archivoService.getArchivoById(this.token, archivo.id).subscribe((response: any) => {
-      console.log(response)
       const url = window.URL.createObjectURL(
         new Blob([response])
       );
