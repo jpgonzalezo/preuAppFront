@@ -17,11 +17,11 @@ export interface Archivo {
 }
 
 @Component({
-  selector: 'app-archivos-alumno',
-  templateUrl: './archivos-alumno.component.html',
-  styleUrls: ['./archivos-alumno.component.css']
+  selector: 'app-archivos-administrador',
+  templateUrl: './archivos-administrador.component.html',
+  styleUrls: ['./archivos-administrador.component.css']
 })
-export class ArchivosAlumnoComponent implements OnInit {
+export class ArchivosAdministradorComponent implements OnInit {
   pageArchivos: number;
   id_asignatura: string = "";
   pageSizeArchivos: number;
@@ -120,4 +120,5 @@ export class ArchivosAlumnoComponent implements OnInit {
 
   }
 }
+
 

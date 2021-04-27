@@ -52,6 +52,7 @@ import { EditarAlumnoComponent } from './editar-alumno/editar-alumno.component';
 import { EditarProfesorComponent } from './editar-profesor/editar-profesor.component';
 import { EditarApoderadoComponent } from './editar-apoderado/editar-apoderado.component';
 import { EditarAdministradorComponent } from './editar-administrador/editar-administrador.component';
+import { ArchivosAdministradorComponent } from './archivos-administrador/archivos-administrador.component';
 
 
 
@@ -151,7 +152,8 @@ const routes: Routes = [
         EditarAlumnoComponent,
         EditarProfesorComponent,
         EditarApoderadoComponent,
-        EditarAdministradorComponent
+        EditarAdministradorComponent,
+        ArchivosAdministradorComponent
         
     ],
     exports: [
