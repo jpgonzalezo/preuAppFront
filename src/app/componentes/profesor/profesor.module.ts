@@ -39,6 +39,8 @@ import { CambioContrasenaComponent } from './cambio-contrasena/cambio-contrasena
 import { NuevaObservacionAlumnoComponent } from './nueva-observacion-alumno/nueva-observacion-alumno.component';
 import { VideoProfesorComponent } from './video-profesor/video-profesor.component';
 import { CompartidoModule } from 'src/app/componentes/compartido.module';
+import { ManejadorArchivosComponent } from './manejador-archivos/manejador-archivos.component';
+import { FormularioArchivoComponent } from './formulario-archivo/formulario-archivo.component';
 
 const routes: Routes = [
     { path: '', component: AsignaturaComponent },
@@ -56,8 +58,9 @@ const routes: Routes = [
     { path: 'detalle/evaluacion/:id/registrar/curso/:id_curso', component: RegistrarEvaluacionComponent},
     { path: 'detalle/evaluacion/:id/editar', component: EditarEvaluacionComponent},
     { path: 'change_password', component: CambioContrasenaComponent },
-    { path: 'videos', component: VideoProfesorComponent }
-
+    { path: 'videos', component: VideoProfesorComponent },
+    { path: 'archivos', component: ManejadorArchivosComponent},
+    { path: 'archivos/formulario', component: FormularioArchivoComponent}
 
 ];
 
@@ -103,7 +106,9 @@ const routes: Routes = [
         DetalleAsistenciaComponent,
         CambioContrasenaComponent,
         NuevaObservacionAlumnoComponent,
-        VideoProfesorComponent
+        VideoProfesorComponent,
+        ManejadorArchivosComponent,
+        FormularioArchivoComponent
     ],
     exports: [
         RouterModule

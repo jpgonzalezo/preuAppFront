@@ -17,11 +17,11 @@ export class ArchivoService {
 	}
 
 	addArchivoByAsignatura(token: string, id_asignatura: string, file: any) {
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
+		const headers = new HttpHeaders({'auth-token': token });
 		const options = {
 			headers: headers
 		}
-		return this.httpClient.post(`${this.API_URL}/archivoAsignatura/${id_asignatura}` , file).pipe(map(res => res))
+		return this.httpClient.post(`${this.API_URL}/archivoAsignatura/${id_asignatura}` , file, options).pipe(map(res => res))
 	}
 
 	getAllArchivo(token: string) {

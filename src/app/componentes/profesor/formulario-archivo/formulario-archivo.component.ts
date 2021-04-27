@@ -71,7 +71,7 @@ export class FormularioArchivoComponent implements OnInit {
     this.loading = true;
     this._asignaturaService.getAsignaturas(this.token).subscribe((cursos: Array<Asignatura>) => {
       cursos.forEach(element => {
-        this.asignaturas.push({ value: element.id, viewValue: element.nombre})
+        this.asignaturas.push({ value: element.id, viewValue: element.nombre })
 
       });
       this.loading = false;
@@ -103,7 +103,7 @@ export class FormularioArchivoComponent implements OnInit {
           text: 'Seleccione una foto de perfil',
           input: 'file',
           inputAttributes: {
-            'accept': 'image/*'
+            'accept': '*/*'
           },
           confirmButtonColor: '#2dce89',
         }).then((result3) => {
@@ -133,41 +133,48 @@ export class FormularioArchivoComponent implements OnInit {
     })
   }
 
-   addVideo() {
+  addVideo() {
     this.loading = true;
     const file = this.selectedFiles;
     console.log(this.selectedFiles)
+    var formData = new FormData()
+    formData.append('file', file)
     var id_asignatura = this.createForm.value.asignatura_id
-    this._archivoService.addArchivoByAsignatura(this.token, id_asignatura,file).subscribe((data: any) => {
-
+    this._archivoService.addArchivoByAsignatura(this.token, id_asignatura, formData).subscribe((data: any) => {
       this.loading = false;
-      Swal.fire({
-        type: 'success',
-        title: 'Registro exitoso',
-        text: 'Su Archivo fue añadido correctamente.',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#5cb85c',
-      }).then((result2) => {
-        if (result2 || result2.dismiss) {
-          this._router.navigateByUrl('/admin/archivos')
-        }
-      })
-    },
-      (error) => {
+      if (data["Response"] == "error") {
         Swal.fire({
           type: 'error',
           title: 'Error en el servidor',
           text: 'Ocurrió un error en el servidor, intente más tarde',
           confirmButtonColor: '#5cb85c',
           confirmButtonText: 'Aceptar',
+        })
+      } else {
+        Swal.fire({
+          type: 'success',
+          title: 'Registro exitoso',
+          text: 'Su Archivo fue añadido correctamente.',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#5cb85c',
         }).then((result2) => {
           if (result2 || result2.dismiss) {
-            this.loading = false;
-
+            this._router.navigateByUrl('/profesor/archivos')
           }
         })
+      }
+    },
+      (error) => {
+        this.loading = false;
+        Swal.fire({
+          type: 'error',
+          title: 'Error en el servidor',
+          text: 'Ocurrió un error en el servidor, intente más tarde',
+          confirmButtonColor: '#5cb85c',
+          confirmButtonText: 'Aceptar',
+        })
       });
-  } 
+  }
 
 
 }
