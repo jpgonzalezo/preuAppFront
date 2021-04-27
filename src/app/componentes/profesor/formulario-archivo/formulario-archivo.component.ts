@@ -46,7 +46,6 @@ export class FormularioArchivoComponent implements OnInit {
     }
     this.createForm = this.formBuilder.group({
       file: ['', [FileValidator.fileExtensions(this.allowedExtensions)]],
-      asignatura_id: ['', [Validators.required]],
     });
     this.getAsignaturas();
   }
@@ -113,7 +112,7 @@ export class FormularioArchivoComponent implements OnInit {
             var formData = new FormData()
             formData.append('file', file)
             var id_asignatura = this.createForm.value.asignatura_id
-            this._archivoService.addArchivoByAsignatura(this.token, id_asignatura, formData).subscribe((data: any) => {
+            this._archivoService.addArchivoByAsignatura(this.token, formData).subscribe((data: any) => {
               if (data['Response'] == "exito") {
                 this.loading = false
                 swal.fire({
@@ -139,8 +138,7 @@ export class FormularioArchivoComponent implements OnInit {
     console.log(this.selectedFiles)
     var formData = new FormData()
     formData.append('file', file)
-    var id_asignatura = this.createForm.value.asignatura_id
-    this._archivoService.addArchivoByAsignatura(this.token, id_asignatura, formData).subscribe((data: any) => {
+    this._archivoService.addArchivoByAsignatura(this.token, formData).subscribe((data: any) => {
       this.loading = false;
       if (data["Response"] == "error") {
         Swal.fire({
