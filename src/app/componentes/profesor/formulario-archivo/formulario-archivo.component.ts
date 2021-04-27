@@ -7,8 +7,6 @@ import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
 import { FileValidator } from 'src/app/validators/file.validators';
 import Swal from 'sweetalert2';
-import { Asignatura } from '@modelos/asignatura.model';
-import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formulario-archivo',
@@ -47,7 +45,6 @@ export class FormularioArchivoComponent implements OnInit {
     this.createForm = this.formBuilder.group({
       file: ['', [FileValidator.fileExtensions(this.allowedExtensions)]],
     });
-    this.getAsignaturas();
   }
 
   getErrorMessage(campo, mensaje) {
@@ -60,79 +57,13 @@ export class FormularioArchivoComponent implements OnInit {
     this.selectedFiles = event.target.files[0];
   }
 
-  getErrorMessageYoutube(campo, mensaje) {
-    return this.createForm.get(campo).hasError('notYoutube')
-      ? mensaje
-      : '';
-  }
-
-  getAsignaturas() {
-    this.loading = true;
-    this._asignaturaService.getAsignaturas(this.token).subscribe((cursos: Array<Asignatura>) => {
-      cursos.forEach(element => {
-        this.asignaturas.push({ value: element.id, viewValue: element.nombre })
-
-      });
-      this.loading = false;
-    },
-      (error) => {
-        this.loading = false;
-      });
-  }
 
   volver() {
-    this._router.navigateByUrl('/admin/videos');
+    this._router.navigateByUrl('/profesor/archivos');
   }
 
 
-  public createAlert() {
-    swal.fire({
-      title: 'Foto de perfil',
-      text: "Desea cambiar la foto de perfil?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#2dce89',
-      cancelButtonColor: '#fb6340',
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No'
-    }).then((result2) => {
-      if (result2.dismiss == null) {
-        swal.fire({
-          title: 'Foto de perfil',
-          text: 'Seleccione una foto de perfil',
-          input: 'file',
-          inputAttributes: {
-            'accept': '*/*'
-          },
-          confirmButtonColor: '#2dce89',
-        }).then((result3) => {
-          if (result3.dismiss == null) {
-            this.loading = true
-            var file = result3.value
-            var formData = new FormData()
-            formData.append('file', file)
-            var id_asignatura = this.createForm.value.asignatura_id
-            this._archivoService.addArchivoByAsignatura(this.token, formData).subscribe((data: any) => {
-              if (data['Response'] == "exito") {
-                this.loading = false
-                swal.fire({
-                  title: 'Registro exitoso',
-                  text: 'Se ha guardado al alumno exitosamente!',
-                  type: 'success',
-                  confirmButtonColor: '#2dce89',
-                }).then((result) => {
-                  //this.cancelar()
-                })
-              }
-              this.loading = false
-            })
-          }
-        })
-      }
-    })
-  }
-
-  addVideo() {
+  addArchivo() {
     this.loading = true;
     const file = this.selectedFiles;
     console.log(this.selectedFiles)
