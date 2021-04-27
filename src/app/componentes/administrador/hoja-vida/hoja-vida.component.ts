@@ -343,7 +343,7 @@ export class HojaVidaComponent implements OnInit {
             this.loading = true
             var file = result3.value
             var formData = new FormData()
-            formData.append('imagen', file)
+            formData.append('file', file)
             this._alumnoService.uploadImage(formData, this.id_hoja_vida, this.token).subscribe((data: any) => {
               if (data['Response'] == "exito") {
                 this.loading = false

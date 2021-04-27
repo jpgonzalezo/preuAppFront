@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/servicios/storage.service';
 import { FileValidator } from 'src/app/validators/file.validators';
 import Swal from 'sweetalert2';
 import { Asignatura } from '@modelos/asignatura.model';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formulario-archivo',
@@ -82,6 +83,54 @@ export class FormularioArchivoComponent implements OnInit {
 
   volver() {
     this._router.navigateByUrl('/admin/videos');
+  }
+
+
+  public createAlert() {
+    swal.fire({
+      title: 'Foto de perfil',
+      text: "Desea cambiar la foto de perfil?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+    }).then((result2) => {
+      if (result2.dismiss == null) {
+        swal.fire({
+          title: 'Foto de perfil',
+          text: 'Seleccione una foto de perfil',
+          input: 'file',
+          inputAttributes: {
+            'accept': 'image/*'
+          },
+          confirmButtonColor: '#2dce89',
+        }).then((result3) => {
+          if (result3.dismiss == null) {
+            this.loading = true
+            var file = result3.value
+            var formData = new FormData()
+            formData.append('file', file)
+            var id_asignatura = this.createForm.value.asignatura_id
+            this._archivoService.addArchivoByAsignatura(this.token, id_asignatura, formData).subscribe((data: any) => {
+              if (data['Response'] == "exito") {
+                this.loading = false
+                swal.fire({
+                  title: 'Registro exitoso',
+                  text: 'Se ha guardado al alumno exitosamente!',
+                  type: 'success',
+                  confirmButtonColor: '#2dce89',
+                }).then((result) => {
+                  //this.cancelar()
+                })
+              }
+              this.loading = false
+            })
+          }
+        })
+      }
+    })
   }
 
    addVideo() {
