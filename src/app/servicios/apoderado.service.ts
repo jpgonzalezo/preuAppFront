@@ -8,67 +8,83 @@ export class ApoderadoService {
 	API_URL = environment.API_SERVER_URL;
 	constructor(private httpClient: HttpClient) { }
 
-  	getApoderados(token:string):any{
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+	getApoderados(token: string): any {
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
 		const options = {
 			headers: headers
 		}
-		return this.httpClient.get(`${this.API_URL}/apoderados`,options).pipe(map(res => res))
+		return this.httpClient.get(`${this.API_URL}/apoderados`, options).pipe(map(res => res))
 	}
 
-	deleteApoderado(id:any,token:string){
-		const headers = new HttpHeaders({ 'Content-type':'application/json','auth-token':token});
+	deleteApoderado(id: any, token: string) {
+		const headers = new HttpHeaders({ 'Content-type': 'application/json', 'auth-token': token });
 		const options = {
-			headers:headers
+			headers: headers
 		}
 		return this.httpClient.delete(`${this.API_URL}/apoderados/${id}`, options).pipe(map(res => res))
 	}
 
-	getApoderado(id:any,token:string){
-		const headers = new HttpHeaders({ 'Content-type':'application/json','auth-token':token});
+	getApoderado(id: any, token: string) {
+		const headers = new HttpHeaders({ 'Content-type': 'application/json', 'auth-token': token });
 		const options = {
-			headers:headers
+			headers: headers
 		}
 		return this.httpClient.get(`${this.API_URL}/apoderados/${id}`, options).pipe(map(res => res))
 	}
 
-	postApoderado(data:any,token:string){
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
+	postApoderado(data: any, token: string) {
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
 		const options = {
-		  headers: headers
+			headers: headers
 		}
-		return this.httpClient.post(`${this.API_URL}/apoderados`, JSON.stringify(data), options).pipe(map(res => res)) 
+		return this.httpClient.post(`${this.API_URL}/apoderados`, JSON.stringify(data), options).pipe(map(res => res))
 	}
 
-	putApoderado(id:string,data:any,token:string):any{
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'auth-token':token});
+	putApoderado(id: string, data: any, token: string): any {
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
 		const options = {
-		  headers: headers
+			headers: headers
 		}
 		return this.httpClient.put(`${this.API_URL}/apoderados/${id}`, JSON.stringify(data), options).pipe(map(res => res))
 	}
 
-	uploadImage(data:FormData, id:string,token:string){
-		const headers = new HttpHeaders({ 'Content-type':'application/json','auth-token':token});
+	uploadImage(data: FormData, id: string, token: string) {
+		const headers = new HttpHeaders({ 'Content-type': 'application/json', 'auth-token': token });
 		const options = {
-		  headers:headers
+			headers: headers
 		}
-		return this.httpClient.post(`${this.API_URL}/apoderado_imagen/${id}`,data).pipe(map(res => res)) 
-	  }
-	
-	uploadImageDefault(id:string,token:string){
-		const headers = new HttpHeaders({ 'Content-type':'application/json','auth-token':token});
-		const options = {
-			headers:headers
-		}
-		return this.httpClient.get(`${this.API_URL}/apoderado_imagen_default/${id}`,options).pipe(map(res => res))
+		return this.httpClient.post(`${this.API_URL}/apoderado_imagen/${id}`, data).pipe(map(res => res))
 	}
 
-	asignarAlumno(id_apoderado,id_alumno,token:string){
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token });
-  	const options = {
-  		headers: headers
+	uploadImageDefault(id: string, token: string) {
+		const headers = new HttpHeaders({ 'Content-type': 'application/json', 'auth-token': token });
+		const options = {
+			headers: headers
 		}
-    return this.httpClient.get(`${this.API_URL}/apoderado_alumno/${id_apoderado}/${id_alumno}`,options).pipe(map(res => res))
+		return this.httpClient.get(`${this.API_URL}/apoderado_imagen_default/${id}`, options).pipe(map(res => res))
+	}
+
+	asignarAlumno(id_apoderado, id_alumno, token: string) {
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.get(`${this.API_URL}/apoderado_alumno/${id_apoderado}/${id_alumno}`, options).pipe(map(res => res))
+	}
+
+	getPlantilla(token: string) {
+		const headers = new HttpHeaders({ 'auth-token': token });
+
+		return this.httpClient.get(`${this.API_URL}/apoderadoExcel`, {
+			headers, responseType: "arraybuffer"
+		}).pipe(map(res => res))
+	}
+
+	uploadExcel(token: string, file: any) {
+		const headers = new HttpHeaders({ 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.post(`${this.API_URL}/apoderadoExcel`, file, options).pipe(map(res => res))
 	}
 }

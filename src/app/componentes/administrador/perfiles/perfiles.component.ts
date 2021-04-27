@@ -17,7 +17,7 @@ import { Profesor } from 'src/app/modelos/profesor';
 import { Asignatura } from 'src/app/modelos/asignatura.model';
 import { Apoderado } from 'src/app/modelos/apoderado.model';
 import { Administrador } from 'src/app/modelos/administrador.model';
-import swal from'sweetalert2';
+import swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -47,11 +47,12 @@ export class PerfilesComponent implements OnInit {
   pageApoderado: number;
   pageSizeApoderado: number;
   collectionSizeApoderado: number;
-  loading:boolean = false
-  loadalumno:boolean = false
-  loadapoderado:boolean = false
-  loadprofesor:boolean = false
-  loadadministrador:boolean = false
+  loading: boolean = false
+  loadalumno: boolean = false
+  loadapoderado: boolean = false
+  loadprofesor: boolean = false
+  loadadministrador: boolean = false
+  selectedFiles: File = null;
   constructor(
     private _alumnoService: AlumnoService,
     private router: Router,
@@ -61,9 +62,8 @@ export class PerfilesComponent implements OnInit {
     public _alumnoTablaService: AlumnoTablaService,
     private _localService: LocalService,
     private _storageService: StorageService,
-    )
-  { 
-    this.asignaturas= []
+  ) {
+    this.asignaturas = []
     this.cursos = []
     this.colegios = []
     this.alumnos = []
@@ -80,10 +80,10 @@ export class PerfilesComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this._storageService.getCurrentToken()==null){
-      this.token = this._localService.getToken() 
+    if (this._storageService.getCurrentToken() == null) {
+      this.token = this._localService.getToken()
     }
-    else{
+    else {
       this.token = this._storageService.getCurrentToken()
     }
     this.getApoderados()
@@ -94,29 +94,29 @@ export class PerfilesComponent implements OnInit {
 
   get profesores_tabla(): any[] {
     return this.profesores
-      .map((profesor, i) => ({id: i + 1, ...profesor}))
+      .map((profesor, i) => ({ id: i + 1, ...profesor }))
       .slice((this.pageProfesor - 1) * this.pageSizeProfesor, (this.pageProfesor - 1) * this.pageSizeProfesor + this.pageSizeProfesor);
   }
 
   get administradores_tabla(): any[] {
     return this.administradores
-      .map((administrador, i) => ({id: i + 1, ...administrador}))
+      .map((administrador, i) => ({ id: i + 1, ...administrador }))
       .slice((this.pageAdministrador - 1) * this.pageSizeAdministrador, (this.pageAdministrador - 1) * this.pageSizeAdministrador + this.pageSizeAdministrador);
   }
 
   get alumnos_tabla(): any[] {
     return this.alumnos
-      .map((asignatura, i) => ({id: i + 1, ...asignatura}))
+      .map((asignatura, i) => ({ id: i + 1, ...asignatura }))
       .slice((this.pageAlumno - 1) * this.pageSizeAlumno, (this.pageAlumno - 1) * this.pageSizeAlumno + this.pageSizeAlumno);
   }
 
   get apoderados_tabla(): any[] {
     return this.apoderados
-      .map((apoderado, i) => ({id: i + 1, ...apoderado}))
+      .map((apoderado, i) => ({ id: i + 1, ...apoderado }))
       .slice((this.pageApoderado - 1) * this.pageSizeApoderado, (this.pageApoderado - 1) * this.pageSizeApoderado + this.pageSizeApoderado);
   }
 
-  public deleteAlumno(id:string){
+  public deleteAlumno(id: string) {
     swal.fire({
       title: 'Desea borrar este perfil?',
       text: "Usted no podrá revertir los cambios!",
@@ -129,15 +129,15 @@ export class PerfilesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.loading = true
-        this._alumnoService.deleteAlumno(id,this.token).subscribe((data:any)=>{
-          if(data['Response']=='borrado'){
+        this._alumnoService.deleteAlumno(id, this.token).subscribe((data: any) => {
+          if (data['Response'] == 'borrado') {
             this.loading = false
             swal.fire({
-              title:'Borrado!',
-              text:'Se ha borrado registro exitosamente.',
-              type:'success',
+              title: 'Borrado!',
+              text: 'Se ha borrado registro exitosamente.',
+              type: 'success',
               confirmButtonColor: '#2dce89',
-            }).then((result)=>{
+            }).then((result) => {
               this._alumnoTablaService.getAlumnos()
             })
           }
@@ -147,7 +147,7 @@ export class PerfilesComponent implements OnInit {
     })
   }
 
-  public deleteProfesor(id:string){
+  public deleteProfesor(id: string) {
     swal.fire({
       title: 'Desea borrar este perfil?',
       text: "Usted no podrá revertir los cambios!",
@@ -160,19 +160,19 @@ export class PerfilesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.loading = true
-        this._profesorService.deleteProfesor(id,this.token).subscribe((data:any)=>{
+        this._profesorService.deleteProfesor(id, this.token).subscribe((data: any) => {
           this.loading = false
-          if(data['Response']=='borrado'){
+          if (data['Response'] == 'borrado') {
             swal.fire({
-              title:'Borrado!',
-              text:'Se ha borrado registro exitosamente.',
-              type:'success',
+              title: 'Borrado!',
+              text: 'Se ha borrado registro exitosamente.',
+              type: 'success',
               confirmButtonColor: '#2dce89',
-            }).then((result)=>{
-              if(result.value){
+            }).then((result) => {
+              if (result.value) {
                 this.getProfesores();
               }
-              if(result.dismiss){
+              if (result.dismiss) {
                 this.getProfesores();
               }
             })
@@ -184,7 +184,7 @@ export class PerfilesComponent implements OnInit {
     })
   }
 
-  public deleteApoderado(id:string){
+  public deleteApoderado(id: string) {
     swal.fire({
       title: 'Desea borrar este perfil?',
       text: "Usted no podrá revertir los cambios!",
@@ -197,15 +197,15 @@ export class PerfilesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.loading = true
-        this._apoderadoService.deleteApoderado(id,this.token).subscribe((data:any)=>{
+        this._apoderadoService.deleteApoderado(id, this.token).subscribe((data: any) => {
           this.loading = false
-          if(data['Response']=='borrado'){
+          if (data['Response'] == 'borrado') {
             swal.fire({
-              title:'Borrado!',
-              text:'Se ha borrado registro exitosamente.',
-              type:'success',
+              title: 'Borrado!',
+              text: 'Se ha borrado registro exitosamente.',
+              type: 'success',
               confirmButtonColor: '#2dce89',
-            }).then((result)=>{
+            }).then((result) => {
               this.getApoderados();
             })
           }
@@ -216,16 +216,16 @@ export class PerfilesComponent implements OnInit {
     })
   }
 
-  public getAlumnos(){
+  public getAlumnos() {
     this.loadalumno = true
-    this._alumnoService.getAlumno(this.token).subscribe((data:Alumno[])=>{
+    this._alumnoService.getAlumno(this.token).subscribe((data: Alumno[]) => {
       this.alumnos = data
-      for(let alumno of this.alumnos){
-        if(alumno.imagen==''){
-          alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/default"
+      for (let alumno of this.alumnos) {
+        if (alumno.imagen == '') {
+          alumno.imagen = environment.API_SERVER_URL + "/alumno_imagen/default"
         }
-        else{
-          alumno.imagen = environment.API_SERVER_URL+"/alumno_imagen/"+alumno.imagen
+        else {
+          alumno.imagen = environment.API_SERVER_URL + "/alumno_imagen/" + alumno.imagen
         }
       }
       this.collectionSizeAlumno = this.alumnos.length
@@ -233,16 +233,16 @@ export class PerfilesComponent implements OnInit {
     })
   }
 
-  public getProfesores(){
+  public getProfesores() {
     this.loadprofesor = true
-    this._profesorService.getProfesores(this.token).subscribe((data:Profesor[])=>{
+    this._profesorService.getProfesores(this.token).subscribe((data: Profesor[]) => {
       this.profesores = data
-      for(let profesor of this.profesores){
-        if(profesor.imagen==''){
-          profesor.imagen = environment.API_SERVER_URL+"/profesor_imagen/default"
+      for (let profesor of this.profesores) {
+        if (profesor.imagen == '') {
+          profesor.imagen = environment.API_SERVER_URL + "/profesor_imagen/default"
         }
-        else{
-          profesor.imagen = environment.API_SERVER_URL+"/profesor_imagen/"+profesor.imagen
+        else {
+          profesor.imagen = environment.API_SERVER_URL + "/profesor_imagen/" + profesor.imagen
         }
       }
       this.collectionSizeProfesor = this.profesores.length
@@ -250,16 +250,16 @@ export class PerfilesComponent implements OnInit {
     })
   }
 
-  public getAdministradores(){
+  public getAdministradores() {
     this.loadadministrador = true
-    this._administradorService.getAdministradores(this.token).subscribe((data:Administrador[])=>{
+    this._administradorService.getAdministradores(this.token).subscribe((data: Administrador[]) => {
       this.administradores = data
-      for(let administrador of this.administradores){
-        if(administrador.imagen==''){
-          administrador.imagen = environment.API_SERVER_URL+"/administrador_imagen/default"
+      for (let administrador of this.administradores) {
+        if (administrador.imagen == '') {
+          administrador.imagen = environment.API_SERVER_URL + "/administrador_imagen/default"
         }
-        else{
-          administrador.imagen = environment.API_SERVER_URL+"/administrador_imagen/"+administrador.imagen
+        else {
+          administrador.imagen = environment.API_SERVER_URL + "/administrador_imagen/" + administrador.imagen
         }
       }
       this.collectionSizeAdministrador = this.administradores.length
@@ -267,16 +267,16 @@ export class PerfilesComponent implements OnInit {
     })
   }
 
-  public getApoderados(){
-    this.loadapoderado  = true
-    this._apoderadoService.getApoderados(this.token).subscribe((data:Apoderado[])=>{
+  public getApoderados() {
+    this.loadapoderado = true
+    this._apoderadoService.getApoderados(this.token).subscribe((data: Apoderado[]) => {
       this.apoderados = data
-      for(let apoderado of this.apoderados){
-        if(apoderado.imagen==''){
-          apoderado.imagen = environment.API_SERVER_URL+"/apoderado_imagen/default"
+      for (let apoderado of this.apoderados) {
+        if (apoderado.imagen == '') {
+          apoderado.imagen = environment.API_SERVER_URL + "/apoderado_imagen/default"
         }
-        else{
-          apoderado.imagen = environment.API_SERVER_URL+"/apoderado_imagen/"+apoderado.imagen
+        else {
+          apoderado.imagen = environment.API_SERVER_URL + "/apoderado_imagen/" + apoderado.imagen
         }
       }
       this.collectionSizeApoderado = this.apoderados.length
@@ -284,45 +284,161 @@ export class PerfilesComponent implements OnInit {
     })
   }
 
-  generarVistaHojaVida(id:string){
-    this.router.navigateByUrl('/admin/perfiles/hoja_vida/'+id);
+  generarVistaHojaVida(id: string) {
+    this.router.navigateByUrl('/admin/perfiles/hoja_vida/' + id);
   }
 
-  verDetalleProfesor(id:string){
-    this.router.navigateByUrl('/admin/perfiles/detalle_profesor/'+id);
+  verDetalleProfesor(id: string) {
+    this.router.navigateByUrl('/admin/perfiles/detalle_profesor/' + id);
   }
 
-  generarNuevoAlumno(){
+  generarNuevoAlumno() {
     this.router.navigateByUrl('/admin/perfiles/nuevoAlumno');
   }
 
-  generarNuevoProfesor(){
+  generarNuevoProfesor() {
     this.router.navigateByUrl('/admin/perfiles/nuevoProfesor');
   }
 
 
-  generarNuevoApoderado(){
+  generarNuevoApoderado() {
     this.router.navigateByUrl('/admin/perfiles/nuevoApoderado');
   }
 
-  generarNuevoAdministrador(){
+  generarNuevoAdministrador() {
     this.router.navigateByUrl('/admin/perfiles/nuevoAdministrador');
   }
 
-  editarAlumno(id_alumno:string){
-    this.router.navigateByUrl('/admin/perfiles/editarAlumno/'+id_alumno);
+  editarAlumno(id_alumno: string) {
+    this.router.navigateByUrl('/admin/perfiles/editarAlumno/' + id_alumno);
   }
 
-  editarProfesor(id_profesor:string){
-    this.router.navigateByUrl('/admin/perfiles/editarProfesor/'+id_profesor);
+  editarProfesor(id_profesor: string) {
+    this.router.navigateByUrl('/admin/perfiles/editarProfesor/' + id_profesor);
   }
 
-  editarApoderado(id_apoderado:string){
-    this.router.navigateByUrl('/admin/perfiles/editarApoderado/'+id_apoderado);
+  editarApoderado(id_apoderado: string) {
+    this.router.navigateByUrl('/admin/perfiles/editarApoderado/' + id_apoderado);
   }
 
-  editarAdministrador(id_administrador:string){
-    this.router.navigateByUrl('/admin/perfiles/editarAdministrador/'+id_administrador);
+  editarAdministrador(id_administrador: string) {
+    this.router.navigateByUrl('/admin/perfiles/editarAdministrador/' + id_administrador);
   }
-  
+
+
+  downloadExcel(tipo: number) {
+    if (tipo == 1) {
+      this._alumnoService.getPlantilla(this.token).subscribe((response: any) => {
+        console.log(response)
+        const url = window.URL.createObjectURL(
+          new Blob([response])
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "plantilla_alumnos.xlsx"); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      })
+    }
+    else if (tipo == 2) {
+      this._apoderadoService.getPlantilla(this.token).subscribe((response: any) => {
+        console.log(response)
+        const url = window.URL.createObjectURL(
+          new Blob([response])
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "plantilla_apoderados.xlsx"); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      })
+    }
+  }
+
+  selectFile(event, tipo: number) {
+    this.selectedFiles = event.target.files[0];
+    this.addArchivo(tipo)
+    this.selectedFiles = null
+  }
+
+  addArchivo(tipo: number) {
+    this.loading = true;
+    const file = this.selectedFiles;
+    console.log(this.selectedFiles)
+    var formData = new FormData()
+    formData.append('file', file)
+    if (tipo == 1) {
+      this._alumnoService.uploadExcel(this.token, formData).subscribe((data: any) => {
+        this.loading = false;
+        if (data["Response"] == "error") {
+          swal.fire({
+            type: 'error',
+            title: 'Error en el servidor',
+            text: 'Ocurrió un error en el servidor, intente más tarde',
+            confirmButtonColor: '#5cb85c',
+            confirmButtonText: 'Aceptar',
+          })
+        } else {
+          swal.fire({
+            type: 'success',
+            title: 'Carga exitosa',
+            text: 'Carga realizada con éxito.',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#5cb85c',
+          }).then((result2) => {
+            if (result2 || result2.dismiss) {
+              this.getAlumnos()
+            }
+          })
+        }
+      },
+        (error) => {
+          this.loading = false;
+          swal.fire({
+            type: 'error',
+            title: 'Error en el servidor',
+            text: 'Ocurrió un error en el servidor, intente más tarde',
+            confirmButtonColor: '#5cb85c',
+            confirmButtonText: 'Aceptar',
+          })
+        });
+    }
+    else if (tipo == 2) {
+      this._apoderadoService.uploadExcel(this.token, formData).subscribe((data: any) => {
+        this.loading = false;
+        if (data["Response"] == "error") {
+          swal.fire({
+            type: 'error',
+            title: 'Error en el servidor',
+            text: 'Ocurrió un error en el servidor, intente más tarde',
+            confirmButtonColor: '#5cb85c',
+            confirmButtonText: 'Aceptar',
+          })
+        } else {
+          swal.fire({
+            type: 'success',
+            title: 'Carga exitosa',
+            text: 'Carga realizada con éxito.',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#5cb85c',
+          }).then((result2) => {
+            if (result2 || result2.dismiss) {
+              this.getApoderados()
+            }
+          })
+        }
+      },
+        (error) => {
+          this.loading = false;
+          swal.fire({
+            type: 'error',
+            title: 'Error en el servidor',
+            text: 'Ocurrió un error en el servidor, intente más tarde',
+            confirmButtonColor: '#5cb85c',
+            confirmButtonText: 'Aceptar',
+          })
+        });
+    }
+  }
+
 }

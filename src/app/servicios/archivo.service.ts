@@ -25,7 +25,7 @@ export class ArchivoService {
 	}
 
 	getArchivoById(token: string, id_archivo: string) {
-		const headers = new HttpHeaders({  'auth-token': token });
+		const headers = new HttpHeaders({'auth-token': token });
 
 		return this.httpClient.get(`${this.API_URL}/archivo/${id_archivo}`, {headers, responseType: "arraybuffer"
 		}).pipe(map(res => res))

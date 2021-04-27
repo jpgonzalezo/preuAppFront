@@ -41,8 +41,10 @@
                   </div>
                   <div class="col-md-3 col-sm-12"></div>
                   <div class="text-right col-md-6 col-sm-12">
-                    <button type="button" class="btn btn-primary" (click)="generarNuevoAlumno()">Importar excel</button>
-                    <button type="button" class="btn btn-success" (click)="generarNuevoAlumno()">Plantilla alumnos <i
+                    <button (click)="fileInputAlumno.click()" type="button" class="btn btn-primary">Importar
+                      excel</button>
+                    <input hidden (change)="selectFile($event, 1)" #fileInputAlumno type="file" id="file">
+                    <button type="button" class="btn btn-success" (click)="downloadExcel(1)">Plantilla alumnos <i
                         class="fas fa-file-excel"></i></button>
                     <br>
                   </div>
@@ -86,7 +88,8 @@
                           <div class="row">
                             <button type="button" class="btn btn-info btn-sm"
                               (click)="generarVistaHojaVida(alumno.id)"><i class="far fa-eye"></i></button>
-                              <button type="button" class="btn btn-secondary btn-sm" (click)="editarAlumno(alumno.id)"><i class="fas fa-user-edit"></i></button>
+                            <button type="button" class="btn btn-secondary btn-sm" (click)="editarAlumno(alumno.id)"><i
+                                class="fas fa-user-edit"></i></button>
                             <button type="button" class="btn btn-danger btn-sm" (click)="deleteAlumno(alumno.id)"><i
                                 class="fas fa-trash-alt"></i></button>
                           </div>
@@ -123,7 +126,7 @@
                       Profesor</button>
 
                   </div>
-   
+
                 </div>
                 <br>
                 <div class="table-responsive-lg">
@@ -162,7 +165,8 @@
                         <td>
                           <button type="button" class="btn btn-info btn-sm" (click)="verDetalleProfesor(profesor.id)"><i
                               class="far fa-eye"></i></button>
-                          <button type="button" class="btn btn-secondary btn-sm" (click)="editarProfesor(profesor.id)"><i class="fas fa-user-edit"></i></button>
+                          <button type="button" class="btn btn-secondary btn-sm"
+                            (click)="editarProfesor(profesor.id)"><i class="fas fa-user-edit"></i></button>
                           <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfesor(profesor.id)"><i
                               class="fas fa-trash-alt"></i></button>
                         </td>
@@ -196,9 +200,10 @@
                   </div>
                   <div class="col-md-3 col-sm-12"></div>
                   <div class="text-right col-md-6 col-sm-12">
-                    <button type="button" class="btn btn-primary" (click)="generarNuevoApoderado()">Importar
+                    <button (click)="fileInputApoderado.click()" type="button" class="btn btn-primary">Importar
                       excel</button>
-                    <button type="button" class="btn btn-success" (click)="generarNuevoApoderado()">Plantilla apoderados
+                    <input hidden (change)="selectFile($event,2)" #fileInputApoderado type="file" id="file">
+                    <button type="button" class="btn btn-success" (click)="downloadExcel(2)">Plantilla apoderados
                       <i class="fas fa-file-excel"></i></button>
                     <br>
                   </div>
@@ -236,7 +241,8 @@
                         <td>{{ apoderado.telefono }}</td>
                         <td>{{ apoderado.alumno.nombres }} {{ apoderado.alumno.apellido_paterno}}</td>
                         <td>
-                          <button type="button" class="btn btn-secondary btn-sm" (click)="editarApoderado(apoderado.id)"><i class="fas fa-user-edit"></i></button>
+                          <button type="button" class="btn btn-secondary btn-sm"
+                            (click)="editarApoderado(apoderado.id)"><i class="fas fa-user-edit"></i></button>
                           <button type="button" class="btn btn-danger btn-sm" (click)="deleteApoderado(apoderado.id)"><i
                               class="fas fa-trash-alt"></i></button>
                         </td>
@@ -269,7 +275,7 @@
                       Administrador</button>
 
                   </div>
-   
+
                 </div>
                 <br>
                 <div class="table-responsive-lg">
@@ -306,7 +312,8 @@
                         <td>{{ administrador.apellido_materno}}</td>
                         <td>{{ administrador.email }}</td>
                         <td>
-                          <button type="button" class="btn btn-secondary btn-sm" (click)="editarAdministrador(administrador.id)"><i class="fas fa-user-edit"></i></button>
+                          <button type="button" class="btn btn-secondary btn-sm"
+                            (click)="editarAdministrador(administrador.id)"><i class="fas fa-user-edit"></i></button>
                         </td>
                       </tr>
                     </tbody>
