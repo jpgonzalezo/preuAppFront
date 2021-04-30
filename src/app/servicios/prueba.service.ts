@@ -143,4 +143,12 @@ export class PruebaService {
         }
         return this.httpClient.put(`${this.API_URL}/pruebas/${id_prueba}/asignar/puntaje/base`,{'puntaje_base':puntaje},options).pipe(map(res => res))
 	}
+
+	uploadExcel(token: string, file: any, id_prueba:string) {
+		const headers = new HttpHeaders({ 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.post(`${this.API_URL}/pruebas/preguntasExcel?prueba_id=${id_prueba}`, file, options).pipe(map(res => res))
+	}
 }
