@@ -104,4 +104,20 @@ export class AlumnoService {
     }
     return this.httpClient.get(`${this.API_URL}/alumno_grafico_asistencia/${id}`,options).pipe(map(res => res))
   }
+
+  getPlantilla(token: string) {
+		const headers = new HttpHeaders({'auth-token': token });
+
+		return this.httpClient.get(`${this.API_URL}/alumnoExcel`, {headers, responseType: "arraybuffer"
+		}).pipe(map(res => res))
+	}
+
+  uploadExcel(token: string, file: any) {
+		const headers = new HttpHeaders({ 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.post(`${this.API_URL}/alumnoExcel`, file, options).pipe(map(res => res))
+	}
+
 }

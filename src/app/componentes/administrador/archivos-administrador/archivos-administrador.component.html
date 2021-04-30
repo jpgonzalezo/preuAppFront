@@ -1,0 +1,45 @@
+<main>
+  <div class="table-responsive-md">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Fecha</th>
+          <th scope="col" class="align-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="loadArchivos">
+          <td colspan="10" class="shine text-center">
+            <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+          </td>
+        </tr>
+        <tr *ngIf="!loadArchivos && archivos_tabla.length == 0">
+          <td colspan="10" class="text-center">
+            No se registran archivos
+          </td>
+        </tr>
+        <tr *ngFor="let archivo of archivos_tabla">
+          <td class="align-vertical">{{ archivo.nombre }}</td>
+          <td class="align-vertical">{{ archivo.fecha }}</td>
+          <td class="align-center">
+
+            <button type="button" class="btn btn-primary btn-sm" (click)="downloadArchivo(archivo)"><i
+              class="fa fa-download"></i>
+          </button>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination [collectionSize]="collectionSizeArchivos" [(page)]="pageArchivos"
+        [pageSize]="pageSizeArchivos">
+      </ngb-pagination>
+
+      <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeArchivos">
+        <option [ngValue]="5">5 archivos por página</option>
+      </select>
+    </div>
+  </div>
+</main>

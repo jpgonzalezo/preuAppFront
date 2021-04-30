@@ -25,9 +25,12 @@
                   </div>
                   <div class="col-md-3 col-sm-12"></div>
                   <div class="text-right col-md-6 col-sm-12">
-                    <button type="button" class="btn btn-primary" (click)="generarNuevoColegio()">Importar excel</button>
-                    <button type="button" class="btn btn-success" (click)="generarNuevoColegio()">Plantilla colegios <i
+                    <button (click)="fileInput.click()" type="button" class="btn btn-primary">Importar
+                      excel</button>
+                    <input hidden (change)="selectFile($event)" #fileInput type="file" id="file">
+                    <button type="button" class="btn btn-success" (click)="downloadExcel()">Plantilla colegios <i
                         class="fas fa-file-excel"></i></button>
+
                     <br>
                   </div>
                 </div>

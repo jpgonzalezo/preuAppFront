@@ -1,0 +1,90 @@
+<app-header-profesor></app-header-profesor>
+<main>
+  <section class="section ">
+    <div class="container">
+      <mat-card-content class="mat-card-content">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-card-title class="mat-card-title">Archivos asignatura</mat-card-title>
+          </div>
+          <div class="col-md-6">
+            <div class="text-right">
+              <button type="button" class="btn-primary btn"
+                (click)="navegarEnComponentes('/profesor/archivos/formulario')">Agregar
+                Archivo <i class="fas fa-file"></i></button>
+            </div>
+          </div>
+        </div>
+        <br>
+      </mat-card-content>
+
+      <div class="row row-grid align-items-center">
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="archivos-tab" data-toggle="tab" href="#archivos_existente"
+                role="tab" aria-controls="archivos" aria-selected="false">Archivos</a>
+            </li>
+          </ul>
+
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="archivos_existente" role="tabpanel"
+              aria-labelledby="archivos-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-md">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadArchivos">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <tr *ngIf="!loadArchivos && archivos_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran archivos
+                        </td>
+                      </tr>
+                      <tr *ngFor="let archivo of archivos_tabla">
+                        <td class="align-vertical">{{ archivo.nombre }}</td>
+                        <td class="align-vertical">{{ archivo.fecha }}</td>
+                        <td class="align-vertical">
+                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteArchivo(archivo.id)"><i
+                              class="fas fa-trash-alt"></i>
+                          </button>
+                          <button type="button" class="btn btn-primary btn-sm" (click)="downloadArchivo(archivo)"><i
+                            class="fa fa-download"></i>
+                        </button>
+                        </td>
+                        
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeArchivos" [(page)]="pageArchivos"
+                      [pageSize]="pageSizeArchivos">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeArchivos">
+                      <option [ngValue]="5">5 archivos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+<app-footer-profesor></app-footer-profesor>

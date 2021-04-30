@@ -5,32 +5,48 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ColegioService {
-  API_URL = environment.API_SERVER_URL;
-  constructor(private httpClient: HttpClient) { }
+	API_URL = environment.API_SERVER_URL;
+	constructor(private httpClient: HttpClient) { }
 
-  getColegios(token:string):any{
-  	const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token});
-  	const options = {
-  		headers: headers
-  	}
-    return this.httpClient.get(`${this.API_URL}/colegios`,options).pipe(map(res => res))
+	getColegios(token: string): any {
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.get(`${this.API_URL}/colegios`, options).pipe(map(res => res))
 	}
 
-	deleteColegio(id:string,token:string){
-		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token});
-  	const options = {
-  		headers: headers
-  	}
-    return this.httpClient.delete(`${this.API_URL}/colegios/${id}`,options).pipe(map(res => res))
+	deleteColegio(id: string, token: string) {
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.delete(`${this.API_URL}/colegios/${id}`, options).pipe(map(res => res))
 	}
 
-	postColegio(data:any,token:string){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token});
-    const options = {
-      headers: headers
-    }
-    return this.httpClient.post(`${this.API_URL}/colegios`, JSON.stringify(data), options).pipe(map(res => res))
-  }
+	postColegio(data: any, token: string) {
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.post(`${this.API_URL}/colegios`, JSON.stringify(data), options).pipe(map(res => res))
+	}
 
+
+	getPlantilla(token: string) {
+		const headers = new HttpHeaders({ 'auth-token': token });
+
+		return this.httpClient.get(`${this.API_URL}/colegiosExcel`, {
+			headers, responseType: "arraybuffer"
+		}).pipe(map(res => res))
+	}
+
+	uploadExcel(token: string, file: any) {
+		const headers = new HttpHeaders({ 'auth-token': token });
+		const options = {
+			headers: headers
+		}
+		return this.httpClient.post(`${this.API_URL}/colegiosExcel`, file, options).pipe(map(res => res))
+	}
 
 }
