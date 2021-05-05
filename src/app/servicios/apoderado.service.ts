@@ -85,6 +85,8 @@ export class ApoderadoService {
 		const options = {
 			headers: headers
 		}
-		return this.httpClient.post(`${this.API_URL}/apoderadoExcel`, file, options).pipe(map(res => res))
+		return this.httpClient.post(`${this.API_URL}/apoderadoExcel`, file, {
+			headers, responseType: "arraybuffer"
+		}).pipe(map(res => res))
 	}
 }

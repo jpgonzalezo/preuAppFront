@@ -117,7 +117,8 @@ export class AlumnoService {
 		const options = {
 			headers: headers
 		}
-		return this.httpClient.post(`${this.API_URL}/alumnoExcel`, file, options).pipe(map(res => res))
+		return this.httpClient.post(`${this.API_URL}/alumnoExcel`, file, {headers, responseType: "arraybuffer"
+		}).pipe(map(res => res))
 	}
 
 }
