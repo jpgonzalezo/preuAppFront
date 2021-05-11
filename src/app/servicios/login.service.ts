@@ -45,6 +45,15 @@ export class LoginService {
     return this.http.post(this.basePath + '/logout', {}).pipe(map(this.extractData));
     }
 
+    enviaCodigoRecuperacion(data: any) {
+        return this.http.post(this.basePath + '/codigo_recuperacion', data, {}).pipe(map(res => res));
+        }
+
+    renuevaContrasena(data: any) {
+        return this.http.post(this.basePath + '/olvide_contrasena', data, {}).pipe(map(res => res));
+        }
+    
+
     cambiarContrasena(passObject: any){
         let token = this.storageService.getCurrentToken();
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});

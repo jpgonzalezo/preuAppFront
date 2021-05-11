@@ -1,0 +1,132 @@
+<div class="my-container">
+  <ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true,
+      backdropBackgroundColour: 'rgba(0, 0, 0, 1)', backdropBorderRadius: '10px',
+      primaryColour: '#ffffff', secondaryColour: '#ffffff', tertiaryColour: '#ffffff' }">
+  </ngx-loading>
+</div>
+<header class="header-global">
+  <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-dark headroom">
+      <div class="container">
+      <a class="navbar-brand mr-lg-5" href="https://www.sanbernardo.cl">
+          <img src="../assets/img/gallery/snbdo.gif">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="navbar_global">
+          <div class="navbar-collapse-header">
+          <div class="row">
+              <div class="col-6 collapse-brand">
+              <a href="">
+                  <img src="../assets/img/gallery/logocasa.jpg">
+                  <!-- <img src="../assets/img/brand/blue.png">  -->
+              </a>
+              </div>
+              <div class="col-6 collapse-close">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
+                  <span></span>
+                  <span></span>
+              </button>
+              </div>
+          </div>
+          </div>
+          <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+          </ul>
+          <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+          </ul>
+      </div>
+      </div>
+  </nav>
+</header>
+<main>
+  <section class="section section-lg section_login">
+      <div class="container pt-lg-md">
+          <div class="row justify-content-center">
+              <div class="col-lg-5">
+              <div class="card bg-secondary shadow border-0">
+                  <div class="card-header bg-white pb-4">
+                      <div class="text-muted text-center mb-3">
+                          <img src="../assets/img/gallery/logocasa.jpg" style="height:70px;">
+                      </div>
+                  </div>
+                  <div class="card-body px-lg-5 py-lg-2">
+                  <form role="form" [formGroup]="formGroupLogin">
+                      <div class="form-group mb-3">
+                      <div class="input-group input-group-alternative">
+                          <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                          </div>
+                          <input name="email" formControlName="email" type="email" class="form-control" placeholder="Email">
+                      </div>
+                      </div>
+                      <div class="form-group">
+                      <div class="input-group input-group-alternative">
+                          <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                          </div>
+                          <input name="codigo" formControlName="codigo" type="text" class="form-control" placeholder="Código recibido" >
+    
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                            </div>
+                            <input name="new_pass" formControlName="new_pass" type="password" class="form-control" placeholder="Contraseña nueva" [type]="hide_login ? 'text' : 'password'">
+                            <mat-icon color="color_teal" matSuffix (click)="hide_login = !hide_login" style="color: #11cdef; padding-top: 10px;">
+                                {{hide_login ? 'visibility' : 'visibility_off'}}
+                            </mat-icon>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="input-group input-group-alternative">
+                              <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                              </div>
+                              <input name="new_pass2" formControlName="new_pass2" type="password" class="form-control" placeholder="Repita contraseña" [type]="hide_login ? 'text' : 'password'">
+                              <mat-icon color="color_teal" matSuffix (click)="hide_login = !hide_login" style="color: #11cdef; padding-top: 10px;">
+                                  {{hide_login ? 'visibility' : 'visibility_off'}}
+                              </mat-icon>
+                          </div>
+                          </div>
+                      <div class="text-center">
+                      <button type="button" class="btn btn-primary my-4" (click)="login()" [disabled]="formGroupLogin.invalid">Enviar</button>
+                      </div>
+                  </form>
+                  </div>
+              </div>
+              </div>
+          </div>
+      </div>
+      <!-- SVG separator -->
+      <div class="separator separator-bottom separator-skew zindex-100">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+      </div>
+  </section>
+
+</main>
+<footer class="footer has-cards">
+  <div class="container">
+      <div class="row row-grid align-items-center my-md">
+      <div class="col-lg-6">
+          <h3 class="text-primary font-weight-light mb-2">Siguenos en nuestras redes sociales</h3>
+          <h4 class="mb-0 font-weight-light">Informate de los eventos en la comuna.</h4>
+      </div>
+
+      </div>
+      <hr>
+      <div class="row align-items-center justify-content-md-between">
+      <div class="col-md-6">
+          <div class="copyright">
+          &copy; 2019
+          <a href="https://www.nice.cl" target="_blank">Juan Pablo González Opazo</a>.
+          </div>
+      </div>
+      <div class="col-md-6">
+      </div>
+      </div>
+  </div>
+</footer>

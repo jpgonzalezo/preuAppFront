@@ -107,4 +107,68 @@ export class InicioComponent implements OnInit {
     }
     return error;
   }
+
+  solicitaCodigo(){
+    var id_prueba = ""
+    swal.mixin({
+      title: 'Nueva código',
+      confirmButtonText: 'Enviar',
+      cancelButtonText: 'Cancelar',
+      showCancelButton: true,
+      progressSteps: ['1'],
+      confirmButtonColor: '#2dce89',
+      cancelButtonColor: '#fb6340',
+    }).queue([
+      {
+        title: 'Email de usuario',
+        text: 'Ingrese su correo con el que se registró',
+        input: 'email',
+        showCancelButton: true,
+        onOpen: function (){
+          swal.disableConfirmButton();
+          swal.getInput().addEventListener('keyup', function(e) {
+            if((<HTMLInputElement>event.target).value == "" || parseInt((<HTMLInputElement>event.target).value)<=0) {
+              swal.disableConfirmButton();
+            } 
+            else {
+              swal.enableConfirmButton();
+            }
+            })
+        }
+      }
+    ]).then((result) => {
+      if (result.dismiss==null) {
+        this.loading = true
+        console.log(result.value[0])
+        const data = {
+          email: result.value[0]
+        }
+        this._loginService.enviaCodigoRecuperacion(data).subscribe(
+          (response) => {                           //Next callback
+            console.log(response)
+            this.loading = false
+            swal.fire({
+              title: 'Código generado con éxito',
+              text: 'Revisa tu bandeja de correo',
+              type: 'success',
+              confirmButtonColor: '#2dce89',
+            })
+          },
+          (error) => {             
+            console.error(error._body)                 //Error callback
+            console.error('error caught in component')
+            swal.fire({
+              title: 'Error en envio de código',
+              text: error._body,
+              type: 'error',
+              confirmButtonColor: '#2dce89',
+            })
+            this.loading = false;
+      
+            //throw error;   //You can also throw the error to a global error handler
+          }
+       ) 
+      }
+    })
+  }
 }

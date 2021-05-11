@@ -16,8 +16,10 @@ import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { InicioComponent } from './inicio/inicio.component';
 //SERVICIOS
 import { LoginService } from 'src/app/servicios/login.service';
+import { CambiaContrasenaComponent } from './cambia-contrasena/cambia-contrasena.component';
 const routes: Routes = [
     { path: '', component: InicioComponent },
+    { path: 'cambiaPass', component: CambiaContrasenaComponent },
 ];
 
 @NgModule({
@@ -42,6 +44,7 @@ const routes: Routes = [
     ],
     declarations: [
         InicioComponent,
+        CambiaContrasenaComponent,
     ],
     exports: [
         RouterModule

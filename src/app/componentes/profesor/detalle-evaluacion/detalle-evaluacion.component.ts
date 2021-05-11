@@ -726,11 +726,11 @@ export class DetalleEvaluacionComponent implements OnInit {
     formData.append('file', file)
     this._pruebaService.uploadExcel(this.token, formData, this.id_evaluacion).subscribe((data: any) => {
       this.loading = false;
-      if (data["Response"] == "error") {
+      if (data["error"] !== undefined) {
         swal.fire({
           type: 'error',
           title: 'Error en el servidor',
-          text: 'Ocurrió un error en el servidor, intente más tarde',
+          text: data["error"],
           confirmButtonColor: '#5cb85c',
           confirmButtonText: 'Aceptar',
         })

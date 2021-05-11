@@ -138,7 +138,7 @@ export class PerfilesComponent implements OnInit {
               type: 'success',
               confirmButtonColor: '#2dce89',
             }).then((result) => {
-              this._alumnoTablaService.getAlumnos()
+              this.getAlumnos()
             })
           }
         })
@@ -364,21 +364,17 @@ export class PerfilesComponent implements OnInit {
   addArchivo(tipo: number) {
     this.loading = true;
     const file = this.selectedFiles;
-    console.log(this.selectedFiles)
     var formData = new FormData()
     formData.append('file', file)
     if (tipo == 1) {
       this._alumnoService.uploadExcel(this.token, formData).subscribe((data: any) => {
         this.loading = false;
-        if (data["Response"] == "error") {
-          swal.fire({
-            type: 'error',
-            title: 'Error en el servidor',
-            text: 'Ocurrió un error en el servidor, intente más tarde',
-            confirmButtonColor: '#5cb85c',
-            confirmButtonText: 'Aceptar',
-          })
-        } else {
+        try {
+          var decodedString = String.fromCharCode.apply(null, new Uint8Array(data));
+          var obj = JSON.parse(decodedString);
+          var message = obj['Response'];
+          console.log(message)
+
           swal.fire({
             type: 'success',
             title: 'Carga exitosa',
@@ -389,6 +385,25 @@ export class PerfilesComponent implements OnInit {
             if (result2 || result2.dismiss) {
               this.getAlumnos()
             }
+          })
+        }
+        catch {
+          swal.fire({
+            type: 'error',
+            title: 'Alumnos con datos erroneos',
+            text: 'Algunos alumnos no fueron creados ya que contienen datos erroneos, favor revisar excel que se descargará automaticamente',
+            confirmButtonColor: '#5cb85c',
+            confirmButtonText: 'Aceptar',
+          }).then((error) => {
+            const url = window.URL.createObjectURL(
+              new Blob([data])
+            );
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "errores_alumnos.xlsx"); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+            this.getAlumnos()
           })
         }
       },
@@ -406,15 +421,12 @@ export class PerfilesComponent implements OnInit {
     else if (tipo == 2) {
       this._apoderadoService.uploadExcel(this.token, formData).subscribe((data: any) => {
         this.loading = false;
-        if (data["Response"] == "error") {
-          swal.fire({
-            type: 'error',
-            title: 'Error en el servidor',
-            text: 'Ocurrió un error en el servidor, intente más tarde',
-            confirmButtonColor: '#5cb85c',
-            confirmButtonText: 'Aceptar',
-          })
-        } else {
+        try {
+          var decodedString = String.fromCharCode.apply(null, new Uint8Array(data));
+          var obj = JSON.parse(decodedString);
+          var message = obj['Response'];
+          console.log(message)
+
           swal.fire({
             type: 'success',
             title: 'Carga exitosa',
@@ -425,6 +437,25 @@ export class PerfilesComponent implements OnInit {
             if (result2 || result2.dismiss) {
               this.getApoderados()
             }
+          })
+        }
+        catch {
+          swal.fire({
+            type: 'error',
+            title: 'Apoderados con datos erroneos',
+            text: 'Algunos apoderados no fueron creados ya que contienen datos erroneos, favor revisar excel que se descargará automaticamente',
+            confirmButtonColor: '#5cb85c',
+            confirmButtonText: 'Aceptar',
+          }).then((error) => {
+            const url = window.URL.createObjectURL(
+              new Blob([data])
+            );
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "errores_apoderados.xlsx"); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+            this.getApoderados()
           })
         }
       },
