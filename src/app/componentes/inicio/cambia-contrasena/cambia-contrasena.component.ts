@@ -62,6 +62,7 @@ export class CambiaContrasenaComponent implements OnInit {
             type: 'success',
             confirmButtonColor: '#2dce89',
           })
+          this.router.navigate(['/inicio']);
         },
         (error) => {             
           console.error(error._body)                 //Error callback
