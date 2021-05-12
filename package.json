@@ -36,7 +36,7 @@
     "ag-grid-angular": "^21.2.1",
     "ag-grid-community": "^21.2.1",
     "angular-datatables": "^7.0.0",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "chartjs-plugin-datalabels": "^0.6.0",
     "core-js": "^2.5.4",
     "datatables.net": "^1.10.19",
