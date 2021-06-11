@@ -111,17 +111,15 @@ export class InicioComponent implements OnInit {
   solicitaCodigo(){
     var id_prueba = ""
     swal.mixin({
-      title: 'Nueva código',
       confirmButtonText: 'Enviar',
       cancelButtonText: 'Cancelar',
       showCancelButton: true,
-      progressSteps: ['1'],
       confirmButtonColor: '#2dce89',
       cancelButtonColor: '#fb6340',
     }).queue([
       {
-        title: 'Email de usuario',
-        text: 'Ingrese su correo con el que se registró',
+        title: 'Recuperación de contraseña',
+        text: 'Ingrese su dirección de email para recuperar su contraseña.',
         input: 'email',
         showCancelButton: true,
         onOpen: function (){
@@ -148,8 +146,8 @@ export class InicioComponent implements OnInit {
             console.log(response)
             this.loading = false
             swal.fire({
-              title: 'Código generado con éxito',
-              text: 'Revisa tu bandeja de correo',
+              title: 'Código generado exitosamente!',
+              text: 'Revisa el código enviado a tu dirección de correo.',
               type: 'success',
               confirmButtonColor: '#2dce89',
             })
