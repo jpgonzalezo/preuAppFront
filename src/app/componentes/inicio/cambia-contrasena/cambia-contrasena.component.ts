@@ -46,7 +46,7 @@ export class CambiaContrasenaComponent implements OnInit {
     if(dataLogin['new_pass'] != dataLogin['new_pass2']){
       swal.fire({
         title : 'Error',
-        text: 'Las nueva contraseña no coinciden',
+        text: 'Las contraseñas no coinciden',
         type: 'error'
       })
     }
