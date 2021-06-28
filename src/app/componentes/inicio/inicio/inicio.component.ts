@@ -79,19 +79,19 @@ export class InicioComponent implements OnInit {
     //this._storageService.setCurrentSession(data);
     //this.localService.setToken(this._storageService.getCurrentToken())
     if(tipo == 'ADMINISTRADOR'){
-      this.loading = false
+      //this.loading = false
       this.router.navigate(['/admin']);
     }
     if(tipo == 'PROFESOR'){
-      this.loading = false
+      //this.loading = false
       this.router.navigate(['/profesor']);
     }
     if(tipo == 'ALUMNO'){
-      this.loading = false
+      //this.loading = false
       this.router.navigate(['/alumno']); 
     }
     if(tipo == 'APODERADO'){
-      this.loading = false
+      //this.loading = false
       this.router.navigate(['/apoderado']); 
     }
   }
