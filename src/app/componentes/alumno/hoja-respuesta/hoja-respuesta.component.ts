@@ -122,45 +122,62 @@ export class HojaRespuestaComponent implements OnInit {
 
 
   enviarRespuestas() {
-    this.loading = true;
-    let dict = {};
-    this.respuestas.forEach((element) => {
-      dict[element.numero_pregunta] = element.alternativa;
-    })
-    let body = {
-      prueba_id: this.id_prueba,
-      respuestas: dict
-    }
-    this._evaluacionService.responderAutoevaluacion(body, this.token).subscribe(
-      (data) => {
-        if (data["Response"] == "exito") {
-          Swal.fire({
-            type: 'success',
-            title: 'Registro exitoso',
-            text: 'Sus respuestas han sido almacenadas correctamente.',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#5cb85c',
-          }).then((result2) => {
-            if (result2 || result2.dismiss) {
-              this._router.navigateByUrl('/alumno/asignaturas/' + this.id_asignatura + '/detalle')
-            }
-          })
-        }
-      },
-      (error) => {
-        Swal.fire({
-          type: 'error',
-          title: 'Error en el servidor',
-          text: 'Ocurrió un error en el servidor, intente más tarde',
-          confirmButtonColor: '#5cb85c',
-          confirmButtonText: 'Aceptar',
-        }).then((result) => {
-          if (result || result.dismiss) {
-            this.loading = false
-          }
+
+    Swal.fire({
+      type: 'warning',
+      title: '¿Desea enviar sus respuestas?',
+      text: 'Está seguro que desea enviar sus respuestas. Luego de enviarlas usted no podrá modificarlas.',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#5cb85c',
+      showCancelButton: true,
+      cancelButtonColor: '#d9534f',
+      cancelButtonText: 'Cancelar'
+    }).then((result2) => {
+      if (result2.value ) {
+        this.loading = true;
+        let dict = {};
+        this.respuestas.forEach((element) => {
+          dict[element.numero_pregunta] = element.alternativa;
         })
-      },
-      () => { this.loading = false });
+        let body = {
+          prueba_id: this.id_prueba,
+          respuestas: dict
+        }
+        this._evaluacionService.responderAutoevaluacion(body, this.token).subscribe(
+          (data) => {
+            if (data["Response"] == "exito") {
+              Swal.fire({
+                type: 'success',
+                title: 'Registro exitoso',
+                text: 'Sus respuestas han sido almacenadas correctamente.',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#5cb85c',
+              }).then((result2) => {
+                if (result2 || result2.dismiss) {
+                  this._router.navigateByUrl('/alumno/asignaturas/' + this.id_asignatura + '/detalle')
+                }
+              })
+            }
+          },
+          (error) => {
+            Swal.fire({
+              type: 'error',
+              title: 'Error en el servidor',
+              text: 'Ocurrió un error en el servidor, intente más tarde',
+              confirmButtonColor: '#5cb85c',
+              confirmButtonText: 'Aceptar',
+            }).then((result) => {
+              if (result || result.dismiss) {
+                this.loading = false
+              }
+            })
+          },
+          () => { this.loading = false });
+      }
+    })
+
+
+
   }
 
   volver() {
