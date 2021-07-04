@@ -75,7 +75,7 @@
                       <div>
                         <div>
                           <div *ngIf="!loadGraficoRendimiento" style="display: block">
-                            <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions"
+                            <canvas baseChart [colors]="colors" [datasets]="radarChartData" [options]="radarChartOptions"
                               [labels]="radarChartLabels" [chartType]="radarChartType">
                             </canvas>
                           </div>
@@ -98,10 +98,10 @@
                     <div class="mb-8 ">
                       <br>
                       <div>
-                        <h5>Asistencia anual</h5>
+                        <h5>Porcentaje asistencia anual</h5>
                         <div *ngIf="!loadGraficoAsistencia">
                           <div style="display: block">
-                            <canvas baseChart [datasets]="barChartDataAnual" [labels]="barChartLabelsAnual"
+                            <canvas baseChart [colors]="colors" [datasets]="barChartDataAnual" [labels]="barChartLabelsAnual"
                               [options]="barChartOptionsAnual" [plugins]="barChartPluginsAnual"
                               [legend]="barChartLegendAnual" [chartType]="barChartTypeAnual">
                             </canvas>
@@ -117,10 +117,10 @@
                       </div>
                       <br>
                       <div>
-                        <h5>Asistencia asignaturas</h5>
+                        <h5>Porcentaje de asistencia por asignatura</h5>
                         <div *ngIf="!loadGraficoAsistencia">
                           <div style="display: block">
-                            <canvas baseChart [datasets]="barChartDataAsignatura" [labels]="barChartLabelsAsignatura"
+                            <canvas baseChart [colors]="colors" [datasets]="barChartDataAsignatura" [labels]="barChartLabelsAsignatura"
                               [options]="barChartOptionsAsignatura" [plugins]="barChartPluginsAsignatura"
                               [legend]="barChartLegendAsignatura" [chartType]="barChartTypeAsignatura">
                             </canvas>

@@ -11,7 +11,7 @@ import { Alerta } from 'src/app/modelos/alerta.model';
 import swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
-import { Label, MultiDataSet } from 'ng2-charts';
+import { Label, MultiDataSet, Color } from 'ng2-charts';
 import { ChartOptions } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { LocalService } from 'src/app/servicios/local.service';
@@ -23,6 +23,11 @@ import { Alumno } from 'src/app/modelos/alumno.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  public colors: Color[] = [
+    { backgroundColor: '#11cdef' },
+    { backgroundColor: '#fb6340' },
+    { backgroundColor: '#f5365c' }
+  ]
   pageAdministrador: number;
   pageProfesor: number;
   pagePsicologo: number;

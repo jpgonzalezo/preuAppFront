@@ -40,7 +40,8 @@ import {
 } from 'chart.js';
 import {
   Label,
-  MultiDataSet
+  MultiDataSet,
+  Color
 } from 'ng2-charts';
 import {
   ChartOptions
@@ -54,6 +55,11 @@ import {
   templateUrl: './hoja-vida.component.html'
 })
 export class HojaVidaComponent implements OnInit {
+  public colors: Color[] = [
+    { backgroundColor: '#11cdef' },
+    { backgroundColor: '#fb6340' },
+    { backgroundColor: '#f5365c' }
+  ]
   pageAdministrador: number;
   pageProfesor: number;
   pagePsicologo: number;

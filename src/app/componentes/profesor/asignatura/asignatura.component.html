@@ -33,10 +33,10 @@
               <div class="mb-8 ">
                 <br>
                 <div>
-                  <h5>Promedio tipo de evaluación cursos</h5>
+                  <h5>Promedio de puntaje por tipo de evaluación</h5>
                   <div>
                     <div *ngIf="!loadGraficoRendimientoEvaluacionesAsignatura" style="display: block">
-                      <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                      <canvas [colors]="colors" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
                         [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
                       </canvas>
                     </div>
@@ -57,10 +57,10 @@
               <div class="mb-8 ">
                 <br>
                 <div>
-                  <h5>Asistencia Cursos</h5>
+                  <h5>Porcentaje de asistencia en cursos</h5>
                   <div>
                     <div *ngIf="!loadGraficoAsistenciaAsignatura" style="display: block">
-                      <canvas baseChart [datasets]="barChartDataAsistencia" [labels]="barChartLabelsAsistencia"
+                      <canvas baseChart [colors]="colors" [datasets]="barChartDataAsistencia" [labels]="barChartLabelsAsistencia"
                         [options]="barChartOptionsAsistencia" [plugins]="barChartPluginsAsistencia"
                         [legend]="barChartLegendAsistencia" [chartType]="barChartTypeAsistencia">
                       </canvas>

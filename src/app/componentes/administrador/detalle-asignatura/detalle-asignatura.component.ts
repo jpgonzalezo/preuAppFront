@@ -15,7 +15,7 @@ import { TopicoService } from 'src/app/servicios/topico.service';
 import { environment } from 'src/environments/environment';
 import swal from'sweetalert2';
 import { ChartType } from 'chart.js';
-import { MultiDataSet, Label } from 'ng2-charts';
+import { MultiDataSet, Label,Color } from 'ng2-charts';
 import { ChartOptions, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { LocalService } from 'src/app/servicios/local.service';
@@ -25,6 +25,11 @@ import { StorageService } from 'src/app/servicios/storage.service';
   templateUrl: './detalle-asignatura.component.html'
 })
 export class DetalleAsignaturaComponent implements OnInit {
+  public colors: Color[] = [
+    { backgroundColor: '#11cdef' },
+    { backgroundColor: '#fb6340' },
+    { backgroundColor: '#f5365c' }
+  ]
   asignatura: Asignatura;
   profesores: Profesor[]
   asistencias: Asistencia[]

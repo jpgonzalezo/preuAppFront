@@ -24,10 +24,10 @@
               <div class="mb-8 ">
                 <br>
                 <div>
-                  <h5>Promedio puntaje asignaturas</h5>
+                  <h5>Promedio puntaje por asignaturas</h5>
                   <div>
                     <div *ngIf="!loadCurso" style="display: block">
-                      <canvas baseChart [data]="polarAreaChartData" [labels]="polarAreaChartLabels"
+                      <canvas baseChart [colors]="colorsPolarArea" [data]="polarAreaChartData" [labels]="polarAreaChartLabels"
                         [legend]="polarAreaLegend" [chartType]="polarAreaChartType">
                       </canvas>
                     </div>
@@ -48,11 +48,11 @@
               <div class="mb-8 ">
                 <br>
                 <div>
-                  <h5>Asistencia anual</h5>
+                  <h5>Porcentaje asistencia anual</h5>
                   <div>
                     <div>
                       <div *ngIf="!loadCurso" style="display: block">
-                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                        <canvas baseChart [colors]="colors" [datasets]="barChartData" [labels]="barChartLabels"
                           [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend"
                           [chartType]="barChartType">
                         </canvas>
@@ -69,10 +69,10 @@
                 </div>
                 <br>
                 <div>
-                  <h5>Asistencia asignaturas</h5>
+                  <h5>Porcentaje de asistencia por asignatura</h5>
                   <div>
                     <div *ngIf="!loadCurso" style="display: block">
-                      <canvas baseChart [datasets]="barChartDataAsignatura" [labels]="barChartLabelsAsignatura"
+                      <canvas baseChart [colors]="colors" [datasets]="barChartDataAsignatura" [labels]="barChartLabelsAsignatura"
                         [options]="barChartOptionsAsignatura" [plugins]="barChartPluginsAsignatura"
                         [legend]="barChartLegendAsignatura" [chartType]="barChartTypeAsignatura">
                       </canvas>

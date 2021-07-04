@@ -14,7 +14,7 @@ import { Asistencia } from 'src/app/modelos/asistencia.model';
 import Swal from 'sweetalert2';
 import { LocalService } from 'src/app/servicios/local.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-import { SingleDataSet, Label } from 'ng2-charts';
+import { SingleDataSet, Label, Color } from 'ng2-charts';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
@@ -24,6 +24,16 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
   styleUrls: ['./detalle-curso.component.css']
 })
 export class DetalleCursoComponent implements OnInit {
+  public colorsPolarArea: Color[] = [
+    {
+      backgroundColor: ['#11cdef', '#fb6340', '#f5365c', '#8965e0', '#ffd600'],
+    }
+  ];
+  public colors: Color[] = [
+    { backgroundColor: '#11cdef' },
+    { backgroundColor: '#fb6340' },
+    { backgroundColor: '#f5365c' }
+  ]
   id_curso:string;
   alumnos: Alumno[];
   curso: Curso;
@@ -151,6 +161,8 @@ export class DetalleCursoComponent implements OnInit {
     this._cursoService.getGraficoAsignaturas(this.id_curso,this.token).subscribe((data:any)=>{
       this.polarAreaChartData = data['data']
       this.polarAreaChartLabels = data['labels']
+      console.log("polarAreaChartData: ", this.polarAreaChartData);
+      console.log("polarAreaChartLabels: ", this.polarAreaChartLabels);
       this.loadCurso = false
     })
     this.activoGrafico = true

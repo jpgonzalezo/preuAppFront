@@ -11,7 +11,7 @@ import { Pregunta } from 'src/app/modelos/pregunta.model';
 import { Evaluacion } from 'src/app/modelos/evaluacion.model';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import { Label, MultiDataSet, } from 'ng2-charts';
+import { Label, MultiDataSet, Color} from 'ng2-charts';
 import swal from 'sweetalert2';
 import { Alumno } from 'src/app/modelos/alumno.model';
 import { LocalService } from 'src/app/servicios/local.service';
@@ -24,6 +24,18 @@ import { PreguntaService } from 'src/app/servicios/pregunta.service';
   styleUrls: ['./detalle-evaluacion.component.css']
 })
 export class DetalleEvaluacionComponent implements OnInit {
+
+  public colors: Color[] = [
+    { backgroundColor: '#11cdef' },
+    { backgroundColor: '#fb6340' },
+    { backgroundColor: '#f5365c' }
+  ]
+
+  public colorsDoughnutChart: Color[] = [
+    {
+      backgroundColor: ['#11cdef', '#fb6340', '#f5365c', '#8965e0', '#ffd600'],
+    }
+  ];
   id_evaluacion: string;
   prueba: Prueba;
   topicos: Topico[];
@@ -136,6 +148,7 @@ export class DetalleEvaluacionComponent implements OnInit {
   getGraficoRendimientoPreguntas() {
     this.loadGraficoRendimientoPreguntas = true;
     this._pruebaService.getGraficoRendimientoPreguntas(this.id_evaluacion, this.token).subscribe((data: any) => {
+      console.log(data['data'])
       this.barChartLabelsPreguntas = data['labels']
       this.barChartDataPreguntas = data['data']
       this.loadGraficoRendimientoPreguntas = false;

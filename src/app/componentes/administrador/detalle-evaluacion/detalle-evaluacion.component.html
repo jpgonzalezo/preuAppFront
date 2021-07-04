@@ -31,7 +31,7 @@
                   <div>
                     <div>
                       <div *ngIf="!loadGraficoRendimientoPreguntas" style="display: block">
-                        <canvas baseChart [datasets]="barChartDataPreguntas" [labels]="barChartLabelsPreguntas"
+                        <canvas baseChart [colors]="colors"[datasets]="barChartDataPreguntas" [labels]="barChartLabelsPreguntas"
                           [options]="barChartOptionsPreguntas" [plugins]="barChartPluginsPreguntas"
                           [legend]="barChartLegendPreguntas" [chartType]="barChartTypePreguntas">
                         </canvas>
@@ -61,7 +61,7 @@
                   <div>
                     <div>
                       <div *ngIf="!loadGraficoRendimientoTopicos" style="display: block">
-                        <canvas baseChart [datasets]="barChartDataTopicos" [labels]="barChartLabelsTopicos"
+                        <canvas baseChart [colors]="colors" [datasets]="barChartDataTopicos" [labels]="barChartLabelsTopicos"
                           [options]="barChartOptionsTopicos" [plugins]="barChartPluginsTopicos"
                           [legend]="barChartLegendTopicos" [chartType]="barChartTypeTopicos">
                         </canvas>
@@ -84,11 +84,11 @@
               <div class="mb-8 ">
                 <br>
                 <div>
-                  <h5>Asistencia Cursos</h5>
+                  <h5>Promedio puntaje por curso</h5>
                   <div>
                     <div>
                       <div *ngIf="!loadGraficoRendimientoCursos" style="display: block">
-                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
+                        <canvas baseChart [colors]="colorsDoughnutChart"[data]="doughnutChartData" [labels]="doughnutChartLabels"
                           [chartType]="doughnutChartType">
                         </canvas>
                       </div>
