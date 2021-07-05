@@ -158,6 +158,34 @@ export class HojaRespuestaComponent implements OnInit {
                 }
               })
             }
+
+            if (data["Response"] == "disabled_prueba"){
+              Swal.fire({
+                type: 'warning',
+                title: 'Evaluación finalizada',
+                text: 'Se acabó su tiempo para responder, la evaluación fue desactivada por el profesor.',
+                confirmButtonColor: '#5cb85c',
+                confirmButtonText: 'Aceptar',
+              }).then((result) => {
+                if (result || result.dismiss) {
+                  this._router.navigateByUrl('/alumno/asignaturas/' + this.id_asignatura + '/detalle')
+                }
+              })
+            }
+
+            if (data["Response"] == "user_invalid"){
+              Swal.fire({
+                type: 'error',
+                title: 'Error en el servidor',
+                text: 'Ocurrió un error en el servidor, intente más tarde',
+                confirmButtonColor: '#5cb85c',
+                confirmButtonText: 'Aceptar',
+              }).then((result) => {
+                if (result || result.dismiss) {
+                  this.loading = false
+                }
+              })
+            }
           },
           (error) => {
             Swal.fire({
