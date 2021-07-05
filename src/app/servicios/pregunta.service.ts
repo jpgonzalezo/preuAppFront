@@ -8,10 +8,10 @@ export class PreguntaService {
 	API_URL = environment.API_SERVER_URL;
 	constructor(private httpClient: HttpClient) { }
 
-	getPlantilla(token: string) {
+	getPlantilla(token: string, id_evaluacion:string) {
 		const headers = new HttpHeaders({ 'auth-token': token });
 
-		return this.httpClient.get(`${this.API_URL}/preguntaExcel`, {
+		return this.httpClient.get(`${this.API_URL}/preguntaExcel/${id_evaluacion}`, {
 			headers, responseType: "arraybuffer"
 		}).pipe(map(res => res))
 	}

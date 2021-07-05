@@ -712,8 +712,7 @@ export class DetalleEvaluacionComponent implements OnInit {
   }
 
   downloadExcel() {
-    this._preguntaService.getPlantilla(this.token).subscribe((response: any) => {
-      console.log(response)
+    this._preguntaService.getPlantilla(this.token,this.id_evaluacion).subscribe((response: any) => {
       const url = window.URL.createObjectURL(
         new Blob([response])
       );
