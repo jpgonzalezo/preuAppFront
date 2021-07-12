@@ -220,8 +220,7 @@
                     <thead>
                       <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Cantidad de Preguntas</th>
-                        <th scope="col">Fecha</th>
+                        <th scope="col">Preguntas</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Puntaje Base</th>
                         <th scope="col">Acción</th>
@@ -241,7 +240,6 @@
                       <tr *ngFor="let evaluacion of evaluaciones_tabla">
                         <td>{{ evaluacion.nombre }}</td>
                         <td>{{ evaluacion.cantidad_preguntas }}</td>
-                        <td>{{ evaluacion.fecha}}</td>
                         <td>
                           <span *ngIf="evaluacion.tipo == 'ENSAYO'"
                             class="badge badge-pill badge-danger">{{ evaluacion.tipo }}</span>
