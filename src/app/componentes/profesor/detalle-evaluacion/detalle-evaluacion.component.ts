@@ -148,7 +148,6 @@ export class DetalleEvaluacionComponent implements OnInit {
   getGraficoRendimientoPreguntas() {
     this.loadGraficoRendimientoPreguntas = true;
     this._pruebaService.getGraficoRendimientoPreguntas(this.id_evaluacion, this.token).subscribe((data: any) => {
-      console.log(data['data'])
       this.barChartLabelsPreguntas = data['labels']
       this.barChartDataPreguntas = data['data']
       this.loadGraficoRendimientoPreguntas = false;
@@ -733,7 +732,6 @@ export class DetalleEvaluacionComponent implements OnInit {
   addArchivo() {
     this.loading = true;
     const file = this.selectedFiles;
-    console.log(this.selectedFiles)
     var formData = new FormData()
     formData.append('file', file)
     this._pruebaService.uploadExcel(this.token, formData, this.id_evaluacion).subscribe((data: any) => {
