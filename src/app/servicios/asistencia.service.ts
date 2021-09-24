@@ -22,7 +22,7 @@ export class AsistenciaService {
   	}
     return this.httpClient.get(`${this.API_URL}/asistencias/${id}`,options).pipe(map(res => res))
 	}
-  getAsistencias(token:string):any{
+  	getAsistencias(token:string):any{
   	const headers = new HttpHeaders({ 'Content-Type': 'application/json' ,'auth-token':token});
   	const options = {
   		headers: headers
@@ -71,11 +71,19 @@ export class AsistenciaService {
 	}
 
 	postAsistencia(data:any,token:string){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token  });
-    const options = {
-      headers: headers
-    }
-    return this.httpClient.post(`${this.API_URL}/asistencias`, JSON.stringify(data), options).pipe(map(res => res))
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token  });
+		const options = {
+		headers: headers
+		}
+		return this.httpClient.post(`${this.API_URL}/asistencias`, JSON.stringify(data), options).pipe(map(res => res))
+	}
+
+	putAsistencia(data:any,token:string, id:string){
+		const headers = new HttpHeaders({ 'Content-Type': 'application/json','auth-token':token  });
+		const options = {
+		headers: headers
+		}
+		return this.httpClient.put(`${this.API_URL}/asistencias/${id}`, JSON.stringify(data), options).pipe(map(res => res))
 	}
 	
 	postJustificacion(data:any,token:string){

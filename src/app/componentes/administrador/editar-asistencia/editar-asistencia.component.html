@@ -1,0 +1,218 @@
+<app-header></app-header>
+<main>
+  <section class="section ">
+    <div class="container">
+      <mat-card-content class="mat-card-content"container>
+        <mat-card-title>Editar asistencia asistencia</mat-card-title><br>
+        <mat-card-subtitle>Realice las modificaciones entre alumnos presentes y asusentes. No se podrá cambiar ni el curso ni la asignatura de este registro.</mat-card-subtitle>
+        <br>
+      </mat-card-content>
+      <br>
+      <div class="row row-grid align-items-center">
+
+        <div class="col-xl-12">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="curso-tab" data-toggle="tab" href="#curso_existente" role="tab"
+                aria-controls="curso" aria-selected="false">Alumnos Curso</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="presente-tab" data-toggle="tab" href="#presente_existente" role="tab"
+                aria-controls="presente" aria-selected="false">Presentes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="ausente-tab" data-toggle="tab" href="#ausente_existente" role="tab"
+                aria-controls="ausente" aria-selected="false">Ausentes</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <!--COLEGIOS EXISTENTE TAB-->
+            <div class="tab-pane fade show active" id="curso_existente" role="tabpanel" aria-labelledby="curso-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">RUT</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido paterno</th>
+                        <th scope="col">Apellido materno</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="loadAlumnos; else alumnosCurso">
+                        <td colspan="10" class="shine text-center">
+                          <h3 class="text-muted"><i class="fa fa-spinner fa-spin"></i> Cargando </h3>
+                        </td>
+                      </tr>
+                      <ng-template #alumnosCurso>
+                        <tr *ngFor="let alumno of alumnos_curso_tabla">
+                          <th scope="row">
+                            <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                          </th>
+                          <td>{{ alumno.rut | rut }}</td>
+                          <td>{{ alumno.nombres }}</td>
+                          <td>{{ alumno.apellido_paterno}}</td>
+                          <td>{{ alumno.apellido_materno}}</td>
+                          <td>
+                            <div class="row">
+                              <button type="button" class="btn btn-success btn-sm" (click)="alumnoPresente(alumno.id)">
+                                <i class="fas fa-user-check"></i>
+                              </button>
+                              <button type="button" class="btn btn-danger btn-sm" (click)="alumnoAusente(alumno.id)">
+                                <i class="fas fa-user-times"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <tr *ngIf="!loadAlumnos && alumnos_curso_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alumnos
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlumnosCurso" [(page)]="pageAlumnosCurso"
+                      [pageSize]="pageSizeAlumnosCurso">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumnosCurso">
+                      <option [ngValue]="10">10 alumnos por página</option>
+                      <option [ngValue]="15">15 alumnos por página</option>
+                      <option [ngValue]="20">20 alumnos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="presente_existente" role="tabpanel" aria-labelledby="presente-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">RUT</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido paterno</th>
+                        <th scope="col">Apellido materno</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="!loadAlumnos && alumnos_presente_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alumnos presentes
+                        </td>
+                      </tr>
+                      <tr *ngFor="let alumno of alumnos_presente_tabla">
+                        <th scope="row">
+                          <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ alumno.rut  | rut}}</td>
+                        <td>{{ alumno.nombres }}</td>
+                        <td>{{ alumno.apellido_paterno}}</td>
+                        <td>{{ alumno.apellido_materno}}</td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-danger btn-sm"
+                              (click)="volverAlumnoCurso(alumno.id,'presente')">
+                              <i class="fas fa-times"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlumnosPresente" [(page)]="pageAlumnosPresente"
+                      [pageSize]="pageSizeAlumnosPresente">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumnosPresente">
+                      <option [ngValue]="10">10 alumnos por página</option>
+                      <option [ngValue]="15">15 alumnos por página</option>
+                      <option [ngValue]="20">20 alumnos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade show" id="ausente_existente" role="tabpanel" aria-labelledby="ausente-tab">
+              <div class="mb-8 ">
+                <br>
+                <div class="table-responsive-lg">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">RUT</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido paterno</th>
+                        <th scope="col">Apellido materno</th>
+                        <th scope="col">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="!loadAlumnos && alumnos_ausente_tabla.length == 0">
+                        <td colspan="10" class="text-center">
+                          No se registran alumnos ausentes
+                        </td>
+                      </tr>
+                      <tr *ngFor="let alumno of alumnos_ausente_tabla">
+                        <th scope="row">
+                          <img [src]='alumno.imagen' class="mr-2" style="width: 50px">
+                        </th>
+                        <td>{{ alumno.rut | rut }}</td>
+                        <td>{{ alumno.nombres }}</td>
+                        <td>{{ alumno.apellido_paterno}}</td>
+                        <td>{{ alumno.apellido_materno}}</td>
+                        <td>
+                          <div class="row">
+                            <button type="button" class="btn btn-danger btn-sm"
+                              (click)="volverAlumnoCurso(alumno.id,'ausente')">
+                              <i class="fas fa-times"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSizeAlumnosAusente" [(page)]="pageAlumnosAusente"
+                      [pageSize]="pageSizeAlumnosAusente">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" [(ngModel)]="pageSizeAlumnosAusente">
+                      <option [ngValue]="10">10 alumnos por página</option>
+                      <option [ngValue]="15">15 alumnos por página</option>
+                      <option [ngValue]="20">20 alumnos por página</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-danger" (click)="volver()">Volver</button>
+            <button type="button" class="btn btn-info"
+              (click)="guardarAsistencia()">Guardar Asistencia</button>
+
+            <br>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer></app-footer>

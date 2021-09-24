@@ -128,4 +128,8 @@ export class AsistenciaComponent implements OnInit {
     this._router.navigateByUrl('/admin/asistencia/detalle_asistencia/'+id_asistencia);
   }
 
+  editarAsistencia(id_asistencia:string){
+    this._router.navigateByUrl('/admin/asistencia/editar_asistencia/'+id_asistencia);
+  }
+
 }

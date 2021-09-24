@@ -53,6 +53,7 @@ import { EditarProfesorComponent } from './editar-profesor/editar-profesor.compo
 import { EditarApoderadoComponent } from './editar-apoderado/editar-apoderado.component';
 import { EditarAdministradorComponent } from './editar-administrador/editar-administrador.component';
 import { ArchivosAdministradorComponent } from './archivos-administrador/archivos-administrador.component';
+import { EditarAsistenciaComponent } from './editar-asistencia/editar-asistencia.component';
 
 
 
@@ -79,6 +80,7 @@ const routes: Routes = [
     { path: 'asistencia', component: AsistenciaComponent},
     { path: 'asistencia/nueva_asistencia', component: NuevaAsistenciaComponent},
     { path: 'asistencia/detalle_asistencia/:id', component: DetalleAsistenciaComponent},
+    { path: 'asistencia/editar_asistencia/:id', component: EditarAsistenciaComponent},
     { path: 'asignaturas/detalle_asignatura/:id_asignatura/detalle_evaluacion/:id_evaluacion', component: DetalleEvaluacionComponent},
     { path: 'asignaturas', component: AsignaturaComponent},
     { path: 'asignaturas/detalle_asignatura/:id', component: DetalleAsignaturaComponent},
@@ -153,7 +155,8 @@ const routes: Routes = [
         EditarProfesorComponent,
         EditarApoderadoComponent,
         EditarAdministradorComponent,
-        ArchivosAdministradorComponent
+        ArchivosAdministradorComponent,
+        EditarAsistenciaComponent
         
     ],
     exports: [
